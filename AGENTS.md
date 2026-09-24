@@ -56,20 +56,33 @@ a different mathematical route to the conclusion.
 
 ## Required preparation for every Lean session
 
-Before editing a Lean proof:
+**MUST load the Lean skill before anything else — it is a hard gate, not
+background reading.** Load (read in full) these, in this order:
+
+1. `.github/skills/fermat-lean-mathlib/SKILL.md`
+2. its `references/search.md` and `references/reference.md`
+3. `pipeline/03-lean/MATHLIB_API_LESSONS.md`
+4. `pipeline/03-lean/ENCODING_MAP.md`
+
+Never edit a `.lean` file, run `lake`, or search for a lemma before this.
+The skill carries the toolchain pin, the container compile loop, the
+9p-bind-mount deadlock rule, the lemma-search ladder and the error→fix
+table; an agent that skips it reliably reproduces failures this repo has
+already paid for (running `lake` inside the Windows bind mount, wasting
+multi-minute compile round-trips on wrong guesses, wrong `ZMod`/`Int`/
+`Int.gcd` API). Do not re-derive what is already written down.
+
+Then, before editing a Lean proof:
 
 1. Read `HANDOFF.md` and identify the one current chunk and exact next step.
 2. Run `python pipeline/smoke/smoke_pipeline.py`. If it fails, fix the
    environment before touching the mathematics.
 3. Read the chunk YAML, its rendered PDF source pages, and its dependencies.
-4. Read `pipeline/03-lean/MATHLIB_API_LESSONS.md`,
-   `pipeline/03-lean/ENCODING_MAP.md` (notation → Lean terms, per-chunk
-   reusable patterns) and `.github/skills/fermat-lean-mathlib/SKILL.md`.
-5. Verify that the chunk has two distinct records:
+4. Verify that the chunk has two distinct records:
    - literal source transcription, preserving signs, exponents, modulus,
      labels, and order;
    - normalized ordered step map, with one entry per author inference.
-6. Confirm the first author step not yet accepted by Lean. Work only on that
+5. Confirm the first author step not yet accepted by Lean. Work only on that
    step; do not write ahead or attack the final theorem directly.
 
 If the exact source is ambiguous, stop before Lean work and obtain a second
@@ -233,8 +246,10 @@ is red, fix the machine, not the math.
   alongside the API lessons; append a section per new chunk.
 - `.github/skills/fermat-lean-mathlib/SKILL.md` — the project's Lean 4 +
   Mathlib skill: toolchain pin, container compile loop, lemma-search
-  ladder, naming conventions, error→fix table. Read it alongside
-  `MATHLIB_API_LESSONS.md` before encoding or searching for lemmas.
+  ladder, naming conventions, error→fix table. **Loading this skill
+  (`SKILL.md` + `references/search.md` + `references/reference.md`) is
+  MANDATORY before any Lean work** — see "Required preparation" above.
+  It is a gate, not optional background reading.
 
 Docker builds maintain stable-to-volatile layering with a tiny context
 and persistent volumes (see `Dockerfile`, `compose.yml`, `.dockerignore`)

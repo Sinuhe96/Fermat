@@ -5,6 +5,14 @@ description: Lean 4.35.0-rc2 + Mathlib v4.35.0-rc2 knowledge for THIS repo's mis
 
 # Fermat project — Lean 4 + Mathlib skill
 
+> **MANDATORY for any Lean work in this repository.** Loading this skill
+> (this file + `references/search.md` + `references/reference.md`) is a
+> hard gate in `AGENTS.md` ("Required preparation for every Lean session"):
+> do not edit a `.lean` file, run `lake`, or search for a lemma before
+> reading it. Skipping it reproduces failures this repo has already paid
+> for (lake inside the Windows bind mount, wasted multi-minute compile
+> round-trips, wrong `ZMod`/`Int` API).
+
 Scope: this repository only (toolchain pin, container layout, pipeline
 contracts, project-learned API pitfalls). For the mission rules themselves
 see `AGENTS.md` — this skill never overrides them.
