@@ -1,13 +1,13 @@
 # Progress — FLT formalization
 
-Overall: [--------------------] 0/1 DONE (0%)
+Overall: [##########----------] 1/2 DONE (50%)
 
 | Status | Count | Chunks |
 |---|---|---|
 | TODO | 0 | — |
 | IN_PROGRESS | 0 | — |
 | BLOCKED | 1 | L7-FRAG-01 |
-| DONE | 0 | — |
+| DONE | 1 | L1-01 |
 
 ## Ready to start (deps satisfied, not DONE)
 

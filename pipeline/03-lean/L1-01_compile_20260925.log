@@ -1,0 +1,6 @@
+'L1.L1_reduce_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L1.L1_step_S2_S3' depends on axioms: [propext, Quot.sound]
+'L1.L1_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L1.L1_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L1.L1_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L1.L1_bo_de_1' depends on axioms: [propext, Classical.choice, Quot.sound]

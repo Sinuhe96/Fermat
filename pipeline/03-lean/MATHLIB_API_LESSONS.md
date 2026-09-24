@@ -174,6 +174,112 @@ are representation/API problems; no author step was mathematically rejected.
     with a `% ↑n` counterexample (line 96) — the argument is not the
     `2 ≠ 0` expected; batched `#check @dvd_pow_self` decides.
 
+## Session 2026-09-25 — L1-01 (bổ đề 1, reduction step = S1)
+
+Verified at this pin by compile (`03-lean/L1-S0S1_compile_20260925.log`)
+unless marked "grep-only".
+
+1. **`Int.gcd` is ℕ-valued; nesting needs an explicit cast.**
+   `Int.gcd u (Int.gcd v t)` does not typecheck — the second argument is
+   `ℤ`. Write the triple gcd as
+   `Int.gcd u ((Int.gcd v t : ℕ) : ℤ)`. `(x,y,z) = 1` (no common divisor)
+   is exactly this nested form `= 1`.
+2. **Divisibility of a gcd, both directions (confirmed by `#check @`):**
+   - `Int.gcd_dvd_left (a b : ℤ) : ↑(a.gcd b) ∣ a` (same for `_right`) —
+     note the `↑` (the gcd is a `ℕ`).
+   - `Int.dvd_gcd : ↑c ∣ a → ↑c ∣ b → c ∣ a.gcd b` — **ℤ divisibility in,
+     ℕ divisibility out**; that asymmetry is the useful one for
+     "gcd is greatest".
+   - `Int.dvd_coe_gcd : c ∣ a → c ∣ b → c ∣ ↑(a.gcd b)` — ℤ→ℤ form.
+3. **Maximality recipe that worked** (proving "divide by a triple gcd ⇒
+   coprime"): build `hmax : ∀ m : ℕ, (m:ℤ) ∣ u₀ → (m:ℤ) ∣ v₀ → (m:ℤ) ∣ t₀
+   → m ∣ D` by `Int.dvd_gcd` twice; then show `e * d` is again a common
+   divisor (`obtain ⟨s, hs⟩ := h`, then `push_cast; ring`) so `e * d ∣ d`,
+   cancel `d ≠ 0` and finish with `Nat.dvd_one.mp`.
+4. **`Dvd` unfolds to `∃ c, b = a * c`** — `obtain ⟨u, hu⟩ := h` with
+   `h : (d:ℤ) ∣ u₀` gives `hu : u₀ = ↑d * u` directly. No need to guess
+   `exists_eq_mul_left_of_dvd`; watch the **argument order** (multiple on
+   the right, `u₀ = ↑d * u`, the author writes `u₀ = u·d` — swap with
+   `mul_comm`).
+5. **`zero_dvd_iff : 0 ∣ a ↔ a = 0`** exists, but after `rw [h0] at h` you
+   get `↑(0:ℕ) ∣ a`, which is not syntactically `(0:ℤ) ∣ a` — insert
+   `have : (0:ℤ) ∣ a := by simpa using h` first.
+6. **Cancellation for `ℤ` and `ℕ`:** `mul_left_cancel₀ (ha : a ≠ 0)`,
+   `mul_right_cancel₀ (hb : b ≠ 0)` — both synthesize for `ℤ` and `ℕ`
+   (`IsLeftCancelMulZero`/`IsRightCancelMulZero` instances exist).
+7. **`rw [← h]` fails on associativity/commutativity shape mismatches.**
+   With `hk : D = e * D * k` and goal `e * k * D = D`, `rw [← hk]` errors
+   ("did not find an occurrence of `e * D * k`"). Use
+   `calc e * k * D = e * D * k := by ring` / `_ = D := hk.symm`.
+   `ring` handles `ℕ` as well as `ℤ`.
+8. **`set x : α := e with hx`** makes every goal occurrence definitionally
+   `x`; `rw [hx]` then gives the expanded form, and `simpa only [hx] using
+   h` converts a hypothesis back. This is the clean way to keep triple-gcd
+   goals readable.
+9. **`pow_dvd_pow_of_dvd (h : a ∣ b) (n : ℕ) : a ^ n ∣ b ^ n`**
+   (`Mathlib/Algebra/Divisibility/Basic.lean:269`, `[CommMonoid α]`).
+   NB `pow_dvd_pow` is a *different* lemma (`a : α`, `h : m ≤ n`,
+   `a ^ m ∣ a ^ n`) — using it for `a^n ∣ b^n` fails.
+10. **No `pow_dvd_pow_iff_left` for ℤ/ℕ at this pin** (grep: the only
+    `pow_dvd_pow_iff` is `IntegrallyClosed`-scoped). For
+    `a ^ n ∣ b ^ n ⟹ a ∣ b` (author step S4) the available route is
+    `Nat.factorization_le_iff_dvd` + `Nat.factorization_pow`
+    (`factorization (n ^ k) = k • n.factorization`, `Data/Nat/Factorization/Defs.lean:183`)
+    + `Nat.le_of_mul_le_mul_left` (or `nsmul_le_nsmul_iff_left`) pointwise.
+    **This step is NOT valid for `n = 0`** (`a^0 = 1 ∣ b^0 = 1` while
+    `a ∤ b`), so `n ≠ 0` must be supplied — it follows from the author's
+    `n ≥ 3`, i.e. it is an F3 side condition, not a new assumption.
+11. **Cost note:** one `lake env lean` round-trip on a warm `import Mathlib`
+    file measured **288–387 s** this session (contended container). Batch
+    every probe into one file; do not spend a round-trip per name.
+
+### L1-01 continued (steps S4/S5/S6 + assembly, all S1)
+
+12. **`Int.dvd_gcd` vs `Int.dvd_coe_gcd` — ℕ out vs ℤ out.** Both exist and
+    the wrong one fails with a bare type mismatch:
+    - `Int.dvd_gcd : ↑c ∣ a → ↑c ∣ b → c ∣ a.gcd b` — conclusion is **Nat**
+      divisibility.
+    - `Int.dvd_coe_gcd : c ∣ a → c ∣ b → c ∣ ↑(a.gcd b)` — conclusion is
+      **ℤ** divisibility (this is the one to chain when the goal is
+      `↑d ∣ ↑(gcd …)`).
+13. **`zero_pow_succ` does not exist at this pin** (`unknown identifier`).
+    To see `(0 : ℕ) ^ (m+1) = 0`, use core `pow_succ` then `mul_zero`:
+    `rw [hd, pow_succ, mul_zero, zero_dvd_iff] at hN`. Get the `m+1` shape
+    from `Nat.exists_eq_succ_of_ne_zero hn` (`hn : n ≠ 0`).
+14. **Working recipe for `d ^ n ∣ t ^ n → d ∣ t` (`[CommMonoid]`-free case).**
+    No `pow_dvd_pow_iff_left` for ℤ/ℕ at this pin; the route that compiled:
+    ```lean
+    have hN : d ^ n ∣ t.natAbs ^ n := by
+      have h' := (Int.natAbs_dvd_natAbs).mpr h
+      simpa only [Int.natAbs_pow, Int.natAbs_natCast] using h'
+    -- then, with hd : d ≠ 0 and hB : t.natAbs ≠ 0:
+    have h1 : (d ^ n).factorization ≤ (t.natAbs ^ n).factorization :=
+      (Nat.factorization_le_iff_dvd (pow_ne_zero n hd) (pow_ne_zero n hB)).mpr hN
+    simp only [Nat.factorization_pow] at h1
+    simp only [Finsupp.le_def] at h1 ⊢
+    intro p
+    have hp := h1 p
+    simp only [Finsupp.smul_apply, nsmul_eq_mul] at hp
+    exact Nat.le_of_mul_le_mul_left hp (Nat.pos_iff_ne_zero.mpr hn)
+    ```
+    Lift back with `(Int.natAbs_dvd_natAbs).mp (by simpa only
+    [Int.natAbs_natCast] using hdvd)`. Note `Int.natAbs_dvd_natAbs` is used
+    **both ways** in this project: `.mpr` to go ℤ→ℕ, `.mp` to go ℕ→ℤ.
+    `Int.dvd_one`-style wrappers are not needed: `Nat.dvd_one.mp` +
+    `Int.natCast_dvd_natCast.mp` finish `↑d ∣ (1:ℤ) → d = 1`.
+15. **Symmetric instances of a `dvd_pow` template need `dvd_sub` + `dvd_neg`.**
+    For the author's "chứng minh tương tự" the third coordinate came from
+    `t ^ n - u ^ n = v ^ n` (`rw [← hsol]; ring`) and `v ^ n - t ^ n = -(u ^ n)`
+    with `(dvd_neg.mp h)`; `dvd_sub : a ∣ b → a ∣ c → a ∣ b - c` is core.
+16. **`Nat.exists_eq_succ_of_ne_zero`** is the standard way to trade `n ≠ 0`
+    for a `m+1` shape (`Data/Int/GCD.lean:57` uses it); it substitutes with
+    `obtain ⟨m, rfl⟩`.
+17. **Unused-hypothesis linter:** an author hypothesis carried for
+    faithfulness but not used by a step triggers
+    `Variable name ... is not explicitly referenced`. Name it `_hn` and
+    explain in the docstring rather than dropping it (dropping would
+    misrepresent the author's stated hypotheses).
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,

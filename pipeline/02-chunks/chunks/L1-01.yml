@@ -1,0 +1,89 @@
+id: L1-01
+title: "Lemma 1 — reduction to pairwise-coprime solution (full lemma)"
+pdf_pages: [1, 2]
+kind: lemma-statement
+depends_on: []
+source_text: |
+  [PDF p1: Lemma 1 statement]
+
+  Bổ đề 1:
+  Cho n ∈ ℕ, n ≥ 3. Nếu phương trình (PT) x^n + y^n = z^n (1)
+  có nghiệm nguyên khác không thì bao giờ cũng tồn tại nghiệm
+  nguyên x = u, y = v, z = t sao cho
+  (u, v) = (u, t) = (v, t) = 1.
+
+  [PDF p2 §1: author's proof ("1. Chứng minh bổ đề 1")]
+
+  Giả sử tồn tại số nguyên n lớn hơn 2, sao cho PT(1) có
+  x = u₀, y = v₀, z = t₀ là một nghiệm nguyên khác không và
+  (u₀, v₀, t₀) = d. Khi đó tồn tại ba số u, v, t ∈ ℤ* sao cho
+  (u, v, t) = 1, u₀ = ud, v₀ = vd, t₀ = td và u₀^n + v₀^n = t₀^n,
+  suy ra u^n + v^n = t^n (1''), suy ra x = u, y = v, z = t là một
+  nghiệm nguyên khác không của PT(1).
+  Giả sử (u, v) = d', từ (1'') suy ra t^n ⋮ d'^n, suy ra t ⋮ d',
+  mà (u, v, t) = 1 nên d' = 1. Vậy (u, v) = 1.
+  Chứng minh tương tự ta cũng có (u, t) = (t, v) = 1.
+  Bổ đề 1 đã được chứng minh.
+formal_hint: |
+  Hypotheses:
+    n : ℕ, n ≥ 3,
+    PT(1) x^n + y^n = z^n has a nonzero integer solution
+  Conclusion:
+    exists nonzero integers u v t with u^n + v^n = t^n and
+    pairwise (u,v) = (u,t) = (v,t) = 1  (Int.gcd = 1)
+transcription: manual
+author_steps: |
+  Normalized ordered step map — full lemma (evidence: renders
+  L1_p1_300dpi.png / L1_p2_300dpi.png + text layer
+  extract_pypdf.txt p.1 "Bổ đề 1:" / p.2 "1. Chứng minh bổ đề 1";
+  divisibility direction + (1'') label + ℤ* confirmed by second
+  visual read).
+  S0 [p2 ¶1] Assume n > 2 with nonzero integer solution
+    (u₀,v₀,t₀) of (1); set d = (u₀,v₀,t₀).
+  S1 [p2 ¶1] Divide out: u₀ = ud, v₀ = vd, t₀ = td with
+    u,v,t ∈ ℤ* and (u,v,t) = 1; from u₀^n+v₀^n = t₀^n get
+    u^n + v^n = t^n (1''); so (u,v,t) is a nonzero solution.
+  S2 [p2 ¶2] Assume (u,v) = d'.
+  S3 [p2 ¶2] From (1''): d'^n ∣ t^n ("t^n ⋮ d'^n": t^n left,
+    d'^n right of the mark).
+  S4 [p2 ¶2] d'^n ∣ t^n ⟹ d' ∣ t ("t ⋮ d'").
+  S5 [p2 ¶2] (u,v,t) = 1 with d' ∣ u,v,t ⟹ d' = 1;
+    hence (u,v) = 1.
+  S6 [p2 ¶3] "Chứng minh tương tự": (u,t) = (t,v) = 1. ∎
+  Lean mapping (one named theorem per author step, 03-lean/L1/Basic.lean):
+    S0+S1 -> L1_reduce_coprime
+    S2+S3 -> L1_step_S2_S3
+    S4    -> L1_step_S4
+    S5    -> L1_step_S5   (stated for any d dividing all three coords,
+                           because S6 needs it for three pairs)
+    S6    -> L1_step_S6
+    whole -> L1_bo_de_1   (assembly, author's order)
+  Classifications (per AGENTS.md F1-F4/S1) — ALL S1:
+    S0+S1: S1. F2 rounds on the way: rewrite pattern `e * D * k` vs goal
+      `e * k * D` (Nat shape) -> explicit `calc … := by ring`.
+    S2+S3: S1.
+    S4:    S1. F2 round: `zero_pow_succ` does not exist at this pin; the
+      d = 0 branch uses `pow_succ` + `mul_zero` instead.
+    S5:    S1. F2 round: `Int.dvd_gcd` returns ℕ-divisibility; the ℤ form
+      is `Int.dvd_coe_gcd` (both now recorded in MATHLIB_API_LESSONS.md).
+    S6:    S1.
+    Assembly: S1 (EXIT:0, no warnings, no sorry).
+  Zero F1/F3/F4 outcomes: every author step was accepted as written.
+  Formal additions (implicit side conditions only, no new mathematics):
+    - S0+S1: `d ≠ 0` (d divides the nonzero u₀) and cancellation by
+      `dⁿ ≠ 0`.
+    - S4: needs `n ≠ 0`, supplied from the author's `n ≥ 3` (the
+      implication is false for n = 0: a⁰ = 1 ∣ b⁰ = 1 while a ∤ b).
+    - S6: the paper's "chứng minh tương tự" is spelled out — the third
+      coordinate is reached by subtraction (`tⁿ − uⁿ = vⁿ`,
+      `vⁿ − tⁿ = −uⁿ`) rather than by the sum used for (u,v).
+  Evidence: 03-lean/L1-01_compile_20260925.log (final, all six
+  `#print axioms` lines = propext, Classical.choice, Quot.sound only);
+  04-sympy/test_l1_01.py PASS (S1 216000 triples; S2+S3 on the 6472
+  solutions that exist for n = 1,2 — none exist for n ≥ 3; S4 16000
+  cases; S5/S6 12674 triples; n ∈ {5,7,11,13} boxed search: 0 solutions,
+  i.e. the author's hypothesis is unsatisfiable there, so Lemma 1 is
+  vacuous on that range).
+lean_file: 03-lean/L1/Basic.lean
+sympy_test: 04-sympy/test_l1_01.py
+status: DONE
