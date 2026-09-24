@@ -77,6 +77,16 @@ Design points that make this work:
 If you change `Dockerfile` layers 1–2 (apt packages, elan bootstrap) it costs more;
 layer 3 (config/scripts) is essentially free.
 
+## Where we are
+
+```bash
+python pipeline/progress.py --check    # live dashboard + ledger consistency check
+```
+
+`pipeline/PROGRESS.md` is the committed snapshot (regenerate with `--write`
+when statuses change). Open obstacles live in `pipeline/BLOCKERS.md`;
+author-bound math disputes live in `pipeline/05-feedback/`.
+
 ---
 
 ## Known issues / next steps

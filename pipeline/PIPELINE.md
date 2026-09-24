@@ -33,3 +33,23 @@ Stages:
    - `smoke_pipeline.py` fails fast on: missing toolchain, Lean hello-world
      not compiling, sympy import broken, extract scripts crashing on page 1.
    - Run BEFORE any large work. If smoke is red, fix the machine, not the math.
+
+6. `progress.py` + `PROGRESS.md` — where are we, right now.
+   - `python pipeline/progress.py --check` prints the dashboard and verifies
+     ledger consistency (tsv vs chunk files, unknown deps, cycles). Exit 1
+     means the TRACKING is broken — fix it before trusting the picture.
+   - `python pipeline/progress.py --write pipeline/PROGRESS.md` refreshes the
+     committed snapshot. Regenerate whenever statuses change.
+   - Sources of truth: `02-chunks/status.tsv`, chunk files, `BLOCKERS.md`,
+     `05-feedback/queries/`. Never edit PROGRESS.md by hand.
+
+7. `BLOCKERS.md` — obstacle log (technical: toolchain, cache, RAM).
+   - One `## B-NNN ... [OPEN|RESOLVED]` section each, newest on top.
+   - An entry closes only when its resolution check passes — not on vibes.
+
+8. `05-feedback/` — author feedback track (mathematical: a chunk fails and
+   triage says the PROOF STEP is suspect, not our transcription).
+   - `queries/Q-NNN-*.md` follow the template; each must reproduce WITHOUT
+     Lean (sympy numbers or a quoted inference with page ref).
+   - Triage rule, lifecycle (OPEN → ANSWERED → RESOLVED), and response-kit
+     convention live in `05-feedback/README.md`.

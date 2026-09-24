@@ -28,6 +28,9 @@ pipeline/01-extract/out/
 .vscode/
 .idea/
 
+# Python bytecode caches.
+__pycache__/
+
 # OS noise.
 Thumbs.db
 Desktop.ini

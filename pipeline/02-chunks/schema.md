@@ -18,7 +18,9 @@ transcription: manual | extract-verified
   # extract-verified = copied from extract output AND token_overlap OK
 lean_file: 03-lean/Pilot/Basic.lean     # where the formalization lives
 sympy_test: 04-sympy/test_l7_frag_01.py # numeric smoke test for this chunk
-status: TODO | IN_PROGRESS | DONE
+status: TODO | IN_PROGRESS | BLOCKED | DONE
+  # BLOCKED = gated on BLOCKERS.md entry or on an OPEN author query;
+  # name the blocker/query id in status.tsv notes.
 ```
 
 DONE criteria (all required):
@@ -26,3 +28,6 @@ DONE criteria (all required):
 2. `sympy_test` passes for n in {5, 7, 11, 13}.
 3. Every id in `depends_on` is DONE.
 4. `source_text` matches the PDF page (second pair of eyes or screenshot diff).
+5. If Lean or sympy refutes the chunk: triage per `05-feedback/README.md`.
+   A chunk whose failure is referred to the author goes to BLOCKED with the
+   query id in status.tsv notes — never back to TODO silently.
