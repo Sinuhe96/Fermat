@@ -44,6 +44,7 @@ is **not yet usable** — no GGUF model downloaded. See Known Issues.
 | Path | What |
 |---|---|
 | `PROOF_of_ FERMAT.pdf` | source proof (33 A4 pages) |
+| `pipeline/` | formalization pipeline (see `pipeline/PIPELINE.md`) |
 | `proof/` | **your work goes here** — mounted at `/workspace/proof`, persists on host |
 | `proof/check_env.sh` | environment smoke test |
 | `models/` | GGUF files for the `prover` service (mounted at `/models`) |
@@ -86,10 +87,11 @@ layer 3 (config/scripts) is essentially free.
    (~4.7GB). Kimina-7B-Distill and Goedel-Prover-SFT ship as safetensors only and need a
    one-time quantize. Note: Docker Desktop is capped at ~8GB RAM, so a 7B model and a
    Mathlib build should not run at the same time.
-3. **Nothing formalized yet.** Next real step is piloting the first lemma from the PDF
-   (see the image lemma: prime `n>3`, `n ∤ abc`, `a^n+b^n-c^n ≡ 0 [n²]` ⟹
-   `(a^n-b^n)(c^n+a^n)(c^n+b^n) ≢ 0 [n]`) — brute-force it for n=5,7,11 in sympy,
-   then write the Lean statement.
+3. **Pilot chunk staged, nothing proven yet.** `pipeline/02-chunks/chunks/L7-FRAG-01.yml`
+   tracks the first lemma fragment; its sympy smoke test passes for n=5,7,11,13
+   (12 witnesses at n=7, 24 at n=13, zero counterexamples). The Lean statement
+   scaffold lives in `pipeline/03-lean/Pilot/Basic.lean`. Run the pipeline via
+   `pipeline/PIPELINE.md`: smoke first, then extract → fidelity gate → chunks.
 
 ---
 

@@ -1,0 +1,2 @@
+chunk	pages	kind	status	lean_file	sympy_test	notes
+L7-FRAG-01	1-2	lemma-statement	TODO	03-lean/Pilot/Basic.lean	04-sympy/test_l7_frag_01.py	pilot: first chunk through the pipeline

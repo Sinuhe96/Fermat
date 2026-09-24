@@ -1,0 +1,2 @@
+-- Common helpers shared by all chunk formalizations.
+-- Empty pilot scaffold: grows as the first real proofs land.

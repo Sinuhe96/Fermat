@@ -1,0 +1,19 @@
+id: L7-FRAG-01
+title: Lemma 7 fragment — non-divisibility conclusion (pilot chunk)
+pdf_pages: [1, 2]
+kind: lemma-statement
+depends_on: []
+source_text: |
+  [MANUAL TRANSCRIPTION PENDING — copy verbatim from PROOF_of_FERMAT.pdf p1-2:
+  Lemma 7 hypotheses (n prime >3, n ∤ abc, a^n+b^n-c^n ≡ 0 [n^2],
+  a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)} ≡ 0 [n]) and the conclusion
+  (a^n-b^n)(c^n+a^n)(c^n+b^n) ≢ 0 [n].]
+formal_hint: |
+  n prime, n > 3, integers a b c with n ∤ a*b*c,
+  a^n + b^n - c^n ≡ 0 [ZMOD n^2],
+  a^{n*(n-2)} + b^{n*(n-2)} - c^{n*(n-2)} ≡ 0 [ZMOD n]
+  → ¬ (n:ℤ) ∣ (a^n - b^n) * (c^n + a^n) * (c^n + b^n)
+transcription: manual
+lean_file: 03-lean/Pilot/Basic.lean
+sympy_test: 04-sympy/test_l7_frag_01.py
+status: TODO

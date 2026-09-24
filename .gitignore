@@ -19,6 +19,10 @@ build/
 *.c
 *.o
 
+# Pipeline extraction outputs — reproducible from the PDF + extract.py.
+# Keep the scripts and reports' schema, not the bulky regenerable text.
+pipeline/01-extract/out/
+
 # Personal tooling state (editor/agent config), not project content.
 .commandcode/
 .vscode/
