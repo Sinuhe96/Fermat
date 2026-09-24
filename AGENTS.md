@@ -4,6 +4,10 @@ These rules are binding on any agent working here. They exist to prevent
 repeated, expensive mistakes. When in doubt, follow this file over
 general coding habits.
 
+**Starting a fresh session:** read `HANDOFF.md` first for the live status
+and exact next step, then follow the rules below. `README.md` covers the
+environment; this file governs how we work.
+
 ## Mission
 
 We are building a **formalized verification** of an existing proof of

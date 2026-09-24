@@ -8,6 +8,11 @@ optional local llama.cpp server for proof assistance.
 
 ## Start here
 
+**First read `AGENTS.md`** — it is the mission statement and the binding
+operating rules (we verify the author's proof, we do not write our own).
+For a fresh session resume, read `HANDOFF.md` first: it points at
+AGENTS.md and summarizes the exact next step.
+
 ```bash
 docker compose up -d lean          # first run installs the toolchain (~90s), then instant
 docker compose exec lean sh /workspace/proof/check_env.sh   # verify everything works
@@ -43,7 +48,9 @@ is **not yet usable** — no GGUF model downloaded. See Known Issues.
 
 | Path | What |
 |---|---|
-| `PROOF_of_ FERMAT.pdf` | source proof (33 A4 pages) |
+| `PROOF_of_FERMAT.pdf` | source proof (33 A4 pages) |
+| `AGENTS.md` | **mission + operating rules — read this first** |
+| `HANDOFF.md` | fresh-session resume doc (points to AGENTS.md) |
 | `pipeline/` | formalization pipeline (see `pipeline/PIPELINE.md`) |
 | `proof/` | **your work goes here** — mounted at `/workspace/proof`, persists on host |
 | `proof/check_env.sh` | environment smoke test |
@@ -91,17 +98,18 @@ author-bound math disputes live in `pipeline/05-feedback/`.
 
 ## Known issues / next steps
 
-1. **Mathlib olean cache does not unpack.** `lake exe cache get` exits 0 but leaves no
-   `Mathlib.olean`. Until fixed, building Mathlib from source is the alternative.
-2. **No prover model.** `bartowski/Qwen2.5-Math-7B-Instruct-GGUF` has confirmed Q4_K_M
-   (~4.7GB). Kimina-7B-Distill and Goedel-Prover-SFT ship as safetensors only and need a
-   one-time quantize. Note: Docker Desktop is capped at ~8GB RAM, so a 7B model and a
-   Mathlib build should not run at the same time.
-3. **Pilot chunk staged, nothing proven yet.** `pipeline/02-chunks/chunks/L7-FRAG-01.yml`
-   tracks the first lemma fragment; its sympy smoke test passes for n=5,7,11,13
-   (12 witnesses at n=7, 24 at n=13, zero counterexamples). The Lean statement
-   scaffold lives in `pipeline/03-lean/Pilot/Basic.lean`. Run the pipeline via
-   `pipeline/PIPELINE.md`: smoke first, then extract → fidelity gate → chunks.
+1. **No prover model (optional helper, not required).**
+   `bartowski/Qwen2.5-Math-7B-Instruct-GGUF` has a confirmed Q4_K_M (~4.7GB);
+   Kimina-7B-Distill and Goedel-Prover-SFT ship as safetensors only and need a
+   one-time quantize. Note: Docker Desktop is capped at ~8GB RAM, so a 7B model
+   and a Mathlib build should not run at the same time.
+2. **Pipeline is set up; nothing formalized yet.** Extraction and fidelity gate
+   run; `L7-FRAG-01` is the first chunk but its pilot transcription was reset
+   (see `HANDOFF.md`). Run the pipeline via `pipeline/PIPELINE.md`: smoke first,
+   then extract → fidelity gate → transcribe a chunk → sympy → Lean.
+3. **Do the next chunk under AGENTS.md.** The prior pilot attempt treated the
+   chunk as "state the conclusion and prove it" — that violated the core rule.
+   A chunk must carry the AUTHOR's proof steps and Lean must check that chain.
 
 ---
 
