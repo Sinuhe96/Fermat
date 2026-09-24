@@ -60,6 +60,46 @@ Conventions this project fixed on (keep them for the next chunks):
 - An author hypothesis carried for faithfulness but unused by a step keeps
   its place with a `_`-prefixed name plus a docstring note (L1's `_hn`).
 
+### Reusing a DONE chunk (and the wiring that is still missing)
+
+- Record the citation as `depends_on: [<id>]`; `progress.py` refuses a
+  dependency that is not DONE. Do **not** redo a DONE chunk's
+  transcription, step map, sympy screen or F1–F4/S1 classification — that
+  is exactly what DONE certifies.
+- At the Lean level, reuse means **`import` the producing module**, never
+  paste its statements or proofs into another file. A pasted copy forces a
+  fresh elaboration of the same proof (minutes per consumer) and, worse,
+  can drift from the verified original — the thing you cite stops being
+  the thing that was verified.
+- L1's first real consumer is **not** L7. The PDF cites bổ đề 1 only at
+  p. 6 ("áp dụng bổ đề 1", main theorem, case n > 11), and bổ đề 6 takes
+  `(u, v) = (u, t) = (v, t) = 1` as a hypothesis, i.e. bổ đề 1's output.
+  `L7-FRAG-01` cites bổ đề 5c/5đ instead, so it takes no L1 edge.
+- L1's conclusion is an `∃`; a consumer destructures it (see the assembly
+  in `L1_bo_de_1`). Destructuring is glue work, not re-verification.
+
+**Wiring status — deliberately deferred** (user decision 2026-09-25):
+every chunk file is currently copied *flat* into the container package
+(`pipeline/03-lean/L1/Basic.lean` → `/workspace/work/testproj/L1Basic.lean`),
+so `import L1.Basic` does **not** resolve. Wire it when the first consumer
+chunk is created (p. 6 main theorem or bổ đề 6):
+
+1. add `[[lean_lib]] name = "L1"` to the package `lakefile.toml` (copy the
+   existing `Pilot` / `Common` pattern);
+2. place the file as `L1/Basic.lean` under the package root, keeping
+   `pipeline/03-lean/L1/Basic.lean` as the repo source of truth;
+3. `import L1.Basic` from the consumer (and from
+   `pipeline/03-lean/Main.lean`, the aggregator);
+4. Lake then reuses `L1/Basic.olean` while the module is unchanged — L1's
+   proof is elaborated once, not once per consumer.
+
+**Known reproducibility gap — fix at wiring time:** the `Pilot`
+`[[lean_lib]]` entry that `Main.lean` already depends on exists only in
+the `lake-work` volume; `proof_verify/lakefile.toml` in git lists only
+`Testproj`. Recreating that volume breaks `import Pilot.Basic`. The package
+file must become repo-tracked and synced into the container instead of
+living only in the volume.
+
 ---
 
 ## §B. Chunk L1-01 — bổ đề 1 (DONE, all steps S1)
