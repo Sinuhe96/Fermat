@@ -1,0 +1,105 @@
+Pilot/Basic.lean:46:2: warning: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Pilot/Basic.lean:52:6: error(lean.unknownIdentifier): Unknown constant `ZMod.intCast_zmod_eq_zero_iff_dvd.mp`
+Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider `noncomm_ring`, `abel` or `module` instead.
+Pilot/Basic.lean:61:55: error: unsolved goals
+n : ℕ
+hn : Nat.Prime n
+h3 : 3 < n
+a b c : ℤ
+h0 : ¬↑n ∣ a * b * c
+h1 : a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2]
+h2 : a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n]
+this : Fact (Nat.Prime n)
+h2nz : 2 ≠ 0
+h22 : 2 ^ (n - 2) = 2
+hp : 2 ^ (n - 1) = 4
+⊢ 3 + -3 = 0
+Pilot/Basic.lean:74:6: error: Type mismatch: After simplification, term
+  hA
+ has type
+  -0 + 3 = 0
+but is expected to have type
+  3 = 0
+Pilot/Basic.lean:77:6: error(lean.unknownIdentifier): Unknown constant `ZMod.intCast_zmod_eq_zero_iff_dvd.mp`
+Pilot/Basic.lean:83:4: error(lean.unknownIdentifier): Unknown constant `ZMod.intCast_zmod_eq_zero_iff_dvd.mp`
+Pilot/Basic.lean:96:6: error: Function expected at
+  Int.ModEq.dvd ?m.463
+but this term has type
+  ?m.456 ∣ ?m.458 - ?m.457
+
+Note: Expected a function because this term is being applied to the argument
+  h1
+Pilot/Basic.lean:96:46: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  e ≥ 1
+  d ≥ 4
+where
+ d := ↑n
+ e := a * b * c % ↑n
+Pilot/Basic.lean:118:23: error: Type mismatch
+  Or.resolve_left (Nat.Prime.eq_two_or_odd hn) hne2
+has type
+  n % 2 = 1
+but is expected to have type
+  Odd n
+Pilot/Basic.lean:131:59: error: unsolved goals
+(… context: n hn h3 a b c h0 h1 h2 Fact h2nz h_tail dvd_of ha0 hb0 hc0 h1n h2n hne2 hodd hodd2 hbc hcz hstep hcn hneg halleq …)
+⊢ ↑b ^ (n * (n - 2)) + -↑b ^ (n * (n - 2)) = 0
+Pilot/Basic.lean:145:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (-?a) ^ (n - 2)
+in the target expression
+  (-↑b ^ n) ^ (n - 2) = -↑b ^ (n * (n - 2))
+Pilot/Basic.lean:156:17: error: unsolved goals
+(… full context …)
+⊢ ↑b ^ (n * (n - 2)) + -↑b ^ (n * (n - 2)) = 0
+Pilot/Basic.lean:169:12: error(lean.unknownIdentifier): Unknown identifier `hpow`
+Pilot/Basic.lean:187:17: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (-?a) ^ (n - 2)
+in the target expression
+  (-2) ^ (n - 2) * (↑b ^ n) ^ (n - 2) = -2 ^ (n - 2) * ↑b ^ (n * (n - 2))
+Pilot/Basic.lean:196:15: error(lean.unknownIdentifier): Unknown identifier `pow_eq_zero`
+Pilot/Basic.lean:205:59: error: unsolved goals
+(… context … hca hcz hstep …)
+⊢ -↑a ^ n + -↑a ^ n = ↑a ^ n * -2
+Pilot/Basic.lean:215:24: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (-?a) ^ (n - 2)
+in the target expression
+  (-↑a ^ n) ^ (n - 2) = -↑a ^ (n * (n - 2))
+Pilot/Basic.lean:219:33: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (-?a) ^ (n - 2)
+in the target expression
+  (-2) ^ (n - 2) * (↑a ^ n) ^ (n - 2) = -2 ^ (n - 2) * ↑a ^ (n * (n - 2))
+Pilot/Basic.lean:229:51: error: unsolved goals
+(… context … hraw …)
+⊢ ↑a ^ ((n - 2) * n) * 2 - ↑a ^ ((n - 2) * n) * 2 ^ (n - 2) =
+    ↑a ^ ((n - 2) * n) + ↑a ^ ((n - 2) * n) * -2 ^ (n - 2) - -↑a ^ ((n - 2) * n)
+Pilot/Basic.lean:253:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑?a = 0
+in the target expression
+  (↑a ^ n - ↑b ^ n) * (↑c ^ n + ↑a ^ n) * ↑(c ^ n + b ^ n) = 0
+Pilot/Basic.lean:264:27: error: Application type mismatch: The argument
+  hf
+has type
+  ↑c ^ n + ↑b ^ n = 0
+but is expected to have type
+  ↑b ^ n + ↑c ^ n = 0
+in the application
+  h_bncn hf
+EXIT=1
+
+[NOTE: hypothesis-context dumps elided above where identical to the first
+unsolved-goal dump; every error line:col and goal is retained. Full verbatim
+output also recoverable by rerunning:
+  docker compose exec -T lean sh -c 'cd /workspace/work/testproj && lake env lean Pilot/Basic.lean'
+Compile #1, 2026-09-25, wall time 180.95 s.]

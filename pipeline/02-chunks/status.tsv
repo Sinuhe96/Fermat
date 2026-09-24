@@ -1,2 +1,2 @@
 chunk	pages	kind	status	lean_file	sympy_test	notes
-L7-FRAG-01	1-2	lemma-statement	TODO	03-lean/Pilot/Basic.lean	04-sympy/test_l7_frag_01.py	pilot: first chunk through the pipeline
+L7-FRAG-01	1-2,4-5	lemma-statement	BLOCKED	03-lean/Pilot/Basic.lean	04-sympy/test_l7_frag_01.py	pilot: sympy pass; faithful chain encoded; Q-001 open (product factor a^n−b^n not covered by printed proof — single sorry marks it)
