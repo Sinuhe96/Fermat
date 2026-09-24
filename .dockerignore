@@ -9,3 +9,12 @@ models/
 *.json
 .git/
 .gitignore
+
+# Regenerable / runtime dirs: mounted or rebuilt, never baked in.
+pipeline/01-extract/out/
+__pycache__/
+*.pyc
+.pytest_cache/
+.lake/
+*.olean
+*.ilean
