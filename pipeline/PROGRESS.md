@@ -17,7 +17,7 @@ L7-FRAG-01
 
 — none —
 
-## Obstacles: 1 OPEN (B-001)
+## Obstacles: 0 OPEN (none)
 See `pipeline/BLOCKERS.md`.
 
 ## Author queries: 0 OPEN of 0 total

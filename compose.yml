@@ -11,8 +11,15 @@ services:
         - type=local,dest=.buildcache,mode=max
     volumes:
       - ./proof:/workspace/proof
+      - lake-work:/workspace/work
       - lean-elan:/elan-home
-    working_dir: /workspace/proof
+      # Lake Mathlib download cache (~/.cache/mathlib *.ltar). Without this,
+      # every container recreate re-downloads GBs from scratch.
+      - lake-cache:/root/.cache
+    # NOTE: proof_verify stays a Windows bind mount for EDITING ONLY.
+    # Never run lake inside it: 9p drvfs deadlocks the cache fetch
+    # (D-state on p9_client_rpc). Lake work happens in /workspace/work.
+    working_dir: /workspace/work
     environment:
       ELAN_HOME: /elan-home
       LEAN_TOOLCHAIN: leanprover/lean4:v4.35.0-rc2
@@ -41,3 +48,5 @@ services:
 
 volumes:
   lean-elan:
+  lake-cache:
+  lake-work:
