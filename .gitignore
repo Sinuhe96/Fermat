@@ -1,0 +1,30 @@
+# Docker layer cache — rebuildable from Dockerfile, do not commit.
+.buildcache/
+
+# Scratch Lake test project — has its own nested .git and a 1.2GB .lake/.
+# Kept on disk for reference only, never tracked here.
+proof_verify/
+
+# Large model binaries for the prover service — download separately.
+*.gguf
+*.safetensors
+*.bin
+
+# Lean/Lake build artifacts (applies now and when proof/ becomes a Lake project).
+.lake/
+lake-packages/
+build/
+*.olean
+*.ilean
+*.c
+*.o
+
+# Personal tooling state (editor/agent config), not project content.
+.commandcode/
+.vscode/
+.idea/
+
+# OS noise.
+Thumbs.db
+Desktop.ini
+.DS_Store

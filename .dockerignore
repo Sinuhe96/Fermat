@@ -1,0 +1,11 @@
+# Keep the build context tiny: never send these to the daemon.
+# (proof/ and models/ are mounted at runtime, not baked into the image.)
+proof_verify/
+proof/
+models/
+.buildcache/
+.commandcode/
+*.pdf
+*.json
+.git/
+.gitignore

@@ -1,0 +1,43 @@
+services:
+  lean:
+    image: fermat-lean:latest
+    build:
+      context: .
+      # Persist the build layer cache so a rebuild after ANY failure
+      # resumes from the last good layer instead of restarting.
+      cache_from:
+        - type=local,src=.buildcache
+      cache_to:
+        - type=local,dest=.buildcache,mode=max
+    volumes:
+      - ./proof:/workspace/proof
+      - lean-elan:/elan-home
+    working_dir: /workspace/proof
+    environment:
+      ELAN_HOME: /elan-home
+      LEAN_TOOLCHAIN: leanprover/lean4:v4.35.0-rc2
+    tty: true
+    stdin_open: true
+    # Mathlib build is RAM-hungry; cap so Docker Desktop (8GB) doesn't OOM
+    mem_limit: 6g
+    cpus: 10
+
+  # CPU inference for 7B prover/math models (GGUF via llama.cpp server, OpenAI-compatible on :8080)
+  # Default model: Qwen2.5-Math-7B-Instruct Q4_K_M (~4.7GB) — only confirmed GGUF in this family.
+  # Kimina-7B / Goedel-SFT ship as safetensors only (verified via HF API), so they need
+  # a one-time quantize step (see README below) before they can serve here.
+  prover:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    volumes:
+      - ./models:/models
+    ports:
+      - "8080:8080"
+    command: >
+      -m /models/Qwen2.5-Math-7B-Instruct-Q4_K_M.gguf
+      --host 0.0.0.0 --port 8080
+      -c 4096 -n 2048
+      --threads 10
+    mem_limit: 6g
+
+volumes:
+  lean-elan:
