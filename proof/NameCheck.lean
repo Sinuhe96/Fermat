@@ -1,0 +1,12 @@
+import Mathlib
+#check @ZMod.pow_card
+#check @Int.modEq_zero_iff_dvd
+#check @ZMod.intCast_zmod_eq_zero_iff_dvd
+#check @eq_inv_of_mul_eq_one_left
+#check @inv_mul_cancel₀
+#check @sq_eq_zero_iff
+#check @mul_eq_zero
+#check @dvd_pow_self
+#check @Nat.dvd_prime
+#check @sub_eq_zero
+#check @mul_right_cancel₀
