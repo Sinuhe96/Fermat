@@ -8,8 +8,7 @@ Source: `PROOF_of_FERMAT.pdf`
   * proof §1 "Chứng minh bổ đề 1": p. 2.
 
 Transcription + ordered step map: `pipeline/02-chunks/chunks/L1-01.yml`
-(S0–S6). This file encodes the FIRST inference only, per AGENTS.md
-one-step rule:
+(S0–S6). One named declaration per author step, all classified S1:
 
   S0+S1  "Giả sử tồn tại số nguyên n lớn hơn 2, sao cho PT(1) có
           x = u₀, y = v₀, z = t₀ là một nghiệm nguyên khác không và
@@ -17,11 +16,21 @@ one-step rule:
           (u, v, t) = 1, u₀ = ud, v₀ = vd, t₀ = td và u₀ⁿ + v₀ⁿ = t₀ⁿ,
           suy ra uⁿ + vⁿ = tⁿ (1''), suy ra x = u, y = v, z = t là một
           nghiệm nguyên khác không của PT(1)."
+                                             -> L1_reduce_coprime
+  S2+S3  "Giả sử (u, v) = d', từ (1'') suy ra tⁿ ⋮ d'ⁿ"  -> L1_step_S2_S3
+  S4     "suy ra t ⋮ d'"                                 -> L1_step_S4
+  S5     "mà (u, v, t) = 1 nên d′ = 1. Vậy (u, v) = 1."  -> L1_step_S5
+  S6     "Chứng minh tương tự ta cũng có (u, t) = (t, v) = 1."
+                                                         -> L1_step_S6
+  assembly of all of the above           -> L1_bo_de_1 (author's order)
 
-Nothing here is our own mathematics: the content is the author's
-"divide the solution by the common gcd d". The only formal additions are
-the implicit side conditions the paper leaves to convention (d ≠ 0, the
-maximality of `Int.gcd`, and cancellation by dⁿ ≠ 0).
+Term mapping and the reusable proof patterns for the next chunks:
+`pipeline/03-lean/ENCODING_MAP.md` §B.
+
+Nothing here is our own mathematics: the content is the author's chain.
+The only formal additions are the implicit side conditions the paper
+leaves to convention (d ≠ 0, the maximality of `Int.gcd`, cancellation by
+dⁿ ≠ 0, and `n ≠ 0` at S4, which the author's `n ≥ 3` supplies).
 
 Triple gcd notation: the author's `(u₀, v₀, t₀) = d` is encoded as
 `Int.gcd u₀ (Int.gcd v₀ t₀)` (nested binary gcd; `Int.gcd` is ℕ-valued),

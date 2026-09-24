@@ -3,6 +3,10 @@
 Hard-won knowledge for encoding elementary number theory proofs in Lean 4
 + Mathlib v4.35.0-rc2. Every item here cost real compilation time.
 
+Companion doc: `pipeline/03-lean/ENCODING_MAP.md` — the author's notation →
+Lean/Mathlib term mapping plus copy-paste proof patterns that already
+compiled (this file = API pitfalls, that file = terminology + patterns).
+
 ## ZMod with a variable modulus `n : ℕ`
 
 `ZMod n` is a field when `n` is prime, but Lean doesn't always resolve the
@@ -174,10 +178,12 @@ are representation/API problems; no author step was mathematically rejected.
     with a `% ↑n` counterexample (line 96) — the argument is not the
     `2 ≠ 0` expected; batched `#check @dvd_pow_self` decides.
 
-## Session 2026-09-25 — L1-01 (bổ đề 1, reduction step = S1)
+## Session 2026-09-25 — L1-01 (bổ đề 1) — all six steps S1
 
-Verified at this pin by compile (`03-lean/L1-S0S1_compile_20260925.log`)
-unless marked "grep-only".
+Verified at this pin by compile (`03-lean/L1-01_compile_20260925.log`,
+final file: `03-lean/L1/Basic.lean`) unless marked "grep-only". Term
+mapping and reusable proof patterns for the next chunks:
+`pipeline/03-lean/ENCODING_MAP.md`.
 
 1. **`Int.gcd` is ℕ-valued; nesting needs an explicit cast.**
    `Int.gcd u (Int.gcd v t)` does not typecheck — the second argument is
@@ -293,5 +299,12 @@ unless marked "grep-only".
    variable `n`, try `n = 7` or `n = 11` to distinguish API issues from
    logic errors.
 
-4. **One `lake env lean` per session.** The compilation is slow (~30s for
-   a file with `import Mathlib`). Batch your changes and compile once.
+4. **One `lake env lean` per author step.** Compile immediately after
+   encoding *one* step and classify it (AGENTS.md one-step loop); never
+   batch several author steps into one compile — a cascade of errors costs
+   a full round-trip to untangle (`L7-FRAG-01` compile #1 is the evidence).
+   Batch only *name probes* (`#check`) into one file. Measured cost at this
+   pin: **~5–6.5 min** per warm `import Mathlib` compile under load
+   (288–387 s across this session), so a wrong guess is expensive: grep the
+   local Mathlib tree first (free, pin-exact) and spend the round-trip on
+   the step itself.

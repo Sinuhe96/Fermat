@@ -62,8 +62,9 @@ Before editing a Lean proof:
 2. Run `python pipeline/smoke/smoke_pipeline.py`. If it fails, fix the
    environment before touching the mathematics.
 3. Read the chunk YAML, its rendered PDF source pages, and its dependencies.
-4. Read `pipeline/03-lean/MATHLIB_API_LESSONS.md` and
-   `.github/skills/fermat-lean-mathlib/SKILL.md`.
+4. Read `pipeline/03-lean/MATHLIB_API_LESSONS.md`,
+   `pipeline/03-lean/ENCODING_MAP.md` (notation → Lean terms, per-chunk
+   reusable patterns) and `.github/skills/fermat-lean-mathlib/SKILL.md`.
 5. Verify that the chunk has two distinct records:
    - literal source transcription, preserving signs, exponents, modulus,
      labels, and order;
@@ -226,6 +227,10 @@ is red, fix the machine, not the math.
 - `pipeline/03-lean/MATHLIB_API_LESSONS.md` — Mathlib API pitfalls and
   workarounds discovered during the first chunk (ZMod, linarith, pow_mul,
   FLT). **Read this before encoding any Lean proof.**
+- `pipeline/03-lean/ENCODING_MAP.md` — the PDF's notation → Lean/Mathlib
+  term mapping (gcd, `⋮`, congruences, "chứng minh tương tự", …) plus the
+  proof patterns that already compiled, one section per chunk. Read
+  alongside the API lessons; append a section per new chunk.
 - `.github/skills/fermat-lean-mathlib/SKILL.md` — the project's Lean 4 +
   Mathlib skill: toolchain pin, container compile loop, lemma-search
   ladder, naming conventions, error→fix table. Read it alongside

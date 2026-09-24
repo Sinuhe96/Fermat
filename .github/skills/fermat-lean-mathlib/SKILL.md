@@ -78,6 +78,11 @@ FIRST READ for encoding: `pipeline/03-lean/MATHLIB_API_LESSONS.md` —
 the repo's live ledger of hard-won API facts. Append new lessons there
 after every session that pays for one.
 
+SECOND READ: `pipeline/03-lean/ENCODING_MAP.md` — the PDF's notation →
+Lean/Mathlib term mapping (gcd, `⋮`, congruences, "chứng minh tương tự",
+…) plus the proof patterns that already compiled. Add one section per new
+chunk so the next lemma does not re-derive them.
+
 ## Trust checks
 
 ```lean
