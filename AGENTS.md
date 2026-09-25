@@ -4,9 +4,31 @@ These rules are binding on any agent working here. They exist to prevent
 repeated, expensive mistakes. When in doubt, follow this file over
 general coding habits.
 
-**Starting a fresh session:** read `HANDOFF.md` first for the live status
-and exact next step, then follow the rules below. `README.md` covers the
-environment; this file governs how we work.
+## Mandatory fresh-session bootstrap
+
+Before any project work, every new agent session must complete this sequence
+in order. Do not inspect a chunk, edit files, search Mathlib, or run Lake first.
+
+1. Read `HANDOFF.md` for live status and the exact next step, then read this
+   `AGENTS.md` in full. `README.md` is the runtime command reference.
+2. Identify the active agent harness and use its native skill discovery/loading
+   mechanism. Command Code supports `/skills` or `cmdc skills list --debug`;
+   OMP exposes skills through `skill://<name>` resources, and repository-local
+   skill files can be read directly. Do not run another harness's commands.
+   If a relevant skill is not exposed, read its canonical file directly; if
+   neither the harness nor repository provides it, report the missing
+   prerequisite before work. Load every skill relevant to the task. Normal
+   proof work requires `lean4` and the Fermat overlay before any Lean/Lake
+   action.
+3. Start the persistent runtime: `docker compose up -d lean`.
+4. Run the hard readiness gate:
+   `docker compose exec -T lean sh /workspace/proof/check_env.sh`.
+   Use `--full` after image, toolchain, cache, or Lake-workspace changes.
+5. Verify project state with
+   `docker compose exec -T lean python /workspace/pipeline/progress.py --check`.
+6. Only after steps 1–5 are green, open the current chunk/source evidence and
+   begin the task. If any gate fails, fix the skills/infrastructure/tracking
+   problem before touching the mathematics.
 
 ## Mission
 
@@ -54,18 +76,47 @@ legitimate to search for the exact Mathlib API, prove type/cast bridges, and
 make implicit side conditions explicit. It is not legitimate to search for
 a different mathematical route to the conclusion.
 
+## Project skill map — discover before acting
+
+Skill discovery and activation are harness-specific. Use the active harness's
+native mechanism: Command Code supports `/skills` or `cmdc skills list
+--debug`; OMP exposes skills through `skill://<name>` resources. If a
+particular skill is not exposed, read its canonical file in this map directly;
+if the required source is unavailable, report the blocker before work. Skills
+are generic playbooks: **this AGENTS.md and the PDF verification rules
+override any conflicting skill instruction.**
+
+| Skill | Use in this project | Activation and boundary |
+|---|---|---|
+| [`lean4`](.commandcode/skills/lean4/SKILL.md) | **Primary general Lean aid.** Use for editing/debugging `.lean`, diagnostics, Mathlib lemma/API search, cast/typeclass errors, `sorry`/axiom review, or Lean/Lake failures. Its LSP/search/error references are useful, but all compilation still uses this repo's container and Linux-volume workflow. | Load through the active harness; if this skill is not exposed, read the linked file directly. Do not use its autoformalize/autoprove/final-theorem workflows to invent or replace the author's chain. |
+| [`lean-proof`](.commandcode/skills/lean-proof/SKILL.md) | **Narrow troubleshooting reference only.** Its syntax→type→goal→linter error priority and dependent-rewrite pattern can help on the *current author step*. | Load only for a local proof-state or dependent-rewrite problem, using the active harness or by reading the linked file directly if it is not exposed. Ignore its "hardest case first", "go directly to target theorem", proof-minimization, and strategic-`sorry` advice here: those conflict with strict PDF/source order and S1 completion. Never let it choose step order. |
+| [`mathlib-build`](.commandcode/skills/mathlib-build/SKILL.md) | **Exceptional environment maintenance.** Use when the pinned Mathlib cache is missing/corrupt, when changing Mathlib itself, or when diagnosing a real Lake/olean build failure. | Load only after the fast/full environment check identifies a cache/build problem, using the active harness or by reading the linked file directly if it is not exposed. Run its Lake commands only in `/workspace/work/testproj`; never force cache download or build all Mathlib during normal proof work. Repository cache instructions and `docs/IMAGE_BUILD.md` take precedence. |
+| [`lean4-setup`](.commandcode/skills/lean4-setup/SKILL.md) | **Normally not applicable.** It builds and links a source clone of the Lean compiler (`leanprover/lean4`); this project consumes a pinned release through Elan and Docker. | Load only if explicitly working on or repairing a Lean compiler source clone outside the normal Fermat workspace, using the active harness or by reading the linked file directly if it is not exposed. Do not run its CMake/Make/toolchain-link commands for routine setup, image rebuilds, or proof verification. |
+
+The separate repository-specific skill
+`.github/skills/fermat-lean-mathlib/SKILL.md` is the authoritative overlay
+for this exact toolchain pin, container layout, Mathlib API lessons, and
+compile/search loop. Read it from the repository in every harness; it does
+not depend on harness auto-discovery.
+
 ## Required preparation for every Lean session
 
-**MUST load the Lean skill before anything else — it is a hard gate, not
-background reading.** Load (read in full) these, in this order:
+**MUST load the Lean skills before any Lean work.** Use the active harness's
+native loader when available; otherwise read the canonical skill file directly.
+The slash-command examples above are Command Code syntax, not universal syntax.
+Prepare in this order:
 
-1. `.github/skills/fermat-lean-mathlib/SKILL.md`
-2. its `references/search.md` and `references/reference.md`
-3. `pipeline/03-lean/MATHLIB_API_LESSONS.md`
-4. `pipeline/03-lean/ENCODING_MAP.md`
+1. Load `lean4` through the active harness, or read
+   `.commandcode/skills/lean4/SKILL.md` directly.
+2. Read `.github/skills/fermat-lean-mathlib/SKILL.md` in full.
+3. Read its `references/search.md` and `references/reference.md` in full.
+4. Read `pipeline/03-lean/MATHLIB_API_LESSONS.md`.
+5. Read `pipeline/03-lean/ENCODING_MAP.md`.
 
-Never edit a `.lean` file, run `lake`, or search for a lemma before this.
-The skill carries the toolchain pin, the container compile loop, the
+Load `lean-proof` through the active harness, or read its linked file directly,
+only for a local proof-state or dependent-rewrite blocker. Never edit a `.lean`
+file, run `lake`, or search for a lemma before completing the required gate.
+The `lean4` skill carries the toolchain pin, the container compile loop, the
 9p-bind-mount deadlock rule, the lemma-search ladder and the error→fix
 table; an agent that skips it reliably reproduces failures this repo has
 already paid for (running `lake` inside the Windows bind mount, wasting
@@ -74,15 +125,14 @@ multi-minute compile round-trips on wrong guesses, wrong `ZMod`/`Int`/
 
 Then, before editing a Lean proof:
 
-1. Read `HANDOFF.md` and identify the one current chunk and exact next step.
-2. Run `python pipeline/smoke/smoke_pipeline.py`. If it fails, fix the
-   environment before touching the mathematics.
-3. Read the chunk YAML, its rendered PDF source pages, and its dependencies.
-4. Verify that the chunk has two distinct records:
+1. Confirm the bootstrap readiness and progress gates are green and identify
+   the one current chunk from `HANDOFF.md`.
+2. Read the chunk YAML, its rendered PDF source pages, and its dependencies.
+3. Verify that the chunk has two distinct records:
    - literal source transcription, preserving signs, exponents, modulus,
      labels, and order;
    - normalized ordered step map, with one entry per author inference.
-5. Confirm the first author step not yet accepted by Lean. Work only on that
+4. Confirm the first author step not yet accepted by Lean. Work only on that
    step; do not write ahead or attack the final theorem directly.
 
 If the exact source is ambiguous, stop before Lean work and obtain a second
@@ -205,19 +255,21 @@ behind a cheap check:
    and unexpected axioms, then update `status.tsv`, chunk YAML, and generated
    `pipeline/PROGRESS.md`.
 
-Run `python pipeline/smoke/smoke_pipeline.py` before any large work — if it
-is red, fix the machine, not the math.
+Run `docker compose exec -T lean sh /workspace/proof/check_env.sh` before any
+large work — if it is red, fix the machine, not the math. The default is a
+fast compile-free check; `--full` additionally validates `import Mathlib`.
 
 ## Cost classes (do the cheap thing on the right side)
 
 - **Transcription:** minutes; done from the PDF renders.
-- **Sympy witness search:** instant; done on the host (Windows Python).
+- **Sympy witness search:** cheap; run with the pinned Python toolkit in the
+  persistent `lean` container.
 - **Mathlib lemma verification:** one slow-ish `lake env lean` round-trip;
   batch all name-checks into ONE script, exec once.
 - **Lean compile against Mathlib:** only inside the `lean` container, and
-  NEVER on the Windows bind mount (9p drvfs deadlocks the cache fetch).
+  NEVER on a Windows bind mount (9p drvfs deadlocks the cache fetch).
   Lake work happens in `/workspace/work` (Linux `lake-work` volume);
-  `proof/` and `proof_verify/` are edit-only.
+  `proof/`, `pipeline/`, and `proof_verify/` are source/edit locations only.
 
 ## Tooling pitfalls that have already wasted time
 
@@ -228,6 +280,20 @@ is red, fix the machine, not the math.
   one command per round-trip through a fragile shell bridge.
 - CRLF: `.gitattributes` forces `eol=lf`. Never add Linux scripts via
   Windows tools that inject CRLF (the `\r` shebang broke `#!/bin/sh`).
+- Host shells are not the Linux container: on Windows, PowerShell lacks
+  bash-isms, and some agent/harness shell bridges treat `docker compose`
+  foreground calls as services and hijack them (ready-polling instead of
+  running, observed with the `lean` service in session 4). If a routine
+  docker/compose command misbehaves at the shell layer, drive the command
+  from the harness's evaluation/sandbox mechanism (one shot) or a script
+  file — never restructure the Docker invocation to dodge the bridge.
+- Text fidelity: hand-typed accent/diacritic text (e.g. Vietnamese source
+  quotes) can corrupt in transit through some tool paths. Keep the literal
+  source transcription ONLY in the chunk YAML `source_text` (its schema
+  home) and write Lean docstrings / notes in English; never hand-retype
+  math or accented prose into docstrings. If a docstring changes, the
+  compiled declarations do not change — a re-compile is only needed when
+  the proof text changes.
 
 ## Where the contracts live
 
@@ -251,7 +317,6 @@ is red, fix the machine, not the math.
   MANDATORY before any Lean work** — see "Required preparation" above.
   It is a gate, not optional background reading.
 
-Docker builds maintain stable-to-volatile layering with a tiny context
-and persistent volumes (see `Dockerfile`, `compose.yml`, `.dockerignore`)
-so a rebuild after any error resumes from the last good layer instead of
-starting over.
+Daily work uses the persistent `lean` service and named volumes; image builds
+are exceptional maintenance. See `README.md` for runtime commands and
+`docs/IMAGE_BUILD.md` for Dockerfile layering and rebuild guidance.
