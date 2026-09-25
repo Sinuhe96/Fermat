@@ -124,9 +124,10 @@ so even a recreate is cheap.
 5. **Docs updated**: ENCODING_MAP §B Chunk L2-01 (step table, reusable
    results, P7, method note); MATHLIB_API_LESSONS session entry;
    PROGRESS.md regenerated (2/3 DONE); HANDOFF.md (this file).
-6. **Renders committed**: `page-001-300dpi-full.png` /
-   `page-002-300dpi-full.png` + `.json` provenance (pre-existing renders
-   `p1_300dpi.png`/`p2_300dpi.png` stay; naming conventions coexist).
+6. **Evidence renders on disk**: `page-001-300dpi-full.png` /
+   `page-002-300dpi-full.png` + `.json` provenance in
+   `01-extract/out/` (same on-disk status as the L1 renders — evidence
+   PNGs are not tracked in git).
 
 ### Prior session (L7 pilot) — still stands
 
