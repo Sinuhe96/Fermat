@@ -1,20 +1,6 @@
-# Keep the build context tiny: never send these to the daemon.
-# (proof/ and models/ are mounted at runtime, not baked into the image.)
-proof_verify/
-proof/
-models/
-.buildcache/
-.commandcode/
-*.pdf
-*.json
-.git/
-.gitignore
-
-# Regenerable / runtime dirs: mounted or rebuilt, never baked in.
-pipeline/01-extract/out/
-__pycache__/
-*.pyc
-.pytest_cache/
-.lake/
-*.olean
-*.ilean
+# The image needs only its definition, runtime entrypoint, and pinned Python set.
+# Source, evidence, caches, models, and the PDF are mounted at runtime.
+*
+!Dockerfile
+!entrypoint.sh
+!requirements-container.txt

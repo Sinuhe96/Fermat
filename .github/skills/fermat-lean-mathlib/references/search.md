@@ -4,13 +4,13 @@ Order: cheapest and most pin-accurate first. Every command here was run
 in this environment (`lean` container, Mathlib `v4.35.0-rc2`, rev
 `06535612…`).
 
-## 1. Grep the local Mathlib source (pin-exact, offline, instant)
+## 1. Search the local Mathlib source (pin-exact, offline, instant)
 
 The full Mathlib `.lean` source tree ships with the build — this is the
 ground truth for OUR pin:
 
 ```sh
-docker compose exec lean grep -rn "theorem pow_card_sub_one_eq_one" \
+docker compose exec -T lean rg -n "theorem pow_card_sub_one_eq_one" \
   /workspace/work/testproj/.lake/packages/mathlib/Mathlib/
 ```
 
@@ -19,11 +19,11 @@ version) and `:611` (`ZMod p` specialization).
 
 When to use: you half-remember a name, want every lemma mentioning a
 symbol (`Int.ModEq`, `ZMod`), or the docs website disagrees with us
-(docs track newer Mathlib). Grep beats every web tool on precision
+(docs track newer Mathlib). `rg` beats every web tool on precision
 because it reads exactly what we compile against.
 
 From the Windows host (no container round-trip), the same tree is at:
-`proof_verify/.lake/packages/mathlib/Mathlib/` (read-only browsing OK;
+`proof_verify/.lake/packages/mathlib/Mathlib/` (read-only browsing/search OK;
 never run `lake` there — 9p deadlock, see AGENTS.md).
 
 ## 2. Loogle JSON API (structured search, works from inside container)

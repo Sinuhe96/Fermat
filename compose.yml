@@ -11,14 +11,17 @@ services:
         - type=local,dest=.buildcache,mode=max
     volumes:
       - ./proof:/workspace/proof
+      # Python tools may use these Windows bind mounts. Lean sources are copied
+      # from /workspace/pipeline into the Linux lake-work volume before Lake runs.
+      - ./pipeline:/workspace/pipeline
+      - ./PROOF_of_FERMAT.pdf:/workspace/source/PROOF_of_FERMAT.pdf:ro
       - lake-work:/workspace/work
       - lean-elan:/elan-home
       # Lake Mathlib download cache (~/.cache/mathlib *.ltar). Without this,
       # every container recreate re-downloads GBs from scratch.
       - lake-cache:/root/.cache
-    # NOTE: proof_verify stays a Windows bind mount for EDITING ONLY.
-    # Never run lake inside it: 9p drvfs deadlocks the cache fetch
-    # (D-state on p9_client_rpc). Lake work happens in /workspace/work.
+      # Never run Lake in /workspace/proof, /workspace/pipeline, or any other
+      # Windows bind mount. Lake work happens only in /workspace/work.
     working_dir: /workspace/work
     environment:
       ELAN_HOME: /elan-home

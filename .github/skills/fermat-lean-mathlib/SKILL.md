@@ -34,12 +34,13 @@ see `AGENTS.md` — this skill never overrides them.
 |---|---|
 | Toolchain | lean 4.35.0-rc2, lake 5.0.0 |
 | Mathlib | tag `v4.35.0-rc2`, rev `065356127b1dc0016f66b7283ce0ce2c4055aa55` |
-| Container | `docker compose exec lean …` (service `lean`, image `fermat-lean`) |
+| Container | `docker compose exec lean …` (service `lean`, image `fermat-lean:latest`) |
 | Compile ONLY in | `/workspace/work/testproj` (Linux volume) |
-| NEVER compile on | `./proof`, `./proof_verify` — 9p drvfs deadlocks `lake` |
+| NEVER compile on | `./proof`, `./pipeline`, `./proof_verify` — 9p drvfs deadlocks `lake` |
 | Mathlib source (in container) | `/workspace/work/testproj/.lake/packages/mathlib/Mathlib/` |
-| Mathlib source (on host) | `proof_verify/.lake/packages/mathlib/Mathlib/` (browse/grep only) |
-| Python/sympy 1.11.1 | same container, for pre-Lean numeric smoke |
+| Mathlib source (on host) | `proof_verify/.lake/packages/mathlib/Mathlib/` (browse/search only) |
+| Python toolkit | pinned pypdf, PyMuPDF, and Sympy in the same container |
+| Source search | `rg` against the pinned local Mathlib tree |
 
 Batch rule: one script per session, exec once. All `#check`s go in ONE
 `.lean` file → ONE `lake env lean` round-trip (template:
@@ -49,12 +50,12 @@ file instead of heredocs.
 ## Compile loop
 
 ```sh
-# host, repo root
-docker compose exec lean sh -c 'cd /workspace/work/testproj && lake env lean <file>.lean'
+# host, repo root; path is relative to pipeline/03-lean
+docker compose exec -T lean sh /workspace/proof/compile_lean.sh <path>.lean
 ```
 
-- Edit files via normal repo paths (`proof/`, `pipeline/03-lean/`), then
-  COPY into `/workspace/work` before compiling (bind mounts are edit-only).
+- The wrapper copies the authoritative file from `/workspace/pipeline/03-lean`
+  into `/workspace/work/testproj`, then invokes Lake only in the Linux volume.
 - `import Mathlib` costs ~30–60 s warm; files with `exact?`/`apply?`/
   `rw?`/`simp?` cost much more (each search scans the whole environment —
   a 4-search file measured 413 s under contention). Never run two
@@ -66,7 +67,7 @@ docker compose exec lean sh -c 'cd /workspace/work/testproj && lake env lean <fi
 
 Detail in `references/search.md`. Summary, cheapest first:
 
-1. **Grep local Mathlib source** (pin-exact, offline): `grep -rn "theorem <hint>" /workspace/work/testproj/.lake/packages/mathlib/Mathlib/`
+1. **Search local Mathlib source** (pin-exact, offline): `rg -n "theorem <hint>" /workspace/work/testproj/.lake/packages/mathlib/Mathlib/`
 2. **Loogle JSON**: `curl -s "https://loogle.lean-lang.org/json?q=…"` (verified from container)
 3. **In-file tactics**: `exact?` `apply?` `rw?` `simp?` — search the exact compiled env
 4. **Natural language**: web UIs leansearch.net / moogle.ai — NOT the

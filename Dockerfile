@@ -12,11 +12,20 @@ FROM debian:${DEBIAN_TAG}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# --- Layer 1 (stable): OS packages + python/sympy -----------------------
+# --- Layer 1 (stable): OS packages + pinned Python toolkit ---------------
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      curl git ca-certificates zstd \
-      python3 python3-pip python3-sympy \
+      curl git ca-certificates zstd ripgrep \
+      python3 python3-pip python3-venv \
     && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-container.txt /opt/fermat/requirements-container.txt
+RUN python3 -m venv /opt/fermat-venv \
+    && /opt/fermat-venv/bin/pip install --no-cache-dir \
+         -r /opt/fermat/requirements-container.txt \
+    && /opt/fermat-venv/bin/pip check \
+    && /opt/fermat-venv/bin/python -c \
+         "import pypdf, pymupdf, sympy; print(pypdf.__version__, pymupdf.__version__, sympy.__version__)" \
+    && rg --version
 
 # --- Layer 2 (stable): elan bootstrap, NO toolchain ----------------------
 # The ~500MB Lean toolchain is NOT baked in. entrypoint.sh installs it
@@ -25,7 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # `docker compose exec` shells — which do not inherit the entrypoint's
 # environment — still resolve lean/lake.
 ENV ELAN_HOME=/elan-home \
-    PATH=/elan-home/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    PATH=/opt/fermat-venv/bin:/elan-home/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     LEAN_TOOLCHAIN=leanprover/lean4:v4.35.0-rc2
 RUN curl https://elan.lean-lang.org/elan-init.sh -sSf \
       | sh -s -- -y --no-modify-path --default-toolchain none \
@@ -42,7 +51,7 @@ RUN sed -i 's/\r$//' /usr/local/bin/fermat-entrypoint.sh \
     && test "$(head -c 10 /usr/local/bin/fermat-entrypoint.sh | head -1)" = "#!/bin/sh" \
     && printf '#!/bin/sh\nexport ELAN_HOME="${ELAN_HOME:-/elan-home}"\nexport PATH="$ELAN_HOME/bin:$PATH"\n' \
          > /etc/profile.d/elan.sh \
-    && python3 -c "import sympy; print('sympy', sympy.__version__)"
+    && python -c "import pypdf, pymupdf, sympy; print('python toolkit OK')"
 
 WORKDIR /workspace
 ENTRYPOINT ["/usr/local/bin/fermat-entrypoint.sh"]

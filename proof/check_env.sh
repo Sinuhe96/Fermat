@@ -1,13 +1,13 @@
 #!/bin/sh
-# Environment check for the fermat-lean container.
-# Run:  docker compose exec lean sh /workspace/proof/check_env.sh
-set -u
-echo "--- Lean toolchain ---"
-lean --version || echo "MISSING lean"
-lake --version || echo "MISSING lake"
-echo "--- Python / sympy (brute-force lemma checks) ---"
-python3 -c "import sympy; print('sympy', sympy.__version__)" || echo "MISSING sympy"
-echo "--- misc ---"
-git --version || echo "MISSING git"
-echo "--- toolchain volume ---"
-du -sh "${ELAN_HOME:-/elan-home}" 2>/dev/null || true
+set -eu
+
+case "${1-}" in
+  "") set -- ;;
+  --full) ;;
+  *)
+    echo "usage: $0 [--full]" >&2
+    exit 2
+    ;;
+esac
+
+exec python /workspace/pipeline/smoke/smoke_pipeline.py "$@"
