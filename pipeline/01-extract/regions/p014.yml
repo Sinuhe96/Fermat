@@ -1,0 +1,65 @@
+id: P014
+page: 14
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 7b9bd3ded3a7de6ac58c5a224d536304e0c7b6afa33bb73a945456785189d1a0
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 449.4]
+    crop: page-014-300dpi-region-01.png
+    words: 1038
+    digits_sorted: "000001111111111111111111111111111111111111111111111111111111112222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333344444444444445688"
+    pua: 33
+    notes: "resolved: cluster is 2n^s abck (vision read s as 5; text layer shows raised s + F block uses n^s abck)"
+    latex: |
+      \[ C_3 = \frac{5n[h^{n-2}-b^{n(n-2)}]+2nb^n h[h^{n-4}-b^{n(n-4)}]}{(h-b^n)^3}(2n^s abck)+\frac{n^3 b^n h[h^{n-4}-b^{n(n-4)}]-n^3[h^{n-2}-b^{n(n-2)}]}{(h-b^n)^2} \]
+
+      \[ \text{*}D=\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}+\sum_{i=0}^{n-3}(n-1-i)(n-2-i)b^{ni}h^{n-3-i}-2\sum_{i=1}^{n-2} i(n-1-i)b^{n(i-1)}h^{n-2-i} \]
+
+      \[ =\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}+\left[(n^2-3n)\sum_{i=0}^{n-3} b^{ni}h^{n-3-i}-2n\sum_{i=1}^{n-3} ib^{ni}h^{n-3-i}+\sum_{i=0}^{n-3}(i+1)(i+2)h^{n-3-i}b^{ni}\right]-2n\sum_{i=1}^{n-2} ib^{n(i-1)}h^{n-2-i}+ \]
+
+      \[ +2\sum_{i=1}^{n-2} i(1+i)b^{n(i-1)}h^{n-2-i}=\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}+(n^2-3n)\sum_{i=0}^{n-3} b^{ni}h^{n-3-i}-2nb^n\sum_{i=1}^{n-3} ib^{n(i-1)}h^{n-3-i}+ \]
+
+      \[ +\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}-2n\sum_{i=1}^{n-2} ib^{n(i-1)}h^{n-2-i}+2\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}\ (\text{áp dụng mục } \textbf{\textit{B.1}}, \text{trang } 2) \]
+
+      \[ =4\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}+(n^2-3n)\sum_{i=0}^{n-3} b^{ni}h^{n-3-i}-2nb^n\sum_{i=1}^{n-3} ib^{n(i-1)}h^{n-3-i}-2n\sum_{i=1}^{n-2} ib^{n(i-1)}h^{n-2-i} \]
+
+      \[ =4f''(b^n)+\frac{(n^2-3n)[h^{n-2}-b^{n(n-2)}]}{h-b^n}-2nb^n p'(b^n)-2nr'(b^n)\ (\text{áp dụng mục } \textbf{\textit{B.2}}, \text{trang } 2) \]
+
+      \[ =4\frac{[n(n-1)b^{n(n-1)}-n(n-1)hb^{n(n-2)}](b^n-h)-2[(n-1)b^{n^2}-nhb^{n(n-1)}+h^n]}{(b^n-h)^3}+\frac{(n^2-3n)[h^{n-2}-b^{n(n-2)}]}{h-b^n}- \]
+
+      \[ -\frac{2n[(n-3)b^{n(n-1)}-(n-2)hb^{n(n-2)}+h^{n-2}b^n]}{(b^n-h)^2}-\frac{2n[(n-2)b^{n(n-1)}-(n-1)hb^{n(n-2)}+h^{n-1}]}{(b^n-h)^2} \]
+
+      \[ =\frac{[4n^2b^{n(n-1)}-4nb^{n(n-1)}-4n^2hb^{n(n-2)}+4nhb^{n(n-2)}](b^n-h)-8[nb^{n(n-1)}(b^n-h)-b^{n^2}+h^n]}{(b^n-h)^3}+\frac{(n^2-3n)[h^{n-2}-b^{n(n-2)}]}{h-b^n}- \]
+
+      \[ -\frac{2n^2b^{n(n-1)}-6nb^{n(n-1)}-2n^2hb^{n(n-2)}+4nhb^{n(n-2)}+2nh^{n-2}b^n}{(b^n-h)^2}-\frac{[2n^2b^{n(n-1)}-4nb^{n(n-1)}-2n^2hb^{n(n-2)}+2nhb^{n(n-2)}+2nh^{n-1}]}{(b^n-h)^2} \]
+
+      \[ \text{Vậy } D=\frac{8(h^n-b^{n^2})}{(h-b^n)^3}-\frac{2nb^{n(n-2)}h+2nb^{n(n-1)}+2nh^{n-2}b^n+2nh^{n-1}}{(h-b^n)^2}+\frac{(n^2-3n)[h^{n-2}-b^{n(n-2)}]}{h-b^n} \]
+  - id: R2
+    rect: [0.0, 449.4, 612.0, 727.6]
+    crop: page-014-300dpi-region-02.png
+    words: 483
+    digits_sorted: "01111111111111111111111122222222222222222222222222222222222222333333444444455666"
+    pua: 6
+    notes: ""
+    latex: |
+      \[
+      \text{*}E= \sum_{i=1}^{n-1}ib^{n(i-1)}h^{n-1-i}-\sum_{i=0}^{n-2}(n-1-i)b^{ni}h^{n-2-i}=f'(b^{n})-g'(h) \\
+      = f'(b^n)-g'(h) \text{(áp dụng mục B.2), trang 2)}\\
+      = \frac{(n-1)b^{n^2}-nhb^{n(n-1)}+h^n}{(h-b^n)^2}-\frac{(n-1)h^n-nb^nh^{n-1}+b^{n^2}}{(h-b^n)^2} \\
+      = -\frac{nh^{n-1}(h-b^n)+nb^{n(n-1)}(h-b^n)}{(h-b^n)^2}+\frac{2(h^n-b^{n^2})}{(b^n-h)^2}=-\frac{n[h^{n-1}+b^{n(n-1)}]}{(h-b^n)}+\frac{2(h^n-b^{n^2})}{(b^n-h)^2} \\
+      \\
+      \text{*} F = a^{n(n-1)} + na^{n(n-2)}n^s abck + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \\
+      = \frac{a^{n(n-1)} + na^{n(n-2)}n^s abck}{h-b^n}(a^n + 2n^s abck) + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \\
+      = \frac{a^{n^2} + na^{n(n-1)}n^s abck}{h-b^n} + \frac{[2a^{n(n-1)}n^s abck + 2na^{n(n-2)}(n^s abck)^2](a^n + 2n^s abck)}{(h-b^n)^2} + \frac{n(n-1)a^{n(n-3)}(n^s abck)^2(a^n + 2n^s abck)^2}{2(h-b^n)^2} + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 \text{ (vì } h-b^n = a^n + 2n^s abck \text{)}
+      \]
+  - id: R3
+    rect: [0.0, 727.6, 612.0, 792.0]
+    crop: page-014-300dpi-region-03.png
+    words: 1
+    digits_sorted: "14"
+    pua: 0
+    notes: ""
+    latex: |
+      \[ \text{14} \]

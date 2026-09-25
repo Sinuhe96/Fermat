@@ -1,0 +1,99 @@
+id: P024
+page: 24
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 8b7396fa6acbb7def31e0b3361189d40969826fa326559b5433cc094396f5a22
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 318.15]
+    crop: page-024-300dpi-region-01.png
+    words: 754
+    digits_sorted: "111111111111122222222222222222222222222222222222222333333333333333333333333333333333333333333333334444444444444444444444444444444444444555556666667777889"
+    pua: 0
+    notes: ""
+    latex: |
+      \[
+      \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{6(h-b^n)^2}-\frac{n^3h^{n-2}-n^3b^nh^{n-3}}{6(h-b^n)^2}(n^sabck)^3+\frac{n^3b^{n(n-2)}-n^3hb^{n(n-3)}}{6(h-b^n)^2}(n^sabck)^3+
+      \]
+      \[
+      +\frac{7nb^{n(n-2)}-nh^{n-2}}{(h-b^n)^3}(n^sabck)^4-\frac{3nh^{n-4}(b^n-h)^2+4nh^{n-3}(h-b^n)+6nh^{n-2}}{12(h-b^n)^3}(n^sabck)^4+\frac{4nb^{n(n-3)}-3nhb^{n(n-4)}-nh^{n-3}}{3(b^n-h)^2}(n^sabck)^4-
+      \]
+      \[
+      +\frac{[-5nh^{n-2}+2nb^nh^{n-3}]+[5nb^{n(n-2)}-2nhb^{n(n-3)}]}{3(h-b^n)^3}(n^sabck)^4+\frac{5[3nb^{n(n-4)}(b^n-h)^2-4nb^{n(n-3)}(h-b^n)+6nb^{n(n-2)}]}{4(h-b^n)^3}(n^sabck)^4-
+      \]
+      \[
+      -\frac{15nb^{n(n-1)}}{(b^n-h)^4}(n^sabck)^4+\frac{-7b^{n(n-4)}(h-b^n)^3+7b^{n(n-3)}(h-b^n)^2-7[b^{n(n-2)}(h-b^n)+h^{n-1}-b^{n(n-1)}]}{(h-b^n)^4}n(n^sabck)^4-
+      \]
+      \[
+      +\frac{9nb^{n(n-4)}(h-b^n)^2-3n[2b^{n(n-3)}(h-b^n)+h^{n-2}-b^{n(n-2)}]}{2(h-b^n)^3}(n^sabck)^4+\frac{n}{4}a^{n(n-5)}(n^sabck)^4+\frac{2na^{n(n-3)}(n^sabck)^4}{(h-b^n)^2}-
+      \]
+      \[
+      -\frac{2nh^{n-3}a^n+2nb^{n(n-3)}a^n+18nb^{n(n-2)}}{3(h-b^n)^3}(n^sabck)^4-\frac{4na^{n(n-2)}(n^sabck)^4}{(h-b^n)^3}-\frac{n^3}{6}a^{n(n-4)}(n^sabck)^3-\frac{nh^{n-1}}{(h-b^n)^4}(n^sabck)^4+
+      \]
+      \[
+      +\frac{n(n-1)(n-2)(n-3)[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^sabck)^4}{24(h-b^n)}+\frac{n(n-1)(n-2)[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^sabck)^4}{3(h-b^n)^2}+
+      \]
+      \[
+      +\frac{2n(n-1)[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^sabck)^4}{(h-b^n)^3}+\frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^sabck)^4}{(h-b^n)^4}
+      \]
+  - id: R2
+    rect: [0.0, 318.15, 612.0, 534.95]
+    crop: page-024-300dpi-region-02.png
+    words: 645
+    digits_sorted: "1111111222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333344444444444444444444555566666667"
+    pua: 0
+    notes: ""
+    latex: |
+      \[
+      =\frac{16(h^n-b^{n^2})(n^sabck)^4}{(h-b^n)^5}+\frac{n^2b^{n(n-2)}(n^sabck)^3}{(h-b^n)^2}-\frac{n^2hb^{n(n-3)}(n^sabck)^3}{(h-b^n)^2}+\frac{[2n^2h^{n-2}-n^2b^nh^{n-3}](n^sabck)^3}{2(h-b^n)^2}+
+      \]
+      \[
+      +\frac{[n^2hb^{n(n-3)}-2n^2b^{n(n-2)}](n^sabck)^3}{2(h-b^n)^2}+\frac{n^2[-3b^{n(n-2)}+2hb^{n(n-3)}+h^{n-2}](n^sabck)^3}{2(b^n-h)^2}+\frac{\mathbf{n^2a^{n(n-4)}}(a^n+2n^sabck)^2(n^sabck)^3}{\mathbf{2(h-b^n)^2}}-
+      \]
+      \[
+      -\frac{2n^2a^{n(n-2)}(n^sabck)^3}{(h-b^n)^2}+\textcolor{blue}{-\frac{16a^{n(n-1)}(a^n+2n^sabck)(n^sabck)^4}{(h-b^n)^5}}-\frac{n^3h^{n-2}-n^3b^nh^{n-3}}{6(h-b^n)^2}(n^sabck)^3+\frac{7nb^{n(n-2)}-nh^{n-2}}{(h-b^n)^3}(n^sabck)^4+
+      \]
+      \[
+      +\frac{n^3b^{n(n-2)}-n^3hb^{n(n-3)}}{6(h-b^n)^2}(n^sabck)^3-\frac{4na^{n(n-2)}(n^sabck)^4}{(h-b^n)^3}+\frac{na^n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^sabck)^3}{(h-b^n)^3}-\frac{15nb^{n(n-1)}}{(b^n-h)^4}(n^sabck)^4-
+      \]
+      \[
+      -\frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{2(h-b^n)^2}-\frac{3nh^{n-4}(h-b^n)^2+4nh^{n-3}(h-b^n)+6nh^{n-2}}{12(h-b^n)^3}(n^sabck)^4+\frac{4nb^{n(n-3)}-3nhb^{n(n-4)}-nh^{n-3}}{3(h-b^n)^2}(n^sabck)^4+
+      \]
+      \[
+      +\frac{5[3nb^{n(n-4)}(b^n-h)^2-4nb^{n(n-3)}(h-b^n)+6nb^{n(n-2)}]}{4(h-b^n)^3}(n^sabck)^4-\frac{nh^{n-1}}{(h-b^n)^4}(n^sabck)^4+\frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{6(h-b^n)^2}+
+      \]
+  - id: R3
+    rect: [0.0, 534.95, 612.0, 728.9]
+    crop: page-024-300dpi-region-03.png
+    words: 450
+    digits_sorted: "11111111122222222222222222222222223333333333333333333333444444444444444444445556777889"
+    pua: 0
+    notes: ""
+    latex: |
+      \[
+      +\frac{-7b^{n(n-4)}(h-b^n)^3+7b^{n(n-3)}(h-b^n)^2-7[b^{n(n-2)}(h-b^n)+h^{n-1}-b^{n(n-1)}]}{(h-b^n)^4}n(n^sabck)^4-\frac{n^3}{6}a^{n(n-4)}(n^sabck)^3-
+      \]
+      \[
+      +\frac{9nb^{n(n-4)}(h-b^n)^2-3n[2b^{n(n-3)}(h-b^n)+h^{n-2}-b^{n(n-2)}]}{2(h-b^n)^3}(n^sabck)^4+\frac{2na^{n(n-3)}}{(h-b^n)^2}(n^sabck)^4+\frac{n}{4}a^{n(n-5)}(n^sabck)^4+
+      \]
+      \[
+      +\frac{[-5nh^{n-2}+2nb^nh^{n-3}]+[5nb^{n(n-2)}-2nhb^{n(n-3)}]}{3(h-b^n)^3}(n^sabck)^4+\frac{n(n-1)(n-2)[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^sabck)^4}{3(b^n-h)^2}-
+      \]
+      \[
+      -\frac{2nh^{n-3}a^n+2nb^{n(n-3)}a^n+18nb^{n(n-2)}}{3(h-b^n)^3}(n^sabck)^4+\frac{2n(n-1)[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^sabck)^4}{(h-b^n)^3}+
+      \]
+      \[
+      +\frac{n(n-1)(n-2)(n-3)[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^sabck)^4}{24(h-b^n)}+\frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^sabck)^4}{(h-b^n)^4} \text{ (vì } h-b^n=a^n+2n^sabck \text{ )}
+      \]
+  - id: R4
+    rect: [0.0, 728.9, 612.0, 792.0]
+    crop: page-024-300dpi-region-04.png
+    words: 1
+    digits_sorted: "24"
+    pua: 0
+    notes: ""
+    latex: |
+      \[
+      \text{24}
+      \]

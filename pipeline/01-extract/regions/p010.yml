@@ -1,0 +1,52 @@
+id: P010
+page: 10
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: fe74d3e956e03b814850e0cf1fda41f9372346c05565114c1789acc3c8431d6d
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 474.4]
+    crop: page-010-300dpi-region-01.png
+    words: 1068
+    digits_sorted: "011111111111111111111111111111111111111111111111111222222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333344444444444444444444444444444444444555555555556666677"
+    pua: 22
+    notes: ""
+    latex: |
+      = \frac{15}{24}\sum_{i=4}^{n-1} i(i-1)(i-2)(i-3)h^{n-1-i}b^{n(i-4)} + \frac{1}{24}\sum_{i=0}^{n-5} (n-1-i)(n-2-i)(n-3-i)(n-4-i)h^{n-5-i}b^{ni} \textcolor{red}{- \frac{7n}{6}\sum_{i=3}^{n-2} i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}}
+      - \textcolor{magenta}{\frac{3n}{4}\sum_{i=2}^{n-3} i(i-1)h^{n-3-i}b^{n(i-2)}} - \frac{n}{3}\sum_{i=1}^{n-4} ih^{n-4-i}b^{n(i-1)}
+      = \frac{15}{24} f^{(4)}(b^n) + \frac{1}{24} g^{(4)}(h) - \frac{7n}{6} r^{(3)}(b^n) - \frac{3n}{4} p''(b^n) - \frac{n}{3} h'(b^n) \quad \text{(áp dụng mục B.2) trang 2)}
+      \text{Với } f(x) = \frac{x^n - h^n}{x - h},\ g(x) = \frac{x^n - b^{n^2}}{x - b^n},\ r(x) = \frac{x^{n-1} - h^{n-1}}{x - h},\ p(x) = \frac{x^{n-2} - h^{n-2}}{x - h},\ h(x) = \frac{x^{n-3} - h^{n-3}}{x - h}
+      f'(x) = \frac{nx^{n-1}(x-h) - x^n + h^n}{(x-h)^2},\ g'(x) = \frac{(n-1)x^n - nb^n x^{n-1} + b^{n^2}}{(x-b^n)^2},\ r'(x) = \frac{(n-2)x^{n-1} - (n-1)hx^{n-2} + h^{n-1}}{(x-h)^2}
+      p'(x) = \frac{(n-3)x^{n-2} - (n-2)hx^{n-3} + h^{n-2}}{(x-h)^2},\ h'(x) = \frac{(n-4)x^{n-3} - (n-3)hx^{n-4} + h^{n-3}}{(x-h)^2}
+      f''(x) = \frac{n(n-1)x^{n-2}(x-h)^2 - 2[nx^{n-1}(x-h) - x^n + h^n]}{(x-h)^3},\ r''(x) = \frac{(n-1)(n-2)x^{n-3}(x-h)^2 - 2[(n-1)x^{n-2}(x-h) - x^{n-1} + h^{n-1}]}{(x-h)^3}
+      g''(x) = \frac{n(n-1)x^{n-2}(x-b^n)^2 - 2[nx^{n-1}(x-b^n) - x^n + b^{n^2}]}{(x-b^n)^3},\ p''(x) = \frac{(n-2)(n-3)x^{n-4}(x-h)^2 - 2[(n-2)x^{n-3}(x-h) - x^{n-2} + h^{n-2}]}{(x-h)^3}
+      r^{(3)}(x) = \frac{(n-1)(n-2)(n-3)x^{n-4}(x-h)^3 - 3(n-1)(n-2)x^{n-3}(x-h)^2 + 6[(n-1)x^{n-2}(x-h) - x^{n-1} + h^{n-1}]}{(x-h)^4}
+      f^{(3)}(x) = \frac{n(n-1)(n-2)x^{n-3}(x-h)^3 - 3n(n-1)x^{n-2}(x-h)^2 + 6[nx^{n-1}(x-h) - x^n + h^n]}{(x-h)^4}
+      f^{(4)}(x) = \frac{n(n-1)(n-2)(n-3)x^{n-4}(x-h)^4 - 4n(n-1)(n-2)x^{n-3}(x-h)^3 + 12n(n-1)x^{n-2}(x-h)^2 - 24[nx^{n-1}(x-h) - x^n + h^n]}{(x-h)^5}
+      g^{(4)}(x) = \frac{n(n-1)(n-2)(n-3)x^{n-4}(x-b^n)^4 - 4n(n-1)(n-2)x^{n-3}(x-b^n)^3 + 12n(n-1)x^{n-2}(x-b^n)^2 - 24[nx^{n-1}(x-b^n) - x^n + b^{n^2}]}{(x-b^n)^5}
+      \text{Ta có : } \frac{15}{24} f^{(4)}(b^n) \equiv \textcolor{red}{\frac{5[3nb^{n(n-4)}(b^n-h)^2 - 4nb^{n(n-3)}(h-b^n) + 6nb^{n(n-2)}]}{4(h-b^n)^3}} + \textcolor{blue}{\frac{15(h^n - b^{n^2})}{(h-b^n)^5}} \textcolor{red}{- \frac{15nb^{n(n-1)}}{(h-b^n)^4}} \pmod{n^2}
+  - id: R2
+    rect: [0.0, 474.4, 612.0, 727.0]
+    crop: page-010-300dpi-region-02.png
+    words: 488
+    digits_sorted: "11111111111122222222222222222222222222233333333333333333333333333334444444444444444444444444555555566666777779"
+    pua: 12
+    notes: "two of the seven lines are printed on yellow highlights (visible in the render; not encoded in LaTeX)"
+    latex: |
+      \frac{1}{24} g^{(4)}(h) \equiv -\textcolor{red}{\frac{3nh^{n-4}(b^n-h)^2 + 4nh^{n-3}(h-b^n) + 6nh^{n-2}}{12(h-b^n)^3}} + \textcolor{blue}{\frac{h^n - b^{n^2}}{(h-b^n)^5}} - \textcolor{red}{\frac{nh^{n-1}}{(h-b^n)^4}} \pmod{n^2}
+      -\frac{7n}{6} r^{(3)}(b^n) \equiv \frac{7nb^{n(n-4)}(b^n-h)^3 + 7nb^{n(n-3)}(b^n-h)^2 - 7n[-b^{n(n-2)}(b^n-h) - b^{n(n-1)} + h^{n-1}]}{(h-b^n)^4} \pmod{n^2}
+      -\frac{3n}{4} p''(b^n) \equiv \frac{9nb^{n(n-4)}(h-b^n)^2 + 3n[-2b^{n(n-3)}(h-b^n) + b^{n(n-2)} - h^{n-2}]}{2(h-b^n)^3} \pmod{n^2}
+      -\frac{n}{3} h'(b^n) \equiv \frac{4nb^{n(n-3)} - 3nhb^{n(n-4)} - nh^{n-3}}{3(h-b^n)^2} \pmod{n^2}
+      \Rightarrow \frac{15}{24} f^{(4)}(b^n) + \frac{1}{24} g^{(4)}(h) - \frac{7n}{6} r^{(3)}(b^n) - \frac{3n}{4} p''(b^n) - \frac{n}{3} h'(b^n)
+      \textcolor{red}{\equiv \frac{5[3nb^{n(n-4)}(b^n-h)^2 - 4nb^{n(n-3)}(h-b^n) + 6nb^{n(n-2)}]}{4(h-b^n)^3}} \textcolor{blue}{+ \frac{15(h^n - b^{n^2})}{(h-b^n)^5}} \textcolor{red}{- \frac{15nb^{n(n-1)}}{(h-b^n)^4}}
+      - \textcolor{red}{\frac{3nh^{n-4}(b^n-h)^2 + 4nh^{n-3}(h-b^n) + 6nh^{n-2}}{12(h-b^n)^3}} + \textcolor{blue}{\frac{h^n - b^{n^2}}{(h-b^n)^5}} - \textcolor{red}{\frac{nh^{n-1}}{(h-b^n)^4}} + \frac{4nb^{n(n-3)} - 3nhb^{n(n-4)} - nh^{n-3}}{3(h-b^n)^2} +
+  - id: R3
+    rect: [0.0, 727.0, 612.0, 792.0]
+    crop: page-010-300dpi-region-03.png
+    words: 1
+    digits_sorted: "01"
+    pua: 0
+    notes: ""
+    latex: |
+      \text{10}

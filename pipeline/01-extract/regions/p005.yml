@@ -1,0 +1,105 @@
+id: P005
+page: 5
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: fb273b3e04162af2a049b696e7f5cda4cb7cf994b6c9a6469169f617e7cc6567
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 328.7]
+    crop: page-005-300dpi-region-01.png
+    words: 518
+    digits_sorted: "000000000000000011111222222222222222222222222222222222333333333333333333333333333557"
+    pua: 42
+    notes: "line 12 of page: the render prints the same formula group three times (a^{3n}+c^{3n}=a^{3n}+(-b)^{3n}, then a^{3n}+c^{3n}=a^{3n}-b^{3n} twice around 'hay'); transcribed verbatim - not a duplication error"
+    latex: |
+      \[ \Rightarrow a^n b^n \equiv c^{2n} \pmod n \text{ (d) (vì } a^n + b^n \equiv c^n \pmod{n^2} \text{)} \]
+
+      \[ \Rightarrow a^n b^n \equiv (a^n + b^n)^2 \pmod n \]
+
+      \[ \Rightarrow b^{2n} + a^n b^n + a^{2n} \equiv 0 \pmod n \]
+
+      \[ \Rightarrow b^{2n} + a^n (a^n + b^n) \equiv 0 \pmod n \]
+
+      \[ \Rightarrow b^{2n} + a^n c^n \equiv 0 \pmod n \text{ (vì } a^n + b^n \equiv c^n \pmod{n^2} \text{)} \]
+
+      \[ \Rightarrow b^{3n} + c^n (a^n b^n) \equiv 0 \pmod n \]
+
+      \[ \Rightarrow b^{3n} + c^{3n} \equiv 0 \pmod n \text{ (vì } a^n b^n \equiv c^{2n} \pmod n \text{)} \]
+
+      \[ \Rightarrow (b^{3n})^n + (c^{3n})^n \equiv 0 \pmod{n^2} \text{ (áp dụng bổ đề 5c)} \]
+
+      \[ \Rightarrow (b^3)^{n(n-1)} . b^{3n} + (c^3)^{n(n-1)} . c^{3n} \equiv 0 \pmod{n^2} \]
+
+      \[ \Rightarrow b^{3n} + c^{3n} \equiv 0 \pmod{n^2} \text{ (áp dụng bổ đề 5d): } (b^3)^{n(n-1)} \equiv (c^3)^{n(n-1)} \equiv 1 \pmod{n^2} \text{)} \]
+
+      \[ \text{Lưu ý rằng trong hai giả thiết đồng dư (c) và (b) của Bổ đề 7 có mỗi cặp } (a; b), (c; -a), (c; -b) \text{ đối xứng nhau, nó bình đẳng và có cùng cấu trúc số học trong vành } \mathbb{Z}. \text{ Cho nên, nếu có } b^{3n} + c^{3n} \equiv 0 \pmod{n^2} \text{ thì ta cũng có} \]
+
+      \[ a^{3n} + c^{3n} \equiv a^{3n} + (-b)^{3n} \equiv 0 \pmod{n^2} \quad a^{3n} + c^{3n} \equiv a^{3n} - b^{3n} \equiv 0 \pmod{n^2}. \text{ hay } a^{3n} + c^{3n} \equiv a^{3n} - b^{3n} \equiv 0 \pmod{n^2}. \]
+
+      \[ \text{* Nếu } b^n + c^n \equiv 0 \pmod n \text{ thì } c^n \equiv -b^n \pmod n \text{, kết hợp với (b) và (c), ta có } a^n \equiv -2b^n \pmod n \text{ và} \]
+
+      \[ (-b^n)^{n-2} \equiv a^{n(n-2)} + b^{n(n-2)} \pmod n \]
+
+      \[ \Rightarrow a^{n(n-2)} + 2b^{n(n-2)} \equiv 0 \pmod n \text{ , (vì n lẻ)} \]
+
+      \[ \Rightarrow (-2b^n)^{n-2} + 2b^{n(n-2)} \equiv 0 \pmod n \]
+
+      \[ \Rightarrow -2^{n-2} b^{n(n-2)} + 2b^{n(n-2)} \equiv 0 \pmod n \]
+  - id: R2
+    rect: [0.0, 328.7, 612.0, 792.0]
+    crop: page-005-300dpi-region-02.png
+    words: 734
+    digits_sorted: "0000000000000000000000000111111111111111111111111111111222222222222222222222222222222222222222222222223333333333333333333333334444444455666666"
+    pua: 52
+    notes: ""
+    latex: |
+      \[ \Rightarrow -2^{n-2} + 2 \equiv 0 \pmod n \text{ (vì } b \not\vdots n \text{)} \]
+
+      \[ \Rightarrow -(2^{n-1} - 1) + 3 \equiv 0 \pmod n \text{, (vì } 2^{n-1} - 1 \equiv 0 \pmod n \text{, định lý nhỏ Fermat)} \]
+
+      \[ \Rightarrow 3 \equiv 0 \pmod n \]
+
+      \[ \Rightarrow n=3, \text{ vô lý.} \]
+
+      \[ \text{Vậy } b^n + c^n \not\equiv 0 \pmod n \text{. Chứng minh tương tự ta cũng có } a^n + b^n \not\equiv \pmod n, c^n + a^n \not\equiv 0 \pmod n. \text{ Tóm lại, ta} \]
+
+      \[ \text{luôn có: } (a^n - b^n)(c^n + a^n)(c^n + b^n) \not\equiv 0 \pmod n \text{ (đpcm).} \]
+
+      \[ \text{* Vì } c^n + b^n \not\equiv 0 \pmod n, \quad b^{3n} + c^{3n} = (b^n + c^n)[(c^n - b^n)^2 + b^n c^n] \equiv (b^n + c^n)(a^{2n} + b^n c^n) \equiv 0 \pmod{n^2} \text{ nên} \]
+
+      \[ a^{2n} + b^n c^n \equiv 0 \pmod{n^2} \]
+
+      \[ \text{Chứng minh tương tự ta cũng có } b^{2n} + a^n c^n \equiv c^{2n} - a^n b^n \equiv 0 \pmod{n^2}. \]
+
+      \[ \text{* Ta có } c^{2n} - a^n b^n \equiv 0 \pmod{n^2} \]
+
+      \[ \Rightarrow c^n (a^n + b^n) - a^n b^n \equiv 0 \pmod{n^2} \text{ (vì } a^n + b^n \equiv c^n \pmod{n^2} \text{)} \]
+
+      \[ \Rightarrow c^n a^n . 1 + c^n b^n . 1 - a^n b^n . 1 \equiv 0 \pmod{n^2} \]
+
+      \[ \Rightarrow c^n a^n b^{n(n-1)} + c^n b^n a^{n(n-1)} - a^n b^n c^{n(n-1)} \equiv 0 \pmod{n^2} \text{ (theo bổ đề 5 d)), ta có } a^{n(n-1)} \equiv b^{n(n-1)} \equiv c^{n(n-1)} \equiv 1 \pmod{n^2} \text{)} \]
+
+      \[ \Rightarrow b^{n(n-2)} + a^{n(n-2)} - c^{n(n-2)} \equiv 0 \pmod{n^2} \text{ (đpcm).} \]
+
+      \[ \text{* Vì n là số nguyên tố lớn hơn 3 nên } n \equiv \pm 1 \pmod 6 \]
+
+      \[ \text{Giả sử } n \equiv -1 \pmod 6, \text{ suy ra } n = 6l - 1, l \in \mathbb{N}^*. \text{ Khi đó, từ } a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv 0 \pmod{n^2}, \text{ ta suy ra} \]
+
+      \[ a^{3n(2l-1)} + b^{3n(2l-1)} - c^{3n(2l-1)} \equiv 0 \pmod n \]
+
+      \[ \Rightarrow a^{3n(2l-1)} + a^{3n(2l-1)} + a^{3n(2l-1)} \equiv 0 \pmod{n^2} \text{ (vì } c^{3n} \equiv -a^{3n} \pmod{n^2}, b^{3n} \equiv a^{3n} \pmod{n^2}) \]
+
+      \[ \Rightarrow 3a^{n(n-2)} \equiv 0 \pmod{n^2}, \text{ vô lý (vì n là số nguyên tố lớn hơn 3 và } a^{n(n-2)} \not\equiv 0 \pmod n.) \]
+
+      \[ \text{Vậy } n \equiv 1 \pmod 6 \text{ (đpcm).} \]
+
+      \[ \text{* Vì } n \equiv 1 \pmod 6, \text{ nên } n = 6l + 1, l \in \mathbb{N}^*. \text{ Do đó} \]
+
+      \[ a^{n(n-4)} + c^{n(n-4)} = a^{3n(2p-1)} + (c^{3n})^{(2p-1)} \equiv a^{3n(2p-1)} - a^{3n(2p-1)} = 0 \pmod n \text{ (vì } c^{3n} \equiv -a^{3n} \pmod{n^2} \text{), suy ra} \]
+
+      \[ a^{n(n-4)} + c^{n(n-4)} \equiv 0 \pmod{n^2}. \]
+
+      \[ \text{Chứng minh tương tự ta cũng có: } b^{n(n-4)} + c^{n(n-4)} \equiv 0 \pmod{n^2} \text{ suy ra } a^{n(n-4)} - b^{n(n-4)} \equiv 0 \pmod n \text{ (đpcm).} \]
+
+      \[ \text{5} \]

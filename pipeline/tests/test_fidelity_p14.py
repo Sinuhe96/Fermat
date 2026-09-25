@@ -18,6 +18,7 @@ Provenance / regeneration:
 Fast: milliseconds on the committed fixture + the live page-14 slice.
 No Lean, no container, no full re-extract.
 """
+import hashlib
 import json
 import re
 import sys
@@ -292,6 +293,62 @@ class ReviewHtmlTests(unittest.TestCase):
             )
             self.assertEqual(written, [])
             self.assertFalse((d / "review").exists())
+
+    def test_region_section_renders_latex_flags_and_copy(self) -> None:
+        record = {
+            "page": "14",
+            "status": "DRAFT",
+            "regions": [
+                {"id": "R1", "rect": [0.0, 0.0, 612.0, 400.0],
+                 "crop": "page-014-300dpi-region-01.png",
+                 "digits_sorted": "12", "pua": 4, "notes": "",
+                 "latex": "\\[ a^{12} \\]"},
+                {"id": "R2", "rect": [0.0, 400.0, 612.0, 792.0],
+                 "crop": "page-014-300dpi-region-02.png",
+                 "digits_sorted": "34", "pua": 0,
+                 "notes": "prime ambiguous in render",
+                 "latex": "\\[ b^{99} \\]"},
+            ],
+        }
+        page = fc.build_review_html(
+            {"page": 14, "verdict": "MANUAL"}, "a", "b", None,
+            "PROOF_of_FERMAT.pdf", record,
+        )
+        self.assertIn('<pre class="latex-src">', page)
+        self.assertIn('<button class="copy" type="button">copy</button>', page)
+        self.assertIn("navigator.clipboard", page)
+        self.assertIn("regions.py export", page)
+        self.assertIn('<a class="crop" href="../page-014-300dpi-region-01.png">crop</a>', page)
+        # R1: digits match, PUA garbage -> amber warn row
+        self.assertIn('class="region warn"', page)
+        self.assertIn('<span class="flag f-warn">PUA 4</span>', page)
+        # R2: latex digits (99) != stored audit (34) -> red bad row + note flag
+        self.assertIn('class="region bad"', page)
+        self.assertIn('<span class="flag f-bad">digit mismatch</span>', page)
+        self.assertIn('<span class="flag f-note">notes</span>', page)
+        self.assertNotIn("stale signoff", page)
+
+    def test_region_section_callout_without_record(self) -> None:
+        page = fc.build_review_html(
+            {"page": 14, "verdict": "MANUAL"}, "a", "b", None, "PROOF_of_FERMAT.pdf"
+        )
+        self.assertIn("no region record", page)
+        self.assertIn("regions.py plan", page)
+        self.assertNotIn("latex-src", page)
+
+    def test_region_state_cell_variants(self) -> None:
+        self.assertEqual(fc.region_state(None), "—")
+        self.assertEqual(fc.region_state({"status": "DRAFT", "regions": []}), "DRAFT")
+        latex = "\\[ a^{12} \\]"
+        reviewed = {
+            "status": "REVIEWED",
+            "signed_latex_sha256": hashlib.sha256(latex.encode("utf-8")).hexdigest(),
+            "regions": [{"id": "R1", "digits_sorted": "12", "pua": 0,
+                         "notes": "", "latex": latex}],
+        }
+        self.assertEqual(fc.region_state(reviewed), "REVIEWED")
+        stale = dict(reviewed, signed_latex_sha256="0" * 64)
+        self.assertEqual(fc.region_state(stale), "REVIEWED ⚠1")
 
 
 if __name__ == "__main__":

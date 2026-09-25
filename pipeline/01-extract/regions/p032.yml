@@ -1,0 +1,65 @@
+id: P032
+page: 32
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 1a9e3bff523f8193a689eda3864d8208193ccdb717ce4d9cac08b503fe491898
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 293.2]
+    crop: page-032-300dpi-region-01.png
+    words: 556
+    digits_sorted: "000000000000111111111111111122222222222222222222222222222222222222222222222333333333334445677789"
+    pua: 24
+    notes: ""
+    latex: |
+      \[ \Rightarrow [a^n(b^n+2n^s abck)^3-b^n(a^n+2n^s abck)^3][a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}]\equiv 0 \ (\mathrm{mod}\ n^{s+1}) \]
+      \[ \Rightarrow (a^n b^{3n}-b^n a^{3n})[a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}]\equiv 0 \ (\mathrm{mod}\ n^{s+1}) \quad (\text{vì } a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}\equiv 0 \ (\mathrm{mod}\, n^2), \text{ bổ đề 7}) \]
+      \[ \Rightarrow -a^n b^n(a^n-b^n)(a^n+b^n)[a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}]\equiv 0 \ (\mathrm{mod}\ n^{s+1}) \]
+      \[ \Rightarrow a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}\equiv 0 \ (\mathrm{mod}\ n^{s+1}) \ (27) \ (\text{vì } a^n b^n(a^n-b^n)(a^n+b^n)\not\equiv 0\,(\mathrm{mod}\ n)) \]
+      \[ \Rightarrow H(c^n,b)\equiv H(c^n,a)\equiv 0 \ (\mathrm{mod}\ n^{s+1}) \ (\text{suy ra từ } (26) \text{ và } (27)) \]
+      \[ \Rightarrow \frac{3}{2}a^{n(n-1)}(n^s abck)\equiv 0 \ (\mathrm{mod}\ n^{s+1}) \ (\text{kết hợp với } (25)) \]
+      \[ \Rightarrow n=3, (\text{vô lý}) \]
+      \[ \text{\textbf{1.3.} Nếu } h=n^{ns-1}c^n \]
+      \[ \text{Ta có} \]
+      \[ \text{*}\ a^{n(n-2)}+b^{n(n-2)}=[(a^n+b^n)-b^n]^{n-2}+b^{n(n-2)}=\sum_{i=0}^{n-2}(-1)^i C_{n-2}^{i}(a^n+b^n)^{n-2-i}b^{ni}+b^{n(n-2)}= \]
+      \[ .=\sum_{i=0}^{n-4}(-1)^i C_{n-2}^{i}(n^{ns-1}c^n-2n^s abck)^{n-2-i}b^{ni}+(n-2)(n^{ns-1}c^n-2n^s abck)b^{n(n-3)}\equiv 0(\mathrm{mod}\ n^{2s}) \]
+      \[ \Rightarrow a^{n(n-2)}+b^{n(n-2)}\equiv (n-2)(n^{ns-1}c^n-2n^s abck)b^{n(n-3)}\equiv 4b^{n(n-3)}n^s abck(\mathrm{mod}\ n^{s+1}), \text{ suy ra } a^{n(n-2)}+b^{n(n-2)}\equiv 0(\mathrm{mod}\ n^s)\ (28) \]
+      \[ \text{và } a^{n(n-2)}+b^{n(n-2)}\equiv 4b^{n(n-3)}n^s abck(\mathrm{mod}\ n^{s+1}) \ (29) \]
+  - id: R2
+    rect: [0.0, 293.2, 612.0, 637.6]
+    crop: page-032-300dpi-region-02.png
+    words: 752
+    digits_sorted: "0000000000000111111111111111111222222222222222222223333333333333333333333333333334444444444444444444444444445555555555555556667778899"
+    pua: 18
+    notes: ""
+    latex: |
+      \[ \text{*}\ a^{n(n-4)} + b^{n(n-4)} = [(a^n + b^n) - b^n]^{n-4} + b^{n(n-4)} = \sum_{i=0}^{n-4} (-1)^i C_{n-4}^{i} (a^n + b^n)^{n-4-i} b^{ni} + b^{n(n-4)} = \]
+      \[ = \sum_{i=0}^{n-5} (-1)^i C_{n-4}^{i} (n^{ns-1} c^n - 2n^s abck)^{n-4-i} b^{ni} \equiv 0 \pmod{n^s} \Rightarrow a^{n(n-4)} + b^{n(n-4)} \equiv 0 \pmod{n^s} \ (30) \]
+      \[ \text{*}\ a^{n(n-3)} - b^{n(n-3)} = [(a^n + b^n) - b^n]^{n-3} - b^{n(n-3)} = \sum_{i=0}^{n-3} (-1)^i C_{n-3}^{i} (a^n + b^n)^{n-3-i} b^{ni} - b^{n(n-3)} = \]
+      \[ = \sum_{i=0}^{n-4} (-1)^i C_{n-3}^{i} (n^{ns-1} c^n - 2n^s abck)^{n-3-i} b^{ni} \equiv 0 \pmod{n^s} \Rightarrow a^{n(n-3)} \equiv b^{n(n-3)} \pmod{n^s} \ (31) \]
+      \[ \text{*}\ a^{n(n-5)} - b^{n(n-5)} = [(a^n + b^n) - b^n]^{n-5} - b^{n(n-5)} = \sum_{i=0}^{n-5} (-1)^i C_{n-5}^{i} (a^n + b^n)^{n-5-i} b^{ni} - b^{n(n-5)} = \]
+      \[ = \sum_{i=0}^{n-6} (-1)^i C_{n-5}^{i} (n^{ns-1} c^n - 2n^s abck)^{n-5-i} b^{ni} \equiv 0 \pmod{n^s} \Rightarrow a^{n(n-5)} \equiv b^{n(n-5)} \pmod{n^s} \ (32) \]
+      \[ \text{Từ (16), (28), (29), (30), (31), (32), } h - b^n \equiv a^n \equiv -b^n \pmod{n^s} \text{ và } h = n^{ns-1} c^n \equiv 0 \pmod{n^{ns-1}}, \text{ Từ (16'') suy ra} \]
+      \[ \frac{(h-b^n)H(h,b)}{(h-b^n)} - \frac{15b^{n(n-3)}(h-b^n)^2}{(h-b^n)^4} n^s abck + \frac{5b^{n(n-2)}(h-b^n)}{3(h-b^n)^4} (n^s abck) - \frac{2b^{n(n-3)}(h-b^n)^2 - 18b^{n(n-3)}(h-b^n)^2}{3(h-b^n)^4} (n^s abck) + \]
+      \[ + \frac{4(-b^{n(n-2)})(h-b^n)(n^s abck)}{(h-b^n)^4} + \frac{(-b^{n(n-4)})(h-b^n)^3}{4(h-b^n)^4} (n^s abck) + \frac{9b^{n(n-4)}(-b^n)(h-b^n)^2 - 3[2b^{n(n-3)}(h-b^n)^2]}{2(h-b^n)^4} (n^s abck) + \]
+      \[ + \frac{-7b^{n(n-4)}(h-b^n)^3 + 7b^{n(n-3)}(h-b^n)^2 - 7[b^{n(n-2)}(h-b^n) - b^{n(n-1)}]}{(h-b^n)^4} (n^s abck) + \frac{4b^{n(n-3)}(h-b^n)^2}{3(h-b^n)^4} (n^s abck) + \]
+  - id: R3
+    rect: [0.0, 637.6, 612.0, 729.6]
+    crop: page-032-300dpi-region-03.png
+    words: 183
+    digits_sorted: "0112222223333334444444444556778"
+    pua: 1
+    notes: ""
+    latex: |
+      \[ + \frac{2b^{n(n-3)}(h-b^n)^2(n^s abck)}{(h-b^n)^4} + \frac{7b^{n(n-2)}(h-b^n)}{(h-b^n)^4}(n^s abck) + \frac{5[3b^{n(n-4)}(h-b^n)^3 - 4b^{n(n-3)}(h-b^n)^2 + 6b^{n(n-2)}(h-b^n)]}{4(h-b^n)^4}(n^s abck) + \]
+      \[ + \frac{b^{n(n-5)}(h-b^n)^4}{4(h-b^n)^4}(n^s abck) + \frac{8[b^{n(n-3)} + b^{n(n-3)}](n^s abck)b^{2n}}{(h-b^n)^4} \equiv 0 \pmod{n^{s+1}} \quad (17'') \]
+  - id: R4
+    rect: [0.0, 729.6, 612.0, 792.0]
+    crop: page-032-300dpi-region-04.png
+    words: 1
+    digits_sorted: "23"
+    pua: 0
+    notes: ""
+    latex: |
+      \[ \text{32} \]

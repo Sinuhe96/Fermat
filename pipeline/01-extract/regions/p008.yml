@@ -1,0 +1,70 @@
+id: P008
+page: 8
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 3a8e7f6ee792dcd27e0d86fb0b1f53c4b1ac6b9b85fc57a4d3494a72d1c32457
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 263.5]
+    crop: page-008-300dpi-region-01.png
+    words: 587
+    digits_sorted: "0001111111111111111111111111111111111111111122222222222222222222222222222222222223333333333333333333334444444444444444444444444555566666"
+    pua: 18
+    notes: vision colour read: front half of line 4 red, line 6 green (colour not encoded); no Vietnamese prose except 'vì 5s >= 4s+2, s >= 2' in line 2; product string printed 'abck' with no space
+    latex: |
+      \[ + \sum_{i=1}^{n-1} i b^{n(i-1)}h^{n-1-i}n^s abck - \sum_{i=0}^{n-2}(n-1-i)b^{ni}h^{n-2-i}n^s abck + \sum_{i=0}^{n-1} h^{n-1-i}b^{ni} \]
+
+      \[ \equiv a^{n(n-1)} + n a^{n(n-2)}n^s abck + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \ (\mathrm{mod}\ n^{4s+2}) \quad (\text{vì } 5s \ge 4s+2,\ s \ge 2) \]
+
+      \[ \Rightarrow \frac{1}{24}\sum_{i=4}^{n-1} i(i-1)(i-2)(i-3)h^{n-1-i}b^{n(i-4)}(n^s abck)^4 + \frac{1}{24}\sum_{i=0}^{n-5}(n-1-i)(n-2-i)(n-3-i)(n-4-i)h^{n-5-i}b^{ni}(n^s abck)^4 + \]
+
+      \[ + \frac{1}{6}\sum_{i=1}^{n-4} i(i+1)(2+i)(3+i)h^{n-4-i}b^{n(i-1)}(n^s abck)^4 - \frac{n}{6}\sum_{i=1}^{n-4}\left[3i(i+1)(i+2)+3i(i+1)+2i\right]h^{n-4-i}b^{n(i-1)}(n^s abck)^4 - \]
+
+      \[ - \frac{n}{6}\sum_{i=3}^{n-2} i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}(n^s abck)^4 + \frac{1}{6}\sum_{i=3}^{n-2}(1+i)i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}(n^s abck)^4 - \frac{n}{4}\sum_{i=2}^{n-3} i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 + \]
+
+      \[ + \frac{1}{4}\sum_{i=2}^{n-3}(2+i)(1+i)i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 - \frac{n}{2}\sum_{i=2}^{n-3}(1+i)i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 + \]
+
+      \[ + \frac{1}{2}\sum_{i=1}^{n-3} i(n-1-i)(n-2-i)h^{n-3-i}b^{n(i-1)}(n^s abck)^3 - \frac{1}{2}\sum_{i=2}^{n-2} i(i-1)(n-1-i)h^{n-2-i}b^{n(i-2)}(n^s abck)^3 - \]
+  - id: R2
+    rect: [0.0, 263.5, 612.0, 502.4]
+    crop: page-008-300dpi-region-02.png
+    words: 623
+    digits_sorted: "000001111111111111111111111111111111111111111111111122222222222222222222222222222222233333333333333333444444444444444444444444444555666666"
+    pua: 18
+    notes: vision colour read disagreed on extent: first read marked the factors b^{n(i-1)}, i(i+1)(i+2), i(i+1), i on lines 6-7 red, focused re-read reports lines 6-7 entirely red; colour not encoded
+    latex: |
+      \[ -\frac{1}{6}\sum_{i=0}^{n-4}(n-1-i)(n-2-i)(n-3-i)h^{n-4-i}b^{ni}(n^s abck)^3+\frac{1}{6}\sum_{i=3}^{n-1}i(i-1)(i-2)h^{n-1-i}b^{n(i-3)}(n^s abck)^3+ \]
+
+      \[ +\frac{1}{2}\sum_{i=2}^{n-1}i(i-1)b^{n(i-2)}h^{n-1-i}(n^s abck)^2+\frac{1}{2}\sum_{i=0}^{n-3}(n-1-i)(n-2-i)b^{ni}h^{n-3-i}(n^s abck)^2-\sum_{i=1}^{n-2}i(n-1-i)b^{n(i-1)}h^{n-2-i}(n^s abck)^2+ \]
+
+      \[ +\sum_{i=1}^{n-1}ib^{n(i-1)}h^{n-1-i}n^s abck-\sum_{i=0}^{n-2}(n-1-i)b^{ni}h^{n-2-i}n^s abck+\sum_{i=0}^{n-1}h^{n-1-i}b^{ni} \]
+
+      \[ \equiv a^{n(n-1)}+na^{n(n-2)}n^s abck+\frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2+\frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3-\frac{n}{4}a^{n(n-5)}(n^s abck)^4(\mathrm{mod}\,n^{4s+2}) \]
+
+      \[ \Rightarrow \frac{1}{24}\sum_{i=4}^{n-1}i(i-1)(i-2)(i-3)h^{n-1-i}b^{n(i-4)}(n^s abck)^4+\frac{1}{24}\sum_{i=0}^{n-5}(n-1-i)(n-2-i)(n-3-i)(n-4-i)h^{n-5-i}b^{ni}(n^s abck)^4+ \]
+
+      \[ +\frac{1}{6}\sum_{i=1}^{n-4}i(1+i)(2+i)(3+i)h^{n-4-i}b^{n(i-1)}(n^s abck)^4-\frac{n}{2}\sum_{i=1}^{n-4}i(i+1)(i+2)h^{n-4-i}b^{n(i-1)}(n^s abck)^4-\frac{n}{2}\sum_{i=1}^{n-4}i(i+1)h^{n-4-i}b^{n(i-1)}(n^s abck)^4- \]
+
+      \[ -\frac{n}{3}\sum_{i=1}^{n-4}ih^{n-4-i}b^{n(i-1)}(n^s abck)^4-\frac{n}{6}\sum_{i=3}^{n-2}i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}(n^s abck)^4+\frac{1}{6}\sum_{i=3}^{n-2}(1+i)i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}(n^s abck)^4- \]
+  - id: R3
+    rect: [0.0, 502.4, 612.0, 792.0]
+    crop: page-008-300dpi-region-03.png
+    words: 510
+    digits_sorted: "000011111111111111111111111111111111111111222222222222222222222222222222222233333333333333333334444444444456668"
+    pua: 14
+    notes: vision colour read: coloured spans (blue/green/brown) on the lower lines, flattened to plain math by the vision pass; colour not encoded
+    latex: |
+      \[ -\frac{n}{4}\sum_{i=2}^{n-3} i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 + \frac{1}{4}\sum_{i=2}^{n-3}(2+i)(1+i)i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 - \frac{n}{2}\sum_{i=2}^{n-3}(1+i)i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 + \]
+
+      \[ + \frac{1}{2}\sum_{i=1}^{n-3} i(n-1-i)(n-2-i)h^{n-3-i}b^{n(i-1)}(n^s abck)^3 - \frac{1}{2}\sum_{i=2}^{n-2} i(i-1)(n-1-i)h^{n-2-i}b^{n(i-2)}(n^s abck)^3 - \]
+
+      \[ -\frac{1}{6}\sum_{i=0}^{n-4}(n-1-i)(n-2-i)(n-3-i)h^{n-4-i}b^{ni}(n^s abck)^3 + \frac{1}{6}\sum_{i=3}^{n-1} i(i-1)(i-2)h^{n-1-i}b^{n(i-3)}(n^s abck)^3 + \]
+
+      \[ +\frac{1}{2}\sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i}(n^s abck)^2 + \frac{1}{2}\sum_{i=0}^{n-3}(n-1-i)(n-2-i)b^{ni}h^{n-3-i}(n^s abck)^2 - \sum_{i=1}^{n-2} i(n-1-i)b^{n(i-1)}h^{n-2-i}(n^s abck)^2 + \]
+
+      \[ +\sum_{i=1}^{n-1} ib^{n(i-1)}h^{n-1-i}n^s abck - \sum_{i=0}^{n-2}(n-1-i)b^{ni}h^{n-2-i}n^s abck + \sum_{i=0}^{n-1} h^{n-1-i}b^{ni} \]
+
+      \[ \equiv a^{n(n-1)} + na^{n(n-2)}n^s abck + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 (\mathrm{mod}\ n^{4s+2}) \]
+
+      \[ \text{8} \]

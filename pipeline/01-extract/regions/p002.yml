@@ -1,0 +1,55 @@
+id: P002
+page: 2
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 0be634f0825821dd12b45146507929c087fd5d392c4c097151f51edc583eb63e
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 465.4]
+    crop: page-002-300dpi-region-01.png
+    words: 956
+    digits_sorted: "0000000000000000000000000000000001111111111111111111111111111111111111111111111111112222222222222222222222222222222222333333333334444446"
+    pua: 29
+    notes: top three display lines are the tail of Bổ đề 7; ≡/≢ come from the Symbol font (PUA-mapped); ⋮ divisibility glyphs unmapped in the text layer (vector-detected); Ω headings B./C. blue bold, "N. Chứng minh bổ đề N" red bold; math bold italic
+    latex: |
+      \[ abc \not\equiv 0(\mathrm{mod}\ n), a^n + b^n - c^n \equiv 0(\mathrm{mod}\ n^2), a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv 0(\mathrm{mod}\ n) \text{ thì ta có } (a^n - b^n)(c^n + a^n)(c^n + b^n) \not\equiv 0(\mathrm{mod}\ n) \]
+      \[ a^{n^2} + b^{n^2} - c^{n^2} \equiv 0(\mathrm{mod}\ n^2), a^{n(n-3)} + b^{n(n-3)} + c^{n(n-3)} \equiv c^{3n} + b^{3n} \equiv a^{3n} - b^{3n} \equiv b^n c^n + a^{2n} \equiv c^n a^n + b^{2n} \equiv b^n a^n - c^{2n} \equiv 0(\mathrm{mod}\ n^2), n \equiv 1(\mathrm{mod}6) \]
+      \[ a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv a^{n(n-4)} + c^{n(n-4)} \equiv b^{n(n-4)} + c^{n(n-4)} \equiv a^{n(n-4)} - b^{n(n-4)} \equiv 0(\mathrm{mod}\ n^2). \]
+      \[ \textcolor{blue}{\textbf{B. MỘT CÁCH BIỂN ĐỔI TỔNG }} \sum_{3} \textcolor{blue}{\textbf{ VÀ MỘT DẠNG TÍNH ĐƯỢC CỦA TỔNG }} \sum_{3} \textcolor{blue}{\textbf{.}} \]
+      \[ 1)\ \sum_{i=k}^{n} a_i = \sum_{i=m}^{n+m-k} a_{i-m+k}\,, k, m \in \mathbb{N} \]
+      \[ 2)\ \sum_{i=k}^{m-1} i(i-1)(i-2)\ldots(i-k+1)h^{m-1-i}x^{i-k} = \sum_{i=0}^{m-1-k} (m-1-i)(m-2-i)\ldots(m-k-i)h^i x^{m-1-k-i} = f^{(k)}(x), k \in \mathbb{N}^{*} \]
+      \[ \text{,với } f(x) = x^{m-1} + hx^{m-2} + \ldots + h^{m-2}x + h^{m-1} = \frac{x^m - h^m}{x - h}, x \neq h\ ;\ f^{(k)}(x) \text{ là đạo hàm cấp } k \text{ của hàm số } f(x),\ m \in \mathbb{N}, m \ge 2. \]
+      \[ \textcolor{blue}{\textbf{C. CHỨNG MINH CÁC BỔ ĐỀ}} \]
+      \[ \textcolor{red}{\textbf{1. Chứng minh bổ đề 1}} \]
+      \[ \text{Giả sử tồn tại số nguyên } n \text{ lớn hơn 2, sao cho PT(1) có } x = u_0,\ y = v_0,\ z = t_0 \text{ là một nghiệm nguyên khác không và } (u_0,v_0,t_0) = d. \text{ Khi đó tồn tại ba số } u,v,t \in \mathbb{Z}^{*} \text{ sao cho } (u,v,t) = 1,\ u_0 = ud,\ v_0 = vd,\ t_0 = td \text{ và } u_0^n + v_0^n = t_0^n, \text{ suy ra } u^n + v^n = t^n (1''), \text{ suy ra } x = u,\ y = v,\ z = t \text{ là một nghiệm nguyên khác không của PT(1).} \]
+      \[ \text{Giả sử } (u,v) = d', \text{ từ } (1'') \text{ suy ra } t^n \vdots d'^{\,n}, \text{ suy ra } t \vdots d', \text{ mà } (u,v,t) = 1 \text{ nên } d' = 1. \text{ Vậy } (u,v) = 1. \]
+      \[ \text{Chứng minh tương tự ta cũng có } (u,t) = (t,v) = 1. \text{ Bổ đề 1 đã được chứng minh.} \]
+      \[ \textcolor{red}{\textbf{2. Chứng minh bổ đề 2}} \]
+      \[ \text{Giả sử tồn tại số nguyên dương } k_0 \text{ sao cho PT } x^{nk_0} + y^{nk_0} = z^{nk_0} \text{ có nghiệm nguyên khác không } x = u, y = v, z = t, \text{ khi đó ta có } u^{nk_0} + v^{nk_0} = t^{nk_0} \Longleftrightarrow (u^{k_0})^n + (v^{k_0})^n = (t^{k_0})^n, \text{ suy ra PT } x^n + y^n = z^n \text{ có nghiệm nguyên khác không } x = u^{k_0}, y = v^{k_0}, z = t^{k_0}, \text{ điều này trái với giả thiết. Bổ đề 2 đã được chứng minh.} \]
+      \[ \textcolor{red}{\textbf{3. Chứng minh bổ đề 3}} \]
+      \[ \text{Giả sử } (a,c) = c'_1, \text{ khi đó tồn tại hai số nguyên } a_1, c'_2 \text{ sao cho } (a_1,c'_2) = 1 \text{ và } a = c'_1a_1, c = c'_1c'_2. \text{ Vì } ab = c^n, \text{ nên } c'_1a_1b = c_1'^{\,n}c_2'^{\,n}, \text{ suy ra } a_1b = c_1'^{\,n-1}c_2'^{\,n}, \text{ suy ra } b \mid c_1'^{\,n-1}c_2'^{\,n}. \text{ Vì } (c'_1,b) = 1 \text{ (do } (a,b) = 1) \text{ nên } c_2'^{\,n} = kb, \text{ với } k \]
+      \[ \text{là số nguyên khác không, từ đẳng thức } a_1b = c_1'^{\,n-1}c_2'^{\,n}, \text{ ta suy ra } a_1 = kc_1'^{\,n-1}, \text{ suy ra } a_1^n = k^n c_1'^{\,n(n-1)}, \text{ suy ra } k \mid a_1^n \text{ và} \]
+  - id: R2
+    rect: [0.0, 465.4, 612.0, 792.0]
+    crop: page-002-300dpi-region-02.png
+    words: 556
+    digits_sorted: "0000011111111111111111111111111111111111122222222222222222222223344455"
+    pua: 12
+    notes: divisibility ⋮ / ⋮̸ transcribed \vdots / \not\vdots; |k| absolute-value bars are vector strokes (confirmed via page drawings); "Bổ đề N đã được chứng minh." prose; math bold italic
+    latex: |
+      \[ k \mid c'_2^{\,n}\ ;\ \text{vì } (a_1,c'_2) = 1 \text{ nên } (a_1^n,c_2'^{\,n}) = 1, \text{ từ đó suy ra } |k| = 1. \]
+      \[ \text{Vậy } b = k(kb) = kc'_2^{\,n} = (kc'_2)^n = c_2^n, a = k(ka) = kc'_1^{\,n} = (kc'_1)^n = c_1^n, c = c_1c_2, \text{ (vì } |k| = 1 \text{, n lẻ) với } c_1 = kc'_1, c_2 = kc'_2 \]
+      \[ \text{nguyên tố cùng nhau.} \]
+      \[ \text{Bổ đề 3 đã được chứng minh.} \]
+      \[ \textcolor{red}{\textbf{4. Chứng minh bổ đề 4}} \]
+      \[ \text{Vì } a \vdots m, b \vdots m \text{ và } a.b = c^n, \text{ suy ra } c^n \vdots m^2, \text{ suy ra } c \vdots m \text{ (do m là số nguyên tố). Giả sử } c = m^s r, \text{ với } s \in \mathbb{N}^*, r \in \mathbb{Z}^* \]
+      \[ \text{và } r \not\vdots m, \text{ mà } c^n = m^{ns} r^n \vdots m^2, \text{ nên } ns \ge 2. \text{ Do } (a,b) = m \text{ và } b \not\vdots m^2, \text{ nên có thể giả sử } b = mh \text{ và } a = m^k l, \text{ với } k \in \mathbb{N}^* \]
+      \[ ; h,l \in \mathbb{Z}^* \text{ sao cho } (h,l) = 1, h \not\vdots m, l \not\vdots m. \text{ Vì } a.b = c^n \text{ nên } m^{k+1}hl = m^{ns}r^n, \text{ suy ra } k+1 = ns, \text{ suy ra } k = ns-1 \text{ và } hl = r^n \]
+      \[ ; \text{ áp dụng bổ đề 3, ta có } r = c_1.c_2, h = c_1^n, l = c_2^n, \text{ trong đó hai số } c_1, c_2 \text{ là hai số nguyên sao cho } (c_1,c_2) = 1. \text{ Từ đó} \]
+      \[ \text{ta có } c = m^s c_1.c_2, a = m^{ns-1} c_2^n, b = mc_1^n. \]
+      \[ \text{Bổ đề 4 đã được chứng minh.} \]
+      \[ \textcolor{red}{\textbf{5. Chứng minh bổ đề 5}} \]
+      \[ a)\ \text{Đặt } A = \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i. \text{ Ta có } u^n + v^n = [(u+v)-v]^n + v^n = (u+v) \sum_{k=0}^{n-1} (-1)^k C_n^k (u+v)^{n-1-k} v^k, u^n + v^n = (u+v)A \text{ mà} \]
+      \[ u+v \neq 0, \text{ nên } A = \sum_{k=0}^{n-1} (-1)^k C_n^k (u+v)^{n-k-1} v^k. \text{ Ta có } A = (u+v) \sum_{k=0}^{n-2} (-1)^k C_n^k (u+v)^{n-k-2} v^k + nv^{n-1}, (u,v) = 1 \text{ và } (u+v) \not\vdots n \]
+      \[ 2 \]

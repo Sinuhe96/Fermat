@@ -1,0 +1,60 @@
+id: P013
+page: 13
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 188c2cb183ee9249498241d24b35258be24b6ccfe2a37424d4205016e0e88cc7
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 193.9]
+    crop: page-013-300dpi-region-01.png
+    words: 282
+    digits_sorted: "011111111122222222222222222222222222223333333333333344444667"
+    pua: 2
+    notes: "the '* C = ...' line begins with a printed '*' bullet (transcribed as \\text{*}); region printed in mixed colours not encoded in LaTeX"
+    latex: |
+      + \frac{14nb^{n(n-2)}n^s a b c k - 2nh^{n-2}n^s a b c k}{(h-b^n)^3} + \frac{n^2[-3b^{n(n-2)} + 2hb^{n(n-3)} + h^{n-2}]}{(b^n-h)^2}
+      \text{Với } B_1 = \frac{7nb^{n(n-2)}a^n - 6nh^{n-1} - nh^{n-2}a^n - 6nhb^{n(n-2)}}{(h-b^n)^3} + \frac{12(h^n-b^{n^2})}{(h-b^n)^4} \text{ và}
+      B_2 = -\frac{2n^2b^{n(n-3)}}{h-b^n} + \frac{n^2[-3b^{n(n-2)} + 2hb^{n(n-3)} + h^{n-2}]}{(b^n-h)^2},\ B_3 = \frac{14nb^{n(n-2)}n^s a b c k - 2nh^{n-2}n^s a b c k}{(h-b^n)^3}
+      \text{*} C = \sum_{i=3}^{n-1} i(i-1)(i-2)h^{n-1-i}b^{n(i-3)} - \sum_{i=0}^{n-4} (n-1-i)(n-2-i)(n-3-i)h^{n-4-i}b^{ni}
+      = f^{(3)}(b^n) - g^{(3)}(h) \text{ (áp dụng mục B.2), trang 2)}
+  - id: R2
+    rect: [0.0, 193.9, 612.0, 513.5]
+    crop: page-013-300dpi-region-02.png
+    words: 723
+    digits_sorted: "11111111111111222222222222222222222222222222222222222222222222222222222223333333333333333333333333333334444444444444444455555555666666666666"
+    pua: 0
+    notes: "the token '2n^s abck' is printed bold and its raised character is the letter s (not the digit 5); the s in 2n^s abck must not be read as 5"
+    latex: |
+      = \frac{n(n-1)(n-2)b^{n(n-3)}(b^n - h)^3 - 3n(n-1)b^{n(n-2)}(b^n - h)^2 + 6[nb^{n(n-1)}(b^n - h) - b^{n^2} + h^n]}{(b^n - h)^4}
+      - \frac{n(n-1)(n-2)h^{n-3}(h - b^n)^3 - 3n(n-1)h^{n-2}(h - b^n)^2 + 6[nh^{n-1}(h - b^n) - h^n + b^{n^2}]}{(h - b^n)^4}
+      = \frac{[(n^3 - 6n^2 + 5n)b^{n(n-2)} - (n^3 - 3n^2 + 2n)hb^{n(n-3)}](b^n - h)^2 + 6[nb^{n(n-1)}(b^n - h) - b^{n^2} + h^n]}{(b^n - h)^4}
+      - \frac{[(n^3 - 6n^2 + 5n)h^{n-2} - (n^3 - 3n^2 + 2n)b^nh^{n-3}](h - b^n)^2 + 6[nh^{n-1}(b^n - h) - h^n + b^{n^2}]}{(h - b^n)^4}
+      = \frac{12(h^n - b^{n^2})}{(h - b^n)^4} + \frac{[5nb^{n(n-2)} - 2nhb^{n(n-3)}](h - b^n)^2 - 6nb^{n(n-1)}(h - b^n) + [-5nh^{n-2} + 2nb^nh^{n-3}](h - b^n)^2 - 6nh^{n-1}(h - b^n)}{(h - b^n)^4} +
+      + \frac{n^3b^nh[h^{n-4} - b^{n(n-4)}] - n^3[h^{n-2} - b^{n(n-2)}]}{(h - b^n)^2} + \frac{6n^2[h^{n-2} - b^{n(n-2)}] - 3n^2b^nh[h^{n-4} - b^{n(n-4)}]}{(h - b^n)^2}
+      = \frac{[-5nh^{n-2} + 2nb^nh^{n-3}](h - b^n) - 6nh^{n-1} + [5nb^{n(n-2)} - 2nhb^{n(n-3)}](h - b^n) - 6nb^{n(n-1)}}{(h - b^n)^3} + \frac{12(h^n - b^{n^2})}{(h - b^n)^4} +
+      + \frac{n^3b^nh[h^{n-4} - b^{n(n-4)}] - n^3[h^{n-2} - b^{n(n-2)}]}{(h - b^n)^2} + \frac{6n^2[h^{n-2} - b^{n(n-2)}] - 3n^2b^nh[h^{n-4} - b^{n(n-4)}]}{(h - b^n)^2}
+      = \frac{[-5nh^{n-2} + 2nb^nh^{n-3}]\left(\mathbf{2n^s abck}\right) + [5nb^{n(n-2)} - 2nhb^{n(n-3)}]\left(\mathbf{2n^s abck}\right)}{(h - b^n)^3} + \frac{n^3b^nh[h^{n-4} - b^{n(n-4)}] - n^3[h^{n-2} - b^{n(n-2)}]}{(h - b^n)^2} +
+  - id: R3
+    rect: [0.0, 513.5, 612.0, 731.0]
+    crop: page-013-300dpi-region-03.png
+    words: 483
+    digits_sorted: "111111111112222222222222222222222222222222222222222233333333333344444444444444444555556666666"
+    pua: 0
+    notes: "the two 'a^n' factors on the first line are printed bold (\\mathbf{a}^n); 'a^n' elsewhere is plain; token '2n^s abck' carries a bold 'a'"
+    latex: |
+      + \frac{[-5nh^{n-2} + 2nb^nh^{n-3}]\mathbf{a}^n - 6nh^{n-1} + [5nb^{n(n-2)} - 2nhb^{n(n-3)}]\mathbf{a}^n - 6nb^{n(n-1)}}{(h-b^n)^3} + \frac{12(h^n - b^{n^2})}{(h-b^n)^4} +
+      + \frac{6n^2[h^{n-2} - b^{n(n-2)}] - 3n^2b^nh[h^{n-4} - b^{n(n-4)}]}{(h-b^n)^2} \text{ (vì } h - b^n = a^n + 2n^s abck)
+      \text{Vậy } C = C_1 + C_2 + C_3 = \frac{12(h^n - b^{n^2})}{(h-b^n)^4} - \frac{5na^n[h^{n-2} - b^{n(n-2)}] + 2na^nb^nh[h^{n-4} - b^{n(n-4)}] + 6n[h^{n-1} + b^{n(n-1)}]}{(h-b^n)^3} +
+      + \frac{6n^2([h^{n-2} - b^{n(n-2)}]) - 3n^2b^nh[h^{n-4} - b^{n(n-4)}]}{(h-b^n)^2} + \frac{5n[h^{n-2} - b^{n(n-2)}] + 2nb^nh[h^{n-4} - b^{n(n-4)}]}{(h-b^n)^3}(2n^s abck) +
+      + \frac{n^3b^nh[h^{n-4} - b^{n(n-4)}] - n^3[h^{n-2} - b^{n(n-2)}]}{(h-b^n)^2}, \text{ với } C_2 = \frac{6n^2([h^{n-2} - b^{n(n-2)}]) - 3n^2b^nh[h^{n-4} - b^{n(n-4)}]}{(h-b^n)^2}
+      C_1 = \frac{12(h^n - b^{n^2})}{(h-b^n)^4} - \frac{5na^n[h^{n-2} - b^{n(n-2)}] + 2na^nb^nh[h^{n-4} - b^{n(n-4)}] + 6n[h^{n-1} + b^{n(n-1)}]}{(h-b^n)^3}
+  - id: R4
+    rect: [0.0, 731.0, 612.0, 792.0]
+    crop: page-013-300dpi-region-04.png
+    words: 1
+    digits_sorted: "13"
+    pua: 0
+    notes: ""
+    latex: |
+      \text{13}

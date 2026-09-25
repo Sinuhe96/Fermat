@@ -1,0 +1,70 @@
+id: P007
+page: 7
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: ba4dbb4b372a4a0f3ce52ddcfae8ed83acbe438eb33f59113f006910f95d0e27
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 271.3]
+    crop: page-007-300dpi-region-01.png
+    words: 555
+    digits_sorted: "00000000000000111111111111111111111111111111111111111111111111112222222222222222222222222333333333333444444444444444455555666"
+    pua: 16
+    notes: vision colour read: last-line -1/6 sum term blue and +1/4 sum term green (line above ends with a red -1/6 sum term); emphasis colour not encoded. Vision read the args as (-1)^i and (i+j>=5) - text-layer glyphs give (-1)^j and (l+j>=5)
+    latex: |
+      \[ + \sum_{i=0}^{n-3}(-1)^2 C_{n-1-i}^{2} C_i^{0} b^{ni} h^{n-3-i} (n^s abck)^2 + \sum_{i=1}^{n-2}(-1)^1 C_{n-1-i}^{1} C_i^{1} b^{n(i-1)} h^{n-2-i} (n^s abck)^2 + \sum_{i=1}^{n-1}(-1)^0 C_{n-1-i}^{0} C_i^{1} b^{n(i-1)} h^{n-1-i} n^s abck + \]
+
+      \[ + \sum_{i=0}^{n-2}(-1)^1 C_{n-1-i}^{1} C_i^{0} b^{ni} h^{n-2-i} n^s abck + \sum_{i=0}^{n-1}(-1)^0 C_{n-1-i}^{0} C_i^{0} h^{n-1-i} b^{ni} \]
+
+      \[ = \sum_{i=5}^{n} C_n^{i} a^{(n-1)(n-i)} (n^s bck)^i + a^{n(n-1)} + n a^{n(n-2)} n^s abck + \frac{n(n-1)}{2} a^{n(n-3)} (n^s abck)^2 + \frac{n(n-1)(n-2)}{6} a^{n(n-4)} (n^s abck)^3 + \]
+
+      \[ + \frac{n(n-1)(n-2)(n-3)}{24} a^{n(n-5)} (n^s abck)^4 \]
+
+      \[ \Leftrightarrow \sum_{i=0}^{n-1}\sum_{\substack{j=0\\(l+j\ge5)}}^{n-1-i}\sum_{l=0}^{i}(-1)^j C_{n-1-i}^{j} C_i^{l} h^{n-1-i-j} b^{n(i-l)} (n^s abck)^{l+j} + \frac{1}{24}\sum_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} (n^s abck)^4 + \]
+
+      \[ + \frac{1}{24}\sum_{i=0}^{n-5}(n-1-i)(n-2-i)(n-3-i)(n-4-i) h^{n-5-i} b^{ni} (n^s abck)^4 - \frac{1}{6}\sum_{i=1}^{n-4} i(n-1-i)(n-2-i)(n-3-i) h^{n-4-i} b^{n(i-1)} (n^s abck)^4 - \]
+
+      \[ - \frac{1}{6}\sum_{i=3}^{n-2}(n-1-i)i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} (n^s abck)^4 + \frac{1}{4}\sum_{i=2}^{n-3}(n-1-i)(n-2-i)i(i-1) h^{n-3-i} b^{n(i-2)} (n^s abck)^4 + \]
+  - id: R2
+    rect: [0.0, 271.3, 612.0, 541.55]
+    crop: page-007-300dpi-region-02.png
+    words: 583
+    digits_sorted: "00000111111111111111111111111111111111111111111111111222222222222222222222222222222222333333333333333333444444444444444444555566666"
+    pua: 16
+    notes: vision colour read: last line printed red; text-layer confirms only the region's own (n^s bck)^i factor on the = line (no 'a'), as read
+    latex: |
+      \[ + \sum_{i=1}^{n-3} i(n-1-i)(n-2-i) h^{n-3-i} b^{n(i-1)} (n^s abck)^3 - \frac{1}{2}\sum_{i=2}^{n-2} i(i-1)(n-1-i) h^{n-2-i} b^{n(i-2)} (n^s abck)^3 - \]
+
+      \[ - \frac{1}{6}\sum_{i=0}^{n-4}(n-1-i)(n-2-i)(n-3-i) h^{n-4-i} b^{ni} (n^s abck)^3 + \frac{1}{6}\sum_{i=3}^{n-1} i(i-1)(i-2) h^{n-1-i} b^{n(i-3)} (n^s abck)^3 + \]
+
+      \[ + \frac{1}{2}\sum_{i=2}^{n-1} i(i-1) b^{n(i-2)} h^{n-1-i} (n^s abck)^2 + \frac{1}{2}\sum_{i=0}^{n-3}(n-1-i)(n-2-i) b^{ni} h^{n-3-i} (n^s abck)^2 - \sum_{i=1}^{n-2} i(n-1-i) b^{n(i-1)} h^{n-2-i} (n^s abck)^2 + \]
+
+      \[ + \sum_{i=1}^{n-1} i b^{n(i-1)} h^{n-1-i} n^s abck - \sum_{i=0}^{n-2}(n-1-i) b^{ni} h^{n-2-i} n^s abck + \sum_{i=0}^{n-1} h^{n-1-i} b^{ni} \]
+
+      \[ = \sum_{i=5}^{n} C_n^{i} a^{(n-1)(n-i)} (n^s bck)^i + a^{n(n-1)} + n a^{n(n-2)} n^s abck + \frac{n(n-1)}{2} a^{n(n-3)} (n^s abck)^2 + \frac{n(n-1)(n-2)}{6} a^{n(n-4)} (n^s abck)^3 + \]
+
+      \[ + \frac{n(n-1)(n-2)(n-3)}{24} a^{n(n-5)} (n^s abck)^4 \]
+
+      \[ \Rightarrow \frac{1}{24}\sum_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} (n^s abck)^4 + \frac{1}{24}\sum_{i=0}^{n-5}(n-1-i)(n-2-i)(n-3-i)(n-4-i) h^{n-5-i} b^{ni} (n^s abck)^4 + \]
+
+      \[ + \frac{1}{6}\sum_{i=1}^{n-4} i(i+1)(2+i)(3+i) h^{n-4-i} b^{n(i-1)} (n^s abck)^4 - \frac{n}{6}\sum_{i=1}^{n-4} i(3i^2+12i+11) h^{n-4-i} b^{n(i-1)} (n^s abck)^4 - \]
+  - id: R3
+    rect: [0.0, 541.55, 612.0, 792.0]
+    crop: page-007-300dpi-region-03.png
+    words: 408
+    digits_sorted: "0011111111111111111111111111111222222222222222222222222222222333333333333333333334444444466667"
+    pua: 11
+    notes: vision colour read: first term of line 2 green; these expansion lines repeat the pattern printed earlier on the same page, verified against the text layer
+    latex: |
+      \[ - \frac{n}{6}\sum_{i=3}^{n-2} i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} (n^s abck)^4 + \frac{1}{6}\sum_{i=3}^{n-2}(1+i)i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} (n^s abck)^4 - \]
+
+      \[ - \frac{n}{4}\sum_{i=2}^{n-3}(3+2i)i(i-1) h^{n-3-i} b^{n(i-2)} (n^s abck)^4 + \frac{1}{4}\sum_{i=2}^{n-3}(2+i)(1+i)i(i-1) h^{n-3-i} b^{n(i-2)} (n^s abck)^4 + \]
+
+      \[ + \sum_{i=1}^{n-3} i(n-1-i)(n-2-i) h^{n-3-i} b^{n(i-1)} (n^s abck)^3 - \frac{1}{2}\sum_{i=2}^{n-2} i(i-1)(n-1-i) h^{n-2-i} b^{n(i-2)} (n^s abck)^3 - \]
+
+      \[ - \frac{1}{6}\sum_{i=0}^{n-4}(n-1-i)(n-2-i)(n-3-i) h^{n-4-i} b^{ni} (n^s abck)^3 + \frac{1}{6}\sum_{i=3}^{n-1} i(i-1)(i-2) h^{n-1-i} b^{n(i-3)} (n^s abck)^3 + \]
+
+      \[ + \frac{1}{2}\sum_{i=2}^{n-1} i(i-1) b^{n(i-2)} h^{n-1-i} (n^s abck)^2 + \frac{1}{2}\sum_{i=0}^{n-3}(n-1-i)(n-2-i) b^{ni} h^{n-3-i} (n^s abck)^2 - \sum_{i=1}^{n-2} i(n-1-i) b^{n(i-1)} h^{n-2-i} (n^s abck)^2 + \]
+
+      \[ \text{7} \]

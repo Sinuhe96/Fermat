@@ -1,0 +1,99 @@
+id: P025
+page: 25
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 4f6a95bb9f833f6ad8483546c922c2b6697623854dc0ed8c6fafcaf6ea95a27e
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 317.95]
+    crop: page-025-300dpi-region-01.png
+    words: 804
+    digits_sorted: "1111111122222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333333334444444444444444444444455555555666666679"
+    pua: 5
+    notes: "text-layer gap: stored digits_sorted lacks 5 digits that are printed in Symbol font and extracted by PyMuPDF as PUA glyphs (0xF032 x2 -> 2, 0xF033 x3 -> 3); latex follows the render (crops verified at 900dpi); needs tool-side PUA-to-digit decoding before signoff"
+    latex: |
+      \[
+      =\frac{16(h^n-b^{n^2})(n^sabck)^4}{(h-b^n)^5}+\frac{n^2[-3b^{n(n-2)}+2hb^{n(n-3)}+h^{n-2}](n^sabck)^3}{2(b^n-h)^2}+\frac{n^2b^{n(n-2)}(n^sabck)^3}{(h-b^n)^2}-\frac{n^2hb^{n(n-3)}(n^sabck)^3}{(h-b^n)^2}+
+      \]
+      \[
+      +\frac{n^2[2h^{n-2}-b^nh^{n-3}](n^sabck)^3}{2(h-b^n)^2}-\frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{2(h-b^n)^2}-\frac{2n^2a^{n(n-2)}(n^sabck)^3}{(h-b^n)^2}+\frac{\mathbf{n^2a^{n(n-2)}}(n^sabck)^3}{\mathbf{2(h-b^n)^2}}+
+      \]
+      \[
+      +\frac{\mathbf{4n^2a^{n(n-4)}}(a^n+n^sabck)(n^sabck)^4}{\mathbf{2(h-b^n)^2}}+\frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{6(h-b^n)^2}+\textcolor{blue}{-\frac{16a^{n^2}(n^sabck)^4}{(h-b^n)^5}-\frac{32a^{n(n-1)}(n^sabck)^5}{(h-b^n)^5}}+
+      \]
+      \[
+      +\frac{n^2[hb^{n(n-3)}-2b^{n(n-2)}](n^sabck)^3}{3(h-b^n)^2}+\frac{na^n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^sabck)^3}{(h-b^n)^3}+\frac{7nb^{n(n-2)}-nh^{n-2}}{(h-b^n)^3}(n^sabck)^4+
+      \]
+      \[
+      -\frac{n^3h^{n-2}-n^3b^nh^{n-3}}{6(h-b^n)^2}(n^sabck)^3+\frac{n^3b^{n(n-2)}-n^3hb^{n(n-3)}}{6(h-b^n)^2}(n^sabck)^3+\frac{5[3nb^{n(n-4)}(h-b^n)^2-4nb^{n(n-3)}(h-b^n)+6nb^{n(n-2)}]}{4(h-b^n)^3}(n^sabck)^4-
+      \]
+      \[
+      -\frac{15nb^{n(n-1)}}{(b^n-h)^4}(n^sabck)^4-\frac{3nh^{n-4}(h-b^n)^2+4nh^{n-3}(h-b^n)+6nh^{n-2}}{12(h-b^n)^3}(n^sabck)^4+\frac{4nb^{n(n-3)}-3nhb^{n(n-4)}-nh^{n-3}}{3(h-b^n)^2}(n^sabck)^4+
+      \]
+      \[
+      +\frac{9nb^{n(n-4)}(h-b^n)^2-3n[2b^{n(n-3)}(h-b^n)+h^{n-2}-b^{n(n-2)}]}{2(h-b^n)^3}(n^sabck)^4+\textcolor{blue}{\frac{\mathbf{n(n-1)(n-2)}[\mathbf{b^{n(n-3)}}+\mathbf{a^{n(n-3)}}+\mathbf{h^{n-3}}](n^sabck)^4}{\mathbf{3(b^n-h)^2}}}
+      \]
+      \[
+      +\frac{[-5nh^{n-2}+2nb^nh^{n-3}]+[5nb^{n(n-2)}-2nhb^{n(n-3)}]}{3(h-b^n)^3}(n^sabck)^4+\textcolor{magenta}{\frac{2n(n-1)[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^sabck)^4}{(h-b^n)^3}}+
+      \]
+  - id: R2
+    rect: [0.0, 317.95, 612.0, 608.95]
+    crop: page-025-300dpi-region-02.png
+    words: 773
+    digits_sorted: "1111111111222222222222222222222222222222222222222222222222222222222233333333333333333333333333333333333333333333334444444444444444444444444455556666666777788"
+    pua: 2
+    notes: "text-layer gap: stored digits_sorted lacks 1 digit printed in Symbol font and extracted as PUA (0xF032 -> 2 at y=501.3); latex follows the render; region also contains one 0xF0DE arrow glyph (read as right double arrow)"
+    latex: |
+      \[
+      +\frac{-7b^{n(n-4)}(b^n-h)^3+7b^{n(n-3)}(h-b^n)^2-7[b^{n(n-2)}(h-b^n)+h^{n-1}-b^{n(n-1)}]}{(h-b^n)^4}n(n^sabck)^4-\frac{nh^{n-1}}{(h-b^n)^4}(n^sabck)^4+
+      \]
+      \[
+      -\frac{2nh^{n-3}a^n+2nb^{n(n-3)}a^n+18nb^{n(n-2)}}{3(h-b^n)^3}(n^sabck)^4-\frac{4na^{n(n-2)}(n^sabck)^4}{(h-b^n)^3}-\frac{n^3}{6}a^{n(n-4)}(n^sabck)^3+\frac{2na^{n(n-3)}(n^sabck)^4}{(h-b^n)^2}+
+      \]
+      \[
+      +\frac{n(n-1)(n-2)(n-3)[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^sabck)^4}{24(h-b^n)}+\frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^sabck)^4}{(h-b^n)^4}+\frac{n}{4}a^{n(n-5)}(n^sabck)^4
+      \]
+      \[
+      \Rightarrow \frac{16(h^n-b^{n^2})(n^sabck)^4}{(h-b^n)^5}+\frac{n^2b^{n(n-2)}(n^sabck)^3}{(h-b^n)^2}-\frac{n^2hb^{n(n-3)}(n^sabck)^3}{(h-b^n)^2}+\frac{[2n^2h^{n-2}-n^2b^nh^{n-3}](n^sabck)^3}{2(h-b^n)^2}+
+      \]
+      \[
+      +\frac{[n^2hb^{n(n-3)}-2n^2b^{n(n-2)}](n^sabck)^3}{2(h-b^n)^2}+\frac{n^2[-3b^{n(n-2)}+2hb^{n(n-3)}+h^{n-2}](n^sabck)^3}{2(b^n-h)^2}+\frac{na^n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^sabck)^3}{(h-b^n)^3}+
+      \]
+      \[
+      +\frac{\mathbf{n^2a^{n(n-2)}}(n^sabck)^3}{2(h-b^n)^2}-\frac{2n^2a^{n(n-2)}(n^sabck)^3}{(h-b^n)^2}-\frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{2(h-b^n)^2}-\frac{16a^{n^2}(n^sabck)^4}{(h-b^n)^5}+
+      \]
+      \[
+      +\frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^sabck)^3}{6(h-b^n)^2}-\frac{n^3h^{n-2}-n^3b^nh^{n-3}}{6(h-b^n)^2}(n^sabck)^3+\frac{n^3b^{n(n-2)}-n^3hb^{n(n-3)}}{6(h-b^n)^2}(n^sabck)^3+
+      \]
+      \[
+      +\frac{7nb^{n(n-2)}-nh^{n-2}}{(h-b^n)^3}(n^sabck)^4+\frac{5[3nb^{n(n-4)}(b^n-h)^2-4nb^{n(n-3)}(h-b^n)+6nb^{n(n-2)}]}{4(h-b^n)^3}(n^sabck)^4-
+      \]
+  - id: R3
+    rect: [0.0, 608.95, 612.0, 728.4]
+    crop: page-025-300dpi-region-03.png
+    words: 296
+    digits_sorted: "1111112222222222222223333333333333333444444444444444455567779"
+    pua: 0
+    notes: ""
+    latex: |
+      \[
+      -\frac{15nb^{n(n-1)}}{(b^n-h)^4}(n^sabck)^4-\frac{3nh^{n-4}(b^n-h)^2+4nh^{n-3}(h-b^n)+6nh^{n-2}}{12(h-b^n)^3}(n^sabck)^4+\frac{4nb^{n(n-3)}-3nhb^{n(n-4)}-nh^{n-3}}{3(h-b^n)^2}(n^sabck)^4+
+      \]
+      \[
+      +\frac{-7b^{n(n-4)}(h-b^n)^3+7b^{n(n-3)}(h-b^n)^2-7[b^{n(n-2)}(h-b^n)+h^{n-1}-b^{n(n-1)}]}{(h-b^n)^4}n(n^sabck)^4-\frac{nh^{n-1}}{(h-b^n)^4}(n^sabck)^4-
+      \]
+      \[
+      +\frac{9nb^{n(n-4)}(h-b^n)^2-3n[2b^{n(n-3)}(h-b^n)+h^{n-2}-b^{n(n-2)}]}{2(h-b^n)^3}(n^sabck)^4+\frac{[-5nh^{n-2}+2nb^nh^{n-3}]+[5nb^{n(n-2)}-2nhb^{n(n-3)}]}{3(h-b^n)^3}(n^sabck)^4-
+      \]
+  - id: R4
+    rect: [0.0, 728.4, 612.0, 792.0]
+    crop: page-025-300dpi-region-04.png
+    words: 1
+    digits_sorted: "25"
+    pua: 0
+    notes: ""
+    latex: |
+      \[
+      \text{25}
+      \]

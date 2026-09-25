@@ -1,0 +1,70 @@
+id: P009
+page: 9
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 51358845cac91c0976d2396309c3aeb6c661e656af601bb766d481c76782e581
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 271.3]
+    crop: page-009-300dpi-region-01.png
+    words: 530
+    digits_sorted: "001111111111111111111111111111111111111111122222222222222222222222222222222222223333333333333333333344444444444444444445566666"
+    pua: 17
+    notes: vision colour read: D(n^s abck)^2 blue, E(n^s abck) green in the two congruence lines (colour not encoded); M definition here starts 'Với' and carries a trailing minus on its next-to-last line
+    latex: |
+      \[ \Rightarrow M(n^s abck)^4 + \frac{1}{2}B(n^s abck)^3 + \frac{1}{6}C(n^s abck)^3 + \frac{1}{2}D(n^s abck)^2 + E(n^s abck) + \frac{h^n - b^{n^2}}{h - b^n} \equiv F (\mathrm{mod}\ n^{4s+2}) \]
+
+      \[ \Rightarrow M(n^s abck)^4 + \frac{1}{2}B(n^s abck)^3 + \frac{1}{6}C(n^s abck)^3 + \frac{1}{2}D(n^s abck)^2 + E(n^s abck) + \frac{h^n - b^{n^2}}{h - b^n} - F \equiv 0 (\mathrm{mod}\ n^{4s+2}) \quad (11) \]
+
+      \[ \text{Với } M = \frac{1}{24}\sum_{i=4}^{n-1} i(i-1)(i-2)(i-3)h^{n-1-i}b^{n(i-4)} + \frac{1}{24}\sum_{i=0}^{n-5} (n-1-i)(n-2-i)(n-3-i)(n-4-i)h^{n-5-i}b^{ni} + \]
+
+      \[ + \frac{1}{6}\sum_{i=1}^{n-4} i(i+1)(2+i)(3+i)h^{n-4-i}b^{n(i-1)} - \frac{n}{2}\sum_{i=1}^{n-4} i(i+1)(i+2)h^{n-4-i}b^{n(i-1)} - \frac{n}{2}\sum_{i=1}^{n-4} i(i+1)h^{n-4-i}b^{n(i-1)} - \frac{n}{3}\sum_{i=1}^{n-4} ih^{n-4-i}b^{n(i-1)} - \]
+
+      \[ - \frac{n}{6}\sum_{i=3}^{n-2} i(i-1)(i-2)h^{n-2-i}b^{n(i-3)} + \frac{1}{6}\sum_{i=3}^{n-2}(1+i)i(i-1)(i-2)h^{n-2-i}b^{n(i-3)} - \frac{n}{4}\sum_{i=2}^{n-3} i(i-1)h^{n-3-i}b^{n(i-2)} + \frac{1}{4}\sum_{i=2}^{n-3}(2+i)(1+i)i(i-1)h^{n-3-i}b^{n(i-2)} - \]
+
+      \[ - \frac{n}{2}\sum_{i=2}^{n-3}(1+i)i(i-1)h^{n-3-i}b^{n(i-2)} \]
+
+      \[ B = \sum_{i=1}^{n-3} i(n-1-i)(n-2-i)h^{n-3-i}b^{n(i-1)} - \sum_{i=2}^{n-2} i(i-1)(n-1-i)h^{n-2-i}b^{n(i-2)} \]
+  - id: R2
+    rect: [0.0, 271.3, 612.0, 555.3]
+    crop: page-009-300dpi-region-02.png
+    words: 589
+    digits_sorted: "00000011111111111111111111111111111111111111111111111222222222222222222222222222222222222333333333333333333334444444444444444444455566666789"
+    pua: 18
+    notes: printed editorial remark 'Quy ước: ...' reproduced as printed (present in the text layer); last line ends with a trailing minus (glyph-shape and text layer agree, an earlier vision read called it a full stop); colour: last two lines partly blue per vision
+    latex: |
+      \[ C = \sum_{i=3}^{n-1} i(i-1)(i-2)h^{n-1-i}b^{n(i-3)} - \sum_{i=0}^{n-4} (n-1-i)(n-2-i)(n-3-i)h^{n-4-i}b^{ni} \]
+
+      \[ D = \sum_{i=2}^{n-1} i(i-1)b^{n(i-2)}h^{n-1-i} + \sum_{i=0}^{n-3} (n-1-i)(n-2-i)b^{ni}h^{n-3-i} - 2\sum_{i=1}^{n-2} i(n-1-i)b^{n(i-1)}h^{n-2-i} \]
+
+      \[ E = \sum_{i=1}^{n-1} ib^{n(i-1)}h^{n-1-i} - \sum_{i=0}^{n-2} (n-1-i)b^{ni}h^{n-2-i} \]
+
+      \[ F = a^{n(n-1)} + na^{n(n-2)}n^s abck + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \]
+
+      \[ \text{\textit{Quy ước:} Trong các biến đổi đồng dư thức từ đây trở đi, tác giả quy đồng mẫu số theo hướng sử dụng (7), (8), (9), (10) và không bỏ mẫu; điều này không làm mất bản chất phương trình đồng dư theo modulo } n^f \text{, } f \in \mathbb{N}^* \text{ (vì các mẫu là } m(h-b^n)^r \not\equiv 0(\mathrm{mod}\ n) \text{, } r = 1,2,3,4;\ m = 1,2,3,4,6,12). \]
+
+      \[ \text{Ta có: } \text{*} \quad M = \frac{1}{24}\sum_{i=4}^{n-1}i(i-1)(i-2)(i-3)h^{n-1-i}b^{n(i-4)} + \frac{1}{24}\sum_{i=0}^{n-5}(n-1-i)(n-2-i)(n-3-i)(n-4-i)h^{n-5-i}b^{ni} + \]
+
+      \[ + \frac{1}{6}\sum_{i=1}^{n-4}i(1+i)(2+i)(3+i)h^{n-4-i}b^{n(i-1)} - \frac{n}{2}\sum_{i=1}^{n-4}i(i+1)(i+2)h^{n-4-i}b^{n(i-1)} - \frac{n}{2}\sum_{i=1}^{n-4}i(i+1)h^{n-4-i}b^{n(i-1)} - \]
+
+      \[ - \frac{n}{6}\sum_{i=3}^{n-2}i(i-1)(i-2)h^{n-2-i}b^{n(i-3)} + \frac{1}{6}\sum_{i=3}^{n-2}(1+i)i(i-1)(i-2)h^{n-2-i}b^{n(i-3)} - \frac{n}{4}\sum_{i=2}^{n-3}i(i-1)h^{n-3-i}b^{n(i-2)} + \frac{1}{4}\sum_{i=2}^{n-3}(2+i)(1+i)i(i-1)h^{n-3-i}b^{n(i-2)} - \]
+  - id: R3
+    rect: [0.0, 555.3, 612.0, 792.0]
+    crop: page-009-300dpi-region-03.png
+    words: 365
+    digits_sorted: "0111111111111111111111111111111222222222222222222222222222333333333333333333344444444444444444556669"
+    pua: 13
+    notes: continuation of M from the region above: line 1 opens with a minus, so the printed text reads '... - - n/2 sum ...'; note also that colons/labels are as printed: '(áp dụng mục B.1) trang 2)'
+    latex: |
+      \[ - \frac{n}{2} \sum_{i=2}^{n-3} (1+i)i(i-1) h^{n-3-i} b^{n(i-2)} - \frac{n}{3} \sum_{i=1}^{n-4} i h^{n-4-i} b^{n(i-1)} \]
+
+      \[ = \frac{1}{24} \sum_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} + \frac{1}{24} \sum_{i=0}^{n-5} (n-1-i)(n-2-i)(n-3-i)(n-4-i) h^{n-5-i} b^{ni} + \]
+
+      \[ + \frac{1}{6} \sum_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} - \frac{n}{2} \sum_{i=3}^{n-2} i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} - \frac{n}{2} \sum_{i=2}^{n-3} i(i-1) h^{n-3-i} b^{n(i-2)} - \]
+
+      \[ - \frac{n}{6} \sum_{i=3}^{n-2} i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} + \frac{1}{6} \sum_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} - \frac{n}{4} \sum_{i=2}^{n-3} i(i-1) h^{n-3-i} b^{n(i-2)} - \frac{n}{3} \sum_{i=1}^{n-4} i h^{n-4-i} b^{n(i-1)} \]
+
+      \[ + \frac{1}{4} \sum_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} - \frac{n}{2} \sum_{i=3}^{n-2} i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} \text{ (áp dụng mục B.1) trang 2)} \]
+
+      \[ \text{9} \]

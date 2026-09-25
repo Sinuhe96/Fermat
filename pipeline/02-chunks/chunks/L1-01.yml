@@ -91,4 +91,5 @@ extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e
 fidelity: PASS_WITH_MANUAL
 renders: L1_p1_300dpi.png L1_p2_300dpi.png
 lean_decls: L1_reduce_coprime, L1_step_S2_S3, L1_step_S4, L1_step_S5, L1_step_S6, L1_bo_de_1
+regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2
 status: DONE

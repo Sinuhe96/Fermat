@@ -1,0 +1,55 @@
+id: P017
+page: 17
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 22fd874c9897700d10e98cdb4cb878cf4e9e70ff2c2a9b8656bb0198a3909fe8
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 237.8]
+    crop: page-017-300dpi-region-01.png
+    words: 419
+    digits_sorted: "111111111111122222222222222222222222222222233333333333333333334444444444444444444444556666668"
+    pua: 1
+    notes: "emphasis colour from PDF text-colour spans; brackets in the printed text are private-use glyph pieces"
+    latex: |
+      \[ +\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\frac{2n^2a^{n(n-2)}(n^s abck)^3}{(h-b^n)^2}+\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}-\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3+ \]
+      \[ \textcolor{red}{+}\frac{\textcolor{red}{4na^{n(n-2)}(n^s abck)^4}}{(h-b^n)^3}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3-\frac{n}{4}a^{n(n-5)}(n^s abck)^4\ (\text{mod } n^{4s+2}) \]
+      \[ \text{Vậy } F\equiv F_1+F_2+F_3\ (\text{mod } n^{4s+2}) \]
+      \[ \text{với } F_1=\frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}+ \]
+      \[ +\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3},\quad F_2=\frac{2n^2a^{n(n-2)}(n^s abck)^3}{(h-b^n)^2}+\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}-\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3 \]
+      \[ F_3=\frac{4na^{n(n-2)}(n^s abck)^4}{(h-b^n)^3}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3-\frac{n}{4}a^{n(n-5)}(n^s abck)^4 \]
+
+  - id: R2
+    rect: [0.0, 237.8, 612.0, 446.5]
+    crop: page-017-300dpi-region-02.png
+    words: 341
+    digits_sorted: "011111111111111111111111111222222222222222222222222233333333333333333334444666666667"
+    pua: 15
+    notes: "tall square brackets are private-use glyphs in the text layer (pua); the equiv sign is private-use U+F0BA in the text layer"
+    latex: |
+      \[ \text{Ta có } T+Q=\left[\frac{1}{2}B_1(n^s abck)^3+\frac{1}{6}C_1(n^s abck)^3+\frac{1}{2}D(n^s abck)^2+E(n^s abck)+\frac{h^n-b^{n^2}}{h-b^n}-F_1\right]-F_3 \]
+      \[ +\left[M(n^s abck)^4+\frac{1}{2}B_2(n^s abck)^3+\frac{1}{6}C_2(n^s abck)^3-F_2+\frac{1}{6}C_3(n^s abck)^3+\frac{1}{2}B_3(n^s abck)^3\right]\text{ với} \]
+      \[ Q=M(n^s abck)^4+\frac{1}{2}B_2(n^s abck)^3+\frac{1}{2}B_3(n^s abck)^3+\frac{1}{6}C_2(n^s abck)^3+\frac{1}{6}C_3(n^s abck)^3-F_2\text{ và} \]
+      \[ T=P-F_3,\quad P=\frac{1}{2}B_1(n^s abck)^3+\frac{1}{6}C_1(n^s abck)^3+\frac{1}{2}D(n^s abck)^2+E(n^s abck)+\frac{h^n-b^{n^2}}{h-b^n}-F_1 \]
+      \[ \text{Từ (11) suy ra } T+Q\equiv 0\ (\text{mod } n^{4s+2})\ (12) \]
+      \[ \text{Dựa vào các kết quả biến đổi đồng nhất và đồng dư thức của các biểu thức:} \]
+      \[ B_1=\frac{7nb^{n(n-2)}a^n-6nh^{n-1}-nh^{n-2}a^n-6nhb^{n(n-2)}}{(h-b^n)^3}+\frac{12(h^n-b^{n^2})}{(h-b^n)^4}, \]
+
+  - id: R3
+    rect: [0.0, 446.5, 612.0, 792.0]
+    crop: page-017-300dpi-region-03.png
+    words: 634
+    digits_sorted: "111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222223333333333333333334444444455566666666677888"
+    pua: 27
+    notes: "curly braces and brackets are private-use glyphs (pua); one term uses magenta (\textcolor{magenta}) and one green (\textcolor{green})"
+    latex: |
+      \[ C_1=\frac{12(h^n-b^{n^2})}{(h-b^n)^4}-\frac{5na^n[h^{n-2}-b^{n(n-2)}]+2na^nb^nh[h^{n-4}-b^{n(n-4)}]+6n[h^{n-1}+b^{n(n-1)}]}{(h-b^n)^3}, \]
+      \[ D=\textcolor{blue}{\frac{8(h^n-b^{n^2})}{(h-b^n)^3}}\textcolor{red}{-}\frac{\textcolor{red}{2nb^{n(n-2)}h+2nb^{n(n-1)}+2nh^{n-2}b^n+2nh^{n-1}}}{(h-b^n)^2}+\frac{(n^2-3n)[h^{n-2}-b^{n(n-2)}]}{h-b^n},\ E=-\frac{n[h^{n-1}+b^{n(n-1)}]}{h-b^n}+\frac{2(h^n-b^{n^2})}{(b^n-h)^2} \]
+      \[ F_1\equiv \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}+\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3} \]
+      \[ \text{ta có: } P=\frac{1}{2}B_1(n^s abck)^3+\frac{1}{6}C_1(n^s abck)^3+\frac{1}{2}D(n^s abck)^2+E(n^s abck)+\frac{h^n-b^{n^2}}{h-b^n}-F_1= \]
+      \[ =\left[\frac{7nb^{n(n-2)}a^n-6nh^{n-1}-nh^{n-2}a^n-6nhb^{n(n-2)}}{2(h-b^n)^3}+\frac{12(h^n-b^{n^2})}{2(h-b^n)^4}\right](n^s abck)^3+ \]
+      \[ +\left\{\frac{[-5nh^{n-2}+2nb^nh^{n-3}]a^n-6nh^{n-1}+[5nb^{n(n-2)}-2nhb^{n(n-3)}]a^n-6nb^{n(n-1)}}{6(h-b^n)^3}+\frac{12(h^n-b^{n^2})}{6(h-b^n)^4}\right\}(n^s abck)^3+ \]
+      \[ +\left[\textcolor{magenta}{\frac{8(h^n-b^{n^2})}{2(h-b^n)^3}}-\frac{2nb^{n(n-2)}h+2nb^{n(n-1)}+2nh^{n-2}b^n+2nh^{n-1}}{2(h-b^n)^2}\right]\textcolor{magenta}{(n^s abck)^2}\textcolor{green}{+\frac{(n^2-3n)[h^{n-2}-b^{n(n-2)}]}{2(h-b^n)}(n^s abck)^2}- \]
+      \[ \text{17} \]
+

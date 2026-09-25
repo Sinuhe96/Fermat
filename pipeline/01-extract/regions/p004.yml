@@ -1,0 +1,66 @@
+id: P004
+page: 4
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: e152eee496ee662930a4b0c1f3bf06542fa8d5e273d99498788c3471bb237ee8
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 517.1]
+    crop: page-004-300dpi-region-01.png
+    words: 1224
+    digits_sorted: "000000000000111111111111111111111111111111111111111111111111111111111111111111111111222222222222222222222223333444444555555555666666666"
+    pua: 117
+    notes: "text-layer vs render check: exponent on n printed 'sn-1' in 6.2 line (u+v=n^{sn-1}c^n) but 'ns-1' / 'ns-1-s' in the 6.2/later lines (b16,b17,b23) - transcribed as printed, not normalized"
+    latex: |
+      \[ \text{thì } C_n^k \vdots n \text{ và } [(u+v)^{n-1}-1]\vdots n \text{ (định lý nhỏ Fermat). Do đó } (c'^{n}-1)\vdots n, \text{ mà } c'\not\vdots n \text{ nên } (c'^{n-1}-1)\vdots n, \text{ suy ra } c'^{n}-1-(c'^{n-1}-1)=c'^{n-1}(c'-1)\vdots n, \text{ suy ra } c'(c'-1)\vdots n, \text{ suy ra } c'=1+n k_3, \text{ với } k_3\in\mathbb{Z}. \text{ Chứng minh tương tự ta cũng có } a'=1+n k_1,\ b'=1+n k_2, \text{ với } k_1,k_2\in\mathbb{Z}, \text{ suy ra } t^n-u-v=(c.c')^n-c^n=c^n[(1+n k_3)^n-1]\vdots n^2. \text{ Chứng minh tương tự ta cũng có } (u^n-t+v)\vdots n^2 \text{ và } (v^n-t+u)\vdots n^2 \text{ suy ra } (u^n-t+v)+(v^n-t+u)-(t^n-u-v)=2(u+v-t)\vdots n^2, \text{ suy ra } (u+v-t)\vdots n^2. \text{ Từ (4'), (5'), (6') và } (a,b)=(a,c)=(c,b)=1 \text{ ta có } u+v-t=c(c^{n-1}-c')=a(a'-a^{n-1})=b(b'-b^{n-1})=n^s abck, \text{ với } k\in\mathbb{Z},\ s\in\mathbb{Z},\ s\ge 2,\ (k,a)=(k,b)=(k,c)=1,\ k\not\vdots n, \text{ nếu } k\ne 0. \text{ Suy ra } u=b^n+n^s abck,\ v=a^n+n^s abck,\ t=c^n-n^s abck,\ a^n+b^n=c^n-2n^s abck. \]
+
+      \[ \textbf{6.2. Khi } t \text{ chia hết cho } n \]
+
+      \[ \text{Từ (4) suy ra } (u+v)\vdots n \text{, áp dụng bổ đề 5b) ta có } \left( u+v,\sum_{i=0}^{n-1}(-1)^i u^{n-1-i}v^i \right)=n \text{ và } \left( \sum_{i=0}^{n-1}(-1)^i u^{n-1-i}v^i \right)\not\vdots n^2, \text{ kết hợp với (4) và áp dụng bổ đề 4, ta có: } u+v=n^{sn-1}c^n\ (4'') \text{ và } \sum_{i=0}^{n-1}(-1)^i u^{n-1-i}v^i=n c'^n \text{ với } t=n^s c.c',\ s\in\mathbb{N}^*;\ c,c'\in\mathbb{Z}^*,\ (c,c')=1,\ c\not\vdots n,\ c'\not\vdots n. \text{ Ta có } t^n-u-v=(n^s c.c')^n-n^{sn-1}c^n=n^{sn-1}c^n[n c'^n-1]\vdots n^2\ (5'')\ \text{(vì } n \text{ là số nguyên tố lẻ, } s\in\mathbb{N}^* \text{). Từ (5), (6) suy ra } (t-v)\not\vdots n \text{ và } (t-u)\not\vdots n, \text{ áp dụng bổ đề 5a) ta có } \left( t-v,\sum_{i=0}^{n-1}t^{n-1-i}v^i \right)=\left( t-u,\sum_{i=0}^{n-1}t^{n-1-i}u^i \right)=1,\ \left( \sum_{i=0}^{n-1}t^{n-1-i}v^i \right)\not\vdots n,\ \left( \sum_{i=0}^{n-1}t^{n-1-i}u^i \right)\not\vdots n, \text{ kết hợp với (5), (6) và áp dụng bổ đề 3 ta có } t-v=b^n\ (5') \text{ và } \sum_{i=0}^{n-1}t^{n-1-i}v^i=b'^n, \text{ với } u=b b',\ b,b'\in\mathbb{Z}^*,\ (b,b')=1,\ b\not\vdots n,\ b'\not\vdots n;\ t-u=a^n\ (6'), \text{ với } v=a a',\ a,a'\in\mathbb{Z}^*,\ (a,a')=1,\ a\not\vdots n,\ a'\not\vdots n;\ (a,b)=(a,c)=(c,b)=1. \]
+
+      \[ \text{Lập luận như 6.1. ta có } b'=1+n k_2,\ a'=1+n k_1, \text{ suy ra } u^n-t+v=(b.b')^n-b^n=b^n[(1+n k_2)^n-1]\vdots n^2\ (5'') \text{ (và } v^n-t+u=(a.a')^n-a^n=a^n[(1+n k_1)^n-1]\vdots n^2\ (6''), \text{ kết hợp (4''),(5'') và (6'') suy ra } (u^n-t+v)+(v^n-t+u)-(t^n-u-v)=2(u+v-t)\vdots n^2, \text{ suy ra } (u+v-t)\vdots n^2, \text{ mà } u+v-t=n^s c(n^{ns-1-s} c^{n-1}-c')=a(a'-a^{n-1})=b(b'-b^{n-1})=n^s abck \text{ nên } s\ge 2;(k,a)=(k,b)=(k,c)=1 \text{ và } k\not\vdots n, \text{ nếu } k\ne 0. \text{ Suy ra } v=a^n+n^s abck,\ u=b^n+n^s abck,\ t=n^{ns-1}c^n-n^s abck,\ a^n+b^n=n^{ns-1}c^n-2n^s abck. \]
+
+      \[ \textbf{6.2.1. Khi } k = 0 \]
+
+      \[ \text{Ta nhận thấy khi } k=0 \text{ thì } t-u=v,\ t-v=u, \text{ hay } a^n=a.a',\ b^n=b.b', \text{ suy ra } a^{n-1}=a',\ b^{n-1}=b' \Rightarrow |a|=|a'|=|b|=|b'|=1 \text{ (vì } (a,a')=(b,b')=1 \text{)} \]
+  - id: R2
+    rect: [0.0, 517.1, 612.0, 659.9]
+    crop: page-004-300dpi-region-02.png
+    words: 251
+    digits_sorted: "000111111111111122222222256677"
+    pua: 8
+    notes: "divisibility glyphs: 'h=c^n khi t does-not-divide n hoac h=n^{ns-1}c^n khi t divides n' (vi) - the glyph is a vertical-dots divisibility symbol, dropped in the text layer; read from render"
+    latex: |
+      \[ \Rightarrow t = 0 \lor t^n = 2 \text{, vô lý.} \]
+
+      \[ \text{Vậy, trong trường hợp } k = 0, \text{ PT (1) vô nghiệm nguyên khác không.} \]
+
+      \[ \text{Theo \textbf{6.1.} và \textbf{6.2.}, ta có \textit{kết quả quan trọng}: } v = a^n + n^s abck,\ u = b^n + n^s abck,\ t = h - n^s abck,\ a^n + b^n = h - 2n^s abck \text{ ; với} \]
+
+      \[ h = c^n \text{, khi } t \not\vdots n \text{ hoặc } h = n^{ns-1}c^n \text{, khi } t \vdots n \text{, trong đó } a, b, c, k \text{ là bốn số nguyên khác không và đôi một nguyên tố cùng} \]
+
+      \[ \text{nhau, đồng thời không chia hết cho } n, s \in \mathbb{Z}, s \ge 2 \text{ (đpcm).} \]
+
+      \[ \textbf{7. Chứng minh bổ đề 7.} \]
+
+      \[ \text{* Vì } abc \not\vdots n \text{, nên } a \not\vdots n, b \not\vdots n, c \not\vdots n \text{, vì vậy theo bổ đề 5d), ta có: } c^{n(n-1)} \equiv a^{n(n-1)} \equiv b^{n(n-1)} \equiv 1 \pmod{n^2} \text{, suy ra} \]
+
+      \[ a^{n^2} + b^{n^2} - c^{n^2} = (a^n + b^n - c^n) - c^n [c^{n(n-1)} - 1] + a^n [a^{n(n-1)} - 1] + b^n [b^{n(n-1)} - 1] \equiv 0 \pmod{n^2} \]
+  - id: R3
+    rect: [0.0, 659.9, 612.0, 792.0]
+    crop: page-004-300dpi-region-03.png
+    words: 139
+    digits_sorted: "00111222222224"
+    pua: 8
+    notes: ""
+    latex: |
+      \[ \Rightarrow a^{n^2}+b^{n^2}-c^{n^2} \equiv 0 \pmod{n^2} \text{ (a).} \]
+
+      \[ \text{* Ta có } c^n \equiv a^n + b^n \pmod{n^2} \text{ (b) và } c^{n(n-2)} \equiv a^{n(n-2)}+b^{n(n-2)} \pmod{n} \text{ (c). Từ (c) suy ra} \]
+
+      \[ c^{n(n-1)}a^n b^n \equiv a^{n(n-1)} c^n b^n + b^{n(n-1)} c^n a^n \pmod{n} \text{ (nhân hai vế của đồng dư thức (c) cho } a^n b^n c^n \not\equiv 0 \pmod n\text{ )} \]
+
+      \[ \Rightarrow a^n b^n \equiv c^n (a^n + b^n) \pmod{n} \]
+
+      \[ \text{4} \]

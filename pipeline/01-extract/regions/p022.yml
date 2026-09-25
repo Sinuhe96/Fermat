@@ -1,0 +1,94 @@
+id: P022
+page: 22
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 202bd18149b83d3928e808152e75bf76e35b9d682d05df7b6144c3d7a6acb77e
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 352.5]
+    crop: page-022-300dpi-region-01.png
+    words: 812
+    digits_sorted: "111111111111111111111111222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333333445566666666666666666666788888888888"
+    pua: 4
+    notes: "render carries red/blue/green/magenta emphasis on parts of these lines; latex keeps only the emphasis the transcription reported"
+    latex: |
+      \[
+      \Rightarrow P_1 = \frac{-6n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]a^n + 2n[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^{2n} + 24n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}]}{6(h-b^n)^3}(n^s abck)^3 +
+      \]
+      \[
+      + \frac{3n[7b^{n(n-2)}a^n - 6h^{n-1} - h^{n-2}a^n - 6hb^{n(n-2)}] + n[5b^{n(n-2)} - 2hb^{n(n-3)}]a^n - 6nb^{n(n-1)}}{6(h-b^n)^3}(n^s abck)^3 +
+      \]
+      \[
+      + \frac{n[-5h^{n-2}+2b^nh^{n-3}]a^n - 6nh^{n-1} + 6nb^{n(n-2)}a^n - 6nh^{n-2}a^n - 14na^{n(n-1)}}{6(h-b^n)^3}(n^s abck)^3 -
+      \]
+      \[
+      - \frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}
+      \]
+      \[
+      \Rightarrow P_1 = \frac{n[(2h^{n-3}a^{2n}+2b^nh^{n-3}a^n)+(2b^{n(n-3)}a^{2n}-2hb^{n(n-3)}a^n)] + n[-18hb^{n(n-2)}-8h^{n-2}a^n+26b^{n(n-2)}a^n+18b^{n(n-1)}+6a^{n(n-1)}]}{6(h-b^n)^3}(n^s abck)^3 -
+      \]
+      \[
+      - \frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n^2[h^{n-2}-b^{n(n-2)}](n^s abck)^3}{(h-b^n)^2} + \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}
+      \]
+      \[
+      \Rightarrow P_1 = \frac{n[2h^{n-3}a^n(a^n+b^n)-2b^{n(n-3)}a^n(h-a^n)] + n[-18b^{n(n-2)}(h-a^n)+8b^{n(n-2)}a^n] - 8nh^{n-2}a^n + 18nb^{n(n-1)} + 6na^{n(n-1)}}{6(h-b^n)^3}(n^s abck)^3 -
+      \]
+      \[
+      - \frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}
+      \]
+      \[
+      \Rightarrow P_1 = \frac{n[2h^{n-3}a^nh - 2b^{n(n-3)}a^nb^n] + n[-18b^{n(n-2)}b^n + 8b^{n(n-2)}a^n] - 8nh^{n-2}a^n + 18nb^{n(n-1)} + 6na^{n(n-1)}}{6(h-b^n)^3}(n^s abck)^3 +
+      \]
+  - id: R2
+    rect: [0.0, 352.5, 612.0, 495.2]
+    crop: page-022-300dpi-region-02.png
+    words: 321
+    digits_sorted: "11122222222222222222222223333333333333333333333333333466688"
+    pua: 1
+    notes: "render carries red/blue/green/magenta emphasis on parts of these lines; latex keeps only the emphasis the transcription reported"
+    latex: |
+      \[
+      + \frac{n[2h^{n-3}a^n(-2n^s abck) - 2b^{n(n-3)}a^n(2n^s abck)] - 18b^{n(n-2)}(2n^s abck)}{6(h-b^n)^3}(n^s abck)^3 - \frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} +
+      \]
+      \[
+      + \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2} \quad (\text{vì } h-a^n = b^n+2n^s abck,\ a^n+b^n = h-2n^s abck)
+      \]
+      \[
+      \Rightarrow P_1 = \frac{na^n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^3}{(h-b^n)^3} - \frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2} -
+      \]
+      \[
+      - \frac{2nh^{n-3}a^n+2nb^{n(n-3)}a^n+18nb^{n(n-2)}}{3(h-b^n)^3}(n^s abck)^4,
+      \]
+  - id: R3
+    rect: [0.0, 495.2, 612.0, 792.0]
+    crop: page-022-300dpi-region-03.png
+    words: 482
+    digits_sorted: "1111111111111122222222222222222222222222222233333333333333333333333333334444444444444444444445556666688"
+    pua: 6
+    notes: "4 superscript digits are PUA glyphs in the text layer (U+F033/F034 = printed 3/4) so this region digits_sorted omits them; latex transcribes the printed digits; red/blue/magenta emphasis kept where reported"
+    latex: |
+      \[
+      \text{Gọi } T = P - F_3 = P_1 + P_2 - F_3, \text{ suy ra}
+      \]
+      \[
+      T \equiv \frac{na^n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^3}{(h-b^n)^3} - \frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2} -
+      \]
+      \[
+      - \frac{2nh^{n-3}a^n+2nb^{n(n-3)}a^n+18nb^{n(n-2)}}{3(h-b^n)^3}(n^s abck)^4 + \frac{\textcolor{red}{n(n-1)(n-2)(n-3)[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^s abck)^4}}{\textcolor{red}{24(h-b^n)}} +
+      \]
+      \[
+      + \frac{\textcolor{blue}{n(n-1)(n-2)[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^s abck)^4}}{\textcolor{blue}{3(b^n-h)^2}} + \frac{\textcolor{magenta}{2n(n-1)[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^4}}{\textcolor{magenta}{(h-b^n)^3}} +
+      \]
+      \[
+      + \frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^s abck)^4}{(h-b^n)^4} - \frac{4na^{n(n-2)}(n^s abck)^4}{(h-b^n)^3} - \frac{n^3}{6}a^{n(n-4)}(n^s abck)^3 + \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \pmod{n^{4s+2}}
+      \]
+      \[
+      \text{Ta có } Q_1 = \frac{16(h^n-b^{n^2})}{(h-b^n)^5}(n^s abck)^4 + \frac{1}{2}B_2(n^s abck)^3 + \frac{1}{6}C_2(n^s abck)^3 - F_2
+      \]
+      \[
+      \text{Từ } M(n^s abck)^4 \equiv \frac{16(h^n-b^{n^2})}{(h-b^n)^5}(n^s abck)^4 + M_1(n^s abck)^4 \pmod{n^{4s+2}} \text{ và các biểu thức}
+      \]
+      \[
+      22
+      \]

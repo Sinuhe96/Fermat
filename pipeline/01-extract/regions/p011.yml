@@ -1,0 +1,109 @@
+id: P011
+page: 11
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: c041c6c7a791080eb3db06878e6d34b1563b686574831b1d47f50190c9489e38
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 96.5]
+    crop: page-011-300dpi-region-01.png
+    words: 119
+    digits_sorted: "112222222333334447779"
+    pua: 0
+    notes: "second line is printed on a yellow highlight (visible in the render; not encoded in LaTeX)"
+    latex: |
+      + \frac{7nb^{n(n-4)}(b^n-h)^3 + 7nb^{n(n-3)}(b^n-h)^2 - 7n\left[b^{n(n-2)}(h-b^n) + h^{n-1} - b^{n(n-1)}\right]}{(h-b^n)^4}
+      + \frac{9nb^{n(n-4)}(h-b^n)^2 + 3n\left[-2b^{n(n-3)}(h-b^n) + b^{n(n-2)} - h^{n-2}\right]}{2(h-b^n)^3}
+  - id: R2
+    rect: [0.0, 96.5, 612.0, 181.9]
+    crop: page-011-300dpi-region-02.png
+    words: 142
+    digits_sorted: "1111122222233333444445566777"
+    pua: 1
+    notes: ""
+    latex: |
+      \text{Vậy } M \equiv \frac{16(h^n - b^{n^2})}{(h-b^n)^5} + M_1 \pmod{n^2}.
+      \text{Với }
+      M_1 = \frac{7nb^{n(n-4)}(b^n-h)^3 + 7nb^{n(n-3)}(b^n-h)^2 - 7n\left[b^{n(n-2)}(h-b^n) + h^{n-1} - b^{n(n-1)}\right]}{(h-b^n)^4} + \textcolor{red}{\frac{5\left[3nb^{n(n-4)}(b^n-h)^2 - 4nb^{n(n-3)}(h-b^n) + 6nb^{n(n-2)}\right]}{4(h-b^n)^3}}
+  - id: R3
+    rect: [0.0, 181.9, 612.0, 250.8]
+    crop: page-011-300dpi-region-03.png
+    words: 148
+    digits_sorted: "111122222222233333333334444444569"
+    pua: 0
+    notes: "leading minus and the first fraction are printed in red in the render (encoded as \\textcolor{red})"
+    latex: |
+      -\textcolor{red}{\frac{3nh^{n-4}(b^n-h)^2 + 4nh^{n-3}(h-b^n) + 6nh^{n-2}}{12(h-b^n)^3}} - \frac{nh^{n-1}}{(b^n-h)^4} + \frac{9nb^{n(n-4)}(b^n-h)^2 + 3n\left[-2b^{n(n-3)}(h-b^n) - b^{n(n-2)} + h^{n-2}\right]}{2(h-b^n)^3} +
+      + \frac{4nb^{n(n-3)} - 3nhb^{n(n-4)} - nh^{n-3}}{3(b^n-h)^2} - \frac{15nb^{n(n-1)}}{(b^n-h)^4}
+  - id: R4
+    rect: [0.0, 250.8, 612.0, 320.7]
+    crop: page-011-300dpi-region-04.png
+    words: 196
+    digits_sorted: "1111111111111112222222222222222333333333"
+    pua: 19
+    notes: "the '*B' line is printed in brown; in the second line the first sum is red and the second sum blue (encoded)"
+    latex: |
+      \text{*}B = \sum_{i=1}^{n-3} i(n-1-i)(n-2-i)h^{n-3-i}b^{n(i-1)} - \sum_{i=2}^{n-2} i(i-1)(n-1-i)h^{n-2-i}b^{n(i-2)}
+      = \left[\sum_{i=1}^{n-3} i(i+1)(i+2)h^{n-3-i}b^{n(i-1)} - n\sum_{i=1}^{n-3} i(2i+3)h^{n-3-i}b^{n(i-1)} + n^2\sum_{i=1}^{n-3} ih^{n-3-i}b^{n(i-1)}\right] + \left[\sum_{i=2}^{n-2} (i-1)i(i+1)h^{n-2-i}b^{n(i-2)} - n\sum_{i=2}^{n-2} i(i-1)h^{n-2-i}b^{n(i-2)}\right]
+  - id: R5
+    rect: [0.0, 320.7, 612.0, 391.8]
+    crop: page-011-300dpi-region-05.png
+    words: 244
+    digits_sorted: "1111111111111111111122222222222222222223333333333333"
+    pua: 39
+    notes: "first sum of line 1 red and second sum blue; in line 2 first sum red and third sum blue (encoded); the two sums in the first bracket of line 2 are printed identically"
+    latex: |
+      = \left[\textcolor{red}{\sum_{i=1}^{n-3} i(i+1)(i+2)h^{n-3-i}b^{n(i-1)}} - \textcolor{blue}{n\sum_{i=1}^{n-3} i(2i+3)h^{n-3-i}b^{n(i-1)}} + n^2\sum_{i=1}^{n-3} ih^{n-3-i}b^{n(i-1)}\right] + \left[\sum_{i=3}^{n-1} (i-2)(i-1)ih^{n-1-i}b^{n(i-3)} - n\sum_{i=2}^{n-2} i(i-1)h^{n-2-i}b^{n(i-2)}\right]
+      = \left\{\left[\textcolor{red}{\sum_{i=3}^{n-1} (i-2)(i-1)ih^{n-1-i}b^{n(i-3)}} + \sum_{i=3}^{n-1} (i-2)(i-1)ih^{n-1-i}b^{n(i-3)}\right] - n\left[\textcolor{blue}{\sum_{i=2}^{n-2} (i-1)(2i+1)h^{n-2-i}b^{n(i-2)}} + \sum_{i=2}^{n-2} i(i-1)h^{n-2-i}b^{n(i-2)}\right]\right\} +
+  - id: R6
+    rect: [0.0, 391.8, 612.0, 465.8]
+    crop: page-011-300dpi-region-06.png
+    words: 110
+    digits_sorted: "11111111112222222223333333"
+    pua: 10
+    notes: ""
+    latex: |
+      + n^2\sum_{i=1}^{n-3} ih^{n-3-i}b^{n(i-1)} \text{ (áp dụng mục B.1), trang 2)}
+      = \left[2\sum_{i=3}^{n-1} (i-2)(i-1)ih^{n-1-i}b^{n(i-3)} - \sum_{i=2}^{n-2} (i-1)(3i+1)h^{n-2-i}b^{n(i-2)}\right] + n^2\sum_{i=1}^{n-3} ih^{n-3-i}b^{n(i-1)}
+  - id: R7
+    rect: [0.0, 465.8, 612.0, 551.6]
+    crop: page-011-300dpi-region-07.png
+    words: 82
+    digits_sorted: "112222222223333"
+    pua: 2
+    notes: ""
+    latex: |
+      = B^* + n^2\sum_{i=1}^{n-3} ih^{n-3-i}b^{n(i-1)}
+      = B^* + n^2 p'(b^n) \text{ (áp dụng mục B.2), trang 2)}
+      = B^* + \frac{n^2\left[(n-3)b^{n(n-2)} - (n-2)hb^{n(n-3)} + h^{n-2}\right]}{(b^n-h)^2}
+  - id: R8
+    rect: [0.0, 551.6, 612.0, 620.0]
+    crop: page-011-300dpi-region-08.png
+    words: 108
+    digits_sorted: "11111222222222223333333"
+    pua: 2
+    notes: "the '*' on B is a superscript (B^*); line 1 repeats the n^2[...]/(b^n-h)^2 fraction of the previous page line with -3 and +2h coefficients and adds -n^3b^{n(n-3)}/(h-b^n)"
+    latex: |
+      = B^* + \frac{n^2\left[-3b^{n(n-2)} + 2hb^{n(n-3)} + h^{n-2}\right]}{(b^n-h)^2} - \frac{n^3b^{n(n-3)}}{h-b^n}
+      \text{Với } B^* = 2\sum_{i=3}^{n-1} (i-2)(i-1)ih^{n-1-i}b^{n(i-3)} - n\sum_{i=2}^{n-2} (i-1)(3i+1)h^{n-2-i}b^{n(i-2)}
+  - id: R9
+    rect: [0.0, 620.0, 612.0, 730.0]
+    crop: page-011-300dpi-region-09.png
+    words: 201
+    digits_sorted: "111111111111222222222222222222223333333333"
+    pua: 25
+    notes: ""
+    latex: |
+      = 2\sum_{i=3}^{n-1} i(i-1)(i-2)h^{n-1-i}b^{n(i-3)} - n\left[3\sum_{i=2}^{n-2} i(i-1)h^{n-2-i}b^{n(i-2)} + \sum_{i=2}^{n-2} (i-1)h^{n-2-i}b^{n(i-2)}\right]
+      = 2\sum_{i=3}^{n-1} i(i-1)(i-2)h^{n-1-i}b^{n(i-3)} - n\left[3\sum_{i=2}^{n-2} i(i-1)h^{n-2-i}b^{n(i-2)} + \sum_{i=1}^{n-3} ih^{n-3-i}b^{n(i-1)}\right] \text{ (áp dụng mục B.1), trang 2)}
+      = 2f^{(3)}(b^n) - n\left[3r''(b^n) + p'(b^n)\right] \text{ (áp dụng mục B.2), trang 2)}
+  - id: R10
+    rect: [0.0, 730.0, 612.0, 792.0]
+    crop: page-011-300dpi-region-10.png
+    words: 1
+    digits_sorted: "11"
+    pua: 0
+    notes: ""
+    latex: |
+      \text{11}

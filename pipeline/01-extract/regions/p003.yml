@@ -1,0 +1,80 @@
+id: P003
+page: 3
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 798f2bd3ff9c37cc26096b21e6ad35bd89bc6c26f3b21d6d59517332b0bab30d
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 186.7]
+    crop: page-003-300dpi-region-01.png
+    words: 300
+    digits_sorted: "00111111111111111111222222222233"
+    pua: 12
+    notes: ""
+    latex: |
+      \[ \text{nên }(u+v, nv^{n-1})=1,\text{ suy ra }(A,u+v)=1\text{ (đpcm).} \]
+
+      \[ b)\ \text{Ta có } A=n(u+v)\left[\sum_{k=0}^{n-3}(-1)^k\frac{C_n^k}{n}(u+v)^{n-k-2}v^k-\frac{(n-1)v^{n-2}}{2}\right]+nv^{n-1}=n(u+v)A_1+nv^{n-1},\text{ với} \]
+
+      \[ \sum_{k=0}^{n-3}(-1)^k\frac{C_n^k}{n}(u+v)^{n-k-2}v^k-\frac{(n-1)v^{n-2}}{2}=A_1.\text{ Với }k=\overline{1,n-1}\text{ thì }C_n^k\vdots n\text{ (vì }n\text{ là số nguyên tố), mà }(u+v)\vdots n\text{ nên} \]
+
+      \[ n(u+v)A_1\vdots n^2;\text{ mặt khác }nv^{n-1}\vdots n\text{ và }nv^{n-1}\not\vdots n^2\text{ (do }v\not\vdots n\text{), từ đó suy ra }n(u+v)A_1+nv^{n-1}=A\vdots n\text{ và }A\not\vdots n^2,\text{ hơn nữa }(u+v,A)=n\text{ (đpcm).} \]
+
+      \[ c)\ *\text{ Nếu }uv\vdots n\text{ thì }u\vdots n\lor v\vdots n\text{ (vì }n\text{ là số nguyên tố), suy ra }u^n\vdots n\lor v^n\vdots n\text{ và do }(u^n+v^n)\vdots n\text{ nên }u^n\vdots n\land v^n\vdots n,\text{ suy ra }u\vdots n\land v\vdots n\text{ (vì }n\text{ là số nguyên tố), suy ra }(u^n+v^n)\vdots n^2\text{ (đpcm).} \]
+  - id: R2
+    rect: [0.0, 186.7, 612.0, 536.6]
+    crop: page-003-300dpi-region-02.png
+    words: 526
+    digits_sorted: "00000000001111111111111111111111111111111111111111111111111222234455566666"
+    pua: 18
+    notes: ""
+    latex: |
+      \[ \text{* Nếu } uv \not\vdots n \text{ thì } u \not\vdots n, v \not\vdots n \text{, suy ra } u^{n-1} \equiv v^{n-1} \equiv 1 \pmod n \text{ (định lý nhỏ Fermat) suy ra } u^{n-1} - v^{n-1} = (u^{n-1} - 1) - (v^{n-1} - 1) \equiv 0 \pmod n. \]
+
+      \[ \text{Giả sử } (u+v) \not\vdots n \text{, ta có } \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i = u^{n-1} - v \sum_{i=0}^{n-2} (-1)^i u^{n-2-i} v^i = u^{n-1} - \frac{v(u^{n-1} - v^{n-1})}{u+v} \equiv u^{n-1} \equiv 1 \pmod n \text{, suy ra} \]
+
+      \[ \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \not\vdots n \text{, suy ra } u^n + v^n = (u+v) \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \not\vdots n \text{, trái với giả thiết.} \]
+
+      \[ \text{Vậy } (u+v)\vdots n \text{, theo một kết quả chứng minh ở b) là } \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i = A\vdots n \text{, suy ra} \]
+
+      \[ u^n + v^n = (u+v) \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \vdots n^2 \text{ (đpcm).} \]
+
+      \[ \text{d) Vì } n \text{ là số nguyên tố và } u \not\vdots n \text{ nên } u^{n-1} \equiv 1 \pmod n \text{ (định lý nhỏ Fermat), suy ra } u^{n-1} = 1 + mn, m \in \mathbb{N}. \]
+
+      \[ \Rightarrow u^{n(n-1)} = (u^{n-1})^n = (1+mn)^n \equiv 1 \pmod{n^2} \text{ (đpcm).} \]
+
+      \[ \text{\textbf{Bổ đề 5 đã được chứng minh.}} \]
+
+      \[ \text{\textbf{6. Chứng minh bổ đề 6.}} \]
+
+      \[ \text{Vì } x=u, y=v, z=t \text{ là nghiệm của PT (1) nên ta có } u^n + v^n = t^n \quad (3) \text{, suy ra: } (u+v) \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i = t^n \quad (4) \text{,} \]
+
+      \[ (t-v) \sum_{i=0}^{n-1} t^{n-1-i} v^i = u^n \quad (5), \quad (t-u) \sum_{i=0}^{n-1} t^{n-1-i} u^i = v^n \quad (6) \]
+
+      \[ \text{Xét hai trường hợp của } t. \]
+
+      \[ \text{\textbf{6.1. Khi } t \text{ không chia hết cho } n.} \]
+
+      \[ \text{Ta có } (u,v) = (u,t) = (v,t) = 1 \text{ và cùng với (4), (5), (6) suy ra } (u+v) \not\vdots n \text{, } (t-v) \not\vdots n \text{ và } (t-u) \not\vdots n \text{; áp dụng bổ đề} \]
+  - id: R3
+    rect: [0.0, 536.6, 612.0, 792.0]
+    crop: page-003-300dpi-region-03.png
+    words: 485
+    digits_sorted: "0000000001111111111111111111111111111111111111334455566"
+    pua: 66
+    notes: ""
+    latex: |
+      \[ \text{5 ta có } \left( u+v, \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \right) = \left( t-v, \sum_{i=0}^{n-1} t^{n-1-i} v^i \right) = \left( t-u, \sum_{i=0}^{n-1} t^{n-1-i} u^i \right) = 1, \left( \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \right) \not\vdots n, \left( \sum_{i=0}^{n-1} t^{n-1-i} v^i \right) \not\vdots n, \]
+
+      \[ \left( \sum_{i=0}^{n-1} t^{n-1-i} u^i \right) \not\vdots n \text{, kết hợp với (4), (5), (6) và áp dụng bổ đề 3, ta có: } u+v = c^n \text{ (4') và } \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i = c'^n \text{, với} \]
+
+      \[ t = c.c',\ c, c' \in \mathbb{Z}^*,\ (c, c') = 1 \text{ và } c \not\vdots n,\ c' \not\vdots n;\ t-v = b^n \text{ (5') và } \sum_{i=0}^{n-1} t^{n-1-i} v^i = b'^n \text{, với} \]
+
+      \[ u = b.b',\ b, b' \in \mathbb{Z}^*,\ (b, b') = 1 \text{ và } b \not\vdots n,\ b' \not\vdots n;\ t-u = a^n \text{ (6') và } \sum_{i=0}^{n-1} t^{n-1-i} u^i = a'^n \text{, với } v = a.a',\ a, a' \in \mathbb{Z}^*,\ (a, a') = 1, \]
+
+      \[ \text{và } a \not\vdots n,\ a' \not\vdots n;\ (a, b) = (a, c) = (c, b) = 1\ ((a, b) = (a, c) = (c, b) = 1 \text{ (vì } (b.b', a.a') = (b.b', c.c') = (a.a', c.c') = 1) \]
+
+      \[ \text{Ta có: } c'^n - 1 = \sum_{k=1}^{n-1} (-1)^k C_n^k (u+v)^{n-k-1} v^k + \left[ (u+v)^{n-1} - 1 \right]. \text{ Vì } n \text{ là số nguyên tố và } (u+v) \not\vdots n, \text{ nên với } k = \overline{1, n-1} \]
+
+      \[ \text{3} \]

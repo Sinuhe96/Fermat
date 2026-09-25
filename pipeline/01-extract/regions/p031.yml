@@ -1,0 +1,60 @@
+id: P031
+page: 31
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 665910a8e9d097380cd06a218c0724ad41b63ee7dbb1f2844a2e4b70a5f88c24
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 272.4]
+    crop: page-031-300dpi-region-01.png
+    words: 728
+    digits_sorted: "000011111111111111111111222222222222222222222222222222222222222233333333333333333333344444444444444444444444444445555667777889"
+    pua: 15
+    notes: ""
+    latex: |
+      \[ \text{(vì } h^{n-4} = c^{n(n-4)} \equiv -a^{n(n-4)} (\text{mod } n^2), b^{n(n-4)} \equiv a^{n(n-4)} (\text{mod } n^2), c^n a^n \equiv -b^{2n} (\text{mod } n^2), c^n b^n \equiv a^{2n} (\text{mod } n^2) \]
+      \[ -b^{n(n-1)} + c^{n(n-1)} = [-b^{n(n-1)} + 1] + [c^{n(n-1)} - 1] \equiv 0 (\text{mod } n^2), a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv a^{n(n-3)} + b^{n(n-3)} + c^{n(n-3)} \equiv 0 (\text{mod } n^2) \]
+      \[ \Rightarrow H(c^n, b) + \{7b^{n(n-2)} a^n - [a^{n(n-2)} - b^{n(n-2)}] a^n \} (n^s abck) - \frac{2(-a^{n(n-3)}) a^n + 18b^{n(n-2)} a^n}{3} (n^s abck) + \]
+      \[ + \frac{5[3a^{n(n-4)} a^{3n} - 4b^{n(n-3)} a^{2n} + 6b^{n(n-2)} a^n]}{4} (n^s abck) - \frac{3(-a^{n(n-4)}) a^{3n} + 4b^{n(n-3)} a^{2n} + 6c^{n(n-2)} a^n}{12} (n^s abck) + \frac{-5a^{n(n-1)} - 4a^{n(n-1)}}{3} (n^s abck) + \]
+      \[ + [-7a^{n(n-4)} a^{3n} + 7b^{n(n-3)} a^{2n} - 7b^{n(n-2)} a^n](n^s abck) - a^{n(n-1)} n^s abck - \frac{4a^{n(n-4)} a^{3n} + c^n[-a^{n(n-4)} - a^{n(n-4)}] a^{2n}}{3} (n^s abck) + \]
+      \[ + \frac{9a^{n(n-4)} a^{3n} - 3[2b^{n(n-3)} a^{2n} + a^{n(n-2)} a^n]}{2} (n^s abck) - 15a^{n(n-1)} n^s abck - 4a^{n(n-2)} a^n (n^s abck) + \frac{a^{n(n-5)} a^{4n} (n^s abck)}{4} - \]
+      \[ - \frac{[a^{n(n-4)} + a^{n(n-4)} - (-a^{n(n-4)})] a^{3n} (n^s abck)}{4} + 2a^{n(n-3)} a^{2n} (n^s abck) + 8[a^{n(n-1)} + a^{n(n-1)} + a^{n(n-1)}](n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \text{(vì } c^{n(n-4)} \equiv -a^{n(n-4)} (\text{mod } n^2), b^{n(n-4)} \equiv a^{n(n-4)} (\text{mod } n^2), c^n b^n \equiv a^{2n} (\text{mod } n^2), a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv 0 (\text{mod } n^2), \]
+      \[ b^{n(n-1)} \equiv c^{n(n-1)} \equiv a^{n(n-1)} (\text{mod } n^2)) \]
+
+  - id: R2
+    rect: [0.0, 272.4, 612.0, 679.9]
+    crop: page-031-300dpi-region-02.png
+    words: 781
+    digits_sorted: "0000000001111111111111111111111111111111111111112222222222222222222222222222222222223333333333333333333333444444444444455555555566666667777789"
+    pua: 16
+    notes: ""
+    latex: |
+      \[ \Rightarrow H(c^n, b) + [6b^{n(n-2)} a^n - a^{n(n-1)}](n^s abck) - \frac{-2a^{n(n-1)} + 18b^{n(n-2)}}{3} a^n (n^s abck) - \frac{4a^{n(n-1)} - 2c^n a^{n(n-2)}}{3} (n^s abck) + \]
+      \[ + \frac{5[3a^{n(n-1)} - 4b^{n(n-3)} a^{2n} + 6b^{n(n-2)} a^n]}{4} (n^s abck) - \frac{-3a^{n(n-1)} + 4b^{n(n-3)} a^{2n} + 6c^{n(n-2)} a^n}{12} (n^s abck) + \frac{-5a^{n(n-1)} - 4a^{n(n-1)}}{3} (n^s abck) - a^{n(n-1)} n^s abck + \]
+      \[ + [-7a^{n(n-1)} + 7b^{n(n-3)} a^{2n} - 7b^{n(n-2)} a^n](n^s abck) + \frac{9a^{n(n-1)} - 3[2b^{n(n-3)} a^{2n} + a^{n(n-1)}]}{2} (n^s abck) - 15a^{n(n-1)} n^s abck - \]
+      \[ - \frac{3a^{n(n-1)}}{4}(n^s abck) + 2a^{n(n-1)}(n^s abck) - 4a^{n(n-1)}(n^s abck) + \frac{a^{n(n-1)}(n^s abck)}{4} + 24a^{n(n-1)}(n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \Rightarrow H(c^n, b) + \frac{2c^n a^{n(n-2)}}{3} (n^s abck) - \frac{2}{3} b^{n(n-3)} a^{2n} (n^s abck) + \frac{5}{6} a^{n(n-1)} (n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \Rightarrow H(c^n, b) + \frac{2a^{2n}[a^{n(n-4)} c^n - b^{n(n-4)} b^n]}{3} (n^s abck) + \frac{5}{6} a^{n(n-1)} (n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \Rightarrow H(c^n, b) + \frac{2a^{n(n-2)}(c^n - b^n)}{3} (n^s abck) + \frac{5}{6} a^{n(n-1)} (n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \Rightarrow H(c^n, b) + \frac{2a^{n(n-2)} a^n}{3} (n^s abck) + \frac{5}{6} a^{n(n-1)} (n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \Rightarrow H(c^n, b) + \frac{3}{2} a^{n(n-1)} (n^s abck) \equiv 0 (\text{mod } n^{s+1}) \quad (23) \]
+      \[ \text{Vì a, b đối xứng nhau, nên ta cũng có } H(c^n, a) + \frac{3}{2} b^{n(n-1)} (n^s abck) \equiv 0 (\text{mod } n^{s+1}) \quad (24) \]
+      \[ \text{Trừ vế theo vế hai PT đồng dư (23) và (24), ta có:} \]
+      \[ [H(c^n, b) - H(c^n, a)] + \frac{3}{2} [a^{n(n-1)} - b^{n(n-1)}](n^s abck) \equiv 0 (\text{mod } n^{s+1}) \]
+      \[ \Rightarrow H(c^n, b) - H(c^n, a) \equiv 0 \pmod{n^{s+1}} \quad (25) \]
+      \[ \text{Theo tính chất của } H(h, b) \text{ và } H(h, a) \text{ ứng với } h = c^n \text{ (PT (17) và PT(17')) và PT (25) ta có} \]
+
+  - id: R3
+    rect: [0.0, 679.9, 612.0, 792.0]
+    crop: page-031-300dpi-region-03.png
+    words: 136
+    digits_sorted: "001111122222222233333"
+    pua: 3
+    notes: ""
+    latex: |
+      \[ \frac{(1-n)a^{n}[a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}]}{(c^{n}-b^{n})^{3}}-\frac{(1-n)b^{n}[a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}]}{(c^{n}-a^{n})^{3}}\equiv 0 \pmod{n^{s+1}} \]
+      \[ \Rightarrow \left[a^{n}(c^{n}-a^{n})^{3}-b^{n}(c^{n}-b^{n})^{3}\right]\left[a^{n(n-2)}+b^{n(n-2)}-c^{n(n-2)}\right]\equiv 0 \pmod{n^{s+1}} \]
+      \[ \text{31} \]
+

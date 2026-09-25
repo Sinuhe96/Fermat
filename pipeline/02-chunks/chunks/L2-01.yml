@@ -86,4 +86,5 @@ extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e
 fidelity: PASS_WITH_MANUAL
 renders: page-001-300dpi-full.png page-002-300dpi-full.png
 lean_decls: L2_step_S1, L2_bo_de_2
+regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2
 status: DONE

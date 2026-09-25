@@ -23,6 +23,7 @@ extract_run_sha: f25efc62…              # sha256 of 01-extract/out/extract_met
 fidelity: PASS_WITH_MANUAL              # fidelity_check.py overall verdict for the run
 renders: L7_stmt_p1.png L7_proof_p4a.png  # render reads backing the transcription
 lean_decls: L7_frag_01                  # comma-separated Lean decls, one per author step
+regions: P001-R1, P002-R1, P002-R2      # region ids (01-extract/regions/pNNN.yml) covering pdf_pages
 status: TODO | IN_PROGRESS | BLOCKED | DONE
   # BLOCKED = gated on BLOCKERS.md entry or on an OPEN author query;
   # name the blocker/query id in status.tsv notes.
@@ -37,8 +38,9 @@ DONE criteria (all required):
    A chunk whose failure is referred to the author goes to BLOCKED with the
    query id in status.tsv notes — never back to TODO silently.
 6. The evidence block is complete and bound to ONE extraction run:
-   `source_pdf_sha`, `extract_run_sha`, `fidelity`, `renders`, `lean_decls`
-   (machine-checked by `pipeline/progress.py --check` for every DONE chunk).
+   `source_pdf_sha`, `extract_run_sha`, `fidelity`, `renders`,
+   `lean_decls`, `regions` (machine-checked by `pipeline/progress.py
+   --check` for every DONE chunk).
    `renders` is REQUIRED whenever any page of `pdf_pages` has fidelity
    verdict MANUAL — the render read is that page's transcription review.
    Renders named `page-*.png` (produced by `render_pdf.py`) must carry
@@ -46,3 +48,10 @@ DONE criteria (all required):
 7. Machine checks of criteria 1 and 4: every `lean_decls` name occurs in
    `lean_file`; `lean_file` contains no `sorry`; every page in `pdf_pages`
    has fidelity verdict OK (or MANUAL with the render read recorded).
+8. Two-phase gate (vision→LaTeX before Lean): every page in `pdf_pages`
+   has a region record `pipeline/01-extract/regions/pNNN.yml` with
+   `source_pdf_sha` equal to the extraction run's PDF sha, `status:
+   REVIEWED`, and a fresh signoff (sha256 of the latex blocks ==
+   `signed_latex_sha256`); every id in the chunk's `regions` field
+   resolves in its page record and the ids cover every `pdf_pages`
+   entry (machine-checked by `progress.py --check`).

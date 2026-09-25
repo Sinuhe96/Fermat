@@ -1,0 +1,53 @@
+id: P018
+page: 18
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 7afbc4bdf68bf567cd37b4968966cd3e99cc9cb2f5240a724fab8d551bdac0e9
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 282.3]
+    crop: page-018-300dpi-region-01.png
+    words: 546
+    digits_sorted: "1111111111111111111122222222222222222222222222222222222222222222222222222222333333333333333333444444556666666788"
+    pua: 1
+    notes: "emphasis colour from PDF text-colour spans (red/blue/magenta); the Rightarrow is private-use U+F0DE in the text layer"
+    latex: |
+      \[ \textcolor{red}{-\frac{n[h^{n-1}+b^{n(n-1)}]}{h-b^n}(n^s abck)}+\textcolor{blue}{\frac{2(h^n-b^{n^2})}{(h-b^n)^2}(n^s abck)}+\textcolor{red}{\frac{h^n-b^{n^2}}{h-b^n}}-\textcolor{red}{\frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}}-\textcolor{blue}{\frac{2a^{n^2}n^s abck}{(h-b^n)^2}}-\textcolor{magenta}{\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}}- \]
+      \[ -\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}-\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}-\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3} \]
+      \[ \Rightarrow P=\textcolor{red}{\frac{h^n-b^{n^2}-a^{n^2}-n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}]n^s abck}{h-b^n}}+\textcolor{blue}{\frac{2(h^n-b^{n^2}-a^{n^2})n^s abck}{(h-b^n)^2}}+\textcolor{magenta}{\frac{4(h^n-b^{n^2}-a^{n^2})}{(h-b^n)^3}(n^s abck)^2}+ \]
+      \[ +\frac{8(h^n-b^{n^2}-a^{n^2})(n^s abck)^3}{(h-b^n)^4}+\frac{7nb^{n(n-2)}a^n-6nh^{n-1}-nh^{n-2}a^n-6nhb^{n(n-2)}(n^s abck)^3}{2(h-b^n)^3}+ \]
+      \[ +\frac{[5nb^{n(n-2)}-2nhb^{n(n-3)}]a^n-6nb^{n(n-1)}+[-5nh^{n-2}+2nb^nh^{n-3}]a^n-6nh^{n-1}}{6(h-b^n)^3}(n^s abck)^3- \]
+      \[ -\frac{nb^{n(n-2)}h+nb^{n(n-1)}+nh^{n-2}b^n+nh^{n-1}}{(h-b^n)^2}(n^s abck)^2+\textcolor{green}{\frac{n^2[h^{n-2}-b^{n(n-2)}](h-b^n)}{2(h-b^n)^2}(n^s abck)^2-\frac{3n[h^{n-2}-b^{n(n-2)}]}{2(h-b^n)}(n^s abck)^2}- \]
+      \[ \textcolor{green}{-\frac{n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}}-\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}-\frac{3na^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}\ (13) \]
+
+  - id: R2
+    rect: [0.0, 282.3, 612.0, 480.9]
+    crop: page-018-300dpi-region-02.png
+    words: 344
+    digits_sorted: "0111111111111111122222222222222222222222222222222233333333333344444466789"
+    pua: 14
+    notes: "line 1 and line 2 carry red/blue/magenta emphasis per PDF text-colour spans; some printed superscript digits are private-use glyphs in the text layer (U+F032/F033/F034)"
+    latex: |
+      \[ \text{Từ (10), (9), (8), (7) và (13) suy ra:} \]
+      \[ P=P_1+P_2=\textcolor{red}{\frac{\frac{n(n-1)}{2}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^2+\frac{n(n-1)(n-2)}{6}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^s abck)^3}{h-b^n}}+ \]
+      \[ \textcolor{red}{+\frac{\frac{n(n-1)(n-2)(n-3)}{24}[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^s abck)^4}{h-b^n}}\textcolor{blue}{+2\frac{\frac{n(n-1)(n-2)}{6}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^s abck)^3}{(b^n-h)^2}(n^s abck)}+ \]
+      \[ +\textcolor{blue}{\frac{2\left[n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}](n^s abck)+\frac{n(n-1)}{2}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^2\right](n^s abck)}{(b^n-h)^2}}\textcolor{green}{-\frac{n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}}+ \]
+      \[ \textcolor{magenta}{4\frac{n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}](n^s abck)+\frac{n(n-1)}{2}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^2}{(h-b^n)^3}(n^s abck)^2}\textcolor{green}{+\frac{n^2[h^{n-2}-b^{n(n-2)}](n^s abck)^3}{(h-b^n)^2}}+ \]
+
+  - id: R3
+    rect: [0.0, 480.9, 612.0, 792.0]
+    crop: page-018-300dpi-region-03.png
+    words: 488
+    digits_sorted: "11111111111111111112222222222222222222222222222222222222222223333333333333333444556666666788"
+    pua: 12
+    notes: "green and red emphasis per PDF text-colour spans; round and square brackets are private-use glyph pieces; last block is the printed page number"
+    latex: |
+      \[ +\frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^s abck)^4}{(h-b^n)^4}-\frac{3n}{2}\left(\frac{h^{n-2}-b^{n(n-2)}}{h-b^n}\right)(n^s abck)^2-\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}-\frac{3na^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}+ \]
+      \[ +\frac{7nb^{n(n-2)}a^n-6nh^{n-1}-nh^{n-2}a^n-6nhb^{n(n-2)}}{2(h-b^n)^3}(n^s abck)^3-\frac{nb^{n(n-2)}h+nb^{n(n-1)}+nh^{n-2}b^n+nh^{n-1}}{(h-b^n)^2}(n^s abck)^2+ \]
+      \[ +\frac{[5nb^{n(n-2)}-2nhb^{n(n-3)}]a^n-6nb^{n(n-1)}+[-5nh^{n-2}+2nb^nh^{n-3}]a^n-6nh^{n-1}}{6(h-b^n)^3}(n^s abck)^3+\textcolor{green}{\frac{n^2}{2}\left[\frac{h^{n-2}-b^{n(n-2)}}{(h-b^n)^2}\right]a^n(n^s abck)^2}\ (\text{vì} \]
+      \[ h-b^n=a^n+2n^s abck)\ \text{với} \]
+      \[ P_1=\frac{\textcolor{green}{\frac{n(n-1)}{2}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]a^n(n^s abck)^2}\textcolor{red}{+\frac{n(n-1)(n-2)}{6}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}}{(h-b^n)^2}+ \]
+      \[ +\frac{2n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}](n^s abck)\textcolor{blue}{+n(n-1)[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^s abck)^3}}{(b^n-h)^2}-\frac{3n[h^{n-2}-b^{n(n-2)}](n^s abck)^2}{2(h-b^n)}+ \]
+      \[ \text{18} \]
+

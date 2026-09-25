@@ -115,7 +115,27 @@ def check_consistency(rows: list[dict], chunks: dict[str, dict]) -> list[str]:
 
 
 EXTRACT_OUT = HERE / "01-extract" / "out"
-EVIDENCE_FIELDS = ("source_pdf_sha", "extract_run_sha", "fidelity", "renders", "lean_decls")
+EVIDENCE_FIELDS = ("source_pdf_sha", "extract_run_sha", "fidelity", "renders",
+                    "lean_decls", "regions")
+
+_REGIONS_MODULE = None
+
+
+def load_regions_module():
+    """Load 01-extract/regions.py (record parser + freshness) via spec.
+
+    Cached; raises on import failure (caller reports it as a gate error
+    so a broken/absent toolchain fails the check, never passes it).
+    """
+    global _REGIONS_MODULE
+    if _REGIONS_MODULE is None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "_regions", HERE / "01-extract" / "regions.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _REGIONS_MODULE = module
+    return _REGIONS_MODULE
 
 
 def parse_pages(raw: str) -> list[int]:
@@ -124,7 +144,7 @@ def parse_pages(raw: str) -> list[int]:
 
 
 def check_evidence(rows: list[dict], chunks: dict[str, dict]) -> list[str]:
-    """Machine-check the evidence block of every DONE chunk (schema criteria 6-7)."""
+    """Machine-check the evidence block of every DONE chunk (schema criteria 6-8)."""
     errors = []
     meta_path = EXTRACT_OUT / "extract_meta.json"
     report_path = EXTRACT_OUT / "fidelity_report.json"
@@ -182,6 +202,54 @@ def check_evidence(rows: list[dict], chunks: dict[str, dict]) -> list[str]:
             for decl in (d.strip() for d in rec.get("lean_decls", "").split(",")):
                 if decl and not re.search(rf"\b{re.escape(decl)}\b", src):
                     errors.append(f"{cid}: declaration '{decl}' not found in '{lean_rel}'")
+        # Two-phase gate: vision->LaTeX region records (schema criterion 8)
+        try:
+            regions_mod = load_regions_module()
+        except Exception as exc:
+            regions_mod = None
+            if not any(e.startswith("region records unavailable") for e in errors):
+                errors.append(f"region records unavailable ({exc})")
+        if regions_mod is not None:
+            refs = [r.strip() for r in rec.get("regions", "").split(",") if r.strip()]
+            parsed_refs = []
+            for ref in refs:
+                m = re.fullmatch(r"P(\d{3})-(.+)", ref)
+                if m:
+                    parsed_refs.append((ref, int(m.group(1)), m.group(2)))
+                else:
+                    errors.append(f"{cid}: region ref '{ref}' not found")
+            covered: set[int] = set()
+            for page in parse_pages(rec.get("pdf_pages", "")):
+                path = regions_mod.REGIONS_DIR / f"p{page:03d}.yml"
+                if not path.is_file():
+                    errors.append(
+                        f"{cid}: page {page} has no region record "
+                        f"(pipeline/01-extract/regions/p{page:03d}.yml)")
+                    continue
+                try:
+                    record = regions_mod.load_page_record(path)
+                except Exception as exc:
+                    errors.append(f"{cid}: page {page} region record unreadable ({exc})")
+                    continue
+                if record.get("source_pdf_sha") != meta.get("sha256"):
+                    errors.append(
+                        f"{cid}: page {page} region source_pdf_sha does not match "
+                        f"extraction run ({meta.get('sha256')})")
+                if record.get("status") != "REVIEWED":
+                    errors.append(f"{cid}: page {page} region record not REVIEWED")
+                elif not regions_mod.record_fresh(record):
+                    errors.append(
+                        f"{cid}: page {page} signoff stale "
+                        "(latex edited after review)")
+                region_ids = {str(r.get("id", "")) for r in record.get("regions", [])}
+                for ref, ref_page, region_id in parsed_refs:
+                    if ref_page == page and region_id not in region_ids:
+                        errors.append(f"{cid}: region ref '{ref}' not found")
+            for ref, ref_page, _region_id in parsed_refs:
+                covered.add(ref_page)
+            for page in parse_pages(rec.get("pdf_pages", "")):
+                if page not in covered and refs:
+                    errors.append(f"{cid}: regions field does not cover page {page}")
     return errors
 
 

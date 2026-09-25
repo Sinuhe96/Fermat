@@ -1,0 +1,68 @@
+id: P028
+page: 28
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 72b1c77f79c626587291ab486d58ecb7caa43bab2fd4a1c6a47093bdf64a88d7
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 245.0]
+    crop: page-028-300dpi-region-01.png
+    words: 622
+    digits_sorted: "111111111122222222222222222222222222222223333333333333333333333333333333334444444444444444444444444444444444455556667777889"
+    pua: 0
+    notes: "render: no coloured text in this region"
+    latex: |
+      \[ +\frac{7nb^{n(n-2)}-nh^{n-2}}{(h-b^{n})^{3}}(n^{s}abck)^{4}+\frac{5[3nb^{n(n-4)}(h-b^{n})^{2}-4nb^{n(n-3)}(h-b^{n})+6nb^{n(n-2)}]}{4(h-b^{n})^{3}}(n^{s}abck)^{4}-\frac{15nb^{n(n-1)}}{(h-b^{n})^{4}}(n^{s}abck)^{4}-\frac{nh^{n-1}}{(h-b^{n})^{4}}(n^{s}abck)^{4}- \]
+
+      \[ -\frac{3nh^{n-4}(h-b^{n})^{2}+4nh^{n-3}(h-b^{n})+6nh^{n-2}}{12(h-b^{n})^{3}}(n^{s}abck)^{4}+\frac{9nb^{n(n-4)}(h-b^{n})^{2}-3n[2b^{n(n-3)}(h-b^{n})+h^{n-2}-b^{n(n-2)}]}{2(h-b^{n})^{3}}(n^{s}abck)^{4}- \]
+
+      \[ -\frac{2n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^{s}abck)^{4}}{(h-b^{n})^{3}}+\frac{4nb^{n(n-3)}-3nhb^{n(n-4)}-nh^{n-3}}{3(b^{n}-h)^{2}}(n^{s}abck)^{4}+\frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^{s}abck)^{4}}{(h-b^{n})^{4}}+ \]
+
+      \[ -\frac{2nh^{n-3}a^{n}+2nb^{n(n-3)}a^{n}+18nb^{n(n-2)}}{3(h-b^{n})^{3}}(n^{s}abck)^{4}+\frac{[-5nh^{n-2}+2nb^{n}h^{n-3}]+[5nb^{n(n-2)}-2nhb^{n(n-3)}]}{3(h-b^{n})^{3}}(n^{s}abck)^{4}- \]
+
+      \[ -\frac{n[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^{s}abck)^{4}}{4(h-b^{n})}-\frac{4na^{n(n-2)}(n^{s}abck)^{4}}{(h-b^{n})^{3}}-\frac{n^{3}}{6}a^{n(n-4)}(n^{s}abck)^{3}+\frac{2na^{n(n-3)}(n^{s}abck)^{4}}{(h-b^{n})^{2}}+ \]
+
+      \[ +\frac{2n[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^{s}abck)^{4}}{3(b^{n}-h)^{2}}+\frac{-7b^{n(n-4)}(h-b^{n})^{3}+7b^{n(n-3)}(h-b^{n})^{2}-7[b^{n(n-2)}(h-b^{n})+h^{n-1}-b^{n(n-1)}]}{(h-b^{n})^{4}}n(n^{s}abck)^{4}+ \]
+  - id: R2
+    rect: [0.0, 245.0, 612.0, 456.0]
+    crop: page-028-300dpi-region-02.png
+    words: 547
+    digits_sorted: "011111122222222222222222222222222223333333333333333333333333333333333334444444444444444444444445556666667777"
+    pua: 2
+    notes: "render colour spans (not transcribed as \textcolor): y246-311 red; y313-347 red+magenta; y349-384 magenta"
+    latex: |
+      \[ +\frac{n}{4}a^{n(n-5)}(n^{s}abck)^{4}\equiv 0\ (\mathrm{mod}\ n^{4s+2}) \]
+
+      \[ \Rightarrow \frac{n^{2}\{-3[a^{n(n-2)}+b^{n(n-2)}-h^{n-2}]+b^{n}h[b^{n(n-4)}-h^{n-4}]\}(n^{s}abck)^{3}}{2(h-b^{n})^{2}}+\frac{na^{n}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^{s}abck)^{3}}{(h-b^{n})^{3}}-\frac{n^{3}}{6}a^{n(n-4)}(n^{s}abck)^{3}- \]
+
+      \[ -\frac{n^{2}[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^{n}(n^{s}abck)^{3}}{2(h-b^{n})^{2}}+\frac{n^{3}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^{n}(n^{s}abck)^{3}}{6(h-b^{n})^{2}}-\frac{n^{3}h^{n-2}-n^{3}b^{n}h^{n-3}}{6(h-b^{n})^{2}}(n^{s}abck)^{3}+ \]
+
+      \[ +\frac{n^{3}b^{n(n-2)}-n^{3}hb^{n(n-3)}}{6(h-b^{n})^{2}}(n^{s}abck)^{3}+\frac{7nb^{n(n-2)}-nh^{n-2}}{(h-b^{n})^{3}}(n^{s}abck)^{4}-\frac{15nb^{n(n-1)}}{(h-b^{n})^{4}}(n^{s}abck)^{4}-\frac{nh^{n-1}}{(h-b^{n})^{4}}(n^{s}abck)^{4}+ \]
+
+      \[ +\frac{5[3nb^{n(n-4)}(h-b^{n})^{2}-4nb^{n(n-3)}(h-b^{n})+6nb^{n(n-2)}]}{4(h-b^{n})^{3}}(n^{s}abck)^{4}-\frac{3nh^{n-4}(h-b^{n})^{2}+4nh^{n-3}(h-b^{n})+6nh^{n-2}}{12(h-b^{n})^{3}}(n^{s}abck)^{4}+ \]
+
+      \[ +\frac{-7b^{n(n-4)}(h-b^{n})^{3}+7b^{n(n-3)}(h-b^{n})^{2}-7[b^{n(n-2)}(h-b^{n})+h^{n-1}-b^{n(n-1)}]}{(h-b^{n})^{4}}n(n^{s}abck)^{4}+\frac{4nb^{n(n-3)}-3nhb^{n(n-4)}-nh^{n-3}}{3(h-b^{n})^{2}}(n^{s}abck)^{4}+ \]
+  - id: R3
+    rect: [0.0, 456.0, 612.0, 792.0]
+    crop: page-028-300dpi-region-03.png
+    words: 731
+    digits_sorted: "011111111122222222222222222222222222222222222222222222222333333333333333333333333333333333444444444444444444444444444444445555556666678889"
+    pua: 2
+    notes: "render colour spans (not transcribed as \textcolor): y602-636 red; y638-673 red"
+    latex: |
+      \[ +\frac{9nb^{n(n-4)}(h-b^{n})^{2}-3n[2b^{n(n-3)}(h-b^{n})+h^{n-2}-b^{n(n-2)}]}{2(h-b^{n})^{3}}(n^{s}abck)^{4}+\frac{[-5h^{n-2}+2b^{n}h^{n-3}]+[5b^{n(n-2)}-2hb^{n(n-3)}]}{3(h-b^{n})^{3}}n(n^{s}abck)^{4}- \]
+
+      \[ -\frac{2nh^{n-3}a^{n}+2nb^{n(n-3)}a^{n}+18nb^{n(n-2)}}{3(h-b^{n})^{3}}(n^{s}abck)^{4}-\frac{2n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]}{(h-b^{n})^{3}}(n^{s}abck)^{4}-\frac{n[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}]}{4(h-b^{n})}(n^{s}abck)^{4}+ \]
+
+      \[ +\frac{n}{4}a^{n(n-5)}(n^{s}abck)^{4}-\frac{4na^{n(n-2)}(n^{s}abck)^{4}}{(h-b^{n})^{3}}+\frac{2na^{n(n-3)}(n^{s}abck)^{4}}{(h-b^{n})^{2}}+\frac{2n[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^{s}abck)^{4}}{3(h-b^{n})^{2}}+ \]
+
+      \[ +\frac{8n[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^{s}abck)^{4}}{(h-b^{n})^{4}}\equiv 0\ (\mathrm{mod}\ n^{4s+2}) \]
+
+      \[ \Rightarrow \frac{n\{-3[a^{n(n-2)}+b^{n(n-2)}-h^{n-2}]+b^{n}h[b^{n(n-4)}-h^{n-4}]\}}{2(h-b^{n})^{2}}+\frac{a^{n}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]}{(h-b^{n})^{3}}-\frac{h^{n-2}-b^{n(n-2)}-b^{n}h[h^{n-4}-b^{n(n-4)}]}{6(h-b^{n})^{2}}n^{2}+ \]
+
+      \[ -\frac{n[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^{n}}{2(h-b^{n})^{2}}+\frac{n^{2}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^{n}}{6(h-b^{n})^{2}}-\frac{n^{2}}{6}a^{n(n-4)}+\frac{7b^{n(n-2)}-h^{n-2}}{(h-b^{n})^{3}}(n^{s}abck)-\frac{15b^{n(n-1)}}{(h-b^{n})^{4}}n^{s}abck+ \]
+
+      \[ +\frac{5[3b^{n(n-4)}(b^{n}-h)^{2}-4b^{n(n-3)}(h-b^{n})+6b^{n(n-2)}]}{4(h-b^{n})^{3}}(n^{s}abck)-\frac{3h^{n-4}(b^{n}-h)^{2}+4h^{n-3}(h-b^{n})+6h^{n-2}}{12(h-b^{n})^{3}}(n^{s}abck)-\frac{h^{n-1}}{(b^{n}-h)^{4}}n^{s}abck+\frac{1}{4}a^{n(n-5)}(n^{s}abck)+ \]
+
+      \[ \text{28} \]

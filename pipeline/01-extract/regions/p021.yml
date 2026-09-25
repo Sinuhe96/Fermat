@@ -1,0 +1,91 @@
+id: P021
+page: 21
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 0ef5e46246185ef4e6b5ee5b451a30687fbeee43381378a51936cd37a098cdf3
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 239.6]
+    crop: page-021-300dpi-region-01.png
+    words: 557
+    digits_sorted: "111111111111111222222222222222222222222222222333333333333333333333333333333333333333334445555666666666666677"
+    pua: 1
+    notes: ""
+    latex: |
+      \[
+      +\frac{4n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}]}{(h-b^n)^3}(n^s abck)^3+\frac{n[7b^{n(n-2)}a^n-6h^{n-1}-h^{n-2}a^n-6hb^{n(n-2)}](n^s abck)^3}{2(h-b^n)^3}+\frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}+
+      \]
+      \[
+      +\frac{[5nb^{n(n-2)}-2nhb^{n(n-3)}]a^n-6nb^{n(n-1)}+[-5nh^{n-2}+2nb^nh^{n-3}]a^n-6nh^{n-1}}{6(h-b^n)^3}(n^s abck)^3+\frac{n[b^{n(n-2)}-h^{n-2}](n^s abck)^3}{(h-b^n)^2}-
+      \]
+      \[
+      -\frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2}
+      \]
+      \[
+      \Rightarrow P_1=\frac{-3n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]+n[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n}{3(h-b^n)^2}(n^s abck)^3+\frac{4n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}]}{(h-b^n)^3}(n^s abck)^3+
+      \]
+      \[
+      +\frac{n[7b^{n(n-2)}a^n-6h^{n-1}-h^{n-2}a^n-6hb^{n(n-2)}]}{2(h-b^n)^3}(n^s abck)^3-\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\frac{n[b^{n(n-2)}-h^{n-2}](h-b^n)(n^s abck)^3}{(h-b^n)^3}+
+      \]
+      \[
+      +\frac{[5nb^{n(n-2)}-2nhb^{n(n-3)}]a^n-6nb^{n(n-1)}+[-5nh^{n-2}+2nb^nh^{n-3}]a^n-6nh^{n-1}}{6(h-b^n)^3}(n^s abck)^3+\frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}-
+      \]
+  - id: R2
+    rect: [0.0, 239.6, 612.0, 382.7]
+    crop: page-021-300dpi-region-02.png
+    words: 338
+    digits_sorted: "1111111112222222222222222222333333333333333333333333334445566666667"
+    pua: 1
+    notes: ""
+    latex: |
+      \[
+      -\frac{n^2[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2}
+      \]
+      \[
+      \Rightarrow P_1=\frac{-3n[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]+n[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n}{3(h-b^n)^2}(n^s abck)^3+\frac{4n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}]}{(h-b^n)^3}(n^s abck)^3+
+      \]
+      \[
+      +\frac{n[7b^{n(n-2)}a^n-6h^{n-1}-h^{n-2}a^n-6hb^{n(n-2)}]}{2(h-b^n)^3}(n^s abck)^3-\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\frac{2n[b^{n(n-2)}-h^{n-2}](n^s abck)^4}{(h-b^n)^3}+
+      \]
+      \[
+      +\frac{[5nb^{n(n-2)}-2nhb^{n(n-3)}]a^n-6nb^{n(n-1)}+[-5nh^{n-2}+2nb^nh^{n-3}]a^n-6nh^{n-1}}{6(h-b^n)^3}(n^s abck)^3+\frac{n^3[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}-
+      \]
+  - id: R3
+    rect: [0.0, 382.7, 612.0, 792.0]
+    crop: page-021-300dpi-region-03.png
+    words: 764
+    digits_sorted: "11111111111111111112222222222222222222222222222222222222222222222223333333333333333333333333333333333333333333333333333333444445555666666666666666666666677"
+    pua: 3
+    notes: ""
+    latex: |
+      \[
+      -\frac{n^2[b^{n(n-3)} - a^{n(n-3)} + h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n[b^{n(n-2)} - h^{n-2}]a^n(n^s abck)^3}{(h-b^n)^3} \quad (\text{vì } h-b^n = a^n + 2n^s abck)
+      \]
+      \[
+      \Rightarrow P_1 = \frac{-6n[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}]a^n + 2n[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}]a^{2n}}{6(h-b^n)^3}(n^s abck)^3 + \frac{24n[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}](n^s abck)^3}{6(h-b^n)^3} +
+      \]
+      \[
+      + \frac{3n[7b^{n(n-2)}a^n - 6h^{n-1} - h^{n-2}a^n - 6hb^{n(n-2)}](n^s abck)^3}{6(h-b^n)^3} + \frac{n[5b^{n(n-2)} - 2hb^{n(n-3)}]a^n - 6nb^{n(n-1)} + n[-5h^{n-2} + 2b^nh^{n-3}]a^n - 6nh^{n-1}}{6(h-b^n)^3}(n^s abck)^3 -
+      \]
+      \[
+      - \frac{n^2[b^{n(n-3)} - a^{n(n-3)} + h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n[b^{n(n-2)} - h^{n-2}]a^n(n^s abck)^3}{(h-b^n)^3} + \frac{n^3[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2} +
+      \]
+      \[
+      + \frac{2n[b^{n(n-2)} - h^{n-2}](n^s abck)^4}{(h-b^n)^3} - \frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}
+      \]
+      \[
+      \Rightarrow P_1 \equiv \frac{-6n[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}]a^n + 2n[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}]a^{2n} + 24n[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}]}{6(h-b^n)^3}(n^s abck)^3 +
+      \]
+      \[
+      + \frac{3n[7b^{n(n-2)}a^n - 6h^{n-1} - h^{n-2}a^n - 6hb^{n(n-2)}] + n[5b^{n(n-2)} - 2hb^{n(n-3)}]a^n - 6nb^{n(n-1)}}{6(h-b^n)^3}(n^s abck)^3 +
+      \]
+      \[
+      + \frac{n[-5h^{n-2} + 2b^nh^{n-3}]a^n - 6nh^{n-1} + 6nb^{n(n-2)}a^n - 6nh^{n-2}a^n - 14na^{n(n-1)}}{6(h-b^n)^3}(n^s abck)^3 -
+      \]
+      \[
+      - \frac{n^2[b^{n(n-3)} - a^{n(n-3)} + h^{n-3}]a^n(n^s abck)^3}{2(h-b^n)^2} + \frac{n^3[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}]a^n(n^s abck)^3}{6(h-b^n)^2}
+      \]
+      \[
+      21
+      \]

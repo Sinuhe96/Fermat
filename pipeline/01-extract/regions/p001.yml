@@ -1,0 +1,81 @@
+id: P001
+page: 1
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: c8b2c8c8457398cec3c5c50de4705f36d115bce41cc45597a2d74ddc9502578d
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 66.6]
+    crop: page-001-300dpi-region-01.png
+    words: 16
+    digits_sorted: ""
+    pua: 0
+    notes: vision caveat: "second line punctuation (comma after Hiệp, period in email) confirmed at 600dpi zoom"; title red bold 18pt, author line blue bold italic 10pt; no digits in region
+    latex: |
+      \[ \textcolor{red}{\textbf{CHỨNG MINH ĐỊNH LÝ LỚN FERMAT}} \]
+      \[ \textcolor{blue}{\textbf{\textit{Tôn Thất Hiệp,g/v THPT Gia Hội, Thành phố Huế. Email:tonthathiep.pdlhue@gmail.com}}} \]
+  - id: R2
+    rect: [0.0, 66.6, 612.0, 438.9]
+    crop: page-001-300dpi-region-02.png
+    words: 495
+    digits_sorted: "001111111111111112222222222233333455566699999"
+    pua: 12
+    notes: printed ∑ both times carries a tiny set-subscript "2" (1pt glyph, confirmed at 1200dpi) transcribed as \sum_{2}; math in this PDF is set bold italic; Bổ đề labels red bold italic, "A. CÁC BỔ ĐỀ" blue bold
+    latex: |
+      \[ \text{Nhà toán học người Pháp Pierre de Fermat (1601--1665) đã đặt ra một định lý nổi tiếng:} \]
+      \[ \text{``phương trình } x^n + y^n = z^n \text{, trong đó } n \text{ là một số nguyên lớn hơn 2, không thể tìm được nghiệm nguyên thỏa mãn} \]
+      \[ xyz \neq 0 \text{.''. Đây là định lý Fermat cuối cùng. Ông đã viết lên lề cuốn sách một tuyên bố nhưng không cung cấp} \]
+      \[ \text{chứng minh, chỉ để lại dòng chú thích: ``Tôi có một phương pháp rất xuất sắc để chứng minh cho trường hợp tổng} \]
+      \[ \text{quát, nhưng không thể viết ra được ở đây vì lề sách quá hẹp!''} \]
+      \[ \text{Các nhà toán học sau đó đã cố gắng giải quyết bài toán này trong suốt gần bốn thế kỷ. Cuối cùng, nhà toán học} \]
+      \[ \text{Andrew Wiles (người Anh, định cư tại Mỹ, sinh năm 1953) đã công bố lời giải duy nhất và không thể nào cản trở} \]
+      \[ \text{được vào mùa hè năm 1993, và sau đó là một phiên bản sửa đổi vào năm 1995.} \]
+      \[ \text{Trong một khoảng thời gian dài, tôi đã cố gắng chứng minh định lý này bằng cách sử dụng lý thuyết số cơ bản và} \]
+      \[ \text{cuối cùng đã thành công. Dưới đây là toàn văn của phần chứng minh định lý Fermat lớn.} \]
+      \[ \text{Để chứng minh định lý Fermat lớn này, tôi trình bày bảy bổ đề và một phương pháp biến đổi tổng } \sum_{2} \text{ cùng với} \]
+      \[ \text{việc sử dụng đạo hàm cấp } k \text{ của hàm số đa thức một biến để tính tổng } \sum_{2}. \]
+      \[ \textcolor{blue}{\textbf{A. CÁC BỔ ĐỀ}} \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 1:}}} \]
+      \[ \text{Cho } n \in \mathbb{N}, n \ge 3 \text{. Nếu phương trình (PT) } x^n + y^n = z^n \text{ (1) có nghiệm nguyên khác không thì bao giờ cũng tồn tại} \]
+      \[ \text{nghiệm nguyên } x = u, y = v, z = t \text{ sao cho } (u,v) = (u,t) = (v,t) = 1. \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 2:}}} \]
+      \[ \text{Nếu có } n \in \mathbb{N}, n \ge 3 \text{, PT } x^n + y^n = z^n \text{ vô nghiệm nguyên khác không thì với mọi } k \in \mathbb{N}^*, \text{ PT } x^{nk} + y^{nk} = z^{nk} \]
+      \[ \text{cũng vô nghiệm nguyên khác không.} \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 3:}}} \]
+      \[ \text{Cho } a.b = c^n, n \text{ là số nguyên dương lẻ}; a,b,c \in \mathbb{Z}^* \text{ sao cho } (a,b) = 1 \text{, khi đó tồn tại hai số nguyên khác không } c_1, c_2 \]
+      \[ \text{sao cho } (c_1,c_2) = 1, c = c_1.c_2, a = c_1^n \text{ và } b = c_2^n. \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 4:}}} \]
+      \[ \text{Cho } a.b = c^n, n \text{ là số nguyên dương lẻ}, a,b,c,m \in \mathbb{Z}^*, \text{ sao cho } |a| \ge 2, |b| \ge 2, |c| \ge 2, m \text{ là số nguyên tố}, (a,b) = m, \]
+  - id: R3
+    rect: [0.0, 438.9, 612.0, 731.5]
+    crop: page-001-300dpi-region-03.png
+    words: 466
+    digits_sorted: "000011111111111111111111111111112222222222234567"
+    pua: 29
+    notes: divisibility glyphs are Vietnamese ⋮ (chia hết) and slashed ⋮̸ (không chia hết), transcribed \vdots / \not\vdots: "a ⋮ b" reads "a chia hết cho b" i.e. b | a; the glyph is a font glyph unmapped in the text layer plus a vector slash
+    latex: |
+      \[ \text{b } \not\vdots \text{ m}^2 \text{, khi đó tồn tại số nguyên dương } s \text{ sao cho } ns \ge 2 \text{ và hai số nguyên khác không } c_1, c_2 \text{ sao cho } (c_1,c_2) = 1 \text{ đồng} \]
+      \[ \text{thời } c_1 \not\vdots m, c_2 \not\vdots m, c = m^s c_1.c_2, a = m^{ns-1} c_2^n \text{ và } b = m c_1^n. \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 5:}}} \]
+      \[ \text{Cho } n \text{ là số nguyên tố lẻ và hai số nguyên } u, v \text{ sao cho } (u,v) = 1 \text{, khi đó:} \]
+      \[ a)\ \text{Nếu } (u+v) \not\vdots n \text{ thì } \left( u+v, \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \right) = 1 \text{ và } \left( \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \right) \not\vdots n. \]
+      \[ b)\ \text{Nếu } (u+v) \vdots n \text{ thì } \left( u+v, \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \right) = n \text{ và } \left( \sum_{i=0}^{n-1} (-1)^i u^{n-1-i} v^i \right) \not\vdots n^2. \]
+      \[ c)\ \text{Nếu } (u^n + v^n) \vdots n \text{ thì } (u^n + v^n) \vdots n^2 \text{ (không cần giả thiết } (u,v) = 1). \]
+      \[ d)\ \text{Nếu } u \not\vdots n \text{ thì } u^{n(n-1)} \equiv 1 (\mathrm{mod}\ n^2). \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 6:}}} \]
+      \[ \text{Cho } n \text{ là số nguyên tố lẻ. Giả sử PT: } x^n + y^n = z^n \text{ (1) có nghiệm nguyên khác không } x = u, y = v, z = t \text{ sao cho} \]
+      \[ (u,v) = (u,t) = (v,t) = 1 \text{ và } uv \not\vdots n. \text{ Khi đó tồn tại 4 số nguyên } a, b, c, k \text{ khác không, đôi một nguyên tố cùng nhau và} \]
+      \[ \text{không chia hết cho } n, \text{ đồng thời tồn tại số nguyên } s \text{ lớn hơn 1, sao cho:} \]
+      \[ v = a^n + n^s abck, u = b^n + n^s abck, t = h - n^s abck, a^n + b^n = h - 2n^s abck\ ;\ \text{với } h = c^n, \text{ khi } t \not\vdots n \text{ hoặc } h = n^{ns-1} c^n, \text{ khi } t \vdots n. \]
+      \[ \textcolor{red}{\textbf{\textit{Bổ đề 7:}}} \]
+      \[ \text{Nếu } n \text{ là số nguyên tố lớn hơn 3 và ba số nguyên } a, b, c, \text{ thỏa mãn} \]
+  - id: R4
+    rect: [0.0, 731.5, 612.0, 792.0]
+    crop: page-001-300dpi-region-04.png
+    words: 1
+    digits_sorted: "1"
+    pua: 0
+    notes: vision caveat: "whether this 1 is a page number or an isolated numeral cannot be determined from the crop alone"
+    latex: |
+      \[ 1 \]

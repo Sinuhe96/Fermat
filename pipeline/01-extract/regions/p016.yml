@@ -1,0 +1,53 @@
+id: P016
+page: 16
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: bb0b859ddd54b4d2c1595d04e80a932b90708e4842b9d729b4cc85c86075cff8
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 255.9]
+    crop: page-016-300dpi-region-01.png
+    words: 584
+    digits_sorted: "111111111111111111222222222222222222222222222222222222222222222222233333333333333333333333444444444444444444444444444445556666666666668888"
+    pua: 0
+    notes: "emphasis colour from PDF text-colour spans; R1 has no private-use glyphs"
+    latex: |
+      \[ +\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}+\frac{n^2(n-3)}{6}a^{n(n-4)}(n^s abck)^3+\frac{2n^2a^{n(n-2)}(n^s abck)^3+2n(n-1)a^{n(n-3)}(n^s abck)^4}{(h-b^n)^2}-\frac{n}{4}a^{n(n-5)}(n^s abck)^4 \]
+      \[ = \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}+ \]
+      \[ \textcolor{green}{+\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}}\textcolor{blue}{+\frac{2na^{n(n-4)}(n^s abck)^4[6a^{2n}+12a^n(n^s abck)+8(n^s abck)^2]}{6(h-b^n)^3}}+\frac{24na^{n(n-2)}(n^s abck)^4}{6(h-b^n)^3}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3+ \]
+      \[ +\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}-\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3+\frac{2n^2a^{n(n-2)}(n^s abck)^3+\textcolor{red}{2n(n-1)a^{n(n-3)}(n^s abck)^4}}{(h-b^n)^2}-\frac{n}{4}a^{n(n-5)}(n^s abck)^4 \]
+      \[ = \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2}+ \]
+      \[ +\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\frac{2na^{n(n-4)}(n^s abck)^4[6a^{2n}+12a^n(n^s abck)+8(n^s abck)^2]}{6(h-b^n)^3}+\frac{24na^{n(n-2)}(n^s abck)^4}{6(h-b^n)^3}-\frac{n}{4}a^{n(n-5)}(n^s abck)^4 \]
+
+  - id: R2
+    rect: [0.0, 255.9, 612.0, 484.4]
+    crop: page-016-300dpi-region-02.png
+    words: 522
+    digits_sorted: "11111111111122222222222222222222222222222222222222222222333333333333333333333344444444444444444444566666688"
+    pua: 5
+    notes: "contains one private-use encoded digit: the exponent of n(n-?) is glyph U+F032 (Symbol '2', rendered as 2) so the text layer stores no digit there; colour from PDF text-colour spans"
+    latex: |
+      \[ +\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3-\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3+\frac{2n^2a^{n(n-2)}(n^s abck)^3+\textcolor{red}{2n^2a^{n(n-3)}(n^s abck)^4}}{(h-b^n)^2}\textcolor{red}{-} \]
+      \[ \textcolor{red}{-}\frac{\textcolor{red}{2na^{n(n-3)}(a^n+2n^s abck)(n^s abck)^4}}{(h-b^n)^3} \]
+      \[ \Rightarrow F\equiv = \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2} \]
+      \[ +\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\frac{6na^{n(n-2)}(n^s abck)^4}{(h-b^n)^3}-\frac{n}{4}a^{n(n-5)}(n^s abck)^4+\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3- \]
+      \[ -\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3+\frac{2n^2a^{n(n-2)}(n^s abck)^3}{(h-b^n)^2}\textcolor{red}{-}\frac{\textcolor{red}{2na^{n(n-3)}(a^n+2n^s abck)(n^s abck)^4}}{(h-b^n)^3}(\text{mod } n^{4s+2}) \]
+      \[ \Rightarrow F\equiv = \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2} \]
+
+  - id: R3
+    rect: [0.0, 484.4, 612.0, 792.0]
+    crop: page-016-300dpi-region-03.png
+    words: 563
+    digits_sorted: "1111111111111112222222222222222222222222222222222222222222233333333333333333333334444444444444444444444445566666666688"
+    pua: 4
+    notes: "private-use glyphs are only U+F0DE (Rightarrow) and U+F0BA (equiv); emphasis colour from PDF text-colour spans"
+    latex: |
+      \[ +\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\frac{6na^{n(n-2)}(n^s abck)^4}{(h-b^n)^3}-\frac{n}{4}a^{n(n-5)}(n^s abck)^4+\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3- \]
+      \[ -\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3+\frac{2n^2a^{n(n-2)}(n^s abck)^3}{(h-b^n)^2}\textcolor{red}{-}\frac{\textcolor{red}{2na^{n(n-2)}(n^s abck)^4}}{(h-b^n)^3}(\text{mod } n^{4s+2}) \]
+      \[ \Rightarrow F\equiv = \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2} \]
+      \[ +\frac{14na^{n(n-1)}(n^s abck)^3}{6(h-b^n)^3}+\textcolor{red}{+\frac{6na^{n(n-2)}(n^s abck)^4}{(h-b^n)^3}}-\frac{n}{4}a^{n(n-5)}(n^s abck)^4+\frac{16a^{n(n-1)}(n^s abck)^4}{(h-b^n)^4}+\frac{n^3}{6}a^{n(n-4)}(n^s abck)^3- \]
+      \[ -\frac{n^2}{2}a^{n(n-4)}(n^s abck)^3+\frac{2n^2a^{n(n-2)}(n^s abck)^3}{(h-b^n)^2}\textcolor{red}{-}\frac{\textcolor{red}{2na^{n(n-2)}(n^s abck)^4}}{(h-b^n)^3}(\text{mod } n^{4s+2}) \]
+      \[ \Rightarrow F\equiv = \frac{a^{n^2}+na^{n(n-1)}n^s abck}{h-b^n}+\frac{2a^{n^2}n^s abck}{(h-b^n)^2}+\frac{4a^{n^2}(n^s abck)^2}{(h-b^n)^3}+\frac{8a^{n^2}(n^s abck)^3}{(h-b^n)^4}+\frac{3na^{n(n-1)}(n^s abck)^2+n^2a^{n(n-1)}(n^s abck)^2}{2(h-b^n)^2} \]
+      \[ \text{16} \]
+

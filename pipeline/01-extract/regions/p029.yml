@@ -1,0 +1,68 @@
+id: P029
+page: 29
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 29f3d30b64503d5ffd4b02d6fd1b03dff74ccc3aba5043f2ddc0dd534676ae76
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 321.0]
+    crop: page-029-300dpi-region-01.png
+    words: 769
+    digits_sorted: "0011111111111122222222222222222222222222222222222222222222222223333333333333333333333333333333333334444444444444444444445555666666667777889"
+    pua: 5
+    notes: "render colour spans (not transcribed as \textcolor): y136-170 green+blue; y172-190 green; y192-227 red; y229-263 red; y266-314 red. NOTE three exponent digits in the middle bracket of line 4 are printed in the Symbol font and encoded U+F033 (PUA) in the text layer (Symbol code 0x33 = 3); they are transcribed as 3."
+    latex: |
+      \[ +\frac{-7b^{n(n-4)}(h-b^{n})^{3}+7b^{n(n-3)}(h-b^{n})^{2}-7[b^{n(n-2)}(h-b^{n})+h^{n-1}-b^{n(n-1)}]}{(h-b^{n})^{4}}(n^{s}abck)+\frac{4b^{n(n-3)}-3hb^{n(n-4)}-h^{n-3}}{3(h-b^{n})^{2}}(n^{s}abck)- \]
+
+      \[ +\frac{9b^{n(n-4)}(h-b^{n})^{2}-3[2b^{n(n-3)}(h-b^{n})+h^{n-2}-b^{n(n-2)}]}{2(h-b^{n})^{3}}(n^{s}abck)+\frac{[-5h^{n-2}+2b^{n}h^{n-3}]+[5b^{n(n-2)}-2hb^{n(n-3)}]}{3(h-b^{n})^{3}}(n^{s}abck)- \]
+
+      \[ -\frac{2h^{n-3}a^{n}+2b^{n(n-3)}a^{n}+18b^{n(n-2)}}{3(h-b^{n})^{3}}(n^{s}abck)-\frac{[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^{s}abck)}{4(h-b^{n})}-\frac{n^{2}}{6}a^{n(n-4)}+\frac{2a^{n(n-3)}(n^{s}abck)}{(h-b^{n})^{2}}-\frac{4a^{n(n-2)}(n^{s}abck)}{(h-b^{n})^{3}}+ \]
+
+      \[ -\frac{2[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^{s}abck)}{(h-b^{n})^{3}}+\frac{2[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^{s}abck)}{3(b^{n}-h)^{2}}+\frac{8[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^{s}abck)}{(h-b^{n})^{4}}\equiv 0\ (\mathrm{mod}\ n^{s+1})\ (16') \]
+
+      \[ \text{Từ (16') suy ra: } b^{n(n-2)}+a^{n(n-2)}-h^{n-2}\equiv 0\ (\mathrm{mod}\ n)\ \text{Đặt:} \]
+
+      \[ H(h,b)=\frac{n\{-3[a^{n(n-2)}+b^{n(n-2)}-h^{n-2}]+b^{n}h[b^{n(n-4)}-h^{n-4}]\}}{2(h-b^{n})^{2}}+\frac{a^{n}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]}{(h-b^{n})^{3}}-\frac{h^{n-2}-b^{n(n-2)}-b^{n}h[h^{n-4}-b^{n(n-4)}]}{6(h-b^{n})^{2}}n^{2}- \]
+
+      \[ -\frac{n[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^{n}}{2(h-b^{n})^{2}}+\frac{n^{2}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^{n}}{6(h-b^{n})^{2}}-\frac{n^{2}}{6}a^{n(n-4)} \]
+
+      \[ \text{Khi đó (16') trở thành } H(h,b)+\frac{7b^{n(n-2)}-h^{n-2}}{(h-b^{n})^{3}}(n^{s}abck)-\frac{15b^{n(n-1)}}{(h-b^{n})^{4}}n^{s}abck+\frac{5[3b^{n(n-4)}(b^{n}-h)^{2}-4b^{n(n-3)}(h-b^{n})+6b^{n(n-2)}]}{4(h-b^{n})^{3}}(n^{s}abck) \]
+  - id: R2
+    rect: [0.0, 321.0, 612.0, 531.0]
+    crop: page-029-300dpi-region-02.png
+    words: 510
+    digits_sorted: "0111111111111122222222222222222222222222233333333333333333333333333344444444444444455566777889"
+    pua: 4
+    notes: "emphasis encoded: cyan = whole line 4 (measured y438-473 x30-430, all cyan); green = 2[b^n(n-3)+a^n(n-3)+h^n-3](n^s abck)/(3(b^n-h)^2) (y475-512 x30-215); blue = (1/4)a^n(n-5)(n^s abck) (x212-295) and 8[h^n-1+b^n(n-1)+a^n(n-1)](n^s abck)/(h-b^n)^4 (x295-440); red = section heading 1.1 Tính chất của H(h,b) và H(h,a) (y514-528 x38-218). Uncorroborated/left out: the vision also reported blue only on the 8[...] fraction, and no green/cyan elsewhere - my measurement shows the 1/4 term is blue too. NOTE three exponent digits of the first bracket of line 5 are printed in the Symbol font and encoded U+F033 (PUA) in the text layer (Symbol code 0x33 = 3); they are transcribed as 3."
+    latex: |
+      \[ -\frac{3h^{n-4}(b^{n}-h)^{2}+4h^{n-3}(h-b^{n})+6h^{n-2}}{12(h-b^{n})^{3}}(n^{s}abck)-\frac{h^{n-1}}{(b^{n}-h)^{4}}n^{s}abck+\frac{4b^{n(n-3)}-3hb^{n(n-4)}-h^{n-3}}{3(h-b^{n})^{2}}(n^{s}abck)-\frac{4a^{n(n-2)}(n^{s}abck)}{(h-b^{n})^{3}}+ \]
+
+      \[ +\frac{-7b^{n(n-4)}(h-b^{n})^{3}+7b^{n(n-3)}(h-b^{n})^{2}-7[b^{n(n-2)}(h-b^{n})+h^{n-1}-b^{n(n-1)}]}{(h-b^{n})^{4}}n(n^{s}abck)-\frac{2[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}](n^{s}abck)}{(h-b^{n})^{3}}+ \]
+
+      \[ +\frac{9b^{n(n-4)}(h-b^{n})^{2}-3[2b^{n(n-3)}(h-b^{n})+h^{n-2}-b^{n(n-2)}]}{2(h-b^{n})^{3}}(n^{s}abck)+\frac{[-5h^{n-2}+2b^{n}h^{n-3}]+[5b^{n(n-2)}-2hb^{n(n-3)}]}{3(h-b^{n})^{3}}(n^{s}abck)- \]
+
+      \[ \textcolor{cyan}{-\frac{2h^{n-3}a^{n}+2b^{n(n-3)}a^{n}+18b^{n(n-2)}}{3(h-b^{n})^{3}}(n^{s}abck)-\frac{[b^{n(n-4)}+a^{n(n-4)}-h^{n-4}](n^{s}abck)}{4(h-b^{n})}+\frac{2a^{n(n-3)}(n^{s}abck)}{(h-b^{n})^{2}}-} \]
+
+      \[ +\textcolor{green}{\frac{2[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^{s}abck)}{3(b^{n}-h)^{2}}}+\textcolor{blue}{\frac{1}{4}a^{n(n-5)}(n^{s}abck)}+\textcolor{blue}{\frac{8[h^{n-1}+b^{n(n-1)}+a^{n(n-1)}](n^{s}abck)}{(h-b^{n})^{4}}}\equiv 0\ (\mathrm{mod}\ n^{s+1})\ (16'') \]
+
+      \[ \textcolor{red}{\text{1.1 Tính chất của } H(h,b) \text{ và } H(h,a)} \]
+  - id: R3
+    rect: [0.0, 531.0, 612.0, 792.0]
+    crop: page-029-300dpi-region-03.png
+    words: 476
+    digits_sorted: "22222222222222222222222222222222222222333333333333333333333344444466669"
+    pua: 0
+    notes: "emphasis encoded: red = H(h,b)=n{-3[...]+b^n h[...]-[...]a^n}/(2(h-b^n)^2) (measured y532-568 x75-452; 'Ta có' left black); red = whole line 2 (measured y570-604 x33-537). NOT encoded (measured colours mixed, so no clean span): line 3 (y605-639: red 1907 + cyan 1288 px), the (h-b^n) terms of line 4 x183-367 (red 1212 + blue 1089 + magenta 846), line 5 x160-330 (red 1980 + cyan 793); the vision's blue/magenta term attributions for those lines are uncorroborated."
+    latex: |
+      \[ \text{Ta có } \textcolor{red}{H(h,b)=\frac{n\{-3[a^{n(n-2)}+b^{n(n-2)}-h^{n-2}]+b^{n}h[b^{n(n-4)}-h^{n-4}]-[b^{n(n-3)}-a^{n(n-3)}+h^{n-3}]a^{n}\}}{2(h-b^{n})^{2}}} \]
+
+      \[ \textcolor{red}{-\frac{h^{n-2}-b^{n(n-2)}-b^{n}h[h^{n-4}-b^{n(n-4)}]}{6(h-b^{n})^{2}}n^{2}+\frac{n^{2}[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}]a^{n}}{6(h-b^{n})^{2}}-\frac{n^{2}}{6}a^{n(n-4)}+\frac{a^{n}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]}{(h-b^{n})^{3}}-} \]
+
+      \[ =\frac{n\{-3[a^{n(n-2)}+b^{n(n-2)}-h^{n-2}]+[hb^{n(n-3)}-b^{n(n-3)}a^{n}]-[b^{n}h^{n-3}+h^{n-3}a^{n}]+a^{n(n-2)}\}}{2(h-b^{n})^{2}}+ \]
+
+      \[ +\frac{b^{n(n-3)}a^{n}+a^{n(n-2)}+h^{n-3}a^{n}-h^{n-3}(h-b^{n})-b^{n(n-3)}(h-b^{n})-a^{n(n-4)}(h-b^{n})^{2}}{6(h-b^{n})^{2}}n^{2}+\frac{a^{n}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]}{(h-b^{n})^{3}} \]
+
+      \[ =\frac{n\{-3[a^{n(n-2)}+b^{n(n-2)}-h^{n-2}]-b^{n(n-3)}(h-a^{n})-h^{n-3}(a^{n}+b^{n})+a^{n(n-2)}\}}{2(h-b^{n})^{2}}+\frac{a^{n}[b^{n(n-2)}+a^{n(n-2)}-h^{n-2}]}{(h-b^{n})^{3}}+ \]
+
+      \[ \text{29} \]

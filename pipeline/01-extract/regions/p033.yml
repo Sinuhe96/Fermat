@@ -1,0 +1,60 @@
+id: P033
+page: 33
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 564974ad93e0bafe10de9235f04d6bea4df6b7076c1fcaf636bba30bf18bec3f
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 379.3]
+    crop: page-033-300dpi-region-01.png
+    words: 765
+    digits_sorted: "000111111111111111111111111111111111222222222222222222222222222333333333333333333333334444444444444444444444444444444444444555555555566666777777778889"
+    pua: 11
+    notes: ""
+    latex: |
+      \[ \text{Ta có } H(h,b) \equiv \frac{(1-n)a^n [a^{n(n-2)} + b^{n(n-2)} - h^{n-2}]}{(h - b^n)^3} \pmod{n^{s+1}} \text{ (tính chất của H(h, b))} \]
+      \[ \Rightarrow \frac{(h - b^n)H(h,b)}{h - b^n} \equiv \frac{(1-n)(-b^n) [a^{n(n-2)} + b^{n(n-2)}](-b^n)}{(h - b^n)^4} \equiv \frac{b^{2n}(4b^{n(n-3)}n^s abck)}{(h - b^n)^4} \pmod{n^{s+1}} \]
+      \[ \Rightarrow \frac{(h - b^n)H(h,b)}{h - b^n} \equiv \frac{4b^{n(n-1)}n^s abck}{(h - b^n)^4} \pmod{n^{s+1}} \text{ (17''') Kết hợp (17'') và (17''') ta có: } \]
+      \[ \frac{4b^{n(n-1)}n^s abck}{(h - b^n)^4} + \frac{5[3b^{n(n-4)}(-b^{3n}) - 4b^{n(n-3)}b^{2n} + 6b^{n(n-2)}(-b^n)]}{4(h - b^n)^4} (n^s abck) + \frac{4b^{n(n-3)}b^{2n}}{3(h - b^n)^4} (n^s abck) - \frac{15b^{n(n-3)}b^{2n}}{(h - b^n)^4} n^s abck + \]
+      \[ + \frac{4(-b^{n(n-2)})(-b^n)(n^s abck)}{(h - b^n)^4} + \frac{(-b^{n(n-4)})(-b^n)^3}{4(h - b^n)^4} (n^s abck) + \frac{9b^{n(n-4)}(-b^n)b^{2n} - 6b^{n(n-3)}b^{2n}}{2(h - b^n)^4} (n^s abck) + \frac{b^{n(n-5)}b^{4n}}{4(h - b^n)^4} (n^s abck) + \]
+      \[ + \frac{-7b^{n(n-4)}(-b^n)^3 + 7b^{n(n-3)}b^{2n} - 7[b^{n(n-2)}(-b^n) - b^{n(n-1)}]}{(h - b^n)^4} (n^s abck) + \frac{7b^{n(n-2)}(-b^n)}{(h - b^n)^4} (n^s abck) + \frac{5b^{n(n-2)}(-b^n)}{3(h - b^n)^4} (n^s abck) \]
+      \[ + \frac{2b^{n(n-3)}b^{2n}(n^s abck)}{(h - b^n)^4} - \frac{2b^{n(n-3)}b^{2n} - 18b^{n(n-3)}b^{2n}}{3(h - b^n)^4} (n^s abck) + \frac{8[b^{n(n-3)} + b^{n(n-3)}](n^s abck)b^{2n}}{(h - b^n)^4} \equiv 0 \pmod{n^{s+1}} \]
+      \[ \Rightarrow 4b^{n(n-1)} - \frac{65b^{n(n-1)}}{4} + \frac{4b^{n(n-1)}}{3} + 4b^{n(n-1)} + \frac{b^{n(n-1)}}{4} - \frac{15b^{n(n-1)}}{2} + 28b^{n(n-1)} - 15b^{n(n-1)} + \frac{b^{n(n-1)}}{4} + 2b^{n(n-1)} + \frac{16b^{n(n-1)}}{3} - \]
+      \[ - 7b^{n(n-1)} - \frac{5b^{n(n-1)}}{3} + 16b^{n(n-1)} \equiv 0 \pmod{n} \]
+      \[ \Rightarrow \frac{55}{3} b^{n(n-1)} \equiv 0 \pmod{n} \]
+
+  - id: R2
+    rect: [0.0, 379.3, 612.0, 640.0]
+    crop: page-033-300dpi-region-02.png
+    words: 221
+    digits_sorted: "00000001111111111111111111111111111112222222333334455555566667777778888889999"
+    pua: 2
+    notes: ""
+    latex: |
+      \[ \Rightarrow n = 11 \text{ hoặc } n = 5 \text{ (vô lý).} \]
+      \[ \text{Vậy, trong trường hợp } k \neq 0, \text{ PT (1) vô nghiệm nguyên khác không, khi } n \text{ là số nguyên tố lớn hơn 11.} \]
+      \[ \text{Tóm lại, PT (1) vô nghiệm nguyên khác không, khi } n \text{ là số nguyên tố lớn hơn 11.} \]
+      \[ \text{\textbf{2. Khi là số nguyên tố nhỏ hơn 13}} \]
+      \[ \text{Nhà toán học Pierre de Fermat (1601 -- 1665 ) đã chứng minh PT(1) vô nghiệm nguyên khác không, khi } n = 4. \]
+      \[ \text{Nhà toán học Leonard Euler (1707--1783) đã chứng minh PT(1) vô nghiệm nguyên khác không, khi } n = 3. \]
+      \[ \text{Nhà toán học Dirichlet (1805 --1859) đã chứng minh PT(1) vô nghiệm nguyên khác không, khi } n = 5. \]
+      \[ \text{Nhà toán học Gabriel Lamé (1795 --1870) đã chứng minh PT(1) vô nghiệm nguyên khác không, khi } n = 7. \]
+      \[ \text{Nhà toán học người Ernst Kummer (1810 -- 1893) đã chứng minh PT(1) vô nghiệm nguyên khác không, khi} \]
+      \[ n = 11. \]
+      \[ \text{\textbf{3. Khi }} n = pk, \; p \text{ là số nguyên tố lẻ hoặc } p = 4 \; (\, k \in \mathbb{N}^* \,) \]
+      \[ \text{Từ kết quả chứng minh ở 1., 2., áp dụng bổ đề 2, ta có PT (1) vô nghiệm nguyên khác không.} \]
+      \[ \text{Vậy định lý lớn Fermat đã được chứng minh.} \]
+      \[ \text{\textit{Phú Vang, ngày22/9/2026}} \]
+      \[ \text{\textit{Tác giả:Tôn Thất Hiệp}} \]
+
+  - id: R3
+    rect: [0.0, 640.0, 612.0, 792.0]
+    crop: page-033-300dpi-region-03.png
+    words: 1
+    digits_sorted: "33"
+    pua: 0
+    notes: ""
+    latex: |
+      \[ \text{33} \]
+

@@ -27,7 +27,36 @@ Stages:
    - Why two tools: math-dense pages extract differently per engine.
      Divergence CONFIRMS unreliability — the two extracts agreeing is the
      signal; the per-page diff pinpoints which spans need eyes.
-   - Math pages that fail are routed to MANUAL transcription from the rendered
+   - Math pages that fail are routed to MANUAL transcription from the
+     rendered page — which is what the vision→LaTeX stage materializes:
+   - Vision→LaTeX region extraction (`regions.py`, in `regions/pNNN.yml`):
+     the transcription prerequisite for the text-only Lean phase.
+     * `precheck` gates the stage: a vision-capable session must
+       transcribe `out/vision-probe.png` (`--check-answer`), or the user
+       supplies LaTeX fixtures (`--fixture <page>=<path> --pages <spec>`).
+       Without either the stage stops: `plan` refuses with
+       `precheck not passed`.
+     * Workflow per page: `words` → model splits into 1–12 horizontal
+       bands (only inside empty word-gaps) → `plan` (gates: exact
+       tiling, min sizes, deterministic word→region assignment; writes
+       the record with per-region `digits_sorted` audit digests and
+       renders `page-NNN-300dpi-region-NN.png` crops) → vision reads
+       each crop to LaTeX (`\[ … \]` display blocks, `\text{*}`
+       bullets, `\textcolor`/`\mathbf` emphasis, ambiguity recorded in
+       `notes`) → `verify` (read-only gates: tiling, LaTeX balance,
+       digit audit per region and page — Symbol-font superscript digits
+       encoded U+F030+k are decoded; signoff staleness outranks digits
+       on REVIEWED records) → `signoff` (REVIEWED + signed latex sha)
+       → `status --pages 33` (bare N = pages 1..N) is the phase switch.
+     * `export <records> --out file.tex` writes one compilable document
+       for external editors; the review HTML (`out/review/`) shows each
+       region's LaTeX with flags (digit mismatch / PUA / stale signoff /
+       notes) and copy buttons, and the index carries a per-page
+       `regions` cell (— / DRAFT / REVIEWED / REVIEWED ⚠n).
+     * Chunk consumption: every DONE chunk carries `regions:` refs
+       (e.g. `P001-R1, P002-R2`) covering its `pdf_pages`;
+       `progress.py --check` requires each page's record present,
+       REVIEWED, fresh, and sha-bound (schema criterion 8).
 
 2. `02-chunks/` — human-verified YAML records, one per work unit.
    - `schema.md` is the contract every chunk must satisfy.

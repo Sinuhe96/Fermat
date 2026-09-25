@@ -83,6 +83,8 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 
+import regions
+
 EXPECTED_PAGES = 33
 # Verdict driver is seq_overlap; numbers kept from the legacy gate.
 SEQ_OK_MATH = 0.80
@@ -297,7 +299,105 @@ a{color:#0b57d0}
 table{border-collapse:collapse;background:#fff;font-size:13px}
 th,td{border:1px solid #d9dde3;padding:5px 10px;text-align:left}
 th{background:#eef1f5}
+.region{background:#fff;border:1px solid #d9dde3;border-radius:8px;padding:8px 10px;margin-top:8px}
+.region.bad{border-left:4px solid #d3302f}
+.region.warn{border-left:4px solid #e0a800}
+.region-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px}
+.rid{display:inline-block;background:#eef1f5;border:1px solid #d9dde3;border-radius:99px;padding:1px 8px;font-weight:600}
+.flag{display:inline-block;border-radius:99px;padding:1px 8px;font-size:11px;border:1px solid}
+.flag.f-bad{background:#ffe2e2;border-color:#f0a6a6;color:#8a1212}
+.flag.f-warn{background:#fff3cd;border-color:#ffd870;color:#6d5200}
+.flag.f-note{background:#e8f0fe;border-color:#b9cdf5;color:#1a4599}
+.copy{font:12px system-ui;border:1px solid #d9dde3;background:#fff;border-radius:6px;padding:2px 10px;cursor:pointer}
+.copy:hover{background:#eef1f5}
+.region pre{margin-top:8px}
+.export-note{font-size:12px;color:#555;margin-top:6px}
 """
+
+
+COPY_SCRIPT = """
+<script>
+document.querySelectorAll('button.copy').forEach(function (button) {
+  button.addEventListener('click', function () {
+    var pre = button.closest('.region').querySelector('.latex-src');
+    var text = pre.textContent;
+    function done() {
+      button.textContent = 'copied';
+      setTimeout(function () { button.textContent = 'copy'; }, 1200);
+    }
+    function fallback() {
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try {
+        document.execCommand('copy');
+        done();
+      } catch (e) {
+        button.textContent = 'select manually';
+      }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  });
+});
+</script>
+"""
+
+
+def _flag_class(label: str) -> str:
+    if label in ("digit mismatch", "stale signoff"):
+        return "f-bad"
+    if label.startswith("PUA"):
+        return "f-warn"
+    return "f-note"
+
+
+def build_region_section(
+    page_no: int, region_record: dict | None, source_pdf: str
+) -> str:
+    """Vision→LaTeX transcription rows with review flags + copy buttons."""
+    if region_record is None:
+        return (
+            '<div class="callout">no region record — run <code>regions.py plan '
+            f"{html.escape(source_pdf)} {page_no} --spec …</code></div>"
+        )
+    rows = regions.review_rows(region_record)
+    status = str(region_record.get("status", "DRAFT"))
+    blocks = []
+    for row in rows:
+        flags = row["flags"]
+        classes = "region"
+        if any(f in ("digit mismatch", "stale signoff") for f in flags):
+            classes += " bad"
+        elif any(f.startswith("PUA") for f in flags):
+            classes += " warn"
+        flag_html = "".join(
+            f'<span class="flag {_flag_class(f)}">{html.escape(f)}</span>'
+            for f in flags
+        )
+        crop = str(row.get("crop", ""))
+        crop_html = (
+            f'<a class="crop" href="../{html.escape(crop)}">crop</a>' if crop else ""
+        )
+        blocks.append(
+            f'<div class="{classes}"><div class="region-head">'
+            f'<span class="rid">{html.escape(row["id"])}</span>{crop_html}{flag_html}'
+            f'<button class="copy" type="button">copy</button></div>'
+            f'<pre class="latex-src">{html.escape(row["latex"])}</pre></div>'
+        )
+    return (
+        f'<div class="chips"><span><b>record</b> {html.escape(status)}</span></div>'
+        + "".join(blocks)
+        + '<p class="export-note">External editor: <code>regions.py export '
+          f"pipeline/01-extract/regions/p{page_no:03d}.yml --out review.tex"
+          "</code> renders these blocks as one amsmath/xcolor document.</p>"
+        + COPY_SCRIPT
+    )
 
 
 def build_review_html(
@@ -306,6 +406,7 @@ def build_review_html(
     text_b: str,
     image_href: str | None,
     source_pdf: str,
+    region_record: dict | None = None,
 ) -> str:
     """One page's review surface: render beside both marked extracts."""
     page_no = int(entry.get("page", 0))
@@ -351,6 +452,7 @@ def build_review_html(
         f"<div><h3>only in pymupdf</h3><pre>{uniq_b}</pre></div>"
         "</div></details>"
     )
+    region_section = build_region_section(page_no, region_record, source_pdf)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -375,6 +477,8 @@ def build_review_html(
 <h3>extract — pymupdf</h3>
 <pre>{marked_b}</pre>
 {footer}
+<h3>LaTeX transcription (regions)</h3>
+{region_section}
 </section>
 </main>
 </body>
@@ -382,11 +486,25 @@ def build_review_html(
 """
 
 
-def build_index_html(entries: list[tuple[dict, str | None]], source_pdf: str) -> str:
+def region_state(record: dict | None) -> str:
+    """Index cell: '—' | 'DRAFT' | 'REVIEWED' | 'REVIEWED ⚠n' (n = bad regions)."""
+    if record is None:
+        return "—"
+    if record.get("status") != "REVIEWED":
+        return str(record.get("status") or "DRAFT")
+    bad = sum(
+        1
+        for row in regions.review_rows(record)
+        if any(f in ("digit mismatch", "stale signoff") for f in row["flags"])
+    )
+    return "REVIEWED" if bad == 0 else f"REVIEWED ⚠{bad}"
+
+
+def build_index_html(entries: list[tuple[dict, str | None, str]], source_pdf: str) -> str:
     """Review queue: one row per non-OK page, render-missing commands listed."""
     rows = []
     missing_cmds = []
-    for entry, href in entries:
+    for entry, href, regions_cell in entries:
         n = int(entry.get("page", 0))
         note = "" if href else " · render missing"
         if not href:
@@ -399,6 +517,7 @@ def build_index_html(entries: list[tuple[dict, str | None]], source_pdf: str) ->
             f"<tr><td>{n}</td><td>{cell('verdict')}</td><td>{cell('seq_overlap')}</td>"
             f"<td>{cell('digit_overlap')}</td><td>{cell('math_density')}</td>"
             f"<td>{cell('preferred_engine')}</td>"
+            f"<td>{html.escape(regions_cell)}</td>"
             f'<td><a href="page-{n:03d}.html">open</a>{note}</td></tr>'
         )
     render_block = (
@@ -420,7 +539,7 @@ def build_index_html(entries: list[tuple[dict, str | None]], source_pdf: str) ->
 Machine contract: <code>../fidelity_report.json</code>.</p>
 </header>
 <table>
-<tr><th>page</th><th>verdict</th><th>seq</th><th>digits</th><th>density</th><th>preferred</th><th>review</th></tr>
+<tr><th>page</th><th>verdict</th><th>seq</th><th>digits</th><th>density</th><th>preferred</th><th>regions</th><th>review</th></tr>
 {"".join(rows)}
 </table>
 {render_block}
@@ -444,21 +563,28 @@ def write_review(
     review.mkdir(exist_ok=True)
     for stale in review.glob("page-*.html"):
         stale.unlink()
-    entries: list[tuple[dict, str | None]] = []
+    entries: list[tuple[dict, str | None, str]] = []
     written = []
     for entry in targets:
         i = int(entry.get("page", 0)) - 1
         a = p1[i] if 0 <= i < len(p1) else ""
         b = p2[i] if 0 <= i < len(p2) else ""
-        href = page_image_href(d, int(entry["page"]))
-        name = f"page-{int(entry['page']):03d}.html"
+        page_no = int(entry["page"])
+        href = page_image_href(d, page_no)
+        try:
+            record = regions.load_page_record(
+                regions.REGIONS_DIR / f"p{page_no:03d}.yml"
+            )
+        except OSError:
+            record = None
+        name = f"page-{page_no:03d}.html"
         (review / name).write_text(
-            build_review_html(entry, a, b, href, source_pdf),
+            build_review_html(entry, a, b, href, source_pdf, record),
             encoding="utf-8",
             newline="\n",
         )
         written.append(name)
-        entries.append((entry, href))
+        entries.append((entry, href, region_state(record)))
     (review / "index.html").write_text(
         build_index_html(entries, source_pdf), encoding="utf-8", newline="\n"
     )

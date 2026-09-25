@@ -1,0 +1,72 @@
+id: P006
+page: 6
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: 897dc39bd1662fa3fbccac315b18daa277d7fdd3753a91e0c2e3bc8d39c60795
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 265.6]
+    crop: page-006-300dpi-region-01.png
+    words: 488
+    digits_sorted: "01111111111111111222222222222333333334444466"
+    pua: 8
+    notes: vision flags: heading blue bold, subheading red bold (colour not encoded, \textbf kept); h=n^{ns-1}c^n exponent small in scan - ns-1 vs s-1 ambiguous, text-layer tokens favour ns-1
+    latex: |
+      \[ \text{\textbf{D. CHỨNG MINH ĐỊNH LÝ LỚN FERMAT}} \]
+
+      \[ \text{\textbf{1. Khi }} n \text{\textbf{ là số nguyên tố lớn hơn 11}} \]
+
+      \[ \text{Giả sử có số nguyên tố } n \text{ lớn hơn 11, sao cho PT (1) có nghiệm nguyên khác không } x = u,\ y = v,\ z = t, \text{ trong đó } (u,v) = (u,t) = (v,t) = 1 \text{ (áp dụng \textbf{bổ đề 1}). Khi đó } u^n + v^n = t^n \text{ (3). Vì } n \text{ lẻ và } u, v, t \text{ là các số nguyên, nên } u^n + v^n = t^n \iff v^n + u^n = t^n \iff (-t)^n + v^n = (-u)^n \iff u^n + (-t)^n = (-v)^n \text{; do đó, tính chất số học và vai trò của } u, v, t \text{ là như nhau; cho nên, không mất tính tổng quát ta giả sử } u \nmid n,\ v \nmid n, \text{ áp dụng \textbf{bổ đề 6}, ta có: } v = a^n + n^s abck,\ u = b^n + n^s abck,\ t = h - n^s abck,\ a^n + b^n = h - 2n^s abck \text{; với } (h = c^n, \text{ khi } t \nmid n) \vee (h = n^{ns-1}c^n, \text{ khi } t : n), \text{ trong đó } a, b, c, k \text{ là bốn số nguyên khác không và đôi một nguyên tố cùng nhau, đồng thời không chia hết cho } n,\ s \in \mathbb{Z},\ s \ge 2. \]
+
+      \[ \text{Ta có: } (3) \Rightarrow (a^n + n^s abck)^n + (b^n + n^s abck)^n = (h - n^s abck)^n \]
+
+      \[ \iff h^n - a^{n^2} - b^{n^2} - n[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}]n^s abck - \frac{n(n-1)}{2}[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}](n^s abck)^2 - \]
+
+      \[ - \frac{n(n-1)(n-2)}{6}[a^{n(n-3)} + b^{n(n-3)} + h^{n-3}](n^s abck)^3 - \frac{n(n-1)(n-2)(n-3)}{24}[b^{n(n-4)} + a^{n(n-4)} - h^{n-4}](n^s abck)^4 - \]
+
+      \[ - \ldots - n(a^n + b^n - h)(n^s abck)^{n-1} - 3(n^s abck)^n = 0, \text{ suy ra} \]
+  - id: R2
+    rect: [0.0, 265.6, 612.0, 547.3]
+    crop: page-006-300dpi-region-02.png
+    words: 593
+    digits_sorted: "00000000111111111111111111111111111111111111122222222222222222222222222222233333333334444445667789"
+    pua: 20
+    notes: last line RHS factor printed without 'a' as (n^s bck); next line prints (n^s abck) - both confirmed at 600dpi
+    latex: |
+      \[ \text{*}\; h^n - a^{n^2} - b^{n^2} \equiv n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck \pmod{n^{2s+1}}\ (7) \]
+
+      \[ \text{*}\; h^n - a^{n^2} - b^{n^2} \equiv n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck + \frac{n(n-1)}{2}\Big[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}\Big](n^s abck)^2 \pmod{n^{3s+1}}\ (8) \]
+
+      \[ \text{*}\; h^n - a^{n^2} - b^{n^2} \equiv n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck + \frac{n(n-1)}{2}\Big[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}\Big](n^s abck)^2 + \]
+
+      \[ + \frac{n(n-1)(n-2)}{6}\Big[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}\Big](n^s abck)^3 \pmod{n^{4s+1}}\ (9),\ h^n \equiv a^{n^2} + b^{n^2} \pmod{n^{s+1}}\ (7') \]
+
+      \[ \text{*}\; h^n - a^{n^2} - b^{n^2} - n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck \equiv \frac{n(n-1)}{2}\Big[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}\Big](n^s abck)^2 + \]
+
+      \[ + \frac{n(n-1)(n-2)}{6}\Big[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}\Big](n^s abck)^3 + \frac{n(n-1)(n-2)(n-3)}{24}\Big[b^{n(n-4)} + a^{n(n-4)} - h^{n-4}\Big](n^s abck)^4 \pmod{n^{5s+1}}\ (10) \]
+
+      \[ \text{Mặt khác ta có } t^n - u^n = v^n \Leftrightarrow (t-u)\sum_{i=0}^{n-1} t^{n-1-i}u^i = v^n \Leftrightarrow a^n\sum_{i=0}^{n-1}(h - n^s abck)^{n-1-i}(b^n + n^s abck)^i = (a^n + n^s abck)^n \]
+
+      \[ \Leftrightarrow \sum_{i=0}^{n-1}(h - n^s abck)^{n-1-i}(b^n + n^s abck)^i = (a^{n-1} + n^s bck)^n \]
+
+      \[ \Leftrightarrow \sum_{i=0}^{n-1}\sum_{j=0}^{n-1-i}\sum_{l=0}^{i}(-1)^j C_{n-1-i}^{j} C_i^{l} h^{n-1-i-j} b^{n(i-l)} (n^s abck)^{l+j} = \sum_{i=0}^{n} C_n^i a^{(n-1)(n-i)}(n^s bck)^i \]
+  - id: R3
+    rect: [0.0, 547.3, 612.0, 792.0]
+    crop: page-006-300dpi-region-03.png
+    words: 517
+    digits_sorted: "0000000000000000011111111111111111111111111111111111111111111111222222222222222222333333333333333333444444444444445556"
+    pua: 20
+    notes: condition under 2nd sum subscript read from glyphs as l + j >= 5
+    latex: |
+      \[ \Leftrightarrow \sum_{i=0}^{n-1} \sum_{j=0}^{n-1-i} \sum_{l=0}^{i} (-1)^j C_{n-1-i}^{j} C_{i}^{l} h^{n-1-i-j} b^{n(i-l)} (n^s abck)^{l+j} = \sum_{i=0}^{n} C_{n}^{i} a^{n(n-1-i)} (n^s abck)^{i} \]
+
+      \[ \Leftrightarrow \sum_{i=0}^{n-1} \sum_{\substack{j=0 \\ (l+j \geq 5)}}^{n-1-i} \sum_{l=0}^{i} (-1)^j C_{n-1-i}^{j} C_{i}^{l} h^{n-1-i-j} b^{n(i-l)} (n^s abck)^{l+j} + \sum_{i=4}^{n-1} (-1)^0 C_{n-1-i}^{0} C_{i}^{4} h^{n-1-i} b^{n(i-4)} (n^s abck)^{4} + \sum_{i=0}^{n-5} (-1)^4 C_{n-1-i}^{4} C_{i}^{0} h^{n-5-i} b^{ni} (n^s abck)^{4} + \]
+
+      \[ + \sum_{i=1}^{n-4} (-1)^3 C_{n-1-i}^{3} C_{i}^{1} h^{n-4-i} b^{n(i-1)} (n^s abck)^{4} + \sum_{i=3}^{n-2} (-1)^1 C_{n-1-i}^{1} C_{i}^{3} h^{n-2-i} b^{n(i-3)} (n^s abck)^{4} + \sum_{i=2}^{n-3} (-1)^2 C_{n-1-i}^{2} C_{i}^{2} h^{n-3-i} b^{n(i-2)} (n^s abck)^{4} + \]
+
+      \[ + \sum_{i=1}^{n-3} (-1)^2 C_{n-1-i}^{2} C_{i}^{1} h^{n-3-i} b^{n(i-1)} (n^s abck)^{3} + \sum_{i=2}^{n-2} (-1)^1 C_{n-1-i}^{1} C_{i}^{2} h^{n-2-i} b^{n(i-2)} (n^s abck)^{3} + \]
+
+      \[ + \sum_{i=0}^{n-4} (-1)^3 C_{n-1-i}^{3} C_{i}^{0} h^{n-4-i} b^{ni} (n^s abck)^{3} + \sum_{i=3}^{n-1} (-1)^0 C_{n-1-i}^{0} C_{i}^{3} h^{n-1-i} b^{n(i-3)} (n^s abck)^{3} + \sum_{i=2}^{n-1} (-1)^0 C_{n-1-i}^{0} C_{i}^{2} b^{n(i-2)} h^{n-1-i} (n^s abck)^{2} + \]
+
+      \[ \text{6} \]

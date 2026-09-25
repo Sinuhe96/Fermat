@@ -1,0 +1,51 @@
+id: P012
+page: 12
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+status: REVIEWED
+signed_latex_sha256: a1457512018ea05eae72ac164a845c5c41e122a32fb614b307a799e12d193ef0
+signed_on: 2026-09-26
+regions:
+  - id: R1
+    rect: [0.0, 0.0, 612.0, 379.9]
+    crop: page-012-300dpi-region-01.png
+    words: 791
+    digits_sorted: "11111111111111111111111111112222222222222222222222222222222222222222222222222222222222222222222222222222222233333333333333333333333333333333344444466888"
+    pua: 9
+    notes: "region printed in mixed colours (blue/red/magenta/purple/green); colour emphasis not encoded in LaTeX (vision read did not delimit it); final display line ends with a trailing '+' continuing on the next region"
+    latex: |
+      \text{suy ra } B^* = 2\frac{n(n-1)(n-2)b^{n(n-3)}(b^n - h)^3 - 3n(n-1)b^{n(n-2)}(b^n - h)^2 + 6\left[nb^{n(n-1)}(b^n - h) - b^{n^2} + h^n\right]}{(b^n - h)^4}
+      - \frac{3n\left\{(n-1)(n-2)b^{n(n-3)}(b^n - h)^2 - 2\left[(n-2)b^{n(n-1)} - (n-1)hb^{n(n-2)} + h^{n-1}\right]\right\}}{(b^n - h)^3} - \frac{n\left[(n-3)b^{n(n-2)} - (n-2)hb^{n(n-3)} + h^{n-2}\right]}{(b^n - h)^2}
+      = 2\frac{\left[n(n-1)^2 b^{n(n-2)} - n(n-1)(n-2)hb^{n(n-3)}\right](b^n - h)^2 - 4\left[n(n-1)b^{n(n-1)} - n(n-1)hb^{n(n-2)}\right](b^n - h) + 6\left[(n-1)b^{n^2} - nhb^{n(n-1)} + h^n\right]}{(b^n - h)^4}
+      - \frac{3n\left\{\left[(n-1)(n-2)b^{n(n-2)} - (n-1)(n-2)hb^{n(n-3)}\right](b^n - h) - 2\left[(n-2)b^{n(n-1)} - (n-1)hb^{n(n-2)} + h^{n-1}\right]\right\}}{(b^n - h)^3} -
+      \frac{n\left[(n-3)b^{n(n-2)} - (n-2)hb^{n(n-3)} + h^{n-2}\right]}{(b^n - h)^2}
+      = \frac{2\left[(n^3 - 2n^2 + n)b^{n(n-2)} - (n^3 - 3n^2 + 2n)hb^{n(n-3)}\right](b^n - h)^2 - 8n^2 b^{n(n-2)}(b^n - h)^2 + 8nb^{n(n-2)}(b^n - h)^2 + 12\left[nb^{n(n-1)}(b^n - h) - b^{n^2} + h^n\right]}{(b^n - h)^4}
+      + \frac{3\left\{\left[(n^3 - 3n^2 + 2n)b^{n(n-2)} - (n^3 - 3n^2 + 2n)hb^{n(n-3)}\right](b^n - h) - 2\left[n^2 b^{n(n-2)}(b^n - h) + nhb^{n(n-2)} - 2nb^{n(n-1)} + nh^{n-1}\right]\right\}}{(h - b^n)^3}
+      - \frac{\left[(n^2 - 3n)b^{n(n-2)} - (n^2 - 2n)hb^{n(n-3)} + nh^{n-2}\right]}{(b^n - h)^2}
+      \Rightarrow B^* = \frac{12(h^n - b^{n^2})}{(b^n - h)^4} + \frac{2\left[nb^{n(n-2)} - 2nhb^{n(n-3)}\right](b^n - h)^2 + 8nb^{n(n-2)}(h - b^n)^2 - 12nb^{n(n-1)}(h - b^n)}{(b^n - h)^4}
+      + \frac{3\left\{\left[2nb^{n(n-2)} - 2nhb^{n(n-3)}\right](b^n - h) - 2\left[-2nb^{n(n-1)} + nhb^{n(n-2)} + nh^{n-1}\right]\right\}}{(h - b^n)^3} - \frac{\left[-3nb^{n(n-2)} + 2nhb^{n(n-3)} + nh^{n-2}\right]}{(b^n - h)^2} +
+  - id: R2
+    rect: [0.0, 379.9, 612.0, 723.5]
+    crop: page-012-300dpi-region-02.png
+    words: 800
+    digits_sorted: "000111111111111111111112222222222222222222222222222222222222222222222222222222222222222222222222222222223333333333333333333333333333333333333333333444444446666666677"
+    pua: 11
+    notes: "region printed in mixed colours; colour emphasis not encoded; the render literally prints the tokens a^n and 2n^s abck (superscript s) as shown"
+    latex: |
+      + \frac{2n^2 b^{n(n-2)}}{(h-b^n)^2}-\frac{2n^2 h b^{n(n-3)}}{(h-b^n)^2}+\left[\frac{n^3 h b^{n(n-3)}}{(h-b^n)^2}-\frac{n^3 b^{n(n-2)}}{(h-b^n)^2}\right]
+      \Rightarrow B^*=\frac{12(h^n-b^{n^2})}{(b^n-h)^4}+\frac{[10nb^{n(n-2)}-4nhb^{n(n-3)}](h-b^n)-12nb^{n(n-1)}}{(h-b^n)^3}-\frac{[-3nb^{n(n-2)}+2nhb^{n(n-3)}+nh^{n-2}](h-b^n)}{(h-b^n)^3}
+      +\frac{3\{[-2nb^{n(n-2)}+2nhb^{n(n-3)}](h-b^n)-2[-2nb^{n(n-1)}+nhb^{n(n-2)}+nh^{n-1}]\}}{(h-b^n)^3}+\frac{2n^2 b^{n(n-2)}}{(h-b^n)^2}-\frac{2n^2 h b^{n(n-3)}}{(h-b^n)^2}+\frac{n^3 b^{n(n-3)}}{h-b^n}
+      \Rightarrow B^*=\frac{12(h^n-b^{n^2})}{(b^n-h)^4}+\frac{[10nb^{n(n-2)}-4nhb^{n(n-3)}]a^n-12nb^{n(n-1)}}{(h-b^n)^3}-\frac{n[-3b^{n(n-2)}+2hb^{n(n-3)}+h^{n-2}]a^n}{(h-b^n)^3}+
+      +\frac{[-6nb^{n(n-2)}+6nhb^{n(n-3)}]a^n+12nb^{n(n-1)}-6nhb^{n(n-2)}-6nh^{n-1}}{(h-b^n)^3}+\frac{2n^2 b^{n(n-2)}}{(h-b^n)^2}-\frac{2n^2 h b^{n(n-3)}}{(h-b^n)^2}-\frac{[-3nb^{n(n-2)}+2nhb^{n(n-3)}+nh^{n-2}]2n^s abck}{(h-b^n)^3}+
+      +\frac{[10nb^{n(n-2)}-4nhb^{n(n-3)}]2n^s abck}{(h-b^n)^3}+\frac{3[-2nb^{n(n-2)}+2nhb^{n(n-3)}]2n^s abck}{(h-b^n)^3}+\frac{n^3 b^{n(n-3)}}{h-b^n}\qquad(\text{vì } h-b^n=a^n+2n^s abck)
+      \Rightarrow B^*=\frac{7nb^{n(n-2)}a^n-6nh^{n-1}-nh^{n-2}a^n-6nhb^{n(n-2)}}{(h-b^n)^3}+\frac{12(h^n-b^{n^2})}{(h-b^n)^4}-\frac{2n^2 b^{n(n-3)}}{h-b^n}+\frac{n^3 b^{n(n-3)}}{h-b^n}+
+      +\frac{n^2[-3b^{n(n-2)}+2hb^{n(n-3)}+h^{n-2}]}{(b^n-h)^2}+\frac{14nb^{n(n-2)}\ n^s abck-2nh^{n-2}\ n^s abck}{(h-b^n)^3}
+      \text{Vậy } B=B_1+B_2+B_3=\frac{7nb^{n(n-2)}a^n-6nh^{n-1}-nh^{n-2}a^n-6nhb^{n(n-2)}}{(h-b^n)^3}+\frac{12(h^n-b^{n^2})}{(h-b^n)^4}-\frac{2n^2 b^{n(n-3)}}{h-b^n}
+  - id: R3
+    rect: [0.0, 723.5, 612.0, 792.0]
+    crop: page-012-300dpi-region-03.png
+    words: 1
+    digits_sorted: "12"
+    pua: 0
+    notes: ""
+    latex: |
+      \text{12}

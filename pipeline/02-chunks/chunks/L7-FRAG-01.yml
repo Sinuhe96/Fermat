@@ -112,6 +112,7 @@ extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e
 fidelity: PASS_WITH_MANUAL
 renders: L7_stmt_p1.png z_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
 lean_decls: L7_frag_01
+regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2, P004-R1, P004-R2, P004-R3, P005-R1, P005-R2
 status: BLOCKED
 # BLOCKED on author query Q-001 (pipeline/05-feedback/queries/):
 # printed proof's "chứng minh tương tự" covers a^n+b^n, not the product's
