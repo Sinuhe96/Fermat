@@ -1,40 +1,57 @@
 # HANDOFF.md — resume point for a fresh session
 
-Read this first, then **AGENTS.md** (updated 2026-09-25 with the one-step
-verification loop and F1–F4/S1 classification, and with the mandatory
-Lean-skill gate — those rules govern *how* to work; this file is just
-*where things stand*). `README.md` covers the environment.
+Read this first, then **AGENTS.md**. Its mandatory fresh-session bootstrap
+requires skill discovery/activation and infrastructure readiness before any
+chunk or mathematics work; those rules govern *how* to work, while this file
+records *where things stand*. `README.md` is the runtime command reference.
 
-Last updated: 2026-09-25 (second session, same day) — **L1-01 is DONE**:
-bổ đề 1 (statement p. 1, proof p. 2) verified end-to-end, all six author
-steps S1. L7-FRAG-01 = BLOCKED on author query Q-001. Next: another small
-lemma (bổ đề 5c/5đ per the earlier directive, or bổ đề 2 in source order).
+Last updated: 2026-09-25 (fourth session, same day) — **L2-01 DONE**:
+bổ đề 2 (statement p. 1, proof p. 2) verified end-to-end via the
+contrapositive (power identity `(u^k)^n = u^(k·n)` + assembly), all
+author steps S1, compiles EXIT:0 with only the permitted axioms, sympy
+screen PASS (3644 real witnesses at n = 1). L1-01 remains DONE.
+L7-FRAG-01 = BLOCKED on author query Q-001. Next: another small lemma
+(bổ đề 5c/5đ per the earlier directive, or bổ đề 3 in source order).
 
 ---
 
 ## One-line status
 
-Docker stack healthy; smoke green. **`L1-01` DONE** — bổ đề 1 verified with
-the one-step loop, one named Lean declaration per author step
-(`03-lean/L1/Basic.lean`), final compile EXIT:0, `#print axioms` =
+Docker stack healthy; smoke green. **`L2-01` DONE** — bổ đề 2 verified
+with the one-step loop, one named Lean declaration per author step
+(`03-lean/L2/Basic.lean`), final compile EXIT:0, `#print axioms` =
 [propext, Classical.choice, Quot.sound] only, sympy screen PASS
-(`04-sympy/test_l1_01.py`). Zero F1/F3/F4 outcomes: every author step was
-accepted as written. Lemma 7's non-divisibility chunk stays transcribed,
-step-mapped, sympy-verified and BLOCKED on the author-facing sign
-inconsistency Q-001; its flat-copy Lean file still has F2 errors plus one
-`sorry` marking that gap, and zero L7 author steps are S1.
+(`04-sympy/test_l2_01.py`: identity 1000 cases, 3644 real witnesses
+lifted at n = 1, vacuity on {5,7,11,13}). `L1-01` DONE (prior session).
+Lemma 7's non-divisibility chunk stays transcribed, step-mapped,
+sympy-verified and BLOCKED on the author-facing sign inconsistency
+Q-001; its flat-copy Lean file still has F2 errors plus one `sorry`
+marking that gap, and zero L7 author steps are S1.
 
 ---
 
-## How to resume (5 minutes to a green smoke)
+## Mandatory fresh-session bootstrap
 
-```bash
-# On Windows host, repo root (C:\Users\Anh\Documents\Fermat)
-docker compose up -d lean                          # keep it persistent; exec into it
-docker compose exec lean sh /workspace/proof/check_env.sh
-python pipeline/smoke/smoke_pipeline.py
-python pipeline/progress.py --check                # must exit 0
+After reading this file and `AGENTS.md`, identify the active agent harness
+and use its native skill discovery/loading mechanism. Command Code examples
+include `/skills` and `cmdc skills list --debug`; in OMP, use `skill://<name>`
+for exposed skills and read repository-local skill files directly. Do not run
+`cmdc` unless using Command Code. If a required skill is not exposed by the
+loader, read its canonical file directly; if unavailable, report the missing
+prerequisite before work. Normal Lean work requires `lean4` and the Fermat
+overlay before starting the container or doing any Lean/Lake work.
+
+```powershell
+# On Windows host, repo root
+# Skill discovery/loading happens through the agent harness, not this shell.
+docker compose up -d lean
+docker compose exec -T lean sh /workspace/proof/check_env.sh
+docker compose exec -T lean python /workspace/pipeline/progress.py --check
 ```
+
+Do not begin chunk work until all gates are green. The default readiness check
+is fast and compile-free. After image, toolchain, cache, or workspace changes,
+run `check_env.sh --full` once to compile `import Mathlib`.
 
 Container policy (answered 2026-09-25): we NEVER spawn/rm per command.
 `docker compose up -d lean` starts it once; every compile is
@@ -73,6 +90,44 @@ so even a recreate is cheap.
    the companion to `MATHLIB_API_LESSONS.md`; both are part of AGENTS.md's
    mandatory preparation gate. Lessons file gained 17 pin-verified items.
 
+## What the L2 session established (evidence, no rework needed)
+
+1. **Chunk `L2-01` DONE** (`pipeline/02-chunks/chunks/L2-01.yml`,
+   `status.tsv`, `PROGRESS.md`): bổ đề 2 — statement p. 1 + proof p. 2 §2
+   transcribed from fresh 300 dpi full-page renders
+   (`01-extract/out/page-001-300dpi-full.png`,
+   `page-002-300dpi-full.png`); statement, proof, and the exponent
+   spellings `nk₀`/`k₀`/`ℕ*` confirmed by two reads (render + pypdf text
+   layer, verbatim agreement). Step map S0–S3: assume a nonzero solution
+   of the nk₀-equation (S0), power identity `(uᵏ)ⁿ = u^{k·n}` (S1),
+   lifted solution of the n-equation (S2), contradiction/contrapositive
+   (S3).
+2. **Lean: one declaration per author step, all S1** —
+   `L2_step_S1` (S0+S1+S2: nonzero solution of `x^{k·n}+…` lifts to
+   `(uᵏ,vᵏ,tᵏ)` of `xⁿ+…`) and the assembly `L2_bo_de_2` (S3,
+   contrapositive wrap). Final compile EXIT:0, no `sorry`, no warnings
+   (`_hn`/`_hk` for the carried-but-unused hypotheses); `#print axioms`
+   on both = propext, Classical.choice, Quot.sound. Log:
+   `03-lean/L2-01_compile_20260925.log` (sha256 of the compiled copy
+   recorded).
+3. **Sympy screen PASS** (`04-sympy/test_l2_01.py`): identity screened on
+   1000 (n,k,u) cases; the lift is exercised on **3644 real witnesses**
+   by taking n = 1 (the transformation does not depend on n); vacuity on
+   {5,7,11,13} × k ∈ {2,3,5}: 0 candidates as expected — for n ≥ 3 the
+   hypotheses admit no witness, so screens test inferences, not witnesses.
+4. **One F2 round, no F1/F3/F4:** `rw [← pow_mul]` failed — pin
+   signature is `pow_mul : a ^ (m * n) = (a ^ m) ^ n`
+   (`Mathlib/Algebra/Group/Pow/Monoid.lean:459`), direction
+   `rw [pow_mul]`. Lesson + a direction table folded into
+   `MATHLIB_API_LESSONS.md`; proof pattern **P7** and the L2-01 §B table
+   in `ENCODING_MAP.md`.
+5. **Docs updated**: ENCODING_MAP §B Chunk L2-01 (step table, reusable
+   results, P7, method note); MATHLIB_API_LESSONS session entry;
+   PROGRESS.md regenerated (2/3 DONE); HANDOFF.md (this file).
+6. **Renders committed**: `page-001-300dpi-full.png` /
+   `page-002-300dpi-full.png` + `.json` provenance (pre-existing renders
+   `p1_300dpi.png`/`p2_300dpi.png` stay; naming conventions coexist).
+
 ### Prior session (L7 pilot) — still stands
 
 1. **Smoke/sympy green.** `04-sympy/test_l7_frag_01.py` exit 0 — n=7: 12
@@ -98,17 +153,19 @@ so even a recreate is cheap.
 
 - **Host:** Windows, Docker Desktop, ~8GB RAM cap → `lean` service has
   `mem_limit: 6g`; Docker measures 12 CPUs (service capped `cpus: 10`).
-- **`lean` container** (image `fermat-lean:latest`): lean 4.35.0-rc2,
-  lake 5.0.0, python3+sympy, git. Toolchain installs once into the
-  `lean-elan` volume (NOT baked into the image).
-- **Volumes:** `./proof:/workspace/proof` (EDIT-ONLY bind), `lake-work`
-  (`/workspace/work`, ALL Lake work), `lean-elan`, `lake-cache`.
+- **`lean` container** (image `fermat-lean:latest`): Lean 4.35.0-rc2,
+  Lake 5.0.0, pinned pypdf/PyMuPDF/Sympy, `rg`, and git. The separate local
+  `leanprovercommunity/lean` image is unused. The toolchain installs once
+  into `lean-elan` (not baked into the image).
+- **Mounts:** `./proof:/workspace/proof`, `./pipeline:/workspace/pipeline`,
+  read-only PDF at `/workspace/source/PROOF_of_FERMAT.pdf`, plus `lake-work`
+  (`/workspace/work`, ALL Lake work), `lean-elan`, and `lake-cache`.
 - **Compile loop:**
-  `docker compose cp <host file> lean:/workspace/work/testproj/…` then
-  `docker compose exec -T lean sh -c 'cd /workspace/work/testproj && lake env lean <file>'`.
-  `pipeline/` is NOT mounted — use `compose cp`, not the bind.
+  `docker compose exec -T lean sh /workspace/proof/compile_lean.sh <path-under-03-lean>`.
+  The wrapper copies from the pipeline bind mount into the Linux Lake volume
+  before invoking `lake env lean`.
 - **9p freeze pitfall:** NEVER run `lake`/`cache get` inside a Windows
-  bind mount (`./proof`, `./proof_verify`). Work happens in
+  bind mount (`./proof`, `./pipeline`, or `./proof_verify`). Work happens in
   `/workspace/work` (Linux volume).
 - Warm `import Mathlib` compile: ~181 s (L7 file, first session) but
   **288–387 s** measured for `L1/Basic.lean` under load — plan one
@@ -122,42 +179,37 @@ so even a recreate is cheap.
 ## Where the pipeline stands
 
 Stages in `pipeline/PIPELINE.md`. Verified working: 01-extract (pypdf +
-pymupdf, SHA256-pinned), 02-chunks (schema + ledger + YAML; both existing
+pymupdf, SHA256-pinned), 02-chunks (schema + ledger + YAML; all existing
 chunks have both required records), 03-lean (compiles in container; API
-lessons + encoding map live), 04-sympy (L1 + L7 tests pass), smoke
+lessons + encoding map live), 04-sympy (L1 + L2 + L7 tests pass), smoke
 (exit 0), progress.py (exit 0), 05-feedback (Q-001 OPEN),
 BLOCKERS (B-001 RESOLVED).
 
-Chunk states: `L1-01` DONE (bổ đề 1, six steps S1, assembly
-`L1_bo_de_1`); `L7-FRAG-01` BLOCKED (Q-001). Two chunks exist.
+Chunk states: `L2-01` DONE (bổ đề 2, contrapositive power-lift, all
+steps S1, assembly `L2_bo_de_2`); `L1-01` DONE (bổ đề 1, six steps S1,
+assembly `L1_bo_de_1`); `L7-FRAG-01` BLOCKED (Q-001). Three chunks exist.
 
-Reuse: L1 is **not** wired as a Lean module yet — deferred by user
-decision to its first real consumer (p. 6 main theorem "áp dụng bổ đề 1",
-or bổ đề 6). Rule + wiring recipe + the volume-only `Pilot` lean_lib
-reproducibility gap: `pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE
-chunk".
+Reuse: L1/L2 are **not** wired as Lean modules yet — deferred by user
+decision to the first real consumers (p. 6 main theorem "áp dụng bổ đề 1",
+or bổ đề 6; L2's nk-scaling for the main theorem). Rule + wiring recipe +
+the volume-only `Pilot` lean_lib reproducibility gap:
+`pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk".
 
 ---
 
 ## Next step (the actual work)
 
-**L1-01 is closed; pick the next lemma.** Two candidates, both with
-satisfied dependencies:
-
-- **bổ đề 5c / 5đ** (user directive 2026-09-25; cited by Lemma 7's proof —
-  formalizing them first also serves L7's `depends_on`), or
-- **bổ đề 2** (p. 1, next in source order). Navigation text only, from the
-  extract layer: reads roughly as "with `n ≥ 3`, if `xⁿ + yⁿ = zⁿ` has no
-  nonzero integer solution then for every `k` neither does
-  `x^{nk} + y^{nk} = z^{nk}`" — **not a transcription**; the text layer is
-  navigation only, so confirm against a 300 dpi render before freezing the
-  chunk. (Its proof, p. 2, runs the contrapositive.)
+**L2-01 is closed. Next lemma:** bổ đề 5c / 5đ (user directive
+2026-09-25; cited by Lemma 7's proof — formalizing them first also serves
+L7's `depends_on`), or bổ đề 3 (p. 1, next in source order — proof p. 2
+§3). Confirm against a 300 dpi render before freezing the chunk; the text
+layer is navigation only.
 
 Either way, follow AGENTS.md exactly:
 
 1. **Load the Lean skill first** (mandatory gate: `SKILL.md` +
    `references/*` + `MATHLIB_API_LESSONS.md` + `ENCODING_MAP.md`).
-2. `python pipeline/smoke/smoke_pipeline.py` — green before math.
+2. `docker compose exec -T lean sh /workspace/proof/check_env.sh` — green before math.
 3. Locate the statement + proof in the PDF: search the text layer, render
    those pages at 300 dpi, transcribe literally (two visual reads if
    ambiguous; the text layer is navigation only).
@@ -188,5 +240,5 @@ Either way, follow AGENTS.md exactly:
   rule exists because of exactly that log.
 - `lake env lean` with `exact?/apply?/rw?/simp?` is very slow; never run
   two jobs at once.
-- Grep the pinned Mathlib source locally before guessing a name: free and
+- Search the pinned Mathlib source with `rg` before guessing a name: free and
   exact, whereas a wrong guess costs a 300+ s round-trip.
