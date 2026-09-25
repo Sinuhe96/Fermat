@@ -1,0 +1,8 @@
+*E= \sum_{i=1}^{n-1}ib^{n(i-1)}h^{n-1-i}-\sum_{i=0}^{n-2}(n-1-i)b^{ni}h^{n-2-i}=f'(b^{n})-g'(h) \\
+= f'(b^n)-g'(h) \text{(áp dụng mục B.2), trang 2)}\\
+= \frac{(n-1)b^{n^2}-nhb^{n(n-1)}+h^n}{(h-b^n)^2}-\frac{(n-1)h^n-nb^nh^{n-1}+b^{n^2}}{(h-b^n)^2} \\
+= -\frac{nh^{n-1}(h-b^n)+nb^{n(n-1)}(h-b^n)}{(h-b^n)^2}+\frac{2(h^n-b^{n^2})}{(b^n-h)^2}=-\frac{n[h^{n-1}+b^{n(n-1)}]}{(h-b^n)}+\frac{2(h^n-b^{n^2})}{(b^n-h)^2} \\
+\\
+* F = a^{n(n-1)} + na^{n(n-2)}n^s abck + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \\
+= \frac{a^{n(n-1)} + na^{n(n-2)}n^s abck}{h-b^n}(a^n + 2n^s abck) + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \\
+= \frac{a^{n^2} + na^{n(n-1)}n^s abck}{h-b^n} + \frac{[2a^{n(n-1)}n^s abck + 2na^{n(n-2)}(n^s abck)^2](a^n + 2n^s abck)}{(h-b^n)^2} + \frac{n(n-1)a^{n(n-3)}(n^s abck)^2(a^n + 2n^s abck)^2}{2(h-b^n)^2} + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 \text{ (vì } h-b^n = a^n + 2n^s abck \text{)}
