@@ -14,8 +14,8 @@ source_text: |            # verbatim transcription (Vietnamese + math as-is)
 formal_hint: |            # informal reading: what the Lean statement should say
   ...
 transcription: manual | extract-verified
-  # manual = typed by a human (required for math-dense pages 7-29)
-  # extract-verified = copied from extract output AND token_overlap OK
+  # manual = typed from the render (required for MANUAL-verdict pages)
+  # extract-verified = copied from extract output on an OK-verdict page
 lean_file: 03-lean/Pilot/Basic.lean     # where the formalization lives
 sympy_test: 04-sympy/test_l7_frag_01.py # numeric smoke test for this chunk
 source_pdf_sha: 721c2539…               # sha256 of PROOF_of_FERMAT.pdf (extraction run)

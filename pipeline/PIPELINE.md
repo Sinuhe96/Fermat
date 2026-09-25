@@ -7,16 +7,23 @@ Stages:
      `--pages` only for bounded checks, not as a replacement for full extraction.
    - `render_pdf.py` renders a one-based page or crop to RGB PNG and records
      source/output hashes, geometry, DPI, and tool version in sidecar JSON.
-   - `fidelity_check.py` compares char counts, text-presence per page, and a
-     verdict file. The pipeline STOPS here if fidelity fails. The gate is
-     consumed per chunk: every chunk's evidence block binds it to one
-     extraction run (`source_pdf_sha`, `extract_run_sha`, `fidelity`,
-     `renders`), and `progress.py --check` validates that binding.
-   - Why two tools: math-dense pages (7-29) extract differently per engine.
-     Low prose-token overlap CONFIRMS unreliability — the two extracts
-     agreeing is the signal; the diff pinpoints which pages need eyes.
+   - `fidelity_check.py` decides, per page, whether the text layer may be
+     transcribed from (OK) or the render must be used instead (MANUAL).
+     Metrics (NFC-normalized): token-stream SequenceMatcher (order-aware
+     verdict driver), digit-stream agreement (any digit disagreement
+     escalates: digits are load-bearing for Lean), measured math-density
+     routing (no hardcoded page-range guess). Non-OK pages carry
+     actionables: preferred engine, first divergent token windows with
+     context, and unique-token samples per engine. Transcript sha256 pins
+     the exact bytes the verdicts were computed on. The pipeline STOPS
+     here if fidelity fails. The gate is consumed per chunk: every chunk's
+     evidence block binds it to one extraction run (`source_pdf_sha`,
+     `extract_run_sha`, `fidelity`, `renders`), and `progress.py --check`
+     validates that binding.
+   - Why two tools: math-dense pages extract differently per engine.
+     Divergence CONFIRMS unreliability — the two extracts agreeing is the
+     signal; the per-page diff pinpoints which spans need eyes.
    - Math pages that fail are routed to MANUAL transcription from the rendered
-     PDF. Extracted text and future OCR are navigation aids, never authority.
 
 2. `02-chunks/` — human-verified YAML records, one per work unit.
    - `schema.md` is the contract every chunk must satisfy.
