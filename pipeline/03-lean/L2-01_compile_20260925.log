@@ -1,0 +1,40 @@
+# L2-01 compile evidence — bổ đề 2 (2026-09-25)
+
+Compile command (in `lean` container):
+
+    sh /workspace/proof/compile_lean.sh L2/Basic.lean
+
+(Wrapper copies `/workspace/pipeline/03-lean/L2/Basic.lean` ->
+`/workspace/work/testproj/L2/Basic.lean`, then `lake env lean` in the
+Linux lake-work volume.)
+
+Result: EXIT:0.
+
+Source checked by the run (sha256 of the copied file in lake-work):
+
+    e1458cd9aab8e34c6a698f03012e794936448128c6ae44df6aaad7e5513469d8
+    /workspace/work/testproj/L2/Basic.lean
+
+(identical to `pipeline/03-lean/L2/Basic.lean` at the time of the run;
+one docstring-only sentence was clarified afterwards — no declaration or
+proof text changed, so the compiled result stands).
+
+Full compiler output:
+
+    'L2.L2_step_S1' depends on axioms: [propext, Classical.choice, Quot.sound]
+    'L2.L2_bo_de_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Only the permitted standard axioms. No `sorry`, no warnings (the two
+carried-but-unused hypotheses of the assembly are named `_hn`/`_hk` in
+the source, which silences the unused-variable linter honestly).
+
+Sympy screen (container): `python /workspace/pipeline/04-sympy/test_l2_01.py`
+exit 0, `L2 SMOKE PASS` — S1 1000 (n,k,u) cases of `(u^k)^n = u^(k*n)`,
+S2 3644 real witnesses (n = 1, k ∈ {1,2,3,5}) lift to the n equation,
+vacuity: no boxed witness for n ∈ {5,7,11,13}, k ∈ {2,3,5}.
+
+Classification per AGENTS.md: every author step S1 (S0 assumption, S1
+power identity, S2 solution lift; S3 contrapositive assembly). No
+F1/F3/F4 outcomes. One F2 round: `rw [← pow_mul]` was the wrong
+direction; `rw [pow_mul]` (pin signature `a ^ (m * n) = (a ^ m) ^ n`,
+Mathlib/Algebra/Group/Pow/Monoid.lean:459) closes the step.

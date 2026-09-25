@@ -38,6 +38,19 @@ rw [pow_mul] at h'
 Or use `← pow_mul` in the other direction. The key is that `pow_mul`
 has a specific argument order; check with `#check @pow_mul`.
 
+**Pin signature (Mathlib/Algebra/Group/Pow/Monoid.lean:459):**
+`pow_mul (a : M) (m n : ℕ) : a ^ (m * n) = (a ^ m) ^ n`. Both directions
+were used at this pin:
+
+| Goal shape | Use |
+|---|---|
+| have `hsol : u ^ (k * n) + …` , want `(u ^ k) ^ n + …` | `rw [pow_mul, pow_mul, pow_mul] at hsol` — `k * n` matches `?m * ?n` directly, NO `mul_comm` needed |
+| have `h : (a ^ m) ^ n = …` , want `a ^ (m * n) = …` | `rw [← pow_mul] at h` |
+
+(Bổ đề 2, L2/Basic.lean: one F2 round cost the wrong direction:
+`rw [← pow_mul]` fails on `u ^ (k * n)` with "Did not find an occurrence
+of the pattern `(?a ^ ?m) ^ ?n`".)
+
 ## Odd powers of negation
 
 `Odd.neg_pow` has signature:
@@ -138,6 +151,30 @@ where `R` has `CharP R p`. For `R = ZMod n`, this gives
 **Pitfall:** the `p` in `CharP R p` is the `ringChar`, which equals `n`
 only when `n` is prime. For composite `n`, `CharP (ZMod n) n` still holds
 (definitionally), but the field instance doesn't.
+
+## Session 2026-09-25 — L2-01 (bổ đề 2) — all steps S1
+
+Verified at this pin by compile (`03-lean/L2-01_compile_20260925.log`,
+final file: `03-lean/L2/Basic.lean`). The chunk is a pure exponent
+identity + contrapositive wrap — no ZMod, no divisibility.
+
+1. **`pow_mul` direction is the only trap.** Goal
+   `(u ^ k) ^ n + (v ^ k) ^ n = (t ^ k) ^ n` from
+   `hsol : u ^ (k * n) + v ^ (k * n) = t ^ (k * n)`:
+   `rw [← pow_mul]` FAILS ("Did not find an occurrence of `(?a ^ ?m) ^ ?n`").
+   The pin signature is `pow_mul (a : M) (m n : ℕ) : a ^ (m * n) = (a ^ m) ^ n`
+   (Mathlib/Algebra/Group/Pow/Monoid.lean:459), so the working direction
+   is plain `rw [pow_mul, pow_mul, pow_mul] at hsol`. `k * n` matches
+   `?m * ?n` directly — the `mul_comm` I added first was redundant.
+2. **Nonzero preservation:** `u ≠ 0 → u ^ k ≠ 0` is `pow_ne_zero k hu`.
+3. **Contrapositive assembly:** `intro h` on the `¬ ∃` conclusion,
+   `obtain ⟨u, v, t, hu, hv, ht, hsol⟩ := h`, feed the step theorem,
+   `exact hno ⟨u ^ k, v ^ k, t ^ k, …⟩`. The carried hypotheses `n ≥ 3`
+   and `k ≠ 0` are unused and must be named `_hn`/`_hk` (linter), exactly
+   the L1 `_hn` pattern.
+4. **Cost:** two clean `import Mathlib` round-trips measured 149 s
+   (failed direction) and 196 s / 311 s (successes) under no contention;
+   evidence log plus `#print axioms` in `L2-01_compile_20260925.log`.
 
 ## Session 2026-09-25 — L7-FRAG-01 compile #1 (whole batch = F2)
 

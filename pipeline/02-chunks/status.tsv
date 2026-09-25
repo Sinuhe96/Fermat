@@ -1,3 +1,4 @@
 chunk	pages	kind	status	lean_file	sympy_test	notes
+L2-01	1-2	lemma-statement	DONE	03-lean/L2/Basic.lean	04-sympy/test_l2_01.py	contrapositive proof; L2_step_S1 (power identity (u^k)^n=u^(k*n)) + assembly L2_bo_de_2; axioms = propext/Classical.choice/Quot.sound; sympy PASS (3644 real witnesses at n=1)
 L7-FRAG-01	1-2,4-5	lemma-statement	BLOCKED	03-lean/Pilot/Basic.lean	04-sympy/test_l7_frag_01.py	pilot: sympy pass; faithful chain encoded; Q-001 open (product factor a^n−b^n not covered by printed proof — single sorry marks it)
 L1-01	1-2	lemma-statement	DONE	03-lean/L1/Basic.lean	04-sympy/test_l1_01.py	all six author steps S1; assembled L1_bo_de_1; axioms = propext/Classical.choice/Quot.sound

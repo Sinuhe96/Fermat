@@ -233,6 +233,74 @@ stronger than it is.
 
 ---
 
+## §B. Chunk L2-01 — bổ đề 2 (DONE, all steps S1)
+
+Source: statement p. 1, proof p. 2 §2. Evidence:
+`03-lean/L2-01_compile_20260925.log` (EXIT:0, no `sorry`, no warnings),
+`04-sympy/test_l2_01.py`.
+
+| Author step | Text (p. 2) | Lean declaration |
+|---|---|---|
+| S0 | "Giả sử tồnă să întreg dôvă k₀ … x^{nk₀} + y^{nk₀} = z^{nk₀} cu nghiệm întreg khác genom x = u, y = v, z = t" | hypothesis of `L2.L2_step_S1` |
+| S1 | "… u^{nk₀} + v^{nk₀} = t^{nk₀} ⇔ (u^{k₀})ⁿ + (v^{k₀})ⁿ = (t^{k₀})ⁿ" | `L2.L2_step_S1` (power identity, forward direction) |
+| S2 | "suy ra PT xⁿ + yⁿ = zⁿ cu nghiệm întreg khác genom x = u^{k₀}, y = v^{k₀}, z = t^{k₀}" | conclusion of `L2.L2_step_S1` |
+| S3 | "diễneăs trái cu giã thiete" (contrapositive) | `L2.L2_bo_de_2` (assembly) |
+
+### Reusable results from this chunk
+
+```lean
+-- power identity in the RIGHT direction (the one that compiled):
+--   u ^ (k * n)  ->  (u ^ k) ^ n     by  rw [pow_mul]
+L2.L2_step_S1 {n k : ℕ} {u v t : ℤ} (hu : u ≠ 0) (hv : v ≠ 0) (ht : t ≠ 0)
+    (hsol : u ^ (k * n) + v ^ (k * n) = t ^ (k * n)) :
+    u ^ k ≠ 0 ∧ v ^ k ≠ 0 ∧ t ^ k ≠ 0 ∧
+      (u ^ k) ^ n + (v ^ k) ^ n = (t ^ k) ^ n
+
+-- the lemma itself (contrapositive wrap):
+L2.L2_bo_de_2 {n k : ℕ} (_hn : 3 ≤ n) (_hk : k ≠ 0)
+    (hno : ¬ ∃ u v t : ℤ, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧ u ^ n + v ^ n = t ^ n) :
+    ¬ ∃ u v t : ℤ, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧
+      u ^ (k * n) + v ^ (k * n) = t ^ (k * n)
+```
+
+### Copy-paste proof patterns (all compiled at this pin)
+
+**P7 — "raising a solution's coordinates" (bổ đề 2's whole content):**
+
+```lean
+-- goal: (u ^ k) ^ n + (v ^ k) ^ n = (t ^ k) ^ n  from
+--       hsol : u ^ (k * n) + v ^ (k * n) = t ^ (k * n)
+rw [pow_mul, pow_mul, pow_mul] at hsol
+exact hsol
+```
+
+`pow_mul` at this pin (`Mathlib/Algebra/Group/Pow/Monoid.lean:459`):
+`a ^ (m * n) = (a ^ m) ^ n`. The exponent in the paper is written
+`nk₀`; Lean's `k * n` matches `?m * ?n` directly — NO `mul_comm` needed
+for the rewrite (the `mul_comm k n` I first added was harmless but
+redundant).
+
+- Nonzero preservation: `pow_ne_zero k hu : u ^ k ≠ 0`.
+- Contrapositive assembly: `intro h; obtain ⟨u, v, t, hu, hv, ht, hsol⟩
+  := h` then hand the obtained witnesses to the step theorem and
+  `exact hno ⟨u ^ k, v ^ k, t ^ k, …⟩`.
+- `_hn` / `_hk` naming: the linter flags hypotheses the proof never
+  must reference; the author's `n ≥ 3` / `k ∈ ℕ*` are carried for
+  faithfulness, so they get the `_` prefix (same pattern as L1's `_hn`).
+
+### Method note for the sympy screen (reusable)
+
+Like every lemma with `n ≥ 3`, bổ đề 2's hypotheses admit no witness in
+a boxed search (`test_l2_01.py`, n ∈ {5,7,11,13}, k ∈ {2,3,5}: 0
+candidates). Two ways to screen the *inference* anyway:
+
+1. The transformation `(u^k)^n = u^(k*n)` does not depend on `n` —
+   screen it on **real witnesses at n = 1**: 3644 lifted triples
+   checked (k ∈ {1,2,3,5}).
+2. Direct identity check on the box (1000 cases).
+
+---
+
 ## §C. Extending this file for the next chunk
 
 1. Add a `## §B. Chunk Lk-01 — …` section with the same four parts: step
@@ -243,4 +311,4 @@ stronger than it is.
 4. Record the classification outcome (F1–F4/S1) per step in the chunk YAML,
    not here; here record only the mapping and the surviving code shapes.
 
-Last updated: 2026-09-25, after L1-01 (bổ đề 1) reached DONE.
+Last updated: 2026-09-25, after L2-01 (bổ đề 2) reached DONE (L1-01 §B above).
