@@ -5,7 +5,17 @@ requires skill discovery/activation and infrastructure readiness before any
 chunk or mathematics work; those rules govern *how* to work, while this file
 records *where things stand*. `README.md` is the runtime command reference.
 
-Last updated: 2026-09-25 (fourth session, same day) — **L2-01 DONE**:
+Last updated: 2026-09-26 (fifth session) — **vision→LaTeX extraction
+stage COMPLETE** (commit `9cb73f8`): `regions.py` gates + `regions/pNNN.yml`
+records for **all 33 pages REVIEWED** (`regions.py status --pages 33`
+exit 0 = the two-phase switch), chunk evidence gate extended with
+`regions:` refs (schema criteria 6–8, `progress.py --check` exit 0),
+review HTML carries every region's LaTeX with flags, 49 tests green.
+Field finding fixed + regression-tested: pymupdf encodes Symbol-font
+superscript digits as PUA `U+F030+k` (pp. 16/18/19/22/25/26/29/30).
+Human review of `out/review/` (user step) — edits after signoff flip
+records to stale; re-`verify` + `signoff` closes them.
+Prior session (2026-09-25): **L2-01 DONE**:
 bổ đề 2 (statement p. 1, proof p. 2) verified end-to-end via the
 contrapositive (power identity `(u^k)^n = u^(k·n)` + assembly), all
 author steps S1, compiles EXIT:0 with only the permitted axioms, sympy
@@ -205,9 +215,30 @@ declarations present in the Lean file, no `sorry`). All three chunks are
 backfilled; the check was proven to fail on tampered evidence. Schema:
 `02-chunks/schema.md` criteria 6–7.
 
+Vision→LaTeX stage (2026-09-26, commit `9cb73f8`): the implicit
+transcription step is now a named stage, tool-gated end to end
+(`pipeline/01-extract/regions.py`: `precheck` → `words` → `plan` →
+vision crop reads → `verify` → `signoff`; `PIPELINE.md` stage 1
+documents it). All 33 page records REVIEWED with fresh signoffs; chunks
+L1-01/L2-01/L7-FRAG-01 carry `regions:` refs; schema criterion 8 +
+`progress.py check_evidence` enforce page records (REVIEWED, fresh,
+sha-bound) for every DONE chunk — proven to fail on `not REVIEWED` and
+`signoff stale` tampering. Digit audit caught three real classes during
+backfill: vision `s`→`5` misread (p14, text-layer + F-block notation
+settled it), PUA-encoded superscript digits (tool fixed +
+`test_pua_encoded_superscript_digits_counted`), and a page-total sort
+bug (fixed). `out/review/` shows per-region LaTeX + flags for the
+human edit pass (KaTeX embedding deferred by decision; copy buttons +
+`regions.py export` serve external editors).
+
 ---
 
 ## Next step (the actual work)
+
+**The vision phase is done** (`regions.py status --pages 33` exit 0):
+the text-only Lean phase may resume — provided the human edit pass over
+`out/review/` is accepted (or skipped by user decision; any edit flips
+the page to `STALE`, then `regions.py verify` + `signoff` re-close it).
 
 **L2-01 is closed. Next lemma:** bổ đề 5c / 5đ (user directive
 2026-09-25; cited by Lemma 7's proof — formalizing them first also serves
