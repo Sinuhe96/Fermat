@@ -677,8 +677,13 @@ def cmd_plan(args) -> int:
     return 0
 
 
-def verify_record(path: Path) -> list[str]:
-    """Read-only gates, first failing class wins (all messages of that class)."""
+def verify_record(path: Path, *, check_freshness: bool = True) -> list[str]:
+    """Read-only gates, first failing class wins (all messages of that class).
+
+    check_freshness=False is for signoff: re-approving edited content must
+    still pass tiling/latex/digit gates but cannot fail on 'not yet
+    re-signed'.
+    """
     try:
         record = load_page_record(path)
     except FileNotFoundError as exc:
@@ -713,7 +718,7 @@ def verify_record(path: Path) -> list[str]:
     # Staleness outranks the digit audit on REVIEWED records: a human
     # signed THIS latex; any edit invalidates the signoff regardless of
     # whether the digits still match.
-    if record.get("status") == "REVIEWED":
+    if check_freshness and record.get("status") == "REVIEWED":
         stored = record.get("signed_latex_sha256", "")
         current = hashlib.sha256(latex_aggregate(record).encode("utf-8")).hexdigest()
         if not stored or stored != current:
@@ -744,7 +749,11 @@ def cmd_verify(args) -> int:
 
 def cmd_signoff(args) -> int:
     path = Path(args.record)
-    errors = verify_record(path)
+    # Signoff re-approves the CURRENT content: every gate except freshness
+    # must be green (freshness would make re-signing after a review edit
+    # impossible). Unreviewed edits are still caught by `verify` and by
+    # progress.py until this runs.
+    errors = verify_record(path, check_freshness=False)
     if errors:
         for message in errors:
             print(message)
@@ -839,7 +848,9 @@ def main(argv: list[str] | None = None) -> int:
     verify = sub.add_parser("verify", help="read-only gates on a record")
     verify.add_argument("record")
 
-    signoff = sub.add_parser("signoff", help="mark a verified record REVIEWED")
+    signoff = sub.add_parser(
+        "signoff",
+        help="mark a verified record REVIEWED (re-signs after review edits)")
     signoff.add_argument("record")
 
     status = sub.add_parser("status", help="per-page record state (phase-switch gate)")

@@ -10,7 +10,9 @@ Human review surface: every non-OK page additionally gets
 <extract_dir>/review/page-NNN.html — the rendered page (or the exact
 render command when no render exists) beside BOTH engine extracts with
 non-equal token spans highlighted, plus the divergence windows and
-unique-token samples. Open <extract_dir>/review/index.html in a browser
+unique-token samples, plus the page's vision→LaTeX region transcription
+(regions/pNNN.yml: per-region LaTeX, review flags, copy buttons) when a
+record exists. Open <extract_dir>/review/index.html in a browser
 for the review queue. fidelity_report.json stays the machine contract
 (progress.py --check reads it); the HTML is a view generated from it.
 

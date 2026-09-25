@@ -342,9 +342,22 @@ class VerifyTests(RegionsTestCase):
         code, text = self.run_cli("verify", str(path))
         self.assertEqual(code, 1)
         self.assertIn("stale signoff", text)
+        # review edit -> signoff re-adopts the current content (all other
+        # gates re-checked) and the record is fresh again
+        code, text = self.run_cli("signoff", str(path))
+        self.assertEqual(code, 0, text)
+        code, text = self.run_cli("verify", str(path))
+        self.assertEqual(code, 0, text)
+        resigned = path.read_text(encoding="utf-8")
+        self.assertIn(
+            f"signed_latex_sha256: "
+            f"{hashlib.sha256('\\[ c^{12} \\]'.encode('utf-8')).hexdigest()}",
+            resigned)
+        # a digit flip still blocks re-signoff (digits gate stays active)
+        path.write_text(resigned.replace("c^{12}", "c^{13}"), encoding="utf-8")
         code, text = self.run_cli("signoff", str(path))
         self.assertEqual(code, 1)
-        self.assertIn("stale signoff", text)
+        self.assertIn("digit mismatch", text)
 
     def test_status_reports_all_states(self) -> None:
         code, text = self.run_cli("status", "--pages", "3-3")
