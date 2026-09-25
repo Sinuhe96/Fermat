@@ -196,6 +196,15 @@ or bổ đề 6; L2's nk-scaling for the main theorem). Rule + wiring recipe +
 the volume-only `Pilot` lean_lib reproducibility gap:
 `pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk".
 
+Workflow hardening (2026-09-25, same day): the extraction-stage
+fidelity gate is now **consumed per chunk** — every chunk carries an
+evidence block (`source_pdf_sha`, `extract_run_sha`, `fidelity`,
+`renders`, `lean_decls`) and `progress.py --check` machine-verifies it
+for DONE chunks (extraction binding, page verdicts, render provenance,
+declarations present in the Lean file, no `sorry`). All three chunks are
+backfilled; the check was proven to fail on tampered evidence. Schema:
+`02-chunks/schema.md` criteria 6–7.
+
 ---
 
 ## Next step (the actual work)

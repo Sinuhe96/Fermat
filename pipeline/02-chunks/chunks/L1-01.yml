@@ -86,4 +86,9 @@ author_steps: |
   vacuous on that range).
 lean_file: 03-lean/L1/Basic.lean
 sympy_test: 04-sympy/test_l1_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L1_p1_300dpi.png L1_p2_300dpi.png
+lean_decls: L1_reduce_coprime, L1_step_S2_S3, L1_step_S4, L1_step_S5, L1_step_S6, L1_bo_de_1
 status: DONE

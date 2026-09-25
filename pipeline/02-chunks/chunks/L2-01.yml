@@ -81,4 +81,9 @@ author_steps: |
   vacuous on that range).
 lean_file: 03-lean/L2/Basic.lean
 sympy_test: 04-sympy/test_l2_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-001-300dpi-full.png page-002-300dpi-full.png
+lean_decls: L2_step_S1, L2_bo_de_2
 status: DONE

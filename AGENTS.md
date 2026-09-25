@@ -128,11 +128,17 @@ Then, before editing a Lean proof:
 1. Confirm the bootstrap readiness and progress gates are green and identify
    the one current chunk from `HANDOFF.md`.
 2. Read the chunk YAML, its rendered PDF source pages, and its dependencies.
-3. Verify that the chunk has two distinct records:
+3. Bind the chunk to its extraction run: run
+   `pipeline/01-extract/fidelity_check.py` (exit 0 required) and fill the
+   chunk's evidence fields (`source_pdf_sha`, `extract_run_sha`, `fidelity`,
+   `renders`, `lean_decls`) per `02-chunks/schema.md`. `progress.py --check`
+   machine-verifies these for DONE chunks — a missing or stale field is a
+   gate failure, not a formality.
+4. Verify that the chunk has two distinct records:
    - literal source transcription, preserving signs, exponents, modulus,
      labels, and order;
    - normalized ordered step map, with one entry per author inference.
-4. Confirm the first author step not yet accepted by Lean. Work only on that
+5. Confirm the first author step not yet accepted by Lean. Work only on that
    step; do not write ahead or attack the final theorem directly.
 
 If the exact source is ambiguous, stop before Lean work and obtain a second
@@ -252,8 +258,11 @@ behind a cheap check:
 4. Encode and classify one author step at a time using F1–F4 or S1.
 5. Stop immediately on F4; continue only after S1.
 6. At chunk completion, compile in the Linux work volume, check for `sorry`
-   and unexpected axioms, then update `status.tsv`, chunk YAML, and generated
-   `pipeline/PROGRESS.md`.
+   and unexpected axioms, fill the chunk's evidence fields, then update
+   `status.tsv`, chunk YAML, and generated `pipeline/PROGRESS.md`. Finally
+   `progress.py --check` must exit 0: it machine-verifies the evidence block
+   (extraction binding, page verdicts, render provenance, `lean_decls` in the
+   Lean file, no `sorry`).
 
 Run `docker compose exec -T lean sh /workspace/proof/check_env.sh` before any
 large work — if it is red, fix the machine, not the math. The default is a

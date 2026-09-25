@@ -7,10 +7,25 @@ Reads extract_pypdf.txt, extract_pymupdf.txt, extract_meta.json.
 Writes fidelity_report.json with per-page verdicts and an overall verdict.
 
 Gate semantics (exit codes):
-    0 — PASS: page counts equal 33, both engines produced text on every
-        page, transcripts are byte-stable vs prior run if present.
-    1 — FAIL: stop the pipeline. Inspect fidelity_report.json, then route
-        failing pages to MANUAL transcription (see 02-chunks/schema.md).
+    0 — PASS or PASS_WITH_MANUAL: page counts equal 33 and both engines
+        produced text on every page. PASS_WITH_MANUAL means some page has
+        verdict MANUAL: its transcription must come from the rendered page
+        and be recorded in the consuming chunk's `renders` field.
+    1 — FAIL: some page has verdict FAIL (no text in an engine) or REVIEW
+        (a prose page diverges beyond threshold). Stop the pipeline;
+        inspect fidelity_report.json and route the page to MANUAL
+        transcription from the render (see 02-chunks/schema.md).
+
+Per-page verdicts (fidelity_report.json `verdict`):
+    OK      engines agree; the text layer is safe as navigation.
+    MANUAL  math-dense page (7-29) diverges as expected — transcribe from
+            the render and record the read per chunk.
+    REVIEW  prose page diverges more than expected — inspect.
+    FAIL    one engine produced no text for the page.
+
+Chunk consumption: `pipeline/progress.py --check` validates every DONE
+chunk's evidence block (source_pdf_sha / extract_run_sha / fidelity /
+renders / lean_decls) against this report.
 
 Deliberately conservative: prose pages should agree closely; math-dense
 pages (7-29) are EXPECTED to diverge, and divergence there means

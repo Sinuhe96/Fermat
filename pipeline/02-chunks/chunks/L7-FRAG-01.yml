@@ -107,6 +107,11 @@ author_steps: |
   with the smaller bổ đề 5c and 5đ first, then set depends_on below.
 lean_file: 03-lean/Pilot/Basic.lean
 sympy_test: 04-sympy/test_l7_frag_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png z_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
+lean_decls: L7_frag_01
 status: BLOCKED
 # BLOCKED on author query Q-001 (pipeline/05-feedback/queries/):
 # printed proof's "chứng minh tương tự" covers a^n+b^n, not the product's

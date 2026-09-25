@@ -8,17 +8,24 @@ Reads (never writes, except PROGRESS.md with --write):
     pipeline/02-chunks/chunks/*.yml ..... per-chunk records (depends_on, status)
     pipeline/BLOCKERS.md ................ obstacle log (counts OPEN items)
     pipeline/05-feedback/queries/*.md ... author queries (counts OPEN items)
+    pipeline/01-extract/out/extract_meta.json + fidelity_report.json
+        ............... extraction-run binding + per-page verdicts (evidence gate)
 
 Exit codes:
-    0 — dashboard generated; counts consistent (ledger matches chunk files).
+    0 — dashboard generated; counts consistent (ledger matches chunk files)
+        and every DONE chunk's evidence block verifies.
     1 — INCONSISTENT: status.tsv disagrees with a chunk file, a depends_on
-        points at an unknown chunk, or a dependency cycle exists. Fix the
-        ledger before trusting the dashboard.
+        points at an unknown chunk, a dependency cycle exists, or a DONE
+        chunk's evidence block is missing/stale (extraction binding, page
+        verdicts, renders, lean_decls, or a `sorry` in the Lean file). Fix
+        the ledger/evidence before trusting the dashboard.
 
 The generated PROGRESS.md is a read-only snapshot for humans. The .tsv,
 the chunk files, BLOCKERS.md and the query files are the editable sources.
 """
 import argparse
+import hashlib
+import json
 import re
 import sys
 from pathlib import Path
@@ -46,7 +53,7 @@ def parse_chunk(path: Path) -> dict:
     for line in text.splitlines():
         if re.match(r"^\s+#", line) or not line.strip() or line.startswith((" ", "\t")):
             continue
-        m = re.match(r"^([A-Za-z_]+):\s*(.*)$", line)
+        m = re.match(r"^([A-Za-z_][A-Za-z0-9_]*):\s*(.*)$", line)
         if m:
             record[m.group(1)] = m.group(2).strip()
     deps = record.get("depends_on", "[]")
@@ -104,6 +111,77 @@ def check_consistency(rows: list[dict], chunks: dict[str, dict]) -> list[str]:
 
     for cid in chunks:
         visit(cid, [])
+    return errors
+
+
+EXTRACT_OUT = HERE / "01-extract" / "out"
+EVIDENCE_FIELDS = ("source_pdf_sha", "extract_run_sha", "fidelity", "renders", "lean_decls")
+
+
+def parse_pages(raw: str) -> list[int]:
+    inner = raw.strip().strip("[]")
+    return [int(p) for p in inner.split(",") if p.strip()]
+
+
+def check_evidence(rows: list[dict], chunks: dict[str, dict]) -> list[str]:
+    """Machine-check the evidence block of every DONE chunk (schema criteria 6-7)."""
+    errors = []
+    meta_path = EXTRACT_OUT / "extract_meta.json"
+    report_path = EXTRACT_OUT / "fidelity_report.json"
+    if not meta_path.is_file() or not report_path.is_file():
+        return ["missing 01-extract/out/extract_meta.json or fidelity_report.json "
+                "(run extract.py + fidelity_check.py)"]
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    run_sha = hashlib.sha256(meta_path.read_bytes()).hexdigest()
+    verdicts = {p["page"]: p["verdict"] for p in report["pages"]}
+    for r in rows:
+        if r["status"] != "DONE":
+            continue
+        cid = r["chunk"]
+        rec = chunks.get(cid)
+        if rec is None:
+            continue  # already reported by check_consistency
+        for field in EVIDENCE_FIELDS:
+            if not rec.get(field, "").strip():
+                errors.append(f"{cid}: missing evidence field '{field}'")
+        if rec.get("source_pdf_sha") and rec["source_pdf_sha"] != meta.get("sha256"):
+            errors.append(f"{cid}: source_pdf_sha does not match extraction run "
+                          f"({meta.get('sha256')})")
+        if rec.get("extract_run_sha") and rec["extract_run_sha"] != run_sha:
+            errors.append(f"{cid}: extract_run_sha stale (on-disk run is {run_sha})")
+        if rec.get("fidelity") and rec["fidelity"].split()[0] != report.get("overall"):
+            errors.append(f"{cid}: fidelity '{rec['fidelity']}' disagrees with report "
+                          f"overall '{report.get('overall')}'")
+        manual = []
+        for page in parse_pages(rec.get("pdf_pages", "")):
+            verdict = verdicts.get(page)
+            if verdict == "MANUAL":
+                manual.append(page)
+            elif verdict != "OK":
+                errors.append(f"{cid}: page {page} verdict {verdict!r} not cleared "
+                              "(need OK, or MANUAL with the render read recorded)")
+        renders = rec.get("renders", "").split()
+        if manual and not renders:
+            errors.append(f"{cid}: MANUAL pages {manual} require a render read ('renders')")
+        for name in renders:
+            if not (EXTRACT_OUT / name).is_file():
+                errors.append(f"{cid}: render '{name}' missing from 01-extract/out")
+            # render_pdf.py outputs carry a provenance sidecar (same stem, .json)
+            elif name.startswith("page-") and not (EXTRACT_OUT / f"{Path(name).stem}.json").is_file():
+                errors.append(f"{cid}: render '{name}' lacks its provenance sidecar")
+        lean_rel = rec.get("lean_file", "")
+        lean_path = HERE / lean_rel
+        if not lean_rel or not lean_path.is_file():
+            errors.append(f"{cid}: lean_file '{lean_rel}' not found")
+        else:
+            src = lean_path.read_text(encoding="utf-8")
+            if re.search(r"\bsorry\b", src):
+                errors.append(f"{cid}: lean_file '{lean_rel}' contains 'sorry' but the "
+                              "chunk is DONE")
+            for decl in (d.strip() for d in rec.get("lean_decls", "").split(",")):
+                if decl and not re.search(rf"\b{re.escape(decl)}\b", src):
+                    errors.append(f"{cid}: declaration '{decl}' not found in '{lean_rel}'")
     return errors
 
 
@@ -179,7 +257,7 @@ def main() -> int:
         rec = parse_chunk(path)
         chunks[rec.get("id", path.stem)] = rec
 
-    errors = check_consistency(rows, chunks)
+    errors = check_consistency(rows, chunks) + check_evidence(rows, chunks)
     dashboard = render(rows, chunks)
     if args.write:
         Path(args.write).write_text(dashboard, encoding="utf-8", newline="\n")
