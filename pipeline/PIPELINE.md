@@ -20,6 +20,10 @@ Stages:
      evidence block binds it to one extraction run (`source_pdf_sha`,
      `extract_run_sha`, `fidelity`, `renders`), and `progress.py --check`
      validates that binding.
+   - Human review surface: every non-OK page also gets
+     `out/review/page-NNN.html` (queue: `out/review/index.html`) — the
+     rendered page beside both extracts with divergent token spans
+     highlighted. fidelity_report.json stays the machine contract.
    - Why two tools: math-dense pages extract differently per engine.
      Divergence CONFIRMS unreliability — the two extracts agreeing is the
      signal; the per-page diff pinpoints which spans need eyes.

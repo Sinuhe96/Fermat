@@ -21,6 +21,7 @@ No Lean, no container, no full re-extract.
 import json
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -216,6 +217,81 @@ class LivePage14Tests(unittest.TestCase):
         expected = set(re.findall(r"\d", read_fixture()))
         for low in (self.low1, self.low2):
             self.assertLessEqual(expected, set(re.findall(r"\d", low)))
+
+    def test_review_surface_for_p14(self) -> None:
+        """The generated review page pairs the render (or its command) with
+        marked extracts for the human reviewer."""
+        href = fc.page_image_href(OUT_DIR, 14)
+        page = fc.build_review_html(
+            self.entry, self.p1[13], self.p2[13], href, "PROOF_of_FERMAT.pdf"
+        )
+        self.assertIn("Page 14", page)
+        self.assertIn('<mark class="d">', page)
+        self.assertIn('<mark class="i">', page)
+        if href is None:
+            self.assertIn("render_pdf.py", page)
+            self.assertIn("--page 14", page)
+        else:
+            self.assertIn(f'<img src="{href}"', page)
+
+
+class ReviewHtmlTests(unittest.TestCase):
+    """The human review surface: marks, escaping, render fallback, files."""
+
+    def test_mark_columns_marks_divergence_and_escapes(self) -> None:
+        left, right = fc.mark_columns(["a", "<", "c"], ["a", "x", "c"])
+        self.assertIn('<mark class="d">&lt;</mark>', left)
+        self.assertIn('<mark class="i">x</mark>', right)
+        self.assertNotIn('<mark class="d">a</mark>', left)
+
+    def test_review_page_falls_back_to_render_command(self) -> None:
+        page = fc.build_review_html(
+            {"page": 14, "verdict": "MANUAL", "seq_overlap": 0.77},
+            "text a",
+            "text b",
+            None,
+            "PROOF_of_FERMAT.pdf",
+        )
+        self.assertIn("render_pdf.py", page)
+        self.assertIn("--page 14", page)
+        self.assertIn("PROOF_of_FERMAT.pdf", page)
+
+    def test_review_page_embeds_render_when_present(self) -> None:
+        page = fc.build_review_html(
+            {"page": 14, "verdict": "MANUAL"},
+            "text a",
+            "text b",
+            "../page-014-300dpi-full.png",
+            "PROOF_of_FERMAT.pdf",
+        )
+        self.assertIn('<img src="../page-014-300dpi-full.png"', page)
+
+    def test_write_review_writes_and_cleans_stale(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp)
+            (d / "review").mkdir()
+            stale = d / "review" / "page-999.html"
+            stale.write_text("stale", encoding="utf-8")
+            written = fc.write_review(
+                d,
+                [{"page": 14, "verdict": "MANUAL"}],
+                ["a b c"],
+                ["a x c"],
+                "PROOF_of_FERMAT.pdf",
+            )
+            self.assertEqual(written, ["page-014.html"])
+            self.assertTrue((d / "review" / "page-014.html").is_file())
+            self.assertTrue((d / "review" / "index.html").is_file())
+            self.assertFalse(stale.exists())
+
+    def test_write_review_skips_clean_runs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp)
+            written = fc.write_review(
+                d, [{"page": 1, "verdict": "OK"}], ["a"], ["a"], "x.pdf"
+            )
+            self.assertEqual(written, [])
+            self.assertFalse((d / "review").exists())
 
 
 if __name__ == "__main__":
