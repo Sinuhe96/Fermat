@@ -119,6 +119,10 @@ Stages:
      Lean (sympy numbers or a quoted inference with page ref).
    - Triage rule, lifecycle (OPEN → ANSWERED → RESOLVED), and response-kit
      convention live in `05-feedback/README.md`.
+   - `python pipeline/05-feedback/render_report.py` builds the author-facing
+     reply package in `05-feedback/report/` (index + one HTML page per query
+     with the PDF renders embedded + `reply-Q-NNN.md` templates) and
+     cross-checks BLOCKED-chunk ↔ query consistency.
 
 ---
 

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q-001 — Product factor sign mismatch: a^n − b^n vs a^n + b^n</title>
+<style>
+:root{--ink:#141414;--mut:#5b6470;--line:#d9dde3;--bg:#f6f7f9;--card:#fff;
+      --blue:#0b57d0;--amber:#fff6d6;--red:#ffe2e2;--green:#e6f4ea}
+*{box-sizing:border-box}
+body{font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;
+     padding:18px 16px 40px;background:var(--bg);color:var(--ink);max-width:1100px}
+a{color:var(--blue)}
+h1{font-size:23px;margin:.2em 0 .35em}
+h2{font-size:17px;margin:1.3em 0 .45em;border-bottom:2px solid var(--line);padding-bottom:.2em}
+h3{font-size:15px;margin:1.1em 0 .35em;color:#2b3440}
+h4,h5,h6{font-size:14px;margin:1em 0 .3em;color:#2b3440}
+p,li{margin:.45em 0}
+code,pre{font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:13px}
+code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+pre{white-space:pre-wrap;word-break:break-word;background:#fff;border:1px solid var(--line);
+    border-radius:8px;padding:10px 12px}
+blockquote{margin:.6em 0;padding:8px 12px;background:#fff;border-left:4px solid var(--blue);
+           border-radius:0 8px 8px 0}
+.chips span{display:inline-block;background:#fff;border:1px solid var(--line);
+            border-radius:99px;padding:2px 10px;margin:3px 6px 0 0;font-size:13px}
+.st-OPEN{background:var(--red);border-color:#f0a6a6;color:#8a1212;font-weight:600}
+.st-ANSWERED{background:var(--amber);border-color:#ffe08a;color:#6d5200;font-weight:600}
+.st-RESOLVED{background:var(--green);border-color:#b7e1c5;color:#1e6b3a;font-weight:600}
+.st-BLOCKED{background:var(--red);border-color:#f0a6a6;color:#8a1212;font-weight:600}
+.st-DONE{background:var(--green);border-color:#b7e1c5;color:#1e6b3a;font-weight:600}
+.pill{display:inline-block;border:1px solid;border-radius:99px;padding:1px 8px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+      padding:14px 16px;margin:14px 0}
+.card.question{background:var(--amber);border-color:#ffe08a}
+.card.answer{background:#fff;border-width:2px;border-color:var(--blue)}
+.card.issue{background:var(--red);border-color:#f0a6a6}
+.card h2:first-child{margin-top:0}
+.note{color:var(--mut);font-size:13px}
+figure{margin:12px 0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}
+figure img{max-width:100%;height:auto;display:block;border:1px solid #eceff3}
+figcaption{font-size:12.5px;color:var(--mut);margin-top:7px}
+table{border-collapse:collapse;background:#fff;width:100%;font-size:14px;margin:10px 0}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f5}
+td.pages{white-space:nowrap}
+ol.steps{padding-left:1.3em}
+textarea{width:100%;min-height:150px;font:14px/1.5 ui-monospace,Consolas,monospace;
+         border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff}
+.handwrite{display:none}
+.handwrite .rule{border-bottom:1px solid #9aa4b1;height:2.1em;margin:0 0 .2em}
+.warn{background:var(--red);border:1px solid #f0a6a6;border-radius:8px;padding:10px 12px}
+ul.plain{list-style:none;padding-left:0}
+footer{margin-top:26px;border-top:1px solid var(--line);padding-top:10px;
+       color:var(--mut);font-size:12.5px}
+@media print{
+  body{max-width:none;background:#fff;padding:0}
+  textarea,.noprint{display:none!important}
+  .handwrite{display:block}
+  .card,figure,tr{break-inside:avoid}
+  .card{border-color:#999}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<p class="noprint"><a href="index.html">← Danh mục / report index</a></p>
+<h1>Q-001 · Product factor sign mismatch: a^n − b^n vs a^n + b^n</h1>
+<div class="chips">
+  <span class="st-OPEN">OPEN</span>
+  <span><b>chunk</b> L7-FRAG-01</span>
+  <span><b>PDF pages</b> 1, 2, 4, 5</span>
+  <span><b>decls</b> 6</span>
+  <span><b>file</b> Q-001-product-factor-sign.md</span>
+</div>
+<div class="card question"><h2>❓ Câu hỏi dành cho tác giả / Question for the author</h2><p>In the &quot;Chứng minh tương tự&quot; line, should the first listed congruence read <code>a^n − b^n ≢ 0 (mod n)</code> (matching the product in the statement and in the &quot;Tóm lại&quot; line), or should the product&#x27;s first factor be <code>a^n + b^n</code> (matching the three sums actually proved)? One of the two printed signs must be a typo; with either reading the lemma is true, but only one makes the printed proof complete.</p><p class="note">Trả lời ở cuối trang / reply at the bottom of this page, or edit <code>reply-Q-001.md</code> and send it back.</p></div>
+<div class="card issue">
+<h2>⚠ Vấn đề / What Lean could not verify</h2>
+<p>Lean cannot close the final &quot;Tóm lại&quot; step: the proof as printed establishes non-divisibility only for the three pairwise <b>sums</b> <code>b^n + c^n</code>, <code>a^n + b^n</code>, <code>c^n + a^n</code>, but the product&#x27;s first factor is the <b>difference</b> <code>a^n − b^n</code>, which no step of the printed chain excludes. The exact spot is marked by the single <code>sorry</code> in <a href="../../03-lean/Pilot/Basic.lean"><code>pipeline/03-lean/Pilot/Basic.lean</code></a> (theorem <code>L7_frag_01</code>, hypothesis <code>h_factor1</code>); every other step compiles.</p>
+<p>Reproduction of the transcription (no Lean needed): extract lines 1053–1057</p>
+<pre>extract_pypdf.txt:1055  ... Chứng minh tương tự ta cũng có
+extract_pypdf.txt:1055  (a^n + b^n ≢ (mod n), c^n + a^n ≢ 0 (mod n)) . Tóm lại, ta
+extract_pypdf.txt:1057  luôn có: (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm).</pre>
+<p>(pypdf drops superscripts; the ± signs are unambiguous. Confirmed independently against the page renders <a href="../../01-extract/out/L7_proof_p4a.png"><code>pipeline/01-extract/out/L7_proof_p4a.png</code></a>, <code>L7_stmt_p1.png</code>, <code>z_stmt_p1.png</code>.)</p>
+</div>
+<div class="card">
+<h2>Bản in nói gì / What the print says</h2>
+<ul>
+<li>Chunk: <code>L7-FRAG-01</code> (<a href="../../02-chunks/chunks/L7-FRAG-01.yml"><code>pipeline/02-chunks/chunks/L7-FRAG-01.yml</code></a>)</li>
+<li>PDF: <code>PROOF_of_FERMAT.pdf</code></li>
+<li>statement: p. 1 bottom (&quot;Bổ đề 7: … thỏa mãn&quot;) continuing on <b>p. 2 top</b></li>
+</ul>
+<p>    (&quot;thì ta có (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n)&quot;)</p>
+<ul>
+<li>proof: p. 4 bottom → p. 5 top (&quot;Vậy b^n + c^n ≢ 0 (mod n). Chứng minh</li>
+</ul>
+<p>    tương tự ta cũng có a^n + b^n ≢ (mod n), c^n + a^n ≢ 0 (mod n). Tóm lại,     ta luôn có: (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm).&quot;)</p>
+<ul>
+<li>text-layer line refs: <a href="../../01-extract/out/extract_pypdf.txt"><code>pipeline/01-extract/out/extract_pypdf.txt</code></a></li>
+</ul>
+<p>    lines 161–163 (statement) and 1053–1057 (proof tail).</p>
+<p class="note">Bản xem xét / review display: <a href="../../01-extract/out/review/index.html">01-extract/out/review/index.html</a> — open the same page there to compare the print with the extract.</p>
+</div>
+<div class="card"><h2>Trang in / The printed pages (bản in là căn cứ — the print is authoritative)</h2><figure><img src="../../01-extract/out/L7_proof_p4a.png" alt="Q-001 evidence — L7_proof_p4a.png" loading="lazy"><figcaption>Q-001 evidence — L7_proof_p4a.png — <a href="../../01-extract/out/L7_proof_p4a.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/L7_stmt_p1.png" alt="Q-001 evidence — L7_stmt_p1.png" loading="lazy"><figcaption>Q-001 evidence — L7_stmt_p1.png — <a href="../../01-extract/out/L7_stmt_p1.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/z_stmt_p1.png" alt="Q-001 evidence — z_stmt_p1.png" loading="lazy"><figcaption>Q-001 evidence — z_stmt_p1.png — <a href="../../01-extract/out/z_stmt_p1.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/page-002-300dpi-region-01.png" alt="Q-001 evidence — page-002-300dpi-region-01.png" loading="lazy"><figcaption>Q-001 evidence — page-002-300dpi-region-01.png — <a href="../../01-extract/out/page-002-300dpi-region-01.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/L7_stmt_p2.png" alt="Q-001 evidence — L7_stmt_p2.png" loading="lazy"><figcaption>Q-001 evidence — L7_stmt_p2.png — <a href="../../01-extract/out/L7_stmt_p2.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/page-001-300dpi-region-03.png" alt="Q-001 evidence — page-001-300dpi-region-03.png" loading="lazy"><figcaption>Q-001 evidence — page-001-300dpi-region-03.png — <a href="../../01-extract/out/page-001-300dpi-region-03.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/page-005-300dpi-region-02.png" alt="Q-001 evidence — page-005-300dpi-region-02.png" loading="lazy"><figcaption>Q-001 evidence — page-005-300dpi-region-02.png — <a href="../../01-extract/out/page-005-300dpi-region-02.png">open full size</a></figcaption></figure><figure><img src="../../01-extract/out/L7_proof_p5a.png" alt="Q-001 evidence — L7_proof_p5a.png" loading="lazy"><figcaption>Q-001 evidence — L7_proof_p5a.png — <a href="../../01-extract/out/L7_proof_p5a.png">open full size</a></figcaption></figure><figure><img src="../assets/Q-001-p4-5-proof.png" alt="Q-001 evidence — Q-001-p4-5-proof.png" loading="lazy"><figcaption>Q-001 evidence — Q-001-p4-5-proof.png — <a href="../assets/Q-001-p4-5-proof.png">open full size</a></figcaption></figure></div>
+<div class="card">
+<h2>Phát biểu đã kiểm chứng / What we formalized (the statement Lean checks)</h2>
+<p>For prime n &gt; 3 and integers a, b, c with n ∤ abc:</p>
+<ul>
+<li>H1: a^n + b^n ≡ c^n (mod n²)</li>
+<li>H2: a^{n(n−2)} + b^{n(n−2)} ≡ c^{n(n−2)} (mod n)</li>
+</ul>
+<p>Lean statement of the conclusion, verbatim from the PDF statement: <code>(a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n)</code>.</p>
+<p>The author&#x27;s proof steps were transcribed in order and, since the 2026-09-26 lane restart, verified step by step: the b^n + c^n reductio, the &quot;chứng minh tương tự&quot; instances for a^n + b^n and c^n + a^n, and then &quot;Tóm lại&quot; for the product. Verified Lean: <code>03-lean/L7/Basic.lean</code> (<code>L7_step_S0</code> … <code>L7_step_S5b</code>, see the update at the end of this query).</p>
+<h3>Đã kiểm chứng trong Lean / verified declarations</h3><ul class='plain'><li><code>L7_step_S0</code></li><li><code>L7_step_S1</code></li><li><code>L7_step_S2</code></li><li><code>L7_step_S3_S4</code></li><li><code>L7_step_S5a</code></li><li><code>L7_step_S5b</code></li></ul>
+</div>
+<h3>Minimal example</h3><p>No numeric counterexample exists: <code>python pipeline/04-sympy/test_l7_frag_01.py</code> exits 0 (n = 7: 12 witnesses, n = 13: 24 witnesses, zero with product ≡ 0). The issue is proof coverage, not truth — the statement as printed verifies on every witness found.</p><h3>Update 2026-09-26 — lane restarted; the finding is unchanged and sharper</h3><p>The 2026-09-25 batch encoding was replaced by a one-step-per-compile lane. <code>03-lean/L7/Basic.lean</code> now holds the author&#x27;s chain, sorry-free, with only the permitted axioms (<code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>):</p>
+<ul>
+<li><code>L7_step_S3_S4</code> — &quot;Nếu b^n + c^n ≡ 0 (mod n) ⇒ … ⇒ n = 3, vô lý&quot;, so</li>
+</ul>
+<p>  <code>b^n + c^n ≢ 0 (mod n)</code>;</p>
+<ul>
+<li><code>L7_step_S5a</code> — <code>a^n + b^n ≢ 0 (mod n)</code>;</li>
+<li><code>L7_step_S5b</code> — <code>c^n + a^n ≢ 0 (mod n)</code>.</li>
+</ul>
+<p>So the printed chain provably yields non-divisibility for the <b>three pairwise sums</b> <code>a^n + b^n</code>, <code>b^n + c^n</code>, <code>c^n + a^n</code> — and the stated product&#x27;s first factor is still the <b>difference</b> <code>a^n − b^n</code>, for which the print gives no step. S6 (&quot;Tóm lại&quot;) is therefore left unencoded: it is the one step the printed chain does not support. <code>03-lean/Pilot/Basic.lean</code> is the frozen pre-restart exhibit quoted above (no longer imported by anything; the single <code>sorry</code> still marks the gap). The question for the author is unchanged.</p><h3>Where to see it — review display</h3><p>Open <a href="../../01-extract/out/review/index.html"><code>pipeline/01-extract/out/review/index.html</code></a> (19 MANUAL pages) and open the two pages below. Left pane = authoritative render; right pane = the REVIEWED LaTeX of each region, with its crop link under the region id.</p>
+<p><b>Spot 1 — the statement (p. 2 top; &quot;Bổ đề 7:&quot; itself starts on p. 1 bottom)</b></p>
+<ul>
+<li>review page: <code>out/review/page-002.html</code> → region <b>R1</b>, first LaTeX line</li>
+<li>crop: <code>out/page-002-300dpi-region-01.png</code> (or <code>out/L7_stmt_p2.png</code>)</li>
+<li>p.1 lead-in: <code>out/review/</code> has no page-001 (p.1 is fidelity-PASS); see</li>
+</ul>
+<p>  <code>regions/p001.yml</code> R3, crop <code>out/page-001-300dpi-region-03.png</code></p>
+<ul>
+<li>line: <code>… thì ta có (a^n - b^n)(c^n + a^n)(c^n + b^n) ≢ 0(mod n)</code></li>
+</ul>
+<p>  → first factor carries <b>minus</b>.</p>
+<p><b>Spot 2 — the proof tail (p. 5 bottom)</b></p>
+<ul>
+<li>review page: <code>out/review/page-005.html</code> → region <b>R2</b>, last-but-one LaTeX</li>
+</ul>
+<p>  block pair (<code>Vậy …</code> / <code>luôn có: …</code>)</p>
+<ul>
+<li>crop: <code>out/page-005-300dpi-region-02.png</code> (or <code>out/L7_proof_p5a.png</code>)</li>
+<li>what is proved there, in order:</li>
+</ul>
+<p>  <code>⇒ 3 ≡ 0 (mod n) ⇒ n=3, vô lý</code> → <code>Vậy b^n + c^n ≢ 0 (mod n)</code> →   <code>Chứng minh tương tự … a^n + b^n ≢ (mod n), c^n + a^n ≢ 0 (mod n)</code> →   <code>Tóm lại, ta luôn có: (a^n - b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm).</code>   Three <b>sums</b> are excluded; the product then prints a <b>difference</b> as   its first factor.</p>
+<p><b>The four conclusions this chunk does not cover</b> — same statement block, <code>out/review/page-002.html</code> region <b>R1</b>, LaTeX lines 2–3 (crop <code>out/page-002-300dpi-region-01.png</code>):</p>
+<ol>
+<li><code>a^{n²} + b^{n²} − c^{n²} ≡ 0 (mod n²)</code> — display (a); proved on p. 4</li>
+</ol>
+<p>   (review <code>page-004.html</code> R2/R3, crops <code>page-004-300dpi-region-0{2,3}.png</code>).</p>
+<ol>
+<li>`a^{n(n−3)} + b^{n(n−3)} + c^{n(n−3)} ≡ c^{3n} + b^{3n} ≡ a^{3n} − b^{3n}</li>
+</ol>
+<p>   ≡ b^n c^n + a^{2n} ≡ c^n a^n + b^{2n} ≡ b^n a^n − c^{2n} ≡ 0 (mod n²)<code> —    proved on p. 5 region **R1** (</code>b^{3n}+c^{3n}<code> chain + bổ đề 5c/5d) with the    </code>a^{2n}+b^n c^n` block at the top of region <b>R2</b>.</p>
+<ol>
+<li><code>n ≡ 1 (mod 6)</code> — proved on p. 5 region <b>R2</b> (`Vì n là số nguyên tố lớn</li>
+</ol>
+<p>   hơn 3 nên n ≡ ±1 (mod 6)<code> … </code>Vậy n ≡ 1 (mod 6) (đpcm).`).</p>
+<ol>
+<li>`a^{n(n−2)} + b^{n(n−2)} − c^{n(n−2)} ≡ a^{n(n−4)} + c^{n(n−4)} ≡</li>
+</ol>
+<p>   b^{n(n−4)} + c^{n(n−4)} ≡ a^{n(n−4)} − b^{n(n−4)} ≡ 0 (mod n²)<code> — the first    congruence is proved in p. 5 region **R2** (</code>* Ta có c^{2n} − a^n b^n ≡ 0<code> …    </code>⇒ b^{n(n-2)} + a^{n(n-2)} − c^{n(n-2)} ≡ 0 (mod n²) (đpcm).<code>), the    remaining three at the end of R2 (</code>Vì n ≡ 1 (mod 6), nên n = 6l + 1<code> …    </code>a^{n(n-4)} − b^{n(n-4)} ≡ 0 (mod n) (đpcm).`).</p><h3>Attachments</h3><ul>
+<li>sympy: <a href="../../04-sympy/test_l7_frag_01.py"><code>pipeline/04-sympy/test_l7_frag_01.py</code></a> (statement as printed: PASS)</li>
+<li>Lean: <a href="../../03-lean/Pilot/Basic.lean"><code>pipeline/03-lean/Pilot/Basic.lean</code></a> (single <code>sorry</code> at the gap)</li>
+<li>PDF screenshot: <a href="../assets/Q-001-p4-5-proof.png"><code>pipeline/05-feedback/assets/Q-001-p4-5-proof.png</code></a></li>
+</ul>
+<div class="card"><h2>Ghi chú phân loại / Classification notes (internal)</h2><ul><li><b>F3</b> — <p>F3 (fill-in from the author&#x27;s own material, no new assumption): S5a&#x27;s &quot;a^n + b^n ≢ 0 (mod n)&quot;.  The b^n + c^n chain is vacuous for that pair (its cancellation needs b ≢ 0 and the pair is (a,b)); the printed claim follows from the print&#x27;s own (b) and S0: if a^n + b^n ≡ 0 then c^n ≡ a^n + b^n ≡ 0, so n ∣ c^n and, n being prime, n ∣ c — contradicting c ≢ 0 (mod n). Encoded as L7_step_S5a.</p></li><li><b>F4</b> — <p>F4 (unchanged, the chunk&#x27;s open finding): S6 — the printed chain establishes ≢ 0 (mod n) for the three pairwise SUMS a^n+b^n (S5a), b^n+c^n (S3+S4) and c^n+a^n (S5b), while the product&#x27;s first factor is the DIFFERENCE a^n − b^n, which no printed step excludes (sign mismatch; text-layer verified, so not F1). Author query Q-001 OPEN: the statement is true as printed on every witness the sympy screen found, but the printed proof does not cover it.</p></li></ul><p class="note">F3 = a gap we filled from your own material (no new assumption). F4 = a proof step Lean could not verify; it needs your answer above.</p></div>
+<div class="card answer">
+<h2>✍️ Trả lời của tác giả / Author's reply</h2>
+<p class="note">Gõ vào ô dưới đây rồi copy vào email, hoặc sửa tệp
+<code>reply-Q-001.md</code>. / Type below and paste into an
+email, or edit the reply template file.</p>
+<textarea spellcheck="false" placeholder="Q-001: câu trả lời của quý vị / your answer …"></textarea>
+<div class="handwrite">
+  <p class="note">In trang này và viết tay / print this page and write by hand:</p>
+  <div class="rule"></div><div class="rule"></div><div class="rule"></div>
+  <div class="rule"></div><div class="rule"></div><div class="rule"></div>
+</div>
+</div>
+<footer>
+Sinh từ / generated by <code>pipeline/05-feedback/render_report.py</code> on
+2026-09-26 — nguồn / sources:
+<code>Q-001-product-factor-sign.md</code>, <code>L7-FRAG-01.yml</code>.
+Không cần Lean để trả lời / no Lean required to answer.
+</footer>
+</body>
+</html>

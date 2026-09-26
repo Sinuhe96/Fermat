@@ -38,3 +38,31 @@ Each RESOLVED query keeps its reproduction artifacts so the author (or a
 referee) can re-run them: the sympy script stays in `04-sympy/`, the Lean
 file stays in `03-lean/`, and the query records both paths plus the
 resolving commit hash.
+
+## Author report (`render_report.py`)
+
+Send the author a package they can answer **without Lean**:
+
+    python pipeline/05-feedback/render_report.py
+
+Reads `queries/Q-NNN-*.md` plus the chunk records (`02-chunks/chunks/*.yml`)
+and writes `report/`:
+
+- `report/index.html` — overview: the open queries, chunk status, and how to
+  respond (bilingual vi/en chrome, query text kept verbatim);
+- `report/Q-NNN.html` — one page per issue, in reading order: the question
+  first (highlighted card), what the print says, the PDF renders embedded
+  (`renders` of the chunk + any image the query cites, so the disputed line is
+  on screen), what Lean formalized plus the verified declaration list, the
+  F3/F4 classification notes, and a reply box (screen textarea, ruled lines
+  when printed);
+- `report/reply-Q-NNN.md` — plain-text reply template for answering by email.
+
+While building it, the script cross-checks the ledger: every `BLOCKED` chunk
+must be referenced by a query, every query must point at an existing chunk,
+and every cited image/render must exist. Warnings are printed and shown in
+`index.html` (the report is still written). Exit codes: 0 report written
+(warnings allowed), 1 no query / unparseable query, 2 output not writable.
+
+`report/` is generated — never hand-edit it; re-run the script when a query
+changes and commit the refreshed output together with the query.
