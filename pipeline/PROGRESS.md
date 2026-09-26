@@ -1,17 +1,17 @@
 # Progress — FLT formalization
 
-Overall: [##############------] 5/7 DONE (71%)
+Overall: [#################---] 6/7 DONE (85%)
 
 | Status | Count | Chunks |
 |---|---|---|
 | TODO | 0 | — |
-| IN_PROGRESS | 1 | L6-01 |
+| IN_PROGRESS | 0 | — |
 | BLOCKED | 1 | L7-FRAG-01 |
-| DONE | 5 | L1-01, L2-01, L3-01, L4-01, L5-01 |
+| DONE | 6 | L1-01, L2-01, L3-01, L4-01, L5-01, L6-01 |
 
 ## Ready to start (deps satisfied, not DONE)
 
-L6-01
+— none —
 
 ## Waiting on dependencies
 

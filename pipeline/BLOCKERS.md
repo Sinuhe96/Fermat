@@ -64,6 +64,23 @@ clutter this log with mathematical disputes.
   `ENCODING_MAP.md` §A records the same.
 - Resolution check: either `grep -c sorry 03-lean/Pilot/Basic.lean` returns 0,
   or the `import Pilot.Basic` line is gone from `Main.lean`.
+- Measured 2026-09-26 (L6-01 close-out), so the L7 lane does not re-pay it:
+  `lake build Common L1 L2` in `/workspace/work/testproj` → EXIT 0 (8936
+  jobs). Those three were the last libs whose oleans predated B-002's `lean -o`
+  publishing (L3–L6 got theirs in their own sessions), so the *verified* set
+  `Common, L1..L6` is now fully importable. `lake env lean Main.lean` therefore
+  gets past every verified lib and stops at exactly one line:
+  `unknown module prefix 'Pilot'` (Pilot is not a `lean_lib` and its source was
+  never copied into the Lake project — by design, it is the parked scratch
+  copy). So the whole remaining defect is that single import line, and the
+  recipe for the L7 session is: settle Q-001 → delete `Pilot/Basic.lean` (or
+  supersede it with `03-lean/L7/Basic.lean` as a declared `lean_lib`) → drop
+  the `import Pilot.Basic` line → `lake build L7` (publishes the olean) →
+  `lake env lean Main.lean` EXIT 0, which then makes the aggregate a
+  sorry-free "everything typechecks" gate.
+  Note `Common/Basic.lean` is an empty scaffold (2 comment lines, no
+  declarations) imported only by `Main.lean`; it is the designated home for
+  chunk-shared helpers and needs no change for bổ đề 7.
 
 ## B-001 Mathlib olean cache does not unpack [RESOLVED]
 

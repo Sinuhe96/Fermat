@@ -538,6 +538,84 @@ L5-01.
     8 of them F2 repairs; the batched probe round pinned every name that a
     local grep could not settle.
 
+## Session 2026-09-26 — L6-01 (bổ đề 6): 13 compile rounds, 35 declarations
+
+1. **`rw` rewrites ALL occurrences — and re-descends into the terms it just
+   created.** `rw [one_pow]` on `1^n + 1^n = t^n` consumes *both* `1^n`, so a
+   second `rw [one_pow]` errors with "Did not find an occurrence of the
+   pattern". Same for `mul_pow` (one call normalises `(n^s*(c*c'))^n` all the
+   way to `(n^s)^n * (c^n * c'^n)`), and for `rw [hexp]` when the goal contains
+   both `n*s-1` and `n*s-1-2` (the second gets mangled:
+   `n*s-1+1-1`). When only *one side's exponent* may move, use `conv`:
+   `conv_lhs => rw [← …]` / `conv_rhs => rw [← pow_add]`.
+2. **Exponent identities.** `(a^m)^n → a^(m*n)` is `← pow_mul`;
+   `a^m * a → a^(m+1)` is `← pow_succ` (`pow_succ` is `a^(n+1) = a^n * a`);
+   `a * a^m → a^(m+1)` is `← pow_succ'`. `pow_add` will **not** match a bare
+   `n^s * n` (the second factor is not syntactically a power).
+3. **`omega` cannot see products.** `n ≥ 3`, `s ≥ 1` give it nothing about the
+   atom `n*s`, so `n*s-1 = s + (n*s-1-s)` is unprovable for it; feed the bound
+   explicitly — `have hbnd : s + 2 ≤ n * s := by nlinarith [hn3, hs1]`, then
+   `omega`. Also: `Nat.Prime n` alone gives only `2 ≤ n` (`omega` does pick
+   that up), and `Odd n` alone gives only `1 ≤ n` (`Odd 1` is true), so
+   `3 ≤ n` needs both: `have h2 := hn.two_le; obtain ⟨j, hj⟩ := hodd; omega`.
+4. **FLT without `ZMod`: `Int.ModEq.pow_prime_eq_self`.** For "`n ∣ t` ⇒
+   `n ∣ u+v`" (bổ đề 6 S15) the `ZMod` route is structurally blocked — the
+   exponent and the modulus are the *same* variable, so
+   `conv_lhs => rw [← Nat.sub_one_add_one_eq_of_pos hn.pos]` on
+   `(u : ZMod n) ^ n` dies with "motive is not type correct ... Fact (Nat.Prime
+   _a)". `Int.ModEq.pow_prime_eq_self hn u : u^n ≡ u [ZMOD ↑n]` needs no
+   coprimality and stays in ℤ:
+   `(Int.ModEq.pow_prime_eq_self hn u).add (…)`, then
+   `hadd.symm.trans (by rw [Int.modEq_zero_iff_dvd]; exact h1)` and
+   `(Int.modEq_zero_iff_dvd).mp hzero`.
+5. **ℤ vs ℕ ne-zero in `pow_ne_zero`.** `pow_ne_zero e hn.ne_zero` has type
+   `n^e ≠ 0` in ℕ; when the expected type is `(↑n)^e ≠ 0` (e.g. the argument of
+   `Int.mul_dvd_mul_iff_left`) it is a type mismatch — use a ℤ proof:
+   `have hnz : (n : ℤ) ≠ 0 := by exact_mod_cast hn.ne_zero`.
+6. **`Nat.exists_eq_pow_mul_and_not_dvd` recipe** (maximal `n`-power of an
+   integer `X ≠ 0`): apply it to `X.natAbs` with `p := n`, `p ≠ 1` proved by
+   `hn.one_lt.ne'`; get `(n:ℤ)^e ∣ X` back with
+   `Int.natCast_dvd.mpr ⟨R, hXR⟩` + `simpa only [Nat.cast_pow]`; transport the
+   cofactor with `rw [hr, Int.natAbs_mul, Int.natAbs_pow, Int.natAbs_natCast]`
+   and `mul_left_cancel₀` (which works on ℕ); `¬(n:ℤ) ∣ r` follows from
+   `hR : ¬ n ∣ R` by `hrabs ▸ Int.natCast_dvd.mp hd`; `s ≥ 2` from `n² ∣ X`
+   by *coprime cancellation* (`Nat.Coprime (n^2) r.natAbs` then
+   `dvd_of_dvd_mul_right`) plus `Nat.pow_dvd_pow_iff_le_right hn.one_lt`.
+7. **`Int.gcd x (x ^ (n-1)) = x.natAbs` for `n ≥ 2`** (the step that turns
+   `a' = a^{n−1}` and `(a,a') = 1` into `a.natAbs = 1`): `Int.gcd_mul_left x 1
+   (x^(n-2))` + `Nat.gcd_one_left`. Do **not** write `rw [hsplit, ← mul_one x,
+   Int.gcd_mul_left]` — `← mul_one x` rewrites *every* `x`, including inside
+   `x^(n-2)`; bind `Int.gcd_mul_left` first and rewrite in the hypothesis.
+8. **`convert h using 1` can close the goal itself**, leaving the follow-up
+   `ring` with "No goals to be solved". Prefer a named identity:
+   `have hring : …= c' := by ring; rwa [hring] at h`.
+9. **`Int.gcd_add_mul_left_left (m n k) : (n + m*k).gcd m = n.gcd m`**,
+   `_right_left : (n + k*m).gcd m = n.gcd m` — so the *non-multiple* summand
+   must be written first; to shift `N*x^(n-1) − x'` by the gcd of `x`, pass
+   `k := N * x^(n-2)`.
+10. **Simple divisibility witnesses: use `dvd_mul_of_dvd_left/right`, not
+    `⟨w, by ring⟩`** (`k ∣ n^s*(b*(c*k))` is
+    `dvd_mul_of_dvd_right (dvd_mul_of_dvd_right (dvd_mul_left k c) b) _`).
+    Also `dvd_pow_self` needs its base given explicitly when the exponent is
+    implicit: `dvd_pow_self (n : ℤ) hne`.
+11. **`IsCoprime` toolkit on ℤ** (all used in L6): `Int.isCoprime_iff_gcd_eq_one`
+    (`IsCoprime m n ↔ Int.gcd m n = 1`), `Int.isCoprime_iff_nat_coprime`
+    (`↔ Nat.Coprime m.natAbs n.natAbs` — the cheap way to get
+    `IsCoprime ((n:ℤ)^2) 2` from `Nat.Coprime (n^2) 2`),
+    `IsCoprime.mul_dvd`, `.dvd_of_dvd_mul_left/right`, `.mul_left/mul_right`,
+    `.pow_left/pow_right`, `.symm`. `Int.Prime.dvd_mul' hn` is the
+    `n ∣ a*b → n ∣ a ∨ n ∣ b` splitter.
+12. **A big `∃` binds its witnesses first.** `∃ a a' b b' : ℤ, …` needs
+    `exact ⟨a, a', b, b', ha0, …⟩` — listing `a, a'` and then the `a`-part
+    conjuncts costs a round ("argument ha0 has type a ≠ 0 but is expected to
+    have type ℤ"). And a *conjunct* that is itself an `∃` must be destructed:
+    `obtain ⟨⟨k₂, hk₂⟩, ⟨k₁, hk₁⟩⟩`.
+13. **Cost/rhythm:** 13 rounds, 300–414 s each (one container, no
+    contention): 1 batched `#check` probe, 6 single-step rounds, 5 batch
+    rounds once green, 3 repair rounds (7 + 6 + 1 error sites). 35
+    declarations (23 author steps + 12 helpers); `sorry`-free, only the three
+    permitted axioms, zero warnings.
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,

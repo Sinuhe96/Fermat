@@ -741,6 +741,148 @@ b) (u = 2, v = 8 gives gcd 10).
 
 ---
 
+## §B. Chunk L6-01 — bổ đề 6 (DONE, all steps S1)
+
+### Step table (`03-lean/L6/Basic.lean`, `namespace L6`)
+
+| author step | declaration | content |
+|---|---|---|
+| S1+S2 | `L6_step_S2` | (4), (5), (6): the three factorisations |
+| S3 | `L6_step_S3` | 6.1: `(u+v), (t−v), (t−u) ⋮̸ n` |
+| S4 | `L6_step_S4` | bổ đề 5 a) at `(u,v)`, `(t,−v)`, `(t,−u)` |
+| S5 | `L6_step_S5` | bổ đề 3 at (4), (5), (6) → `c,c',b,b',a,a'` |
+| S6 | `L6_step_S6` | `(a,b) = (a,c) = (c,b) = 1` |
+| S7 | `L6_step_S7` | `c'^n − 1 = Σ_{k≥1} … + [(u+v)^{n−1} − 1]` |
+| S8 | `L6_step_S8` | `n ∣ c'^n − 1` (`C_n^k ⋮ n` + FLT) |
+| S9 | `L6_step_S9` | `c' = 1 + n k₃` |
+| S10 | `L6_step_S10` | `b' = 1 + n k₂`, `a' = 1 + n k₁` |
+| S11 | `L6_step_S11` | 6.1: `t^n − u − v = c^n[(1+nk₃)^n − 1] ⋮ n²` |
+| S12 | `L6_step_S12` | 6.1: three-term identity ⇒ `(u+v−t) ⋮ n²` |
+| S13 | `L6_step_S13` | 6.1: `u+v−t = n^s a b c k`, `s ≥ 2`, `(k,a)=(k,b)=(k,c)=1`, `k ⋮̸ n` |
+| S14 | `L6_step_S14` | 6.1 conclusion (`h = c^n`) |
+| S15 | `L6_step_S15` | 6.2: `t ⋮ n ⇒ u+v ⋮ n` (F3 fill-in via FLT mod n) |
+| S16 | `L6_step_S16` | bổ đề 5 b) + bổ đề 4 ⇒ the print's (4'') |
+| S17 | `L6_step_S17` | 6.2: (5''): `t^n − u − v ⋮ n²` |
+| S18 | `L6_step_S18` | 6.2: `(t−v), (t−u) ⋮̸ n` + bổ đề 5 a) ×2 |
+| S19 | `L6_step_S19` | 6.2: bổ đề 3 ⇒ (5'), (6') + `(a,b)=(a,c)=(c,b)=1` |
+| S20+S21+S22 | `L6_step_S20_S22` | 6.2: the S10-style and S12-style re-runs ("lập luận như 6.1") |
+| S23 | `L6_step_S23` | 6.2: `u+v−t = n^s a b c k`, `s ≥ 2`, gcds |
+| S24 | `L6_step_S24` | 6.2 conclusion (`h = n^{ns−1}c^n`) |
+| S25+S26 | `L6_step_S25_S26` | §6.2.1: `k = 0` is absurd |
+| assembly | `L6_bo_de_6` | the lemma: `by_cases (n:ℤ) ∣ t`, both branches emit `a,b,c,k,s` and their `h` |
+
+Helpers (not author steps): `L6_gcd_neg_left/right`, `L6_gcd_eq_one_of_dvd`,
+`L6_gcd_eq_one_of_dvd_left`, `L6_gcd_sub_pow_eq_one`, `L6_gcd_pow_sub_eq_one`,
+`L6_gcd_mul_pow_sub_eq_one`, `L6_gcd_self_pow`, `L6_one_add_n_mul_of`,
+`L6_nsq_dvd_one_add_mul_pow`, `L6_isCoprime_sq_two`, `L6_zero_case`.
+
+### Notation decisions specific to bổ đề 6
+
+| print | Lean | why |
+|---|---|---|
+| (5)'s `Σ_{i≤n−1} t^{n−1−i}v^i` | `L5.A ℤ n t (-v)` | `A R n x y = Σ (−1)^i x^{n−1−i} y^i`; with `y = −v` the two signs cancel (`(−1)^i(−1)^i = 1`), so this *is* the print's sum. No new definition — and bổ đề 5 a) then applies to the *pair* `(t,−v)`, whose sum `t + (−v) = t−v` is exactly what S3/S18 bound. |
+| (6)'s `Σ_{i≤n−1} t^{n−1−i}u^i` | `L5.A ℤ n t (-u)` | same, pair `(t,−u)`. |
+| `s ∈ ℤ, s ≥ 2` (6.1) / `t = n^s c·c'`, `s ∈ ℕ*` (6.2) | `∃ s : ℕ` | the exponent is a natural in both readings; in 6.2 it is the *same* `s` as (4'')'s. |
+| `h = c^n` khi `t ⋮̸ n`, `h = n^{ns−1}c^n` khi `t ⋮ n` | one `∃ h : ℤ` + `(¬n∣t → h = c^n) ∧ (n∣t → h = n^{ns−1}c^n)` | the print defines `h` *by cases*; each branch proves its own half and the other half is vacuous (`absurd` against the case hypothesis). |
+
+### Non-deductible-in-the-print items (F3 fill-ins; each is the author's own material)
+
+1. **S15** — "từ (4) suy ra (u+v) ⋮ n" is not derivable from (4) alone; the
+   supported route is `n ∣ t ⇒ n ∣ t^n = u^n+v^n` plus FLT in the form
+   `x^n ≡ x (mod n)` ⇒ `u+v ≡ 0`. (Author's own FLT, used by him in S8.)
+2. **S9's middle step** "(c'^{n−1} − 1) ⋮ n" is FLT at `c'`, which needs `n ∤ c'`
+   (supplied by S5's `c' ⋮̸ n`).
+3. **S13's `s ≥ 2`** is the n-adic maximality argument (S12 gives `n² ∣ u+v−t`,
+   S5/S6 give `gcd(abc,n) = 1`).
+4. **6.1's `k ≠ 0`** (chunk F1 note 7): the print only excludes `k = 0` in 6.2
+   (§6.2.1); the same argument closes 6.1 — this is `L6_zero_case`, used by both.
+
+### Reusable results (DONE dependencies)
+
+* `L5.L5_bo_de_5 hn hodd hcop` — `.1 hw` is part a) (`Int.gcd (u+v) A = 1 ∧ ¬n ∣ A` |
+  `hw : ¬(n:ℤ) ∣ u+v`), `.2.1 hw` is part b) (`n ∣ A ∧ ¬n² ∣ A ∧ Int.gcd (u+v) A = n`).
+* `L4.L4_bo_de_4 hn hodd hn.pos ha2 hb2 hc2 ha hb hc hab hgcd hb2'` — output
+  `∃ s c1 c2, … c = ↑m^s*(c1*c2) ∧ a = ↑m^(n*s-1)*c2^n ∧ b = ↑m*c1^n`. **`c1`
+  pairs with `b` and `c2` with `a`** (inverting this is easy and wrong).
+* `L3.L3_bo_de_3 hodd hn.pos ha hb hc hab hgcd` — `∃ c1 c2, … c = c1*c2 ∧ a = c1^n ∧ b = c2^n`.
+* `L5.L5_gcd_eq_one_of_not_dvd hn (¬n ∣ u) : Int.gcd u (n:ℤ) = 1`.
+
+### Code shapes bổ đề 6 needed (all compiled at this pin)
+
+**Q1 — `rw` rewrites ALL occurrences, and re-descends into what it creates.**
+`rw [one_pow]` on `1^n + 1^n = t^n` consumes *both* `1^n`; a second
+`rw [one_pow]` then errors ("pattern not found"). Likewise `rw [hexp]` on a
+goal containing both `n*s−1` and `n*s−1−2` mangles the second. When only one
+side's exponent may move, use `conv`:
+
+```lean
+have h1 : (n:ℤ)^(n*s-1) = (n:ℤ)^s * (n:ℤ)^(n*s-1-s) := by
+  conv_rhs => rw [← pow_add]   -- only the RHS's exponents move
+  rw [hexp]
+have hexp2 : (n:ℤ)^(s*n) = (n:ℤ)^(n*s-1) * (n:ℤ) := by
+  rw [Nat.mul_comm s n]
+  conv_lhs => rw [← Nat.sub_one_add_one_eq_of_pos hpos]
+  rw [pow_succ]
+```
+
+**Q2 — `(a*b)^n → a^n*b^n` is ONE `mul_pow`** (it re-descends into the new
+`(c*c')^n`), and `(a^m)^n → a^(m*n)` is `← pow_mul`:
+
+```lean
+rw [h1, ht, huv, mul_pow, ← pow_mul, hexp2]
+```
+
+**Q3 — extracting the maximal `n`-power of an integer** (S13's 6.1 route):
+
+```lean
+obtain ⟨e, R, hR, hXR⟩ := Nat.exists_eq_pow_mul_and_not_dvd hXabs n hn.one_lt.ne'
+have hdecomp : (n:ℤ)^e ∣ X := by
+  have h1 : ((n^e : ℕ) : ℤ) ∣ X := Int.natCast_dvd.mpr ⟨R, hXR⟩
+  simpa only [Nat.cast_pow] using h1
+obtain ⟨r, hr⟩ := hdecomp
+have hrabs : r.natAbs = R := by
+  have h := hXR
+  rw [hr, Int.natAbs_mul, Int.natAbs_pow, Int.natAbs_natCast] at h
+  exact mul_left_cancel₀ (pow_ne_zero e hn.ne_zero) h
+have hrndvd : ¬ (n:ℤ) ∣ r := fun hd => hR (hrabs ▸ Int.natCast_dvd.mp hd)
+-- s ≥ 2: n² ∣ X = n^e·r with ¬ n ∣ r, cancel the coprime n² :
+have he2 : 2 ≤ e := (Nat.pow_dvd_pow_iff_le_right hn.one_lt).mp
+  (hcopR.dvd_of_dvd_mul_right h2nat)      -- hcopR : Nat.Coprime (n^2) r.natAbs
+```
+
+The `(n:ℤ)^e` cancellation in 6.2 (S23) is `Int.mul_dvd_mul_iff_left` plus a
+**ℤ** ne-zero proof: `pow_ne_zero s (by exact_mod_cast hn.ne_zero)` — the ℕ
+`hn.ne_zero : n ≠ 0` does not typecheck there.
+
+**Q4 — a big `∃` binds its witnesses first.** `∃ a a' b b' : ℤ, …` needs
+`exact ⟨a, a', b, b', ha0, …⟩` (writing a, a', then the a-part conjuncts, then
+b, b' cost a round in S19). Same for a *conjunct* that is itself an `∃`:
+`L6_step_S10`'s output is `(∃k,…) ∧ (∃k,…)`, so callers need
+`obtain ⟨⟨k₂, hk₂⟩, ⟨k₁, hk₁⟩⟩`.
+
+**Q5 — `omega` cannot see products.** `n ≥ 3` and `s ≥ 1` give it nothing
+about the atom `n*s`; supply the bound:
+`have hbnd : s + 2 ≤ n * s := by nlinarith [hn3, hs1]`, then `omega`. Likewise
+`3 ≤ n` needs `Nat.Prime n` *and* `Odd n`: `have h2 := hn.two_le; obtain ⟨j, hj⟩ := hodd; omega`
+(prime alone gives `2 ≤ n` only, and `Odd 1` is true so `hodd` alone gives `1 ≤ n`).
+
+**Q6 — 6.2's `s ≥ 2` without a valuation** (S23): `s` is *given* by (4''); its
+maximality is the bracket `n^{ns−1−s}c^{n−1} − c' ≡ −c' (mod n)` being `⋮̸ n`
+(`ns−1−s ≥ 1`), and then `n² ∣ u+v−t` forces `s ≥ 2` by cancelling `n^s`.
+
+**Q7 — `(t−v) ⋮̸ n` from `t ⋮ n` and `uv ⋮̸ n`** (S18): if `n ∣ t−v` then
+`n ∣ t − (t−v) = v`. No FLT and no (5)/(6) needed.
+
+### Method note for the sympy screen
+
+bổ đề 6's hypotheses are **unsatisfiable** for `n ≥ 3` (they imply FLT), so
+`test_l6_01.py` cannot run the author's steps on real instances: like L1/L2 it
+screens the *inferences* — 19652 triples for the gcd/divisibility steps, 42
+instances of (4'')/(5''), the 16 sign patterns of §6.2.1 — and records four red
+flags (`n` prime, `n` odd, `uv ⋮̸ n`, `n ∤ a b c k` for the `s ≥ 2` implication).
+
+---
+
 ## §C. Extending this file for the next chunk
 
 1. Add a `## §B. Chunk Lk-01 — …` section with the same four parts: step
@@ -751,4 +893,4 @@ b) (u = 2, v = 8 gives gcd 10).
 4. Record the classification outcome (F1–F4/S1) per step in the chunk YAML,
    not here; here record only the mapping and the surviving code shapes.
 
-Last updated: 2026-09-26, after L5-01 (bổ đề 5) reached DONE (§B above holds L1-01 through L5-01).
+Last updated: 2026-09-26, after L6-01 (bổ đề 6) reached DONE (§B above holds L1-01 through L6-01).

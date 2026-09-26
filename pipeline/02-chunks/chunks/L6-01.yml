@@ -1,0 +1,376 @@
+id: L6-01
+title: "Lemma 6 — four-term parametrisation of a primitive Fermat triple (u^n + v^n = t^n, uv ⋮̸ n): v = a^n + n^s abck, u = b^n + n^s abck, t = h − n^s abck, a^n + b^n = h − 2n^s abck (full lemma)"
+pdf_pages: [1, 3, 4]
+kind: lemma-statement
+depends_on: [L3-01, L4-01, L5-01]
+source_text: |
+  [PDF p1 §A, lemma 6 of the seven-lemma list — region P001·R3]
+
+  Bổ đề 6:
+  Cho n là số nguyên tố lẻ. Giả sử PT: x^n + y^n = z^n (1) có nghiệm nguyên khác không x = u, y = v, z = t sao cho
+  (u,v) = (u,t) = (v,t) = 1 và uv ⋮̸ n. Khi đó tồn tại 4 số nguyên a, b, c, k khác không, đôi một nguyên tố cùng nhau và
+  không chia hết cho n, đồng thời tồn tại số nguyên s lớn hơn 1, sao cho:
+  v = a^n + n^s abck, u = b^n + n^s abck, t = h − n^s abck, a^n + b^n = h − 2n^s abck ; với h = c^n, khi t ⋮̸ n hoặc h = n^{ns−1} c^n, khi t ⋮ n.
+
+  [PDF p3 §6 "6. Chứng minh bổ đề 6" — region P003·R2 (tail). The region also carries the last lines of §5d; only the §6 part is transcribed here.]
+
+  6. Chứng minh bổ đề 6.
+  Vì x = u, y = v, z = t là nghiệm của PT (1) nên ta có u^n + v^n = t^n (3), suy ra: (u+v) Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = t^n (4),
+  (t−v) Σ_{i=0}^{n−1} t^{n−1−i} v^i = u^n (5),  (t−u) Σ_{i=0}^{n−1} t^{n−1−i} u^i = v^n (6)
+  Xét hai trường hợp của t.
+  6.1. Khi t không chia hết cho n.
+  Ta có (u,v) = (u,t) = (v,t) = 1 và cùng với (4), (5), (6) suy ra (u+v) ⋮̸ n, (t−v) ⋮̸ n và (t−u) ⋮̸ n; áp dụng bổ đề
+
+  [PDF p3 §6.1 continuation — region P003·R3]
+
+  5 ta có (u+v, Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) = (t−v, Σ_{i=0}^{n−1} t^{n−1−i} v^i) = (t−u, Σ_{i=0}^{n−1} t^{n−1−i} u^i) = 1, (Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) ⋮̸ n, (Σ_{i=0}^{n−1} t^{n−1−i} v^i) ⋮̸ n,
+  (Σ_{i=0}^{n−1} t^{n−1−i} u^i) ⋮̸ n, kết hợp với (4), (5), (6) và áp dụng bổ đề 3, ta có: u+v = c^n (4') và Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = c'^n, với
+  t = c.c', c, c' ∈ ℤ*, (c, c') = 1 và c ⋮̸ n, c' ⋮̸ n; t−v = b^n (5') và Σ_{i=0}^{n−1} t^{n−1−i} v^i = b'^n, với
+  u = b.b', b, b' ∈ ℤ*, (b, b') = 1 và b ⋮̸ n, b' ⋮̸ n; t−u = a^n (6') và Σ_{i=0}^{n−1} t^{n−1−i} u^i = a'^n, với v = a.a', a, a' ∈ ℤ*, (a, a') = 1,
+  và a ⋮̸ n, a' ⋮̸ n; (a, b) = (a, c) = (c, b) = 1 ((a, b) = (a, c) = (c, b) = 1 (vì (b.b', a.a') = (b.b', c.c') = (a.a', c.c') = 1)
+  Ta có: c'^n − 1 = Σ_{k=1}^{n−1} (−1)^k C_n^k (u+v)^{n−k−1} v^k + [(u+v)^{n−1} − 1]. Vì n là số nguyên tố và (u+v) ⋮̸ n, nên với k = 1..(n−1)
+
+  [PDF p4 §6.1 continuation and end — region P004·R1, first paragraph]
+
+  thì C_n^k ⋮ n và [(u+v)^{n−1} − 1] ⋮ n (định lý nhỏ Fermat). Do đó (c'^n − 1) ⋮ n, mà c' ⋮̸ n nên (c'^{n−1} − 1) ⋮ n, suy ra c'^n − 1 − (c'^{n−1} − 1) = c'^{n−1}(c' − 1) ⋮ n, suy ra c'(c' − 1) ⋮ n, suy ra c' = 1 + n k₃, với k₃ ∈ ℤ. Chứng minh tương tự ta cũng có a' = 1 + n k₁, b' = 1 + n k₂, với k₁, k₂ ∈ ℤ, suy ra t^n − u − v = (c.c')^n − c^n = c^n[(1 + n k₃)^n − 1] ⋮ n². Chứng minh tương tự ta cũng có (u^n − t + v) ⋮ n² và (v^n − t + u) ⋮ n² suy ra (u^n − t + v) + (v^n − t + u) − (t^n − u − v) = 2(u + v − t) ⋮ n², suy ra (u+v−t) ⋮ n². Từ (4'), (5'), (6') và (a,b) = (a,c) = (c,b) = 1 ta có u+v−t = c(c^{n−1} − c') = a(a' − a^{n−1}) = b(b' − b^{n−1}) = n^s abck, với k ∈ ℤ, s ∈ ℤ, s ≥ 2, (k,a) = (k,b) = (k,c) = 1, k ⋮̸ n, nếu k ≠ 0. Suy ra u = b^n + n^s abck, v = a^n + n^s abck, t = c^n − n^s abck, a^n + b^n = c^n − 2n^s abck.
+
+  [PDF p4 §6.2 — region P004·R1, second paragraph]
+
+  6.2. Khi t chia hết cho n
+  Từ (4) suy ra (u+v) ⋮ n, áp dụng bổ đề 5b) ta có (u+v, Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) = n và (Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) ⋮̸ n², kết hợp với (4) và áp dụng bổ đề 4, ta có: u+v = n^{sn−1}c^n (4'') và Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = n c'^n với t = n^s c.c', s ∈ ℕ*; c, c' ∈ ℤ*, (c, c') = 1, c ⋮̸ n, c' ⋮̸ n. Ta có t^n − u − v = (n^s c.c')^n − n^{sn−1}c^n = n^{sn−1}c^n[n c'^n − 1] ⋮ n² (5'') (vì n là số nguyên tố lẻ, s ∈ ℕ*). Từ (5), (6) suy ra (t−v) ⋮̸ n và (t−u) ⋮̸ n, áp dụng bổ đề 5a) ta có (t−v, Σ_{i=0}^{n−1} t^{n−1−i} v^i) = (t−u, Σ_{i=0}^{n−1} t^{n−1−i} u^i) = 1, (Σ_{i=0}^{n−1} t^{n−1−i} v^i) ⋮̸ n, (Σ_{i=0}^{n−1} t^{n−1−i} u^i) ⋮̸ n, kết hợp với (5), (6) và áp dụng bổ đề 3 ta có t−v = b^n (5') và Σ_{i=0}^{n−1} t^{n−1−i} v^i = b'^n, với u = b b', b, b' ∈ ℤ*, (b, b') = 1, b ⋮̸ n, b' ⋮̸ n; t−u = a^n (6'), với v = a a', a, a' ∈ ℤ*, (a, a') = 1, a ⋮̸ n, a' ⋮̸ n; (a,b) = (a,c) = (c,b) = 1.
+
+  [PDF p4 §6.2 continuation — region P004·R1, third paragraph. NOTE: (5') and (6') are re-used here after 6.1, and (5'') is used twice on this page (once above, once below) — printed labelling, transcribed as printed.]
+
+  Lập luận như 6.1. ta có b' = 1 + n k₂, a' = 1 + n k₁, suy ra u^n − t + v = (b.b')^n − b^n = b^n[(1 + n k₂)^n − 1] ⋮ n² (5'') (và v^n − t + u = (a.a')^n − a^n = a^n[(1 + n k₁)^n − 1] ⋮ n² (6''), kết hợp (4''),(5'') và (6'') suy ra (u^n − t + v) + (v^n − t + u) − (t^n − u − v) = 2(u+v−t) ⋮ n², suy ra (u+v−t) ⋮ n², mà u+v−t = n^s c(n^{ns−1−s} c^{n−1} − c') = a(a' − a^{n−1}) = b(b' − b^{n−1}) = n^s abck nên s ≥ 2; (k,a) = (k,b) = (k,c) = 1 và k ⋮̸ n, nếu k ≠ 0. Suy ra v = a^n + n^s abck, u = b^n + n^s abck, t = n^{ns−1}c^n − n^s abck, a^n + b^n = n^{ns−1}c^n − 2n^s abck.
+
+  [PDF p4 §6.2.1 — region P004·R1, fourth paragraph]
+
+  6.2.1. Khi k = 0
+  Ta nhận thấy khi k = 0 thì t−u = v, t−v = u, hay a^n = a.a', b^n = b.b', suy ra a^{n−1} = a', b^{n−1} = b' ⇒ |a| = |a'| = |b| = |b'| = 1 (vì (a,a') = (b,b') = 1)
+
+  [PDF p4 §6.2.1 end + the lemma's summary — region P004·R2. The region also carries §7's opening; only the lemma-6 part is transcribed here.]
+
+  ⇒ t = 0 ∨ t^n = 2, vô lý.
+  Vậy, trong trường hợp k = 0, PT (1) vô nghiệm nguyên khác không.
+  Theo 6.1. và 6.2., ta có kết quả quan trọng: v = a^n + n^s abck, u = b^n + n^s abck, t = h − n^s abck, a^n + b^n = h − 2n^s abck ; với
+  h = c^n, khi t ⋮̸ n hoặc h = n^{ns−1}c^n, khi t ⋮ n, trong đó a, b, c, k là bốn số nguyên khác không và đôi một nguyên tố cùng
+  nhau, đồng thời không chia hết cho n, s ∈ ℤ, s ≥ 2 (đpcm).
+
+  [Notation as printed: ⋮ is the Vietnamese divisibility glyph ("a ⋮ b" = "a chia hết cho b" = b | a; argument order flips, ENCODING_MAP §A), ⋮̸ is the same glyph with a vector slash; a.b = a·b; ℤ* = nonzero integers; C_n^k is the binomial coefficient (the text layers lose sub/superscript pairing, so the region LaTeX is the read of record); Σ_{i=0}^{n−1} is set under the sum sign in the print, transcribed inline here. The slashed glyph is vector art dropped by both text layers — read from the REVIEWED region records, which record the glyph explicitly.]
+formal_hint: |
+  Hypotheses:
+    n : ℕ, "n là số nguyên tố lẻ" — Nat.Prime n and 3 < n (odd);
+    u v t : ℤ nonzero with u^n + v^n = t^n  ((1), the Fermat equation);
+    pairwise coprimality of the triple: Int.gcd u v = 1, Int.gcd u t = 1,
+      Int.gcd v t = 1  ("(u,v) = (u,t) = (v,t) = 1", which is bổ đề 1's output);
+    uv ⋮̸ n, i.e. ¬ ((n : ℤ) ∣ u * v)  — since n is prime this is n ∤ u ∧ n ∤ v.
+  Conclusion:
+    ∃ a b c k : ℤ, ∃ s : ℕ,
+      a ≠ 0 ∧ b ≠ 0 ∧ c ≠ 0 ∧ k ≠ 0 ∧
+      pairwise coprime: Int.gcd a b = 1 ∧ Int.gcd a c = 1 ∧ Int.gcd c b = 1 ∧
+        Int.gcd a k = 1 ∧ Int.gcd b k = 1 ∧ Int.gcd c k = 1 ∧
+      ¬ (n ∣ a) ∧ ¬ (n ∣ b) ∧ ¬ (n ∣ c) ∧ ¬ (n ∣ k) ∧
+      2 ≤ s ∧
+      v = a ^ n + (n : ℤ) ^ s * (a * b * c * k) ∧
+      u = b ^ n + (n : ℤ) ^ s * (a * b * c * k) ∧
+      t = h − (n : ℤ) ^ s * (a * b * c * k) ∧
+      a ^ n + b ^ n = h − 2 * (n : ℤ) ^ s * (a * b * c * k) ∧
+      (h = c ^ n if ¬ (n ∣ t)   -- case 6.1
+       h = (n : ℤ) ^ (n * s − 1) * c ^ n if n ∣ t)   -- case 6.2
+  Reading: a primitive solution is governed by four parameters; u and v each
+  differ from a pure n-th power (b^n, a^n) by the SAME "coupling" term
+  X = n^s abck, and t is h − X for h = c^n (t ∤ n) resp. h = n^{ns−1}c^n
+  (t ⋮ n), where c^n = u+v is the 6.1 factorisation and n^{ns−1}c^n = u+v the
+  6.2 one. The statement's printed "số nguyên s lớn hơn 1" is s ≥ 2; the 6.2
+  body prints "s ∈ ℕ*" first and concludes s ≥ 2 (see author_steps F1 notes).
+transcription: manual
+author_steps: |
+  Normalized ordered step map — bổ đề 6 (statement p1; proof p3 §6 – p4).
+  Evidence: signed REVIEWED region records 01-extract/regions/p001.yml
+  (P001·R3 = statement), p003.yml (P003·R2 = §6 head: (3),(4),(5),(6), the
+  case split, 6.1 head; P003·R3 = 6.1 body: bổ đề 5a, bổ đề 3, (4'),(5'),(6'),
+  (a,b)=(a,c)=(c,b)=1, the c'^n−1 identity), p004.yml (P004·R1 = 6.1 end,
+  6.2, 6.2.1 head; P004·R2 = 6.2.1 end + the summary) — i.e. the vision→LaTeX
+  render read. Cross-checked against both engine text layers
+  (extract_pypdf.txt lines 565–615 (setup/6.1), 700–975 (6.1 tail, 6.2, 6.2.1,
+  summary); extract_pymupdf.txt lines 2056–3440), which reproduce the same
+  proof but drop the math glyphs (MANUAL pages 3, 4). Vision probe this
+  session: the harness CAN route a PNG to a vision model here (page crops,
+  `?q=`), but its output is demonstrably noisy on this document — it read the
+  summary exponent as "s−1" (dropping a character), rendered ⋮ as ":",
+  rendered "⋮ n²" as ": n²", and (when the question named the candidate
+  orders) claimed the 6.2 exponents are all "sn-1", contradicting both text
+  layers. It was therefore NOT treated as authoritative; the signed region
+  LaTeX remains the render read of record, and the disagreement is reported
+  in the F1 notes instead of being resolved silently.
+
+  S0 [p1 statement, P001·R3] Hypotheses: n odd prime; (1) has a nonzero
+    solution x=u,y=v,z=t with (u,v)=(u,t)=(v,t)=1 and uv ⋮̸ n. Conclusion:
+    ∃ nonzero pairwise-coprime a,b,c,k with a,b,c,k ⋮̸ n, ∃ s > 1:
+    v = a^n+n^s abck, u = b^n+n^s abck, t = h − n^s abck,
+    a^n+b^n = h − 2n^s abck, h = c^n (t ⋮̸ n) or h = n^{ns−1}c^n (t ⋮ n).
+  S1 [p3 §6, P003·R2] "Vì x=u, y=v, z=t là nghiệm của PT (1) nên ta có
+    u^n + v^n = t^n (3)" — pure instantiation of the S0 hypothesis (3).
+  S2 [p3 §6, P003·R2] "suy ra: (u+v) Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = t^n
+    (4), (t−v) Σ t^{n−1−i} v^i = u^n (5), (t−u) Σ t^{n−1−i} u^i = v^n (6)" —
+    the three factorisations: (4) from t^n = u^n+v^n (odd-n sum
+    factorisation), (5) from t^n − v^n = u^n, (6) from t^n − u^n = v^n.
+  S3 [p3 §6, P003·R2 end] "Xét hai trường hợp của t." + "6.1. Khi t không chia
+    hết cho n" ⇒ case 6.1; "Ta có (u,v) = (u,t) = (v,t) = 1 và cùng với (4),
+    (5), (6) suy ra (u+v) ⋮̸ n, (t−v) ⋮̸ n và (t−u) ⋮̸ n" — under t ⋮̸ n the
+    three factors cannot be divisible by n (n | (u+v) would give n | t^n via
+    (4); n | (t−v) gives n | u via (5); n | (t−u) gives n | v via (6), and
+    uv ⋮̸ n with n prime forbids both).
+  S4 [p3 §6.1, P003·R3] "áp dụng bổ đề 5 ta có (u+v, Σ(−1)^i u^{n−1−i}v^i) =
+    (t−v, Σ t^{n−1−i}v^i) = (t−u, Σ t^{n−1−i}u^i) = 1, (Σ(−1)^i u^{n−1−i}v^i)
+    ⋮̸ n, (Σ t^{n−1−i}v^i) ⋮̸ n, (Σ t^{n−1−i}u^i) ⋮̸ n" — bổ đề 5a) applied to
+    the three pairs (u,v), (t,v), (t,u) (each needs the pair coprime, which
+    (u,v)=(v,t)=(u,t)=1 supplies, and the sum-factor ⋮̸ n from S3).
+  S5 [p3 §6.1, P003·R3] "kết hợp với (4), (5), (6) và áp dụng bổ đề 3, ta
+    có: u+v = c^n (4') và Σ(−1)^i u^{n−1−i}v^i = c'^n, với t = c.c', c,c' ∈ ℤ*,
+    (c,c') = 1 và c ⋮̸ n, c' ⋮̸ n; t−v = b^n (5') và Σ t^{n−1−i}v^i = b'^n, với
+    u = b.b', b,b' ∈ ℤ*, (b,b') = 1 và b ⋮̸ n, b' ⋮̸ n; t−u = a^n (6') và
+    Σ t^{n−1−i}u^i = a'^n, với v = a.a', a,a' ∈ ℤ*, (a,a') = 1, và a ⋮̸ n,
+    a' ⋮̸ n" — bổ đề 3 applied to (4), (5), (6) with the gcd-1 results of S4
+    (three instances; (c,c') ⟺ (c₁,c₂) of bổ đề 3).
+  S6 [p3 §6.1, P003·R3] "(a,b) = (a,c) = (c,b) = 1 (vì (b.b', a.a') =
+    (b.b', c.c') = (a.a', c.c') = 1)" — the printed clause is duplicated with
+    an unmatched "(" in the print; see F1.
+  S7 [p3 §6.1, P003·R3] "Ta có: c'^n − 1 = Σ_{k=1}^{n−1} (−1)^k C_n^k
+    (u+v)^{n−k−1} v^k + [(u+v)^{n−1} − 1]" — expand c'^n = Σ(−1)^i u^{n−1−i}v^i
+    through (4') u+v = c^n; the k = 0 term is (u+v)^{n−1}.
+  S8 [p4 §6.1, P004·R1] "Vì n là số nguyên tố và (u+v) ⋮̸ n, nên với k = 1..n−1
+    thì C_n^k ⋮ n và [(u+v)^{n−1} − 1] ⋮ n (định lý nhỏ Fermat). Do đó
+    (c'^n − 1) ⋮ n" — every summand carries C_n^k ⋮ n; the bracket is Fermat.
+  S9 [p4 §6.1, P004·R1] "mà c' ⋮̸ n nên (c'^{n−1} − 1) ⋮ n, suy ra c'^n − 1 −
+    (c'^{n−1} − 1) = c'^{n−1}(c' − 1) ⋮ n, suy ra c'(c' − 1) ⋮ n, suy ra
+    c' = 1 + n k₃, với k₃ ∈ ℤ" — from n | c'^{n−1}(c'−1) and n ∤ c' (n prime)
+    the author concludes c' ≡ 1 (mod n); cf. F1 note on the printed middle
+    step "(c'^{n−1} − 1) ⋮ n", which is Fermat and unconditional.
+  S10 [p4 §6.1, P004·R1] "Chứng minh tương tự ta cũng có a' = 1 + n k₁,
+    b' = 1 + n k₂, với k₁,k₂ ∈ ℤ" — the same argument at (6')/(5').
+  S11 [p4 §6.1, P004·R1] "suy ra t^n − u − v = (c.c')^n − c^n =
+    c^n[(1 + n k₃)^n − 1] ⋮ n²" — t = c.c', u+v = c^n (4'), binomial expansion
+    of (1+nk₃)^n (needs n ≥ 3 for n²).
+  S12 [p4 §6.1, P004·R1] "Chứng minh tương tự ta cũng có (u^n − t + v) ⋮ n² và
+    (v^n − t + u) ⋮ n² suy ra (u^n − t + v) + (v^n − t + u) − (t^n − u − v) =
+    2(u + v − t) ⋮ n², suy ra (u+v−t) ⋮ n²" — (5),(6) with b',a' ≡ 1 mod n,
+    then the three-term identity (which equals 2(u+v−t) exactly, and equals
+    (u^n+v^n−t^n) + 2(u+v−t) under (3)), then division by 2 (n odd).
+  S13 [p4 §6.1, P004·R1] "Từ (4'), (5'), (6') và (a,b) = (a,c) = (c,b) = 1 ta
+    có u+v−t = c(c^{n−1} − c') = a(a' − a^{n−1}) = b(b' − b^{n−1}) = n^s abck,
+    với k ∈ ℤ, s ∈ ℤ, s ≥ 2, (k,a) = (k,b) = (k,c) = 1, k ⋮̸ n, nếu k ≠ 0" —
+    the three expressions all equal u+v−t; n² | u+v−t (S12) and abc coprime to
+    n give s ≥ 2; k is then DEFINED by the last equality.
+  S14 [p4 §6.1 end, P004·R1] "Suy ra u = b^n + n^s abck, v = a^n + n^s abck,
+    t = c^n − n^s abck, a^n + b^n = c^n − 2n^s abck" — case 6.1 conclusion
+    (h = c^n, since t ⋮̸ n): u = b b' = b^n + X, v = a a' = a^n + X, t = c c'
+    = c^n − X, X = n^s abck.
+  S15 [p4 §6.2, P004·R1] "Từ (4) suy ra (u+v) ⋮ n, áp dụng bổ đề 5b) ta có
+    (u+v, Σ(−1)^i u^{n−1−i}v^i) = n và (Σ(−1)^i u^{n−1−i}v^i) ⋮̸ n²" — case
+    6.2 (t ⋮ n): (4) gives n | t^n hence n | (u+v); bổ đề 5b).
+  S16 [p4 §6.2, P004·R1] "kết hợp với (4) và áp dụng bổ đề 4, ta có:
+    u+v = n^{sn−1}c^n (4'') và Σ(−1)^i u^{n−1−i}v^i = n c'^n với t = n^s c.c',
+    s ∈ ℕ*; c, c' ∈ ℤ*, (c, c') = 1, c ⋮̸ n, c' ⋮̸ n" — bổ đề 4 at (4) with
+    m = n: a := u+v, b := Σ(−1)^i u^{n−1−i}v^i, c := t; the gcd is n (S15) and
+    the non-square condition is Σ ⋮̸ n² (S15). NOTE the printed exponent
+    "sn−1" in (4''); see F1.
+  S17 [p4 §6.2, P004·R1] "Ta có t^n − u − v = (n^s c.c')^n − n^{sn−1}c^n =
+    n^{sn−1}c^n[n c'^n − 1] ⋮ n² (5'') (vì n là số nguyên tố lẻ, s ∈ ℕ*)" —
+    (4'') substituted; n^{sn−1} carries n² since sn−1 ≥ 2 for n ≥ 3, s ≥ 1.
+  S18 [p4 §6.2, P004·R1] "Từ (5), (6) suy ra (t−v) ⋮̸ n và (t−u) ⋮̸ n, áp dụng
+    bổ đề 5a) ta có (t−v, Σ t^{n−1−i}v^i) = (t−u, Σ t^{n−1−i}u^i) = 1,
+    (Σ t^{n−1−i}v^i) ⋮̸ n, (Σ t^{n−1−i}u^i) ⋮̸ n" — (5): (t−v)Σ t^{n−1−i}v^i
+    = u^n with Σ t^{n−1−i}v^i ≡ v^{n−1} ⋮̸ n (t ⋮ n, v ⋮̸ n), so t−v ⋮̸ n;
+    same for t−u; then bổ đề 5a) on (t,v) and (t,u) (coprime via (v,t)=(u,t)=1).
+  S19 [p4 §6.2, P004·R1] "kết hợp với (5), (6) và áp dụng bổ đề 3 ta có
+    t−v = b^n (5') và Σ t^{n−1−i}v^i = b'^n, với u = b b', b,b' ∈ ℤ*, (b,b') = 1,
+    b ⋮̸ n, b' ⋮̸ n; t−u = a^n (6'), với v = a a', a,a' ∈ ℤ*, (a,a') = 1,
+    a ⋮̸ n, a' ⋮̸ n; (a,b) = (a,c) = (c,b) = 1" — bổ đề 3 twice; the labels
+    (5'),(6') repeat 6.1's (printed).
+  S20 [p4 §6.2, P004·R1] "Lập luận như 6.1. ta có b' = 1 + n k₂, a' = 1 + n k₁"
+    — S9/S10 re-run in case 6.2 (same argument, no n | requirement on t here).
+  S21 [p4 §6.2, P004·R1] "suy ra u^n − t + v = (b.b')^n − b^n =
+    b^n[(1 + n k₂)^n − 1] ⋮ n² (5'') (và v^n − t + u = (a.a')^n − a^n =
+    a^n[(1 + n k₁)^n − 1] ⋮ n² (6'')" — the 6.2 analogue of S11 (labels (5'')
+    and (6'') — (5'') repeats the label used at S17).
+  S22 [p4 §6.2, P004·R1] "kết hợp (4''),(5'') và (6'') suy ra
+    (u^n − t + v) + (v^n − t + u) − (t^n − u − v) = 2(u+v−t) ⋮ n², suy ra
+    (u+v−t) ⋮ n²" — the 6.2 analogue of S12.
+  S23 [p4 §6.2, P004·R1] "mà u+v−t = n^s c(n^{ns−1−s} c^{n−1} − c') =
+    a(a' − a^{n−1}) = b(b' − b^{n−1}) = n^s abck nên s ≥ 2; (k,a) = (k,b) =
+    (k,c) = 1 và k ⋮̸ n, nếu k ≠ 0" — n^{ns−1}c^n − n^s c c' factored as
+    n^s c(n^{ns−1−s}c^{n−1} − c'); the three expressions equal u+v−t; k defined.
+  S24 [p4 §6.2 end, P004·R1] "Suy ra v = a^n + n^s abck, u = b^n + n^s abck,
+    t = n^{ns−1}c^n − n^s abck, a^n + b^n = n^{ns−1}c^n − 2n^s abck" — case 6.2
+    conclusion (h = n^{ns−1}c^n = u+v).
+  S25 [p4 §6.2.1, P004·R1] "Ta nhận thấy khi k = 0 thì t−u = v, t−v = u, hay
+    a^n = a.a', b^n = b.b', suy ra a^{n−1} = a', b^{n−1} = b'
+    ⇒ |a| = |a'| = |b| = |b'| = 1 (vì (a,a') = (b,b') = 1)" — k = 0 gives
+    u+v−t = 0, so t−u = v and t−v = u; with (5'),(6') and the definitions of
+    S19 this is a^n = a a', b^n = b b'; coprime factors then force |a| = 1.
+  S26 [p4 §6.2.1 end, P004·R2] "⇒ t = 0 ∨ t^n = 2, vô lý. Vậy, trong trường
+    hợp k = 0, PT (1) vô nghiệm nguyên khác không." — with |a|=|b|=1 (n odd)
+    u = b^n = ±1, v = a^n = ±1, so t = u+v ∈ {−2,0,2} and t^n = u^n+v^n = u+v
+    = t; t = 0 contradicts the nonzero solution, and t = ±2 gives t^n = ±2,
+    impossible for n ≥ 3. (The printed alternative "t^n = 2" is the u = v = 1
+    branch; the u = v = −1 branch gives t^n = −2, equally absurd — see F1.)
+  S27 [p4 summary, P004·R2] "Theo 6.1. và 6.2., ta có kết quả quan trọng:
+    v = a^n + n^s abck, u = b^n + n^s abck, t = h − n^s abck,
+    a^n + b^n = h − 2n^s abck ; với h = c^n, khi t ⋮̸ n hoặc h = n^{ns−1}c^n,
+    khi t ⋮ n, trong đó a, b, c, k là bốn số nguyên khác không và đôi một
+    nguyên tố cùng nhau, đồng thời không chia hết cho n, s ∈ ℤ, s ≥ 2
+    (đpcm)." — the lemma's conclusion, assembled from S14 (6.1) and S24 (6.2).
+
+  Lean mapping (PROPOSED ONLY — no file created; the Lean lane is closed for
+  this chunk, `lean_decls` stays empty). Requested names L6_step_S…, assembly
+  L6_bo_de_6; `03-lean/L6/Basic.lean` would `import L3.Basic`, `import
+  L4.Basic`, `import L5.Basic` and reuse those lemmas rather than restate
+  them (ENCODING_MAP §A "Reusing a DONE chunk"):
+    S0           -> the step theorems' hypotheses + `L6_bo_de_6`'s hypotheses
+    S1           -> collapsed into S2 (the hypothesis (1) re-read as (3))
+    S2           -> L6_step_S2      ((3) => (4),(5),(6): three factorisations)
+    S3           -> L6_step_S3      (6.1: (u+v), (t−v), (t−u) ⋮̸ n)
+    S4           -> L6_step_S4      (cites L5.L5_bo_de_5 a) — three instances)
+    S5           -> L6_step_S5      (cites L3.L3_bo_de_3 — three instances)
+    S6           -> L6_step_S6      ((a,b)=(a,c)=(c,b)=1 from coprime products)
+    S7           -> L6_step_S7      (the c'^n − 1 decomposition identity)
+    S8           -> L6_step_S8      (C_n^k ⋮ n, FLT mod n => c'^n − 1 ⋮ n)
+    S9           -> L6_step_S9      (c' = 1 + n k₃; also a' at S10's call)
+    S10          -> L6_step_S10     (a' = 1 + n k₁, b' = 1 + n k₂)
+    S11          -> L6_step_S11     (t^n − u − v ⋮ n²)
+    S12          -> L6_step_S12     ((u^n−t+v), (v^n−t+u) ⋮ n² + the 3-term
+                                     identity + halving => (u+v−t) ⋮ n²)
+    S13          -> L6_step_S13     (u+v−t = … = n^s abck, s ≥ 2, k data)
+    S14          -> L6_step_S14     (6.1 conclusion: h = c^n branch)
+    S15          -> L6_step_S15     (6.2: (u+v) ⋮ n; cites L5 b))
+    S16          -> L6_step_S16     (cites L4.L4_bo_de_4 => (4''), t = n^s c c')
+    S17          -> L6_step_S17     ((5''))
+    S18          -> L6_step_S18     ((t−v), (t−u) ⋮̸ n; cites L5 a))
+    S19          -> L6_step_S19     (cites L3 — two instances => (5'),(6'))
+    S20          -> L6_step_S20     (b' = 1 + n k₂, a' = 1 + n k₁)
+    S21          -> L6_step_S21     ((5''),(6'') in 6.2)
+    S22          -> L6_step_S22     ((u+v−t) ⋮ n² in 6.2)
+    S23          -> L6_step_S23     (u+v−t = n^s c(n^{ns−1−s}c^{n−1} − c')
+                                     = … = n^s abck, s ≥ 2)
+    S24          -> L6_step_S24     (6.2 conclusion: h = n^{ns−1}c^n branch)
+    S25          -> L6_step_S25     (6.2.1: k = 0 => a^{n−1} = a',
+                                     b^{n−1} = b', |a| = |a'| = |b| = |b'| = 1)
+    S26          -> L6_step_S26     (k = 0 gives t = 0 ∨ t^n = ±2; vô lý)
+    assembly     -> L6_bo_de_6       (case 6.1 = S14, case 6.2 = S24, summary
+                                     = S27 with the two h alternatives)
+
+  Implicit side conditions identified while transcribing (F3 watch-list for
+  the Lean lane; each is supplied by the author's own hypotheses or by an
+  earlier step — never invented):
+    - S2 (4) needs n odd (the alternating-sum factorisation of a SUM); at
+      even n the same sum factors the DIFFERENCE. (5),(6) hold for all n.
+      Verified numerically in 04-sympy/test_l6_01.py.
+    - S3 the contradiction needs n prime AND uv ⋮̸ n (n ∤ u, n ∤ v): from
+      (5), n | (t−v) gives n | u; from (6), n | (t−u) gives n | v. Without
+      uv ⋮̸ n the step has no contradiction (red flag 4 of the sympy screen).
+    - S4/S5/S18/S19 the four coprimality inputs (u,v)=(u,t)=(v,t)=1 come from
+      bổ đề 1 (L1-01), which the lemma's statement supplies as a hypothesis.
+    - S5/S19 the non-divisibility c,c' ⋮̸ n, a,a' ⋮̸ n, b,b' ⋮̸ n
+      comes from S4 (bổ đề 5a gives the sums ⋮̸ n; a factor divides the sum
+      only if it is divisible by n, n prime).
+    - S8/S9 need n prime (C_n^k ⋮ n and (u+v)^{n−1} ≡ 1 mod n): red flag 1.
+    - S12/S22 divide by 2: need n odd (gcd(2, n²) = 1): red flag 2.
+    - S13/S23's "nên s ≥ 2" needs (a b c, n) = 1 and k ≠ 0 ⟹ n ∤ k: red
+      flag 3. Note the printed statement of 6.1 reads "k ∈ ℤ, s ∈ ℤ, s ≥ 2,
+      (k,a) = (k,b) = (k,c) = 1, k ⋮̸ n, nếu k ≠ 0" — s ≥ 2 is asserted, not
+      derived from a valuation count, in the print.
+    - S26 needs n ≥ 3 (t = ±2 gives t^n = ±2 only for n = 1) and the
+      hypothesis t ∈ ℤ*.
+
+  F1 notes (transcription red flags — reported, not resolved silently):
+    1. PRINTED EXPONENT INCONSISTENCY in 6.2. (4'') prints u+v = n^{sn−1}c^n
+       and (5'') prints t^n − u − v = (n^s c.c')^n − n^{sn−1}c^n =
+       n^{sn−1}c^n[n c'^n − 1], i.e. letters in the order "sn"; the very next
+       paragraph prints n^{ns−1−s}, t = n^{ns−1}c^n − n^s abck,
+       a^n + b^n = n^{ns−1}c^n − 2n^s abck, and the statement (p1) and the
+       summary (p4) print h = n^{ns−1}c^n, i.e. the order "ns". Transcribed
+       as printed (P004·R1 keeps both readings). Independent confirmation of
+       the split: p004.yml's own note ("b16 vs b17,b23") and the two text
+       layers' contiguous glyph runs — extract_pypdf.txt line 824/846 give
+       "sn" for (4'')/(5'') and lines 933/942 give "ns" for the later lines;
+       extract_pymupdf.txt keeps each superscript run on its own line and
+       reads the run `sn` at lines 2923 (4'') and 2986, 2988 (the two (5'')
+       occurrences), versus the run `ns` at lines 3348, 3411, 3426 (the
+       n^{ns−1−s}, t = n^{ns−1}c^n and a^n + b^n = n^{ns−1}c^n occurrences)
+       and 3558 (the summary's h = n^{ns−1}c^n). Since n^{sn−1} = n^{ns−1}
+       (s·n − 1 = n·s − 1), this is typographic, NOT a mathematical gap;
+       04-sympy/test_l6_01.py (`check_62_algebra`) checks the (5'') identity
+       holds with either letter order. The vision probe of the p4 crop
+       disagreed with the split (it claimed "sn" everywhere) and is recorded
+       above as unreliable.
+    2. VISION/TEXT-LAYER DISAGREEMENT on the same exponents is the reason
+       the render read of record is the signed region LaTeX, not a fresh
+       vision pass (the probe also read the summary exponent as "s−1",
+       dropping the n). No layer contradicts the signed LaTeX on any other
+       point of lemma 6; the two text layers differ from it only by the
+       dropped vector glyphs (⋮ / ⋮̸), which they cannot render at all.
+    3. CASE LABEL REUSE (printed): (4'),(5'),(6') are introduced in 6.1
+       (P003·R3) and re-introduced with different content in 6.2 (P004·R1);
+       in addition (5'') labels two different formulas on p4 (t^n − u − v at
+       S17 and u^n − t + v at S21). Transcribed as printed; the Lean lane
+       must not assume the labels are globally unique.
+    4. PRINTED DUPLICATION WITH UNMATCHED PAREN (p3, P003·R3): "(a, b) =
+       (a, c) = (c, b) = 1 ((a, b) = (a, c) = (c, b) = 1 (vì (b.b', a.a') =
+       (b.b', c.c') = (a.a', c.c') = 1)". Both text layers show the clause
+       twice (extract_pypdf.txt line 700–703 and the pymupdf glyph stream),
+       so it is a print artefact, not a transcription error; the missing
+       closing paren is as printed.
+    5. s ∈ ℕ* vs s > 1: the statement (p1) says "tồn tại số nguyên s lớn hơn
+       1" (s > 1, i.e. s ≥ 2) and the summary says "s ∈ ℤ, s ≥ 2", but the
+       6.2 body introduces s by "t = n^s c.c', s ∈ ℕ*" and 6.1 writes "s ∈ ℤ,
+       s ≥ 2". Both readings are transcribed; the conclusion only needs
+       s ≥ 2, which S13/S23 assert and the sympy screen shows is forced by
+       n² | u+v−t only when n ∤ abck (red flag 3). Reported as a statement/
+       proof mismatch, not resolved here.
+    6. The printed alternative "t = 0 ∨ t^n = 2" (S26) covers the u = v = 1
+       sign branch only; the u = v = −1 branch gives t^n = −2 for t = −2.
+       Both are impossible for n ≥ 3, so "vô lý" stands; the printed
+       alternative is imprecise up to sign (sympy screen comment).
+    7. CASE GAP OBSERVED (author-proof, not transcription): k = 0 is
+       excluded only in 6.2 (§6.2.1). In 6.1 the printed chain stops at
+       "k ⋮̸ n, nếu k ≠ 0" without treating k = 0, yet the lemma's conclusion
+       asserts k ≠ 0. The gap closes with the author's OWN §6.2.1 argument
+       applied to 6.1's relations [derivation supplied by the transcribing
+       session; not printed in 6.1, no new assumption]: k = 0 means
+       u+v−t = 0, so t−u = v and t−v = u; with (6') t−u = a^n and v = a·a'
+       this reads a^n = a·a', i.e. a^{n−1} = a' (a ≠ 0), and (a,a') = 1 then
+       forces |a| = 1 because gcd(a, a^{n−1}) = |a| (n − 1 ≥ 1); likewise
+       |b| = 1. Hence u = b^n = ±1, v = a^n = ±1, so t = u+v ∈ {−2,0,2} and
+       (3) gives t^n = u^n + v^n = u + v = t; with n ≥ 3 that forces t = 0,
+       contradicting the hypothesis t ∈ ℤ*. So k ≠ 0 in 6.1 too, and the
+       conclusion's "k khác không" is justified — an F3 derivation for the
+       Lean lane. [Corrected 2026-09-26 by the integration session: an
+       earlier version of this note proposed closing the case via
+       (u+v)^n − u^n − v^n = uv(u+v)Q(u,v); that is insufficient, since
+       uv(u+v)Q = 0 with u, v, t ≠ 0 gives only Q = 0 — no contradiction.
+       The §6.2.1 route above is the one the author's own text supports.]
+    8. The lemma's statement is vacuously true for n ≥ 3 (the hypothesis (1)
+       has no nonzero solution — FLT), so no witness-based check of bổ đề 6
+       is possible; 04-sympy/test_l6_01.py says this explicitly and screens
+       the inferences instead.
+
+  DEPENDENCIES verified against the print:
+    - "áp dụng bổ đề 5" (S4), "áp dụng bổ đề 5b)" (S15), "áp dụng bổ đề 5a)"
+      (S18) and "Lập luận như 6.1" reuse bổ đề 5's parts a) and b)
+      -> depends_on L5-01.
+    - "áp dụng bổ đề 4" (S16) -> depends_on L4-01.
+    - "áp dụng bổ đề 3" (S5 and S19, three + two instances) -> depends_on
+      L3-01 (DONE). No other lemma is cited in the printed proof of bổ đề 6;
+      bổ đề 1 is not cited but its CONCLUSION is a hypothesis of the
+      statement (u,v) = (u,t) = (v,t) = 1 — recorded as a note, not as a
+      dependency, since the printed proof does not apply it.
+lean_file: 03-lean/L6/Basic.lean
+sympy_test: 04-sympy/test_l6_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-001-300dpi-full.png page-003-300dpi-full.png page-004-300dpi-full.png
+lean_decls: L6_gcd_neg_right, L6_gcd_neg_left, L6_step_S2, L6_step_S3, L6_step_S4, L6_step_S5, L6_gcd_eq_one_of_dvd, L6_step_S6, L6_step_S7, L6_step_S8, L6_one_add_n_mul_of, L6_step_S9, L6_step_S10, L6_nsq_dvd_one_add_mul_pow, L6_isCoprime_sq_two, L6_step_S11, L6_step_S12, L6_gcd_eq_one_of_dvd_left, L6_gcd_sub_pow_eq_one, L6_gcd_pow_sub_eq_one, L6_gcd_self_pow, L6_step_S13, L6_zero_case, L6_step_S14, L6_step_S15, L6_step_S16, L6_step_S17, L6_step_S18, L6_step_S19, L6_step_S20_S22, L6_gcd_mul_pow_sub_eq_one, L6_step_S23, L6_step_S24, L6_step_S25_S26, L6_bo_de_6
+regions: P001-R3, P003-R2, P003-R3, P004-R1, P004-R2
+status: DONE

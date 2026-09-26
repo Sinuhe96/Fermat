@@ -1,0 +1,111 @@
+L6-01 (bổ đề 6) — Lean lane round log, ninth session, 2026-09-26
+================================================================
+
+Target: pipeline/03-lean/L6/Basic.lean  (namespace L6, 1328 lines,
+35 declarations: 23 author steps + 12 helpers)
+Loop:   docker compose exec -T lean sh /workspace/proof/compile_lean.sh L6/Basic.lean
+Pin:    Lean 4.35.0-rc2 / Mathlib v4.35.0-rc2 (rev 065356127b1dc0016f66b7283ce0ce2c4055aa55)
+
+Round sequence (wall time per round where recorded; single container,
+no contention; each round = one `compile_lean.sh` on the whole file)
+---------------------------------------------------------------------
+ 1  307 s  probe: one batched `#check` file (L6Probe.lean, since deleted) pinning
+            every Int.gcd / Int.ModEq / IsCoprime / Nat.Prime / Finset name used below.
+ 2  327 s  S1+S2 (L6_step_S2, the three factorisations) — green first try.
+ 3  380 s  S3 — green.
+ 4    —    S4 — green.
+ 5    —    S5 — green.
+ 6    —    S6 + S7 — green.
+ 7    —    S8, S9, S10 — green (`Nat.Prime.dvd_choose_self`, Int.prime_dvd_pow_sub_one).
+ 8    —    S11, S12, S13, L6_zero_case, S14, S15 — 7 error sites (see below).
+ 9    —    fixes + S16, S17, S18, S19, S20_S22 — 6 error sites.
+10    —    S23, S24, S25_S26, assembly L6_bo_de_6 — 6 error sites (all in S23).
+11    —    S23 repairs — 1 error site.
+12  379 s  S23 h1 — 1 error site (rw rewriting a subterm of the exponent).
+13  376 s  FINAL — EXIT 0, no error/warning line, `sorry`-free.
+
+(The rounds marked "—" completed between the recorded deliveries; their wall
+times were not captured. All rounds ran at the usual 300–400 s floor.)
+
+All 15 error sites were F2 (tactic/API shape); no F1 (transcription) and no F4
+(first unsupported author step). The F3 items live in the chunk YAML:
+
+  * S15  t ⋮ n ⇒ (u+v) ⋮ n   — route is n ∣ t^n = u^n+v^n plus FLT;
+  * S9   the intermediate (c'^(n-1) − 1) ⋮ n is FLT at c' (needs n ∤ c');
+  * S13  s ≥ 2 from n² ∣ u+v−t and gcd(a b c, n) = 1 (n-adic maximality);
+  * 6.1  k ≠ 0 via L6_zero_case — §6.2.1's own argument, reused in 6.1
+         (chunk F1 note 7); L6_step_S25_S26 is 6.2's printed §6.2.1.
+
+Final round output (compile_lean.sh, round 13), verbatim
+--------------------------------------------------------
+'L6.L6_gcd_neg_right' does not depend on any axioms
+'L6.L6_gcd_neg_left' does not depend on any axioms
+'L6.L6_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_gcd_eq_one_of_dvd' depends on axioms: [propext, Quot.sound]
+'L6.L6_step_S6' depends on axioms: [propext, Quot.sound]
+'L6.L6_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_one_add_n_mul_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_nsq_dvd_one_add_mul_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_isCoprime_sq_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_gcd_eq_one_of_dvd_left' depends on axioms: [propext, Quot.sound]
+'L6.L6_gcd_sub_pow_eq_one' depends on axioms: [propext, Quot.sound]
+'L6.L6_gcd_pow_sub_eq_one' depends on axioms: [propext, Quot.sound]
+'L6.L6_gcd_self_pow' depends on axioms: [propext, Quot.sound]
+'L6.L6_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_zero_case' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S14' depends on axioms: [propext, Quot.sound]
+'L6.L6_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S17' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S18' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S19' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S20_S22' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_gcd_mul_pow_sub_eq_one' depends on axioms: [propext, Quot.sound]
+'L6.L6_step_S23' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_step_S24' depends on axioms: [propext, Quot.sound]
+'L6.L6_step_S25_S26' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L6.L6_bo_de_6' depends on axioms: [propext, Classical.choice, Quot.sound]
+(exit 0)
+
+Post-compile gates (same session)
+---------------------------------
+lake build L6 (in /workspace/work/testproj)      EXIT 0  "Build completed
+                                                   successfully (8935 jobs)"
+                                                   -> L6/Basic.olean published,
+                                                      `import L6.Basic` resolves
+python pipeline/progress.py --check              EXIT 0  (6/7 DONE)
+python pipeline/progress.py --write PROGRESS.md  EXIT 0
+python pipeline/04-sympy/run_all.py              EXIT 0  "all 7 sympy smoke
+                                                   tests passed" (L6 screen PASS)
+sh proof/check_env.sh --full                     EXIT 0  "SMOKE PASS (full)"
+
+The 15 F2 shapes (all recorded in 03-lean/MATHLIB_API_LESSONS.md, § L6 session)
+--------------------------------------------------------------------------------
+ 1. L6_gcd_self_pow: `rw [← mul_one x]` rewrites every `x`, including inside
+    `x^(n-2)`; bind Int.gcd_mul_left first and rewrite in the hypothesis.
+ 2. S13 h2nat: `rw [← hrabs]` had the direction wrong (pattern R vs r.natAbs).
+ 3. S13 final witness: `by rw [hr, hk]; ring` — the rw already closed the goal
+    ("No goals to be solved").
+ 4. L6_zero_case `3 ≤ n`: `Odd n` alone gives 1 ≤ n only; needs hn.two_le too.
+ 5. S13's `No goals` at an `exact ⟨…, by ring⟩` witness — replaced by an
+    explicit `dvd_mul_of_dvd_left/right` walk (also did this for hB', hC').
+ 6. S15: the ZMod route is structurally blocked (exponent = modulus) — replaced
+    by Int.ModEq.pow_prime_eq_self.
+ 7-12. S17: `pow_ne_zero`/`omega` needs an explicit `n*s` bound (nlinarith);
+    `rw [← sub_one_add_one]` mangled an exponent subterm -> `conv_lhs`;
+    `rw [huv]` could not match `u+v` inside `… - u - v` (introduce the
+    parenthesised form with `ring` first); `rw [hexp]` mangled the RHS ->
+    `conv_rhs`.
+13. S19: the 4-witness `∃` was given witnesses in the wrong positions.
+14. S20_S22: S10's output is `(∃k, …) ∧ (∃k, …)` — needed `⟨⟨k₂, …⟩, ⟨k₁, …⟩⟩`.
+15. S23/S25: `pow_ne_zero e hn.ne_zero` is an ℕ proof (needs
+    `by exact_mod_cast`); `rw [hXk, hk, mul_zero]` left `n^s * 0 = 0` (use
+    `simp`); `congr 1` closed the exponent goal the `omega` was written for.

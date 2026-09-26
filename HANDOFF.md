@@ -5,6 +5,26 @@ requires skill discovery/activation and infrastructure readiness before any
 chunk or mathematics work; those rules govern *how* to work, while this file
 records *where things stand*. `README.md` is the runtime command reference.
 
+Last updated: 2026-09-26 (ninth session — **`L6-01` Lean lane, now DONE**) —
+bổ đề 6 is verified end to end: `03-lean/L6/Basic.lean` holds 35 declarations
+(23 author steps `L6_step_S2` … `L6_step_S25_S26` + the assembly `L6_bo_de_6`,
+plus 12 helpers), reached in 13 compile rounds (one batched `#check` probe;
+F2 shape repairs only, no F1/F4), EXIT:0, zero warnings, zero `sorry`,
+`#print axioms` = propext/Classical.choice/Quot.sound on every author-step
+declaration (the 12 helpers use no axioms at all). The chunk's evidence block
+is filled (`lean_decls`, 35 names), `status: DONE` in the YAML and the ledger,
+`[[lean_lib]] L6` in the tracked lakefile and `import L6.Basic` in
+`Main.lean`; `progress.py --check` EXIT 0 (**6/7 chunks DONE — only
+`L7-FRAG-01` remains, BLOCKED on Q-001**), `04-sympy/run_all.py` green (7/7,
+re-run in the ninth session), `lake build L6` EXIT 0 (olean published, so
+`import L6.Basic` resolves) and `proof/check_env.sh --full` EXIT 0
+(SMOKE PASS). F3 fill-ins, all built from the author's own material:
+S15 (`t ⋮ n ⇒ u+v ⋮ n`, FLT in the `Int.ModEq.pow_prime_eq_self` form), S9's
+intermediate FLT at `c'`, S13's `s ≥ 2` (n-adic maximality), and 6.1's
+`k ≠ 0` via `L6_zero_case` (§6.2.1's own argument reused in 6.1 — chunk F1
+note 7). Ninth-session detail: ENCODING_MAP §B L6-01 (patterns Q1–Q7) and
+`03-lean/MATHLIB_API_LESSONS.md` § Session 2026-09-26 — L6-01.
+
 Last updated: 2026-09-26 (eighth session — **`L5-01` Lean lane, now DONE**) —
 bổ đề 5 is verified end to end: `03-lean/L5/Basic.lean` holds `L5_step_S2` …
 `L5_step_S18`, three helpers and the assembly `L5_bo_de_5`, reached in 29
@@ -186,27 +206,22 @@ Lean lane stayed closed because bổ đề 4's lane is live in another process):
 
 ## One-line status
 
-Docker stack healthy; smoke green. **`L3-01` DONE, `L2-01` DONE,
-`L1-01` DONE** — three lemmas fully verified with the one-step loop (one
-named Lean declaration per author step, final compile EXIT:0, `#print
-axioms` = [propext, Classical.choice, Quot.sound] only). `L3-01`'s sympy
-screen is the first **instance-based** one (`04-sympy/test_l3_01.py`:
-2184 structured + 2264 boxed real instances, n ∈ {1,3,5,7,11,13});
-L1/L2's screens are inference-only because their hypotheses (the FLT
-equation) are unsatisfiable for n ≥ 3. **`L4-01` (bổ đề 4)
-IN_PROGRESS** — transcription, step map S0–S7, sympy screen and evidence
-block are done (parallel session); its Lean lane is not started and now
-carries `depends_on: [L3-01]`.
-**`L5-01` (bổ đề 5) and `L6-01` (bổ đề 6) IN_PROGRESS** — transcription,
-step maps (S0–S18 / S0–S27), sympy screens and evidence blocks complete
-(seventh session, transcription lane only); Lean lanes untouched
-(`lean_decls` empty, no F1–F4/S1 assigned) and `L6-01` declares
-`depends_on: [L3-01, L4-01, L5-01]`, so it is the first chunk that must
-import TWO producers (L4 and L5) as well as L3.
-Lemma 7's non-divisibility chunk stays transcribed, step-mapped,
-sympy-verified and BLOCKED on the author-facing sign inconsistency
-Q-001; its flat-copy Lean file still has F2 errors plus one `sorry`
-marking that gap, and zero L7 author steps are S1.
+Docker stack healthy; smoke green. **Six of the seven chunks are DONE** —
+`L1-01`, `L2-01`, `L3-01`, `L4-01`, `L5-01`, `L6-01` — each verified with
+the one-step loop (one named Lean declaration per author step, final compile
+EXIT:0, `#print axioms` = [propext, Classical.choice, Quot.sound] only);
+`progress.py --check` exits 0 and `proof/check_env.sh --full` is SMOKE PASS.
+`L1-01`, `L2-01` and `L6-01`'s sympy screens are **inference-based** because
+their hypotheses (the FLT equation) are unsatisfiable for n ≥ 3, so no real
+witness can exist; `L3-01`, `L4-01` and `L5-01`'s screens are instance-based.
+**`L7-FRAG-01` (the bổ đề 7 non-divisibility fragment) is BLOCKED** on the
+author-facing sign inconsistency Q-001 (the print's step-10 list of three sums
+vs the product's `a^n − b^n` factor); its transcription, step map and sympy
+screen stand, its flat-copy Lean file still has F2 errors plus one `sorry`
+marking that gap, and zero L7 author steps are S1. **The rest of bổ đề 7
+(four further conclusions, pp. 2/4/5) is not yet chunked** — that is the
+remaining verification work in this repository, not a re-run of anything
+above.
 
 ---
 
@@ -425,20 +440,23 @@ declarations S1 in `03-lean/L4/Basic.lean`, assembly `L4_bo_de_4`;
 (bổ đề 5 — statement p. 1, proof p. 2 §5 → p. 3 §5; S2–S18 all S1 plus the
 assembly `L5_bo_de_5` in `03-lean/L5/Basic.lean`, 29 rounds, EXIT:0, zero
 warnings, zero `sorry`, only permitted axioms; no dependency, `import Mathlib`
-only; round log `03-lean/L5-01_compile_20260926.log`); `L6-01` IN_PROGRESS (bổ đề 6 —
-transcription, S0–S27 incl. the 6.1/6.2/6.2.1 case tree, sympy screen,
-evidence block complete; `depends_on: [L3-01, L4-01, L5-01]`; Lean lane
-not started); `L7-FRAG-01` BLOCKED (Q-001). Seven chunks exist:
-5 DONE / 1 IN_PROGRESS / 1 BLOCKED.
+only; round log `03-lean/L5-01_compile_20260926.log`); `L6-01` DONE (bổ đề 6 — transcription S0–S27 incl. the 6.1/6.2/6.2.1 case
+tree, sympy screen, evidence block with 35 `lean_decls`; 23 author-step
+declarations + assembly `L6_bo_de_6` + 12 helpers in `03-lean/L6/Basic.lean`,
+13 rounds, EXIT:0, zero warnings, zero `sorry`, only permitted axioms;
+`depends_on: [L3-01, L4-01, L5-01]`, citing `L3.L3_bo_de_3` five instances,
+`L4.L4_bo_de_4` once (6.2) and `L5_bo_de_5` a)/b)); `L7-FRAG-01` BLOCKED
+(Q-001). Seven chunks exist: 6 DONE / 1 BLOCKED.
 
-Reuse: L1–L5 are now wired as Lean modules (`[[lean_lib]]` entries in
+Reuse: L1–L6 are now wired as Lean modules (`[[lean_lib]]` entries in
 the tracked `03-lean/lakefile.toml`; `proof/compile_lean.sh` syncs it into
 the Lake project and publishes each compiled module's olean, after removing
 any previous one so a failed compile cannot leave a stale artifact), and
-`Main.lean` imports `Common`, `L1`–`L5`. The consumers exist: `L4-01` imports
-`L3.Basic` and cites `L3.L3_bo_de_3`; the p. 6 main theorem (bổ đề 1) and
-bổ đề 6 remain the other consumers — L6-01 is the first chunk with three
-producer edges. Rule + cost model + the chunk-file skeleton:
+`Main.lean` imports `Common`, `L1`–`L6`. The consumers exist: `L4-01` imports
+`L3.Basic` and cites `L3.L3_bo_de_3`; `L6-01` imports `L3.Basic`,
+`L4.Basic`, `L5.Basic` and cites all three producers; the p. 6 main theorem
+(bổ đề 1) and bổ đề 7 remain the other consumers — L6-01 is the first chunk
+with three producer edges. Rule + cost model + the chunk-file skeleton:
 `pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk"; the fixed
 wiring gap and the still-open `Pilot` aggregator defect:
 `pipeline/BLOCKERS.md` B-002/B-003.
@@ -448,11 +466,19 @@ Consumer edges for L6-01 (reconnaissance, 2026-09-26): `L5-01` needs
 lane compiled; `L5` is now declared in the tracked lakefile and in
 `Main.lean`); `L6-01` needs `import L3.Basic`, `import L4.Basic`,
 `import L5.Basic` and must cite `L3.L3_bo_de_3` (five instances),
-`L4.L4_bo_de_4` (once, in 6.2) and `L5_bo_de_5` a)/b). Its `[[lean_lib]]`
-entry must be appended in ONE edit with its `.lean` file (a lib whose root file
-is absent is a lake-configuration hazard, and `compile_lean.sh` copies the repo
-lakefile into the package on every run), and the `import Lk.Basic` line added
-only after each producer has compiled green once.
+`L4.L4_bo_de_4` (once, in 6.2) and `L5_bo_de_5` a)/b). Both mechanics are now exercised: its `[[lean_lib]]` entry went in ONE edit
+with `L6/Basic.lean`, and `import L6.Basic` was added to `Main.lean` only
+after the lane compiled green (`lake build L6` EXIT 0, olean published, so
+`import L6.Basic` resolves for a consumer). The aggregate `Main.lean` was also
+made one step closer to usable as a build-all gate: the last libs whose oleans
+predated B-002's `lean -o` fix (`Common`, `L1`, `L2`) were built once
+(EXIT 0), so `lake env lean Main.lean` now gets past every verified lib and
+stops at exactly one line — the parked `import Pilot.Basic` (B-003's whole
+remaining defect; `Common/Basic.lean` is an empty scaffold, imported only by
+`Main.lean`). The L7 session inherits: `import L6.Basic` works already, and
+the B-003 recipe (settle Q-001 → delete/supersede `Pilot` → drop that import →
+`lake build L7` → `lake env lean Main.lean` EXIT 0) gives it a sorry-free
+"everything typechecks" gate.
 
 Workflow hardening (2026-09-25, same day): the extraction-stage
 fidelity gate is now **consumed per chunk** — every chunk carries an
@@ -518,16 +544,30 @@ records point at them:
    `haveI`) for Prop-valued local instances. All recorded in
    `MATHLIB_API_LESSONS.md` (§ L5 session) with patterns P14–P18 in
    `ENCODING_MAP.md` §B L5-01.
-3. **`L6-01` (bổ đề 6), Lean lane — the remaining chunk** (its producers L3,
-   L4 and L5 are all DONE, so `progress.py` now lists it as "ready to
-   start"). It imports L3, L4 **and** L5 and cites `L3_bo_de_3`
-   (5×), `L4_bo_de_4` (6.2) and `L5_bo_de_5` a)/b). Expect ~12–18 compile
-   rounds if smooth (28 author steps, ~15–20 of them substantive). Watch
-   the three F3 derivations in the chunk's F1 notes (6.1's three `⋮̸ n`,
-   the 6.1 `k = 0` case, 6.2's `(u+v) ⋮ n`), the printed label re-use, and
-   the `n`-adic bookkeeping behind `s ≥ 2`.
-4. **bổ đề 5c / 5đ** (user directive 2026-09-25; cited by Lemma 7's proof)
-   and the rest of bổ đề 7's chain, in source order, after the above.
+3. **`L6-01` (bổ đề 6), Lean lane — DONE (ninth session, 13 rounds).**
+   `03-lean/L6/Basic.lean` holds `L6_step_S2` … `L6_step_S25_S26` (23 author
+   steps; S1 is folded into S2, and the print's S20+S21+S22 and S25+S26 are
+   each one declaration), 12 helpers and the assembly `L6_bo_de_6`; EXIT:0,
+   zero warnings, zero `sorry`, axioms = propext/Classical.choice/Quot.sound
+   on every author-step declaration (the helpers use none). It imports L3,
+   L4 **and** L5 and cites `L3_bo_de_3` (5 instances), `L4_bo_de_4` (6.2) and
+   `L5_bo_de_5` a)/b). The three F3 derivations the chunk flagged all close
+   from the author's own material (S15's FLT-mod-n, S9's FLT at `c'`, S13's
+   `s ≥ 2`), and 6.1's `k = 0` gap (F1 note 7) is closed by `L6_zero_case` —
+   §6.2.1's argument, reused verbatim in 6.1. No F1 and no F4 anywhere.
+   Patterns Q1–Q7 and the sympy-screening method note: `ENCODING_MAP.md`
+   §B L6-01.
+4. **The only remaining verification work in the repository: bổ đề 7.**
+   `L7-FRAG-01` (its non-divisibility fragment) is transcribed, step-mapped,
+   sympy-screened and BLOCKED on Q-001; the rest of bổ đề 7 (four further
+   conclusions, pp. 2/4/5) is not yet chunked. Per
+   `pipeline/05-feedback/README.md`, Q-001 is a *typographic* inconsistency in
+   the print (step 10 lists three *sums* while the product's third factor is
+   `a^n − b^n`); resolving it decides whether that fragment restarts at S0 as
+   printed or waits for the author. `L7-FRAG-01` also still parks a flat-copy
+   module (`03-lean/Pilot/Basic.lean`, 2 sorries) that `Main.lean` imports;
+   BLOCKERS B-003 closes when that fragment's lane is redone as
+   `03-lean/L7/Basic.lean`.
 
 Whichever is chosen, confirm the statement + proof against a 300 dpi
 render (the reviewed region records are the authoritative transcription;
@@ -616,7 +656,9 @@ next DONE flip):
    so a `lean_file_sha256` + "olean newer than source" check would help.
 
 Nice to have: keep one `LkProbe.lean` per lemma as the durable, reusable
-name list (L4Probe.lean is currently overwritten per round); print the round
+name list — still a *candidate*, not current practice: `L6Probe.lean` (this
+session) and `L4Probe.lean` (deleted on request) were both transient, removed
+once their lane compiled, so the names they pinned are not archived; print the round
 count and wall clock in the compile-log header; add a `read_backing:` field
 recording which read backs a transcription, so a session without working
 vision cannot silently launder an unread render as its authority (this
