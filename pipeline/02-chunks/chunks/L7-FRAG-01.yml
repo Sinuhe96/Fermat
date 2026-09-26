@@ -2,7 +2,7 @@ id: L7-FRAG-01
 title: "Lemma 7 fragment — non-divisibility conclusion (pilot chunk)"
 pdf_pages: [1, 2, 4, 5]
 kind: lemma-statement
-depends_on: []
+depends_on: [L5-01]
 source_text: |
   [PDF p1 bottom → p2 top: Lemma 7 statement]
 
@@ -103,8 +103,11 @@ author_steps: |
            (sign mismatch; text-layer verified, not F1). Query Q-001 OPEN.
   Scope note: displayed (a), (d), the (b^{3n})^n + (c^{3n})^n chain via
   bổ đề 5c/5đ, and the "Lưu ý" paragraph on p4-p5 prove Lemma 7's OTHER
-  listed conclusions — separate chunks. User directive 2026-09-25: start
-  with the smaller bổ đề 5c and 5đ first, then set depends_on below.
+  listed conclusions — separate chunks. User directive 2026-09-25 (start
+  with the smaller bổ đề 5c and 5đ first, then set `depends_on`) is now
+  satisfied: `L5-01` is DONE, so `depends_on: [L5-01]` is set and the lane
+  cites `L5_bo_de_5` conjuncts `.2.2.1` (5c) / `.2.2.2` (5d) instead of
+  re-deriving Euler.
 lean_file: 03-lean/Pilot/Basic.lean
 sympy_test: 04-sympy/test_l7_frag_01.py
 source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761

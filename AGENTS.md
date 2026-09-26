@@ -334,10 +334,19 @@ fast compile-free check; `--full` additionally validates `import Mathlib`.
   step (L4-01 rounds 1 and 3). The `import Mathlib` elaboration is the whole
   per-round cost, so the real lever is the NUMBER of rounds: probe in bulk,
   then one step per compile.
+- **A probe file's `#check` list is trustworthy only if it actually ran.**
+  `proof/NameCheck.lean` was never executed, and its list is the source of a
+  falsified recipe (`ZMod.intCast_zmod_eq_zero_iff_dvd`) that cost a
+  round-trip; `03-lean/L4Probe.lean` and `L6Probe.lean` were each executed
+  once and then deleted, so the names they pinned are not archived anywhere.
+  Re-check names against the pinned Mathlib source and re-run a bulk `#check`
+  in the container instead of trusting a stale list.
 - **Two sessions in one repo share write targets** (`status.tsv`,
   `PROGRESS.md`, `HANDOFF.md`, `lakefile.toml`). An edit is rejected as
   stale when the other session has written the file since your last read —
-  re-read and re-apply ONLY your own paragraph, never wholesale. A
+  re-read and re-apply ONLY your own paragraph, never wholesale. Do not
+  commit while another session has uncommitted edits in those files (a
+  status sweep once captured another lane's ledger row). A
   concurrent compile session also roughly triples per-round wall time
   (922 s measured while two sessions compiled).
 - **Cheap habit that keeps paying:** after `rw [h, mul_zero] at hyp`, `hyp`

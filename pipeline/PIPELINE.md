@@ -117,6 +117,37 @@ Stages:
 
 ---
 
+## Gate blind spots (the DONE evidence check) and the hardening backlog
+
+`progress.py --check`'s DONE-evidence check is deliberately narrow. These four
+gaps were measured on 2026-09-26; none of them blocks the current chunks, and
+each is worth closing before the next DONE flip:
+
+1. `renders:` is **name-blind** — only the file's (and the `page-*.json`
+   sidecar's) existence is tested, never that the render belongs to a page
+   listed in `pdf_pages` (`progress.py:186-192`).
+2. `lean_decls` is a **bare word-boundary search** (`progress.py:202-204`): a
+   name occurring only in a docstring, or only in the `#print axioms
+   Lk.<name>` footer, satisfies it. A dropped step theorem is therefore the
+   plausible way to reach DONE with a missing declaration — require a
+   top-level `theorem|lemma|def <name>` match plus the assembly name.
+3. `transcription:` and `sympy_test:` are **never machine-checked**, and
+   nothing runs `04-sympy/run_all.py` automatically, so "DONE criterion 2"
+   has no trace in the gate.
+4. **No compile/olean field**: after a producer source edit a consumer can
+   import the stale olean (`03-lean/ENCODING_MAP.md` §A, "Olean staleness
+   caveat"). A `lean_file_sha256` plus an "olean newer than source"
+   comparison would close it.
+
+Parked, lower priority: archive one `LkProbe.lean` per lemma as a reusable
+name list (the L4/L6 probe files were transient `#check` scratch and are gone,
+so the names they pinned are not archived); print the round count and wall
+clock in each compile-log header; add a `read_backing:` chunk field recording
+which read backs a transcription, so a session without working vision cannot
+launder an unread render as its transcription authority.
+
+---
+
 ## Runbooks (for consumers)
 
 The tools enforce this workflow; these are the commands to run when

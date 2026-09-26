@@ -123,6 +123,25 @@ The optional `prover` service still requires a compatible GGUF model in
 `models/` and must not run alongside a memory-heavy Mathlib compile on the
 current Docker Desktop allocation.
 
+## Host resources and compile cost
+
+The `lean` service is sized for a Docker Desktop allocation of about 8 GB:
+`mem_limit: 6g`, with 12 CPUs visible to Docker and the service capped at
+`cpus: 10`. Run **one** Mathlib-heavy compile at a time — a second concurrent
+compile measured 922 s against ~150–350 s clean, and the optional `prover`
+service must not run beside one at all.
+
+A warm `import Mathlib` compile is the floor under every check: ~181 s idle,
+288–387 s under load. Treat *one Lean declaration per compile* as the unit of
+work; batching several proof steps into one edit turns a single error into a
+cascade and pays the same floor to learn less
+(`pipeline/03-lean/L7-FRAG-01_compile_20260925.log` is the recorded example).
+
+Pinned Mathlib source for lemma greps: in the container
+`/workspace/work/testproj/.lake/packages/mathlib/Mathlib/` (as in the `rg`
+example above); read-only host-side copy for editing-time greps,
+`proof_verify/.lake/packages/mathlib/Mathlib/`.
+
 ## Project navigation
 
 | Path | Purpose |
