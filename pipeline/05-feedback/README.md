@@ -41,28 +41,55 @@ resolving commit hash.
 
 ## Author report (`render_report.py`)
 
-Send the author a package they can answer **without Lean**:
+Send the author a package they can answer **without Lean and without the
+repository**:
 
-    python pipeline/05-feedback/render_report.py
+    python pipeline/05-feedback/render_report.py            # build + verify
+    python pipeline/05-feedback/render_report.py --zip      # + report.zip
+    python pipeline/05-feedback/render_report.py --no-verify
 
 Reads `queries/Q-NNN-*.md` plus the chunk records (`02-chunks/chunks/*.yml`)
-and writes `report/`:
+and writes a self-contained `report/`:
 
-- `report/index.html` — overview: the open queries, chunk status, and how to
-  respond (bilingual vi/en chrome, query text kept verbatim);
+- `report/index.html` — overview: open queries, chunk status, how to respond
+  (bilingual vi/en chrome, query text kept verbatim);
 - `report/Q-NNN.html` — one page per issue, in reading order: the question
-  first (highlighted card), what the print says, the PDF renders embedded
-  (`renders` of the chunk + any image the query cites, so the disputed line is
-  on screen), what Lean formalized plus the verified declaration list, the
+  first (highlighted card), what the print says, **the printed pages with the
+  cited regions boxed in red** (rects from `01-extract/regions/pNNN.yml`
+  overlaid on the full-page renders — the query's own `P0NNN-RM` mentions pick
+  the regions, otherwise every region of the chunk), the same lines **typeset
+  by KaTeX**, what Lean formalized plus the verified declaration list, the
   F3/F4 classification notes, and a reply box (screen textarea, ruled lines
   when printed);
-- `report/reply-Q-NNN.md` — plain-text reply template for answering by email.
+- `report/reply-Q-NNN.md` — plain-text reply template for answering by email;
+- `report/assets/…` — every referenced file (renders, region crops, the cited
+  review pages, linked sources, KaTeX), mirroring its `pipeline/`-relative
+  path. Files are **hardlinked** when the filesystem allows (fallback:
+  copy) so the package adds no bytes to the checkout.
 
-While building it, the script cross-checks the ledger: every `BLOCKED` chunk
-must be referenced by a query, every query must point at an existing chunk,
-and every cited image/render must exist. Warnings are printed and shown in
-`index.html` (the report is still written). Exit codes: 0 report written
-(warnings allowed), 1 no query / unparseable query, 2 output not writable.
+**Gate 1 — ship it.** After writing, the script zips the report, extracts it
+to a temp directory and checks that every `src`/`href` and every CSS `url()`
+resolves *inside* the extracted tree (`verify: N files, N refs checked …`).
+Exit 1 on any miss; `--no-verify` skips it. `--zip` also writes
+`<out>.zip` for attaching to an email.
 
-`report/` is generated — never hand-edit it; re-run the script when a query
-changes and commit the refreshed output together with the query.
+**Gate 2 — many reports, no interference.** Each `--out` directory owns its
+`assets/` and prunes only its own generated files (`index.html`, `Q-*.html`,
+`reply-*.md`, `assets/`) before rebuilding; it refuses to touch a directory it
+did not generate. Two report directories can be built in any order without
+sharing state.
+
+**Not packed:** `01-extract/out/review/index.html` (it links all 19 manual
+review pages, which would drag in the whole review surface). The report packs
+the individual `review/page-NNN.html` pages the query cites — each carries its
+own render and crops, so it works standalone.
+
+**KaTeX** is vendored at `05-feedback/vendor/katex/` (MIT, `LICENSE` kept,
+woff2 fonts only — the packed CSS drops the woff/ttf fallbacks it would
+otherwise reference). Rendering is client-side, no server; if JavaScript or
+KaTeX is unavailable the raw text stays visible, formulas never hide content.
+
+`report/` is generated **and gitignored** (same policy as `01-extract/out/`:
+the checkout carries the script and the sources, not the bulky regenerable
+output). Build it on demand, ship it with `--zip`, and never hand-edit it.
+Also update `check()`/this README when adding a new kind of reference.

@@ -87,22 +87,25 @@ pre-restart exhibit quoted above (no longer imported by anything; the single
 
 ## Where to see it — review display
 
-Open `pipeline/01-extract/out/review/index.html` (19 MANUAL pages) and open
-the two pages below. Left pane = authoritative render; right pane = the
-REVIEWED LaTeX of each region, with its crop link under the region id.
+Open `pipeline/01-extract/out/review/index.html` (19 MANUAL pages) — inside the
+repo only; **this report already carries the two pages you need** as
+`page-002.html` and `page-005.html` under `assets/`. Left pane = authoritative
+render; right pane = the REVIEWED LaTeX of each region, with its crop link
+under the region id. The red boxes below mark the same regions on the full-page
+renders.
 
 **Spot 1 — the statement (p. 2 top; "Bổ đề 7:" itself starts on p. 1 bottom)**
 
-- review page: `out/review/page-002.html` → region **R1**, first LaTeX line
+- review page: `out/review/page-002.html` → region **P002-R1**, first LaTeX line
 - crop: `out/page-002-300dpi-region-01.png` (or `out/L7_stmt_p2.png`)
 - p.1 lead-in: `out/review/` has no page-001 (p.1 is fidelity-PASS); see
-  `regions/p001.yml` R3, crop `out/page-001-300dpi-region-03.png`
-- line: `… thì ta có (a^n - b^n)(c^n + a^n)(c^n + b^n) ≢ 0(mod n)`
+  `regions/p001.yml` region **P001-R3**, crop `out/page-001-300dpi-region-03.png`
+- line: `… thì ta có (a^n - b^n)(c^n + a^n)(c^n + b^n) ≡ 0(mod n)`
   → first factor carries **minus**.
 
 **Spot 2 — the proof tail (p. 5 bottom)**
 
-- review page: `out/review/page-005.html` → region **R2**, last-but-one LaTeX
+- review page: `out/review/page-005.html` → region **P005-R2**, last-but-one LaTeX
   block pair (`Vậy …` / `luôn có: …`)
 - crop: `out/page-005-300dpi-region-02.png` (or `out/L7_proof_p5a.png`)
 - what is proved there, in order:

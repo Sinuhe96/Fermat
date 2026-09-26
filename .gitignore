@@ -23,6 +23,12 @@ build/
 # Keep the scripts and reports' schema, not the bulky regenerable text.
 pipeline/01-extract/out/
 
+# Author report package — regenerable from the queries + chunk records by
+# 05-feedback/render_report.py (same policy as 01-extract/out/). Ship a copy
+# with `render_report.py --zip`; never hand-edit it.
+pipeline/05-feedback/report/
+pipeline/05-feedback/report*.zip
+
 # Personal tooling state (editor/agent config), not project content.
 .commandcode/
 .vscode/
