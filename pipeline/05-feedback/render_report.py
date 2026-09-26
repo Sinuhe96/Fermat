@@ -340,7 +340,29 @@ class Pack:
         self._extern_names: dict[str, Path] = {}
 
     # -- link policy -------------------------------------------------------
-    FALLBACK_SRC_RE = re.compile(r",\s*url\([^)]+\)\s+format\('(?:woff|truetype)'\)")
+    _SRC_LIST_RE = re.compile(r"src:([^;}]+)")
+    _ENTRY_RE = re.compile(r"url\(([^)]+)\)\s*format\(([^)]+)\)")
+
+    @classmethod
+    def _trim_font_fallbacks(cls, css: str, base: Path) -> str:
+        """Drop `url(...) format(...)` font entries whose file is not shipped,
+        touching ONLY the inside of `src:` lists — a minified stylesheet puts
+        `}@font-face{...` between entries, so a greedy pattern here destroys
+        rules (that is what silently unbound the KaTeX fonts)."""
+        def fix(m: re.Match) -> str:
+            body = m.group(1)
+            if "url(" not in body or "local(" in body:
+                return m.group(0)
+            entries = cls._ENTRY_RE.findall(body)
+            if not entries:
+                return m.group(0)
+            keep = [f"url({u}) format({f})" for u, f in entries
+                    if (base / u.strip("'\"")).is_file()]
+            if not keep or len(keep) == len(entries):
+                return m.group(0)
+            return "src:" + ",".join(keep)
+
+        return cls._SRC_LIST_RE.sub(fix, css)
 
     def can_link(self, src: Path) -> bool:
         if not src.is_file():
@@ -377,16 +399,12 @@ class Pack:
         dest.parent.mkdir(parents=True, exist_ok=True)
         try:
             if src.suffix.lower() == ".css":
-                # derived copy: drop font-format fallbacks whose file is not
-                # shipped (KaTeX css lists woff2/woff/ttf; we ship woff2 only),
-                # so the package never references a file it does not contain.
+                # derived copy: keep only the font formats actually shipped
+                # (KaTeX css lists woff2/woff/ttf; we ship woff2 only), so the
+                # package never references a file it does not contain — and
+                # never loses the @font-face/.katex rules that bind them.
                 text = src.read_text(encoding="utf-8", errors="surrogateescape")
-                derived = self.FALLBACK_SRC_RE.sub("", text)
-                missing = [m for m in re.findall(r"url\(([^)]+)\)", derived)
-                           if not (src.parent / m.strip("'\"")).is_file()]
-                for m in missing:
-                    derived = re.sub(r",?\s*url\(" + re.escape(m) + r"\)[^;]*", "",
-                                     derived, count=1)
+                derived = self._trim_font_fallbacks(text, src.parent)
                 dest.write_text(derived, encoding="utf-8", errors="surrogateescape",
                                 newline="\n")
                 self.map[src] = dest
@@ -1090,6 +1108,29 @@ def verify(out_dir: Path, write_zip: bool) -> tuple[bool, str]:
                     continue
                 if not target.exists():
                     problems.append(f"{page.relative_to(extract)}: missing {ref}")
+        # Structural gate: a packed stylesheet must keep every @font-face (each
+        # with its url()) and the rule that binds KaTeX's families — otherwise
+        # formulas silently fall back to system fonts and look wrong.
+        for css in sorted(extract.rglob("*.css")):
+            rel = css.relative_to(extract).as_posix()
+            dst = css.read_text(encoding="utf-8", errors="replace")
+            blocks = dst.count("@font-face")
+            with_url = len(re.findall(r"@font-face\{[^}]*url\(", dst))
+            if blocks and blocks != with_url:
+                problems.append(f"{rel}: {blocks - with_url} @font-face block(s) "
+                                f"lost their url() font")
+            if rel.startswith("assets/"):
+                src_path = PIPE / rel[len("assets/"):]
+                if src_path.is_file():
+                    src_text = src_path.read_text(encoding="utf-8", errors="replace")
+                    if src_text.count("@font-face") != blocks:
+                        problems.append(f"{rel}: @font-face count {blocks} != source "
+                                        f"{src_text.count('@font-face')}")
+                    if ".katex{" in src_text and ".katex{" not in dst:
+                        problems.append(f"{rel}: lost the .katex rule (font binding)")
+            else:
+                problems.append(f"{rel}: stylesheet outside assets/")
+
         size_mb = zpath.stat().st_size / (1024 * 1024)
         msg = (f"verify: {len(files)} files, {refs} refs checked, "
                f"zip {size_mb:.1f} MB -> extracted clean"

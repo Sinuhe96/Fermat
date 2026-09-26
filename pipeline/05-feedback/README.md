@@ -69,7 +69,10 @@ and writes a self-contained `report/`:
 
 **Gate 1 — ship it.** After writing, the script zips the report, extracts it
 to a temp directory and checks that every `src`/`href` and every CSS `url()`
-resolves *inside* the extracted tree (`verify: N files, N refs checked …`).
+resolves *inside* the extracted tree, **and** that every packed stylesheet
+keeps its `@font-face` blocks (each still carrying a `url()`) plus KaTeX's
+`.katex` rule — the font binding; a stylesheet that loses them renders formulas
+in system fonts and looks wrong (`verify: N files, N refs checked …`).
 Exit 1 on any miss; `--no-verify` skips it. `--zip` also writes
 `<out>.zip` for attaching to an email.
 
@@ -85,9 +88,15 @@ the individual `review/page-NNN.html` pages the query cites — each carries its
 own render and crops, so it works standalone.
 
 **KaTeX** is vendored at `05-feedback/vendor/katex/` (MIT, `LICENSE` kept,
-woff2 fonts only — the packed CSS drops the woff/ttf fallbacks it would
-otherwise reference). Rendering is client-side, no server; if JavaScript or
-KaTeX is unavailable the raw text stays visible, formulas never hide content.
+woff2 fonts only). The report page binds those fonts through its
+`<link rel="stylesheet" href="assets/…/katex.min.css">`; the packed copy of
+that CSS keeps all20 `@font-face` declarations pointing at the shipped
+`fonts/*.woff2` and drops only the woff/ttf entries whose files are not
+shipped — trimming is restricted to the inside of `src:` lists (a greedy
+pattern there used to swallow `}@font-face{…` and silently unbind the fonts;
+the verify gate now rejects that). Rendering is client-side, no server; if
+JavaScript or KaTeX is unavailable the raw text stays visible, formulas never
+hide content.
 
 `report/` is generated **and gitignored** (same policy as `01-extract/out/`:
 the checkout carries the script and the sources, not the bulky regenerable
