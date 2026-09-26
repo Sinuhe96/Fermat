@@ -1,0 +1,46 @@
+name = "testproj"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Testproj"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc2"
+
+[[lean_lib]]
+name = "Testproj"
+
+[[lean_lib]]
+name = "Pilot"
+
+# Chunk libraries. `roots` is explicit: a `lean_lib` named `L3` would otherwise
+# look for `L3.lean`, while our modules live at `L3/Basic.lean`.
+# Building one of these ONCE produces `Lk/Basic.olean`, so a consumer chunk that
+# does `import Lk.Basic` reuses the verified proof instead of re-elaborating it
+# on every compile — and, more importantly, instead of pasting a copy that can
+# drift from the thing that was verified (ENCODING_MAP §A "Reusing a DONE
+# chunk"). `proof/compile_lean.sh` syncs this file into
+# /workspace/work/testproj and publishes the olean of every module it compiles,
+# so a chunk becomes importable by being compiled once.
+[[lean_lib]]
+name = "Common"
+roots = ["Common.Basic"]
+
+[[lean_lib]]
+name = "L1"
+roots = ["L1.Basic"]
+
+[[lean_lib]]
+name = "L2"
+roots = ["L2.Basic"]
+
+[[lean_lib]]
+name = "L3"
+roots = ["L3.Basic"]

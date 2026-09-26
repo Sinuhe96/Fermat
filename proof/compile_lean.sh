@@ -35,7 +35,23 @@ if [ ! -f "$work_root/lakefile.toml" ] || [ ! -f "$work_root/lean-toolchain" ]; 
   exit 1
 fi
 
+# The package file is repo-tracked (it carries the chunk `lean_lib` wiring that
+# makes `import Lk.Basic` resolve); sync it into the volume so the two copies
+# cannot drift and a recreated volume regains the wiring.
+if [ -f "$source_root/lakefile.toml" ]; then
+  cp "$source_root/lakefile.toml" "$work_root/lakefile.toml"
+fi
+
 mkdir -p "$(dirname "$destination")"
 cp "$source_file" "$destination"
 cd "$work_root"
-exec lake env lean "$relative"
+
+# Publish the module for consumer chunks (`import Lk.Basic`). `lean -o` writes
+# the olean as a by-product of the compile we are already paying for; the
+# previous olean is dropped first so that a FAILED compile cannot leave a stale
+# artifact behind for a consumer to import.
+olean="$work_root/.lake/build/lib/lean/${relative%.lean}.olean"
+mkdir -p "$(dirname "$olean")"
+rm -f "$olean"
+
+exec lake env lean -o "$olean" "$relative"

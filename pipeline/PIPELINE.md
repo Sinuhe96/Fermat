@@ -67,8 +67,13 @@ Stages:
 
 3. `03-lean/` — Lean formalization, git-versioned.
    - `Pilot/` is the FIRST chunk through (Lemma 7 fragment). It validates the
-     flow before bulk work.
+     flow before bulk work; it is parked at 2 `sorry`s (BLOCKERS B-003).
    - `Common/` holds shared helpers; `Main.lean` wires module roots.
+   - `lakefile.toml` declares one `lean_lib` per verified chunk, so a DONE
+     chunk is reused by `import`ing it (`import L3.Basic` → `L3.L3_bo_de_3`)
+     rather than pasting a copy that can drift; `proof/compile_lean.sh` syncs
+     that file into the Lake project and publishes the module's olean as a
+     by-product of the compile (ENCODING_MAP §A "Reusing a DONE chunk").
    - ONLY `03-lean/` holds `.lean` files. Sympy lives one stage earlier.
 
 4. `04-sympy/` — numeric smoke tests (n=5,7,11,13), BEFORE formalizing.

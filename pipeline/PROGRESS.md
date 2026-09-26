@@ -17,7 +17,7 @@ L4-01
 
 — none —
 
-## Obstacles: 0 OPEN (none)
+## Obstacles: 1 OPEN (B-003)
 See `pipeline/BLOCKERS.md`.
 
 ## Author queries: 1 OPEN of 1 total (Q-001-product-factor-sign)

@@ -221,9 +221,12 @@ so even a recreate is cheap.
 6. **Downstream integration:** `L4-01` (bổ đề 4, a parallel session's
    transcription) cites bổ đề 3 at its S6; its `depends_on: [L3-01]` is
    now declared (the chunk's own note asked for this once bổ đề 3
-   existed), and its Lean lane must reuse `L3.L3_bo_de_3` — module
-   wiring (`[[lean_lib]] name = "L3"`) is still pending per
-   `ENCODING_MAP.md` §A.
+   existed), and its Lean lane must reuse `L3.L3_bo_de_3` — module wiring
+   for `Common`/`L1`/`L2`/`L3` is **in place** (tracked
+   `03-lean/lakefile.toml`; `compile_lean.sh` syncs it and publishes each
+   compiled module's olean, so `import L3.Basic` works after one compile).
+   See `ENCODING_MAP.md` §A "Reusing a DONE chunk" and `BLOCKERS.md`
+   B-002.
 
 ### Prior session (L7 pilot) — still stands
 
@@ -291,14 +294,18 @@ from a parallel session; Lean lane not started; `depends_on: [L3-01]`);
 `L7-FRAG-01` BLOCKED (Q-001). Five chunks exist: 3 DONE / 1 IN_PROGRESS /
 1 BLOCKED.
 
-Reuse: L1/L2/L3 are **not** wired as Lean modules yet — deferred by user
-decision to the first real consumers. That consumer now exists: `L4-01`
-declares `depends_on: [L3-01]`, so its Lean lane is the first chunk that
-must import/reuse a DONE chunk's declarations (`L3.L3_bo_de_3`, or its
-step lemmas) instead of re-deriving them; the p. 6 main theorem (bổ đề 1)
-and bổ đề 6 remain the other consumers. Rule + wiring recipe + the
-volume-only `Pilot` lean_lib reproducibility gap:
-`pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk".
+Reuse: L1/L2/L3 are now wired as Lean modules (`[[lean_lib]]` entries in
+the tracked `03-lean/lakefile.toml`; `proof/compile_lean.sh` syncs it into
+the Lake project and publishes each compiled module's olean, after removing
+any previous one so a failed compile cannot leave a stale artifact). The
+first real consumer exists: `L4-01` declares `depends_on: [L3-01]`, so its
+Lean lane is the first chunk that must import/reuse a DONE chunk's
+declarations (`import L3.Basic`, then `L3.L3_bo_de_3` or its step lemmas)
+instead of re-deriving them; the p. 6 main theorem (bổ đề 1) and bổ đề 6
+remain the other consumers. Rule + cost model + the chunk-file skeleton:
+`pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk"; the fixed
+wiring gap and the still-open `Pilot` aggregator defect:
+`pipeline/BLOCKERS.md` B-002/B-003.
 
 Workflow hardening (2026-09-25, same day): the extraction-stage
 fidelity gate is now **consumed per chunk** — every chunk carries an

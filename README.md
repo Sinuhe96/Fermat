@@ -69,6 +69,15 @@ docker compose exec -T lean python /workspace/pipeline/01-extract/render_pdf.py 
   --page 2 --dpi 300 --crop 72,90,520,700
 ```
 
+**Chunk-to-chunk reuse.** A DONE chunk is cited by `import`ing its module,
+never by pasting its proof: `import L3.Basic` then `L3.L3_bo_de_3` (see
+`pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk").
+`compile_lean.sh` syncs the repo-tracked `pipeline/03-lean/lakefile.toml` into
+the Lake project and publishes `<module>.olean` as a by-product of every
+successful compile, so a producer becomes importable by being compiled once —
+no separate `lake build` step. The copies under `pipeline/03-lean/` stay the
+source of truth; never edit the Lake-volume copies.
+
 **Never run `lake`, `lake exe cache get`, or Lean compilation in
 `/workspace/proof`, `/workspace/pipeline`, `proof_verify`, or another Windows
 bind mount.** Lake work belongs only in `/workspace/work/testproj` on the

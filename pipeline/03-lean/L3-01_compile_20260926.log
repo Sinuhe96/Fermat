@@ -82,3 +82,13 @@ EXIT:0
 'L3.L3_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
 'L3.L3_bo_de_3' depends on axioms: [propext, Classical.choice, Quot.sound]
 EXIT:0
+=== round 12 (harness: lakefile sync + olean publish) ===
+'L3.L3_step_S0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_step_S1_S2' depends on axioms: [propext, Quot.sound]
+'L3.L3_step_S3_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_step_S5' depends on axioms: [propext]
+'L3.L3_step_S6_S8' depends on axioms: [propext]
+'L3.L3_step_S9_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_bo_de_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXIT:0

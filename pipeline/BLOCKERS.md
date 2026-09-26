@@ -15,6 +15,53 @@ clutter this log with mathematical disputes.
 
 ---
 
+## B-002 Chunk-import wiring untracked, package file unsynced, producers never built [RESOLVED]
+
+- Impact: `import Lk.Basic` from a consumer chunk could not resolve. The
+  `lean_lib` wiring existed only in an untracked `pipeline/03-lean/lakefile.toml`,
+  `proof/compile_lean.sh` never copied the package file into
+  `/workspace/work/testproj`, and `.lake/build/lib/lean/L3/` was an empty
+  directory (no producer olean had ever been produced). The first consumer —
+  L4-01 (bổ đề 4 cites bổ đề 3) — would have paid a full 150–350 s round-trip
+  to discover the import failure.
+- Root cause: the copy-then-compile harness handled `.lean` sources only, and
+  `lake env lean <file>` emits no olean, so no chunk was ever importable. The
+  volume's `lakefile.toml` and the (untracked) repo copy were already two
+  unsynced sources of truth; ENCODING_MAP §A had flagged the volume-only copy
+  as a known gap.
+- First seen: 2026-09-26 (L3-01 close-out; diagnosed while checking what the
+  L4 session needed).
+- Fix: `pipeline/03-lean/lakefile.toml` is tracked, with `[[lean_lib]]`
+  entries (explicit `roots`) for `Common`, `L1`, `L2`, `L3`;
+  `proof/compile_lean.sh` now syncs that file into the package and compiles
+  with `lean -o <package>/.lake/build/lib/lean/<relative>.olean`, after an
+  `rm -f` of the previous olean so a failed compile cannot publish a stale
+  artifact.
+- Resolution check: verified 2026-09-26 — (a) `lean -o` on a module with a
+  type error and on one with a failed tactic exits 1 and writes **no** olean;
+  (b) `lean -o` on a trivial module plus `import` of it from a second file
+  works (olean written, 4 s, no Mathlib import); (c) a real
+  `compile_lean.sh L3/Basic.lean` round leaves
+  `.lake/build/lib/lean/L3/Basic.olean` in place (round 12 of
+  `03-lean/L3-01_compile_20260926.log`).
+
+## B-003 `Main.lean` aggregator still lists a sorry-carrying scratch module [OPEN]
+
+- Impact: the aggregate root cannot serve as a build-all gate.
+  `03-lean/Pilot/Basic.lean` is the parked L7-FRAG-01 scratch file and still
+  contains 2 `sorry`s; nothing builds `Main.lean` (Lake's `defaultTargets` is
+  `Testproj`), so the defect stays latent.
+- Unblocks: any future "compile everything" gate, and the resolution of
+  L7-FRAG-01 / Q-001, which decides whether `Pilot/Basic.lean` is deleted or
+  superseded.
+- First seen: 2026-09-26 (L3-01 close-out).
+- Workaround applied: `Main.lean` now lists the verified chunk libraries
+  (`Common`, `L1`, `L2`, `L3`) as its verified set and marks the
+  `import Pilot.Basic` line as parked with a comment tying it to Q-001;
+  `ENCODING_MAP.md` §A records the same.
+- Resolution check: either `grep -c sorry 03-lean/Pilot/Basic.lean` returns 0,
+  or the `import Pilot.Basic` line is gone from `Main.lean`.
+
 ## B-001 Mathlib olean cache does not unpack [RESOLVED]
 
 - Impact: `03-lean/` files could not `import Mathlib`.
