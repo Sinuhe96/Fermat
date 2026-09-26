@@ -4,12 +4,13 @@
 
 - Chunk: `L7-FRAG-01` (`pipeline/02-chunks/chunks/L7-FRAG-01.yml`)
 - PDF: `PROOF_of_FERMAT.pdf`
-  - statement: p. 1 bottom ("thì ta có (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n)")
+  - statement: p. 1 bottom ("Bổ đề 7: … thỏa mãn") continuing on **p. 2 top**
+    ("thì ta có (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n)")
   - proof: p. 4 bottom → p. 5 top ("Vậy b^n + c^n ≢ 0 (mod n). Chứng minh
     tương tự ta cũng có a^n + b^n ≢ (mod n), c^n + a^n ≢ 0 (mod n). Tóm lại,
     ta luôn có: (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm).")
-  - text-layer line refs: `pipeline/01-extract/out/extract_pypdf.txt` lines
-    1053–1057.
+  - text-layer line refs: `pipeline/01-extract/out/extract_pypdf.txt`
+    lines 161–163 (statement) and 1053–1057 (proof tail).
 
 ## What we formalized
 
@@ -83,6 +84,54 @@ step. S6 ("Tóm lại") is therefore left unencoded: it is the one step the
 printed chain does not support. `03-lean/Pilot/Basic.lean` is the frozen
 pre-restart exhibit quoted above (no longer imported by anything; the single
 `sorry` still marks the gap). The question for the author is unchanged.
+
+## Where to see it — review display
+
+Open `pipeline/01-extract/out/review/index.html` (19 MANUAL pages) and open
+the two pages below. Left pane = authoritative render; right pane = the
+REVIEWED LaTeX of each region, with its crop link under the region id.
+
+**Spot 1 — the statement (p. 2 top; "Bổ đề 7:" itself starts on p. 1 bottom)**
+
+- review page: `out/review/page-002.html` → region **R1**, first LaTeX line
+- crop: `out/page-002-300dpi-region-01.png` (or `out/L7_stmt_p2.png`)
+- p.1 lead-in: `out/review/` has no page-001 (p.1 is fidelity-PASS); see
+  `regions/p001.yml` R3, crop `out/page-001-300dpi-region-03.png`
+- line: `… thì ta có (a^n - b^n)(c^n + a^n)(c^n + b^n) ≢ 0(mod n)`
+  → first factor carries **minus**.
+
+**Spot 2 — the proof tail (p. 5 bottom)**
+
+- review page: `out/review/page-005.html` → region **R2**, last-but-one LaTeX
+  block pair (`Vậy …` / `luôn có: …`)
+- crop: `out/page-005-300dpi-region-02.png` (or `out/L7_proof_p5a.png`)
+- what is proved there, in order:
+  `⇒ 3 ≡ 0 (mod n) ⇒ n=3, vô lý` → `Vậy b^n + c^n ≢ 0 (mod n)` →
+  `Chứng minh tương tự … a^n + b^n ≢ (mod n), c^n + a^n ≢ 0 (mod n)` →
+  `Tóm lại, ta luôn có: (a^n - b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm).`
+  Three **sums** are excluded; the product then prints a **difference** as
+  its first factor.
+
+**The four conclusions this chunk does not cover** — same statement block,
+`out/review/page-002.html` region **R1**, LaTeX lines 2–3
+(crop `out/page-002-300dpi-region-01.png`):
+
+1. `a^{n²} + b^{n²} − c^{n²} ≡ 0 (mod n²)` — display (a); proved on p. 4
+   (review `page-004.html` R2/R3, crops `page-004-300dpi-region-0{2,3}.png`).
+2. `a^{n(n−3)} + b^{n(n−3)} + c^{n(n−3)} ≡ c^{3n} + b^{3n} ≡ a^{3n} − b^{3n}
+   ≡ b^n c^n + a^{2n} ≡ c^n a^n + b^{2n} ≡ b^n a^n − c^{2n} ≡ 0 (mod n²)` —
+   proved on p. 5 region **R1** (`b^{3n}+c^{3n}` chain + bổ đề 5c/5d) with the
+   `a^{2n}+b^n c^n` block at the top of region **R2**.
+3. `n ≡ 1 (mod 6)` — proved on p. 5 region **R2** (`Vì n là số nguyên tố lớn
+   hơn 3 nên n ≡ ±1 (mod 6)` … `Vậy n ≡ 1 (mod 6) (đpcm).`).
+4. `a^{n(n−2)} + b^{n(n−2)} − c^{n(n−2)} ≡ a^{n(n−4)} + c^{n(n−4)} ≡
+   b^{n(n−4)} + c^{n(n−4)} ≡ a^{n(n−4)} − b^{n(n−4)} ≡ 0 (mod n²)` — the first
+   congruence is proved in p. 5 region **R2** (`* Ta có c^{2n} − a^n b^n ≡ 0` …
+   `⇒ b^{n(n-2)} + a^{n(n-2)} − c^{n(n-2)} ≡ 0 (mod n²) (đpcm).`), the
+   remaining three at the end of R2 (`Vì n ≡ 1 (mod 6), nên n = 6l + 1` …
+   `a^{n(n-4)} − b^{n(n-4)} ≡ 0 (mod n) (đpcm).`).
+
+
 
 ## Attachments
 
