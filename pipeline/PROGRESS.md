@@ -17,7 +17,7 @@ Overall: [#################---] 6/7 DONE (85%)
 
 — none —
 
-## Obstacles: 1 OPEN (B-003)
+## Obstacles: 0 OPEN (none)
 See `pipeline/BLOCKERS.md`.
 
 ## Author queries: 1 OPEN of 1 total (Q-001-product-factor-sign)

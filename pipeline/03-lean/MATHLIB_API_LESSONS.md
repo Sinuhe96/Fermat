@@ -616,6 +616,78 @@ L5-01.
     declarations (23 author steps + 12 helpers); `sorry`-free, only the three
     permitted axioms, zero warnings.
 
+## Session 2026-09-26 — L7-FRAG-01 (bổ đề 7, non-divisibility) lane restart
+
+State: `03-lean/L7/Basic.lean` compiles EXIT:0, zero warnings, zero `sorry`;
+`#print axioms` on `L7_step_S0`, `L7_step_S1`, `L7_step_S2`,
+`L7_step_S3_S4`, `L7_step_S5a`, `L7_step_S5b`, `L7_modEq_of_zmod_eq`,
+`L7_tail_three`, `L7_pair_reductio` = propext / Classical.choice / Quot.sound
+only. Nine rounds (1 bulk `#check` probe + 6 step rounds + 2 repair rounds) and
+three one-shot tactic probes; per-round diagnosis in
+`03-lean/L7-FRAG-01_compile_20260926.log`. The chunk stays BLOCKED on the open
+author query Q-001 (its S6 is not encoded). All names pinned by the probe:
+`pow_eq_zero_iff`, `dvd_pow_self`, `sub_eq_zero`, `neg_inj`,
+`add_eq_zero_iff_eq_neg`, `mul_eq_zero`, `mul_eq_zero_iff_right`, `pow_ne_zero`,
+`mul_pow`, `Odd.neg_pow`, `Nat.Prime.odd_of_ne_two`, `Nat.Prime.eq_two_or_odd'`,
+`Int.Prime.dvd_pow'`, `Int.modEq_zero_iff_dvd`, `Int.modEq_iff_dvd`,
+`Int.natCast_dvd_natCast`, `ZMod.intCast_zmod_eq_zero_iff_dvd`,
+`ZMod.pow_card_sub_one_eq_one`, `ZMod.pow_card`,
+`L5.L5_zmod_intCast_eq_zero_iff`, `L5.L5_gcd_eq_one_of_not_dvd`.
+
+1. **`ZMod n` with a variable modulus is context-sensitive: the same tactic
+   fails inside a longer proof and passes in a standalone `example`.** In the
+   lane's first ZMod draft, `ring` failed on `-x + -x = -(x * 2)`
+   (`⊢ -↑b ^ n + -↑b ^ n = -(↑b ^ n * 2)`), on `↑b ^ e + -↑b ^ e = 0`, and on
+   numerals (`⊢ 3 + -3 = 0` for `-((4 : ZMod n) - 1) + 3 = 0`); `rw
+   [Odd.neg_pow hodd2]` reported "did not find an occurrence of the pattern
+   `(-?a) ^ (n - 2)`" in a goal printing exactly that. A controlled probe then
+   showed the trigger is *instance scope*: with `[Fact (Nat.Prime n)]` as a
+   theorem **binder** those goals fail, while the same code with the instance
+   introduced **in-proof** (`have : Fact (Nat.Prime n) := ⟨hn⟩`, the L5
+   pattern) closes in isolation. Also reproducible: `rw [neg_zero]` on
+   `-0 + 3 = 0` ("did not find `-0`") — the L5 session's `- 0` note again.
+   Consequence adopted here: **carry mod-`n` arguments in ℤ, not in `ZMod n`
+   with a variable modulus** (item 2).
+2. **The ℤ replacement (all verified at this pin):** `Int.ModEq` algebra —
+   `h.pow k`, `h1.add h2`, `h1.mul h2`, `h.neg`, `h.add_left c`,
+   `h.add_right c`, `h1.trans h2`, `h.symm`, `Int.ModEq.refl a` — plus
+   `Int.modEq_iff_dvd` (`a ≡ b [ZMOD n] ↔ n ∣ b - a`; read `≡` as `n ∣ b - a`
+   in whichever direction the algebra needs), `Int.modEq_zero_iff_dvd`,
+   `dvd_neg`, `dvd_sub`, `dvd_add`, `dvd_mul_of_dvd_right`,
+   `Int.natCast_dvd_natCast`, `Nat.le_of_dvd`,
+   `ZMod.intCast_zmod_eq_zero_iff_dvd (a : ℤ) (b : ℕ)`. Term-shape changes
+   between ℤ facts are `by ring` / `by omega` — reliable in ℤ.
+3. **`have hid : <numeral identity> = 3` DEFAULTS TO `ℕ`** when nothing pins the
+   type — and in ℕ the identity is false (truncated subtraction), so `ring`
+   fails on `2 * (2 - 2 ^ (n - 2)) + (2 ^ (n - 1) - 1) = 3` and the report looks
+   like a broken `ring` rather than a wrong type. Write
+   `have hid : (2 * (2 - 2 ^ (n - 2)) + (2 ^ (n - 1) - 1) : ℤ) = 3`. Rule: any
+   pure-numeral `have` in a ℤ proof needs the `: ℤ` annotation.
+4. **Bổ đề 5's FLT helper removes the `Fact` instance from ℤ proofs:**
+   `Int.ModEq.pow_card_sub_one_eq_one (hn : Nat.Prime p) (hcop : IsCoprime n ↑p)`
+   with `hcop` from `L5.L5_gcd_eq_one_of_not_dvd hn (h : ¬ (n : ℤ) ∣ u) :
+   Int.gcd u (n : ℤ) = 1` via `Int.isCoprime_iff_gcd_eq_one.mpr`; then
+   `h.symm.dvd : n ∣ 2 ^ (n - 1) - 1` reads the congruence as divisibility.
+   (Alternative pinned route: `Nat.Prime.coprime_iff_not_dvd Nat.prime_two` +
+   `Int.isCoprime_iff_nat_coprime`.)
+5. **Cancelling a factor modulo a prime needs no field:** from `n ∣ A * b^e`
+   and `¬ n ∣ b`, `Int.Prime.dvd_mul' hn` splits the product and
+   `Int.Prime.dvd_pow' hn` refutes the second branch — the ℤ analogue of the
+   author's "vì b ≢ 0".
+6. **`pow_eq_zero` does not exist at this pin.** `pow_eq_zero_iff` needs
+   `[IsReduced M₀]` and `n ≠ 0`, and `IsReduced (ZMod n)` requires
+   `Fact (Squarefree n)` (`Mathlib/RingTheory/ZMod.lean:50`) — a prime modulus
+   does not supply it, so `pow_ne_zero` is not directly available in `ZMod p`
+   either. Prove nonzero powers from the field (`x ^ k * (x⁻¹) ^ k = 1` via
+   `← mul_pow`, `mul_inv_cancel₀`, `one_pow`, `one_ne_zero`) or stay in ℤ.
+7. **Oddness bridges that compiled:** `Nat.Prime.odd_of_ne_two (hn) (p ≠ 2) :
+   Odd p` (note `Nat.Prime.eq_two_or_odd` returns `n % 2 = 1`, while
+   `eq_two_or_odd'` returns `Odd p`), and `Odd (n - 2)` from `Odd n` via
+   `obtain ⟨k, hk⟩ := hodd; exact ⟨k - 1, by omega⟩`.
+8. Cost: 285–375 s per `import Mathlib` round; the three tactic probes
+   (343–358 s) were the cheapest way to settle the `ZMod n` question before
+   rewriting the lane in ℤ.
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,

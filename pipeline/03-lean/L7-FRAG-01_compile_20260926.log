@@ -1,0 +1,86 @@
+=== L7-FRAG-01 (bổ đề 7, non-divisibility conclusion) — lane restart, 2026-09-26 ===
+Restart of the chunk's Lean lane after the 2026-09-25 batch attempt (F2 cascade,
+log preserved below in L7-FRAG-01_compile_20260925.log). One author step per
+compile, per AGENTS.md. Rounds 1-9 below; the two tactic probes are separate
+untracked files (L7Probe.lean, L7TacticProbe.lean — deleted after use, names
+archived in MATHLIB_API_LESSONS.md).
+
+=== round 1: bulk `#check` probe (L7Probe.lean, untracked) 2026-09-26 ===
+285 s. Pinned (among others): pow_eq_zero_iff (needs IsReduced; `pow_eq_zero`
+does NOT exist at this pin), dvd_pow_self, sub_eq_zero, neg_inj,
+add_eq_zero_iff_eq_neg, mul_eq_zero / mul_eq_zero_iff_right, pow_ne_zero,
+mul_pow, Odd.neg_pow, Nat.Prime.odd_of_ne_two, Nat.Prime.eq_two_or_odd',
+Int.Prime.dvd_pow', Int.modEq_zero_iff_dvd, Int.modEq_iff_dvd,
+Int.natCast_dvd_natCast, ZMod.intCast_zmod_eq_zero_iff_dvd (explicit args),
+ZMod.pow_card_sub_one_eq_one, ZMod.pow_card, CharP.intCast_eq_zero_iff,
+L5.L5_zmod_intCast_eq_zero_iff, L5.L5_bo_de_5, L5.L5_step_S16.
+
+=== round 2: skeleton + S0 (fresh module L7/Basic.lean, wiring to lakefile.toml) ===
+'L7.L7_step_S0' depends on axioms: [propext]
+294 s. EXIT 0, zero warnings. Wiring verified in the same round: `import L5.Basic`
+resolves (producer olean published), lakefile synced, `[[lean_lib]] L7` declared.
+
+=== round 3: S1 (the author's (b), GT2 reduced mod n) ===
+'L7.L7_step_S1' depends on axioms: [propext, Classical.choice, Quot.sound]
+345 s. EXIT 0, zero warnings, no `sorry`.
+
+=== round 4: S2 (the author's (c), GT3) ===
+'L7.L7_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+355 s. EXIT 0, zero warnings, no `sorry`.
+
+=== round 5: plumbing helpers (ZMod bridges + the printed tail) — F2 ===
+L7/Basic.lean:100:53: error: unsolved goals ... ⊢ 3 + -3 = 0      (ring, after `rw [hp]`)
+L7/Basic.lean:108:14: error: rewrite failed: Did not find an occurrence of
+  the pattern `-0` in the target expression `-0 + 3 = 0`            (neg_zero)
+'L7.L7_zmod_ne_zero' / 'L7.L7_zmod_pow_ne_zero' compiled clean; 'L7.L7_tail_three'
+and (in the same round) 'L7.L7_step_S3_S4' carried sorryAx via the ZMod-goal
+failures. Diagnosis: ZMod-numeral/negation shapes (`-0`, `3 + -3 = 0`), not
+mathematics — same class as the L5 session's `sub_zero` note.
+
+=== round 6: S3+S4 (ZMod draft) — F2, three more ZMod shape failures ===
+L7/Basic.lean:151:59: unsolved goals ... ⊢ -↑b ^ n + -↑b ^ n = -(↑b ^ n * 2)   (ring)
+L7/Basic.lean:164:8:  Did not find an occurrence of the pattern `(-?a) ^ (n - 2)`
+    in the target expression `(-↑b ^ n) ^ (n - 2) = -↑b ^ (n * (n - 2))`  (rw [Odd.neg_pow hodd2, pow_mul])
+L7/Basic.lean:174:15: unsolved goals ... ⊢ ↑b ^ (n * (n - 2)) + -↑b ^ (n * (n - 2)) = 0  (ring)
+L7/Basic.lean:186:8:  same `(-?a) ^ (n - 2)` non-match (rw [Odd.neg_pow hodd2, mul_pow, ...])
+All F2 (representation), no author step rejected.
+
+=== probe rounds (L7TacticProbe.lean, untracked, 3 one-shot runs) ===
+Run A (352 s): the ZMod shapes that fail in the lane's context CLOSE in isolation
+  (`ring` on `-x + -x = -(x*2)`, `(3 : ZMod n) + -3 = 0`, `((4 : ZMod n) - 1)`
+  numerals). So the failures are context-sensitive in `ZMod n` with a variable
+  modulus — the lane's mixed statement-/proof-side `ZMod n` terms.
+Run B (345 s): with `[Fact (Nat.Prime n)]` as a theorem BINDER `ring` fails on
+  `-x + x = 0`, `-x - x = -(2*x)`, numerals, and `rw [Odd.neg_pow _]` fails to
+  match — while the same code with the instance introduced in-proof passes.
+  Reproducible environment fact; documented in MATHLIB_API_LESSONS.md.
+Run C (345 s, ℤ toolbox): whole `Int.ModEq` API (.pow/.add/.mul/.neg/.add_right/
+  .add_left/.trans/.symm/refl), ZMod→ℤ bridges, `Int.Prime.dvd_mul'`/`dvd_pow'`,
+  ℤ FLT via `L5.L5_gcd_eq_one_of_not_dvd` — all green. The one failure was a
+  `have hid : <numeral identity> = 3` whose type DEFAULTED TO ℕ (truncated
+  subtraction ⇒ false identity); with `… : ℤ` pinned it closes. This drove the
+  decision to carry S3-S5 in ℤ congruence form.
+
+=== rounds 7-8: ℤ rewrite of the reductio (L7_pair_reductio, S5a, S5b) — F2 ===
+L7/Basic.lean:82:45: unsolved goals ... ⊢ x + y - z = -x + y - z
+  (= the `L7_modEq_flip` bridge: my algebra was wrong, the "permute the pair"
+  reading is NOT an equivalence; the lemma was deleted and S5b re-parameterised
+  with (X, Y, Z) = (a, c, b) instead)
+L7/Basic.lean:197:8: rewrite failed: pattern `-(2 ^ (n - 2) * X ^ (n * (n - 2)))`
+  not found (rw [← hpow] used where `rw [hpow]` is meant — direction)
+'L7.L7_step_S5a' and 'L7.L7_tail_three' compiled clean in these rounds.
+
+=== round 9 (final): L7/Basic.lean complete ===
+'L7.L7_step_S0'              depends on axioms: [propext]
+'L7.L7_step_S1'              depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S2'              depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S3_S4'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S5a'             depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S5b'             depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_modEq_of_zmod_eq'     depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_tail_three'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_pair_reductio'        depends on axioms: [propext, Classical.choice, Quot.sound]
+373 s. EXIT 0, ZERO warnings, ZERO `sorry`; every declaration carries only the
+permitted axioms. S0-S5 are S1 (author steps verified); S6 is NOT encoded — the
+open author query Q-001 (the printed product's first factor is the difference
+a^n − b^n, which no printed step excludes). Chunk stays BLOCKED on Q-001.

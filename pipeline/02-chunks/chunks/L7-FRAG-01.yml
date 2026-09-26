@@ -75,8 +75,9 @@ transcription: manual
 author_steps: |
   Normalized ordered step map — non-divisibility conclusion only
   (evidence: renders L7_proof_p4a/L7_stmt_p1/z_stmt_p1 + text layer
-  extract_pypdf.txt:1053-1057; compile log L7-FRAG-01_compile_20260925.log).
-  S0 [p5 §7 line 1] abc ≢ 0 (mod n) ⇒ a,b,c ≢ 0 (mod n)  (cites bổ đề 5đ)
+  extract_pypdf.txt:1053-1057; compile logs L7-FRAG-01_compile_20260925.log
+  (superseded batch attempt) and L7-FRAG-01_compile_20260926.log (this lane)).
+  S0 [p5 §7 line 1] abc ≢ 0 (mod n) ⇒ a,b,c ≢ 0 (mod n)  (no cited result)
   S1 [p5] GT2 ⇒ (b) c^n ≡ a^n + b^n (mod n²)
   S2 [p5] GT3 ⇒ (c) c^{n(n−2)} ≡ a^{n(n−2)} + b^{n(n−2)} (mod n)
   S3 [p4→p5 "*"] assume b^n + c^n ≡ 0 (mod n); e := n(n−2):
@@ -93,14 +94,42 @@ author_steps: |
   S5 [p5] "Chứng minh tương tự": a^n + b^n ≢ (mod n) [0 missing in print];
           c^n + a^n ≢ 0 (mod n)
   S6 [p5] "Tóm lại": (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm)
-  Classifications (2026-09-25 session, per AGENTS.md F1-F4/S1):
-    S0-S5: F2 — batch encoding failed at the API layer; zero S1 yet;
-           evidence in L7-FRAG-01_compile_20260925.log. Process note:
-           the batch write violated the one-step rule; restart the loop
-           at S0, one step per compile.
-    S6:    F4 — S5 establishes only the three pairwise sums; the product's
-           factor a^n − b^n is never excluded by the printed chain
-           (sign mismatch; text-layer verified, not F1). Query Q-001 OPEN.
+  Classifications (2026-09-26 lane restart, one step per compile, per
+  AGENTS.md F1-F4/S1; evidence: 03-lean/L7-FRAG-01_compile_20260926.log):
+    S0-S5: S1 — all six step declarations compile in 03-lean/L7/Basic.lean
+           (EXIT 0, zero warnings, zero sorry; axioms = propext /
+           Classical.choice / Quot.sound only, checked by #print axioms):
+             S0     -> L7_step_S0
+             S1     -> L7_step_S1
+             S2     -> L7_step_S2
+             S3+S4  -> L7_step_S3_S4   (one declaration: the reductio's
+                       conclusion IS the printed closing line "Vậy b^n + c^n
+                       ≢ 0 (mod n)", so S4 adds no separate claim)
+             S5a    -> L7_step_S5a
+             S5b    -> L7_step_S5b
+           Encoding: S0-S2 in ZMod n (as first verified); S3-S5 carried out
+           in ℤ congruence/divisibility form, which is the author's own
+           modulus arithmetic. Plumbing declarations: L7_modEq_of_zmod_eq
+           (S1/S2 output -> Int.ModEq), L7_pair_reductio (the printed
+           reductio with the pair (X,Y) and the third variable Z abstracted —
+           the print's own "chứng minh tương tự" made reusable, so S3+S4 is
+           (b,c,a) and S5b is (a,c,b)), L7_tail_three (the printed tail:
+           Fermat's little theorem, 3 ≡ 0, n = 3 absurd).
+           The 2026-09-25 batch attempt's F2 classification is superseded; the
+           restart produced F2 rounds only (ZMod numeral/negation shapes, one
+           rewrite direction) — no author step was rejected.
+  F3 (fill-in from the author's own material, no new assumption): S5a's
+    "a^n + b^n ≢ 0 (mod n)".  The b^n + c^n chain is vacuous for that pair
+    (its cancellation needs b ≢ 0 and the pair is (a,b)); the printed claim
+    follows from the print's own (b) and S0: if a^n + b^n ≡ 0 then
+    c^n ≡ a^n + b^n ≡ 0, so n ∣ c^n and, n being prime, n ∣ c — contradicting
+    c ≢ 0 (mod n). Encoded as L7_step_S5a.
+  F4 (unchanged, the chunk's open finding): S6 — the printed chain establishes
+    ≢ 0 (mod n) for the three pairwise SUMS a^n+b^n (S5a), b^n+c^n (S3+S4) and
+    c^n+a^n (S5b), while the product's first factor is the DIFFERENCE a^n − b^n,
+    which no printed step excludes (sign mismatch; text-layer verified, so not
+    F1). Author query Q-001 OPEN: the statement is true as printed on every
+    witness the sympy screen found, but the printed proof does not cover it.
   Scope note: displayed (a), (d), the (b^{3n})^n + (c^{3n})^n chain via
   bổ đề 5c/5đ, and the "Lưu ý" paragraph on p4-p5 prove Lemma 7's OTHER
   listed conclusions — separate chunks. User directive 2026-09-25 (start
@@ -108,15 +137,17 @@ author_steps: |
   satisfied: `L5-01` is DONE, so `depends_on: [L5-01]` is set and the lane
   cites `L5_bo_de_5` conjuncts `.2.2.1` (5c) / `.2.2.2` (5d) instead of
   re-deriving Euler.
-lean_file: 03-lean/Pilot/Basic.lean
+lean_file: 03-lean/L7/Basic.lean
 sympy_test: 04-sympy/test_l7_frag_01.py
 source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
 extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
 fidelity: PASS_WITH_MANUAL
 renders: L7_stmt_p1.png z_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
-lean_decls: L7_frag_01
+lean_decls: L7_step_S0, L7_step_S1, L7_step_S2, L7_step_S3_S4, L7_step_S5a, L7_step_S5b
 regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2, P004-R1, P004-R2, P004-R3, P005-R1, P005-R2
 status: BLOCKED
-# BLOCKED on author query Q-001 (pipeline/05-feedback/queries/):
-# printed proof's "chứng minh tương tự" covers a^n+b^n, not the product's
-# factor a^n−b^n — sign mismatch, one of the two printed signs is a typo.
+# BLOCKED on author query Q-001 (pipeline/05-feedback/queries/): S0-S5 are S1
+# in 03-lean/L7/Basic.lean (sorry-free, permitted axioms only) and S6 is the
+# open finding — the printed chain covers the three pairwise sums a^n+b^n,
+# b^n+c^n, c^n+a^n, not the product's first factor a^n−b^n (sign mismatch: one
+# of the two printed signs is a typo). No L7 completion without that answer.

@@ -17,9 +17,6 @@ rev = "v4.35.0-rc2"
 [[lean_lib]]
 name = "Testproj"
 
-[[lean_lib]]
-name = "Pilot"
-
 # Chunk libraries. `roots` is explicit: a `lean_lib` named `L3` would otherwise
 # look for `L3.lean`, while our modules live at `L3/Basic.lean`.
 # Building one of these ONCE produces `Lk/Basic.olean`, so a consumer chunk that
@@ -56,3 +53,9 @@ roots = ["L5.Basic"]
 [[lean_lib]]
 name = "L6"
 roots = ["L6.Basic"]
+
+# L7 (bổ đề 7, non-divisibility conclusion) is in progress: its S0–S5 are S1,
+# its S6 is the open author query Q-001 (no declaration for it, no `sorry`).
+[[lean_lib]]
+name = "L7"
+roots = ["L7.Basic"]

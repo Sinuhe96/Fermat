@@ -3,6 +3,12 @@ import Mathlib
 /-!
 # Lemma 7 fragment — non-divisibility conclusion (chunk L7-FRAG-01)
 
+FROZEN PRE-RESTART EXHIBIT (2026-09-25). This file is the batch attempt that
+was never compiled as a whole (its steps reached F2, not S1); it is kept only
+as the Lean exhibit cited by author query Q-001 and is imported by nothing.
+The verified lane is `03-lean/L7/Basic.lean` (S0–S5 all S1); the `sorry` below
+still marks the one step the printed chain does not support.
+
 Verbatim formalization of the AUTHOR's proof from `PROOF_of_FERMAT.pdf`
 (p. 1 statement; proof section "7. Chứng minh bổ đề 7", p. 4 bottom → p. 5)
 per AGENTS.md: Lean checks the author's chain; nothing is derived by us.

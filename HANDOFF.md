@@ -5,9 +5,12 @@ one-step verification loop, the F1–F4/S1 outcome classes) and **README.md**
 (runtime commands, container policy, mount table). This file records *where
 things stand* and deliberately does not repeat what those two say.
 
-Last updated: 2026-09-26 (**ninth session**): `L6-01` (bổ đề 6) reached DONE,
-so **six of the seven chunks are DONE and the only remaining verification
-work is bổ đề 7** — see "Next step" below.
+Last updated: 2026-09-26 (**tenth session**): the `L7-FRAG-01` Lean lane was
+restarted one-step-per-compile, and its non-divisibility chain now verifies
+**S0–S5, all S1**, in `03-lean/L7/Basic.lean` (sorry-free, permitted axioms
+only). Only **S6** — the printed product — is left, and it is F4, blocked on
+author query Q-001. So six chunks are DONE and one is BLOCKED; BLOCKERS B-003
+is resolved. See "Next step" below.
 
 ---
 
@@ -21,7 +24,7 @@ work is bổ đề 7** — see "Next step" below.
 | `L4-01` | bổ đề 4 | DONE | `03-lean/L4/Basic.lean`, `L4_bo_de_4`, log `03-lean/L4-01_compile_20260926.log` |
 | `L5-01` | bổ đề 5, parts a)–d) | DONE | `03-lean/L5/Basic.lean`, `L5_bo_de_5`, log `03-lean/L5-01_compile_20260926.log` |
 | `L6-01` | bổ đề 6 | DONE | `03-lean/L6/Basic.lean`, `L6_bo_de_6`, log `03-lean/L6-01_compile_20260926.log` |
-| `L7-FRAG-01` | bổ đề 7, non-divisibility conclusion | **BLOCKED** on Q-001 | parked flat copy `03-lean/Pilot/Basic.lean`; supersede with `L7/Basic.lean` |
+| `L7-FRAG-01` | bổ đề 7, non-divisibility conclusion | **BLOCKED** on Q-001 (S0–S5 = S1; S6 = F4) | `03-lean/L7/Basic.lean`, `lean_lib L7`, log `03-lean/L7-FRAG-01_compile_20260926.log`; pre-restart exhibit `03-lean/Pilot/Basic.lean` (frozen, imported by nothing) |
 
 Every DONE row is machine-verified, not asserted: the chunk YAML's evidence
 block (`source_pdf_sha`, `extract_run_sha`, `fidelity`, `renders`, `regions`,
@@ -34,13 +37,19 @@ reusable signatures and compiled patterns live in `03-lean/ENCODING_MAP.md` §B
 and `03-lean/MATHLIB_API_LESSONS.md` — read those, do not re-derive.
 
 Reuse state: the tracked `03-lean/lakefile.toml` declares `lean_lib` for
-`Common` and `L1`–`L6`, `Main.lean` imports them, and every producer's olean
-is published, so `import Lk.Basic` resolves in a new chunk. Producer edges in
-use: `L4-01 → L3-01`; `L6-01 → L3-01 + L4-01 + L5-01` (first chunk with three).
+`Common` and `L1`–`L7`, `Main.lean` imports them, and every producer's olean is
+published, so `import Lk.Basic` resolves in a new chunk (the `Pilot` entry is
+gone — that module is a frozen exhibit). Producer edges in
+use: `L4-01 → L3-01`; `L6-01 → L3-01 + L4-01 + L5-01`; `L7-FRAG-01 → L5-01`
+(the tail reuses `L5_gcd_eq_one_of_not_dvd` for Fermat's little theorem).
 
-Gate status at the ninth session's close: `progress.py --check` exit 0,
-`proof/check_env.sh --full` SMOKE PASS, `04-sympy/run_all.py` 7/7,
-`lake build L6` exit 0.
+Gate status at the tenth session's close (2026-09-26): `progress.py --check`
+exit 0, `proof/check_env.sh` SMOKE PASS, `04-sympy/run_all.py` 7/7,
+`compile_lean.sh L7/Basic.lean` EXIT 0 (zero warnings, zero `sorry`; `#print
+axioms` on all nine declarations = propext / Classical.choice / Quot.sound
+only), and `compile_lean.sh Main.lean` EXIT 0 — the aggregate root now compiles
+every chunk including L7, which is the "everything typechecks" gate B-003
+asked for (B-003 RESOLVED).
 
 ---
 
@@ -53,27 +62,45 @@ Gate status at the ninth session's close: `progress.py --check` exit 0,
   the non-divisibility conclusion, the evidence block and the sympy screen
   (`04-sympy/test_l7_frag_01.py` exit 0: 12 witnesses at n = 7, 24 at n = 13,
   zero counterexamples to the printed statement).
-- Its Lean lane was attempted **once, in a single batch** (a process
-  violation: it cascaded instead of localising) and stopped at **S6 = F4**:
+- Its Lean lane was attempted **once, in a single batch** on 2026-09-25 (a
+  process violation: it cascaded instead of localising) and is now
+  **superseded**. The 2026-09-26 restart redid it one step per compile:
+  `03-lean/L7/Basic.lean` verifies **S0–S5, all S1** (nine declarations,
+  EXIT 0, zero warnings, zero `sorry`, axioms = propext / Classical.choice /
+  Quot.sound). S0–S2 are `ZMod n` statements; S3–S5 are carried out in ℤ
+  congruence/divisibility form (`L7_pair_reductio` is the printed reductio with
+  the pair abstracted — the print's own "chứng minh tương tự" — and
+  `L7_tail_three` is its printed tail, Fermat/3 ≡ 0/n = 3). S5a is an F3
+  fill-in from the author's own (b) plus S0. Per-round diagnosis:
+  `03-lean/L7-FRAG-01_compile_20260926.log`; the ZMod-vs-ℤ lesson that forced
+  the rewrite is the L7 session entry in `MATHLIB_API_LESSONS.md` (and §B Chunk
+  L7-FRAG-01 in `ENCODING_MAP.md`).
+- **S6 remains F4**:
   `05-feedback/queries/Q-001-product-factor-sign.md` (OPEN, screenshot asset
-  attached). The printed "chứng minh tương tự" line establishes ≢ 0 for the
-  three pairwise **sums** `b^n+c^n`, `a^n+b^n`, `c^n+a^n`, but the first
-  factor of the stated product is the **difference** `a^n − b^n`, which no
-  printed step excludes. Classification F4, not F1: our transcription matches
-  the print; the print is internally inconsistent (typographic).
-- S0–S5 themselves reached only F2 (API shape, zero S1 yet), so the chain up
-  to S5 looks codable: **restart at S0, one step per compile.** The parked
-  file `03-lean/Pilot/Basic.lean` (flat copy) marks the S6 gap with one
-  `sorry`; BLOCKERS **B-003** closes when this lane is redone as
-  `03-lean/L7/Basic.lean` and the `import Pilot.Basic` line leaves `Main.lean`
-  (`Main.lean` is not a build target — `defaultTargets` is `Testproj` — so the
-  defect is latent, not active).
+  attached, no declaration encodes it). The printed chain establishes ≢ 0 for
+  the three pairwise **sums** `a^n+b^n` (S5a), `b^n+c^n` (S3+S4), `c^n+a^n`
+  (S5b), but the stated product's first factor is the **difference**
+  `a^n − b^n`, which no printed step excludes. Classification F4, not F1: our
+  transcription matches the print; the print is internally inconsistent
+  (typographic). The pre-restart file `03-lean/Pilot/Basic.lean` is kept as a
+  frozen exhibit for that query (its single `sorry` marks the gap) and is
+  imported by nothing; BLOCKERS **B-003** is RESOLVED (the `import Pilot.Basic`
+  line left `Main.lean`, and `compile_lean.sh Main.lean` now exits 0).
 
-### Required imports for L7
+### Wiring (in place since the tenth session)
 
-The citations visible in the transcribed bổ đề 7 material are **bổ đề 5c/5d**
-(Euler mod n²) and Fermat's little theorem (Mathlib). `L5_bo_de_5` exposes
-exactly those, as its four conjuncts:
+The lane's header is **`import Mathlib` + `import L5.Basic`**; `lakefile.toml`
+declares `[[lean_lib]] name = "L7"` with `roots = ["L7.Basic"]`, and
+`Main.lean` lists `L7.Basic` in the verified set (the `Pilot` line and the
+`Pilot` `lean_lib` entry are gone). `L7-FRAG-01.yml` carries
+`depends_on: [L5-01]`. Fermat's little theorem in the tail is bổ đề 5's
+`L5_gcd_eq_one_of_not_dvd`; `L5_bo_de_5`'s conjuncts `.2.2.1` (5c) / `.2.2.2`
+(5d) are what bổ đề 7's **other** conclusions need when their chunks arrive.
+
+### The bổ đề 5 surface this chunk reuses
+
+`L5_bo_de_5`'s four conjuncts (the print's parts a)–d)), at
+`L5_bo_de_5 hn hodd hcop`:
 
 | print | `L5_bo_de_5 hn hodd hcop` |
 |---|---|
@@ -82,17 +109,12 @@ exactly those, as its four conjuncts:
 | bổ đề 5 c) | `.2.2.1 hw` — `n ∣ u^n+v^n → n² ∣ u^n+v^n` |
 | bổ đề 5 d) | `.2.2.2 hw` — `¬ n ∣ u → u^{n(n−1)} ≡ 1 [ZMOD n²]` (Euler, φ(n²)=n(n−1)) |
 
-So the L7 lane's header is **`import Mathlib` + `import L5.Basic`**, it must
-add `[[lean_lib]] name = "L7"` to the tracked `lakefile.toml` in the same edit
-that creates `L7/Basic.lean`, and `L7-FRAG-01.yml` now carries
-`depends_on: [L5-01]` (it was `[]` only because bổ đề 5 was unverified when
-the fragment was frozen; the older "do the small bổ đề 5c/5đ first" directive
-is satisfied by `L5-01` being DONE). S0 itself — `abc ≢ 0 (mod n) ⇒ a, b, c
-≢ 0 (mod n)` — needs no author lemma at all (primality: `n ∣ a → n ∣ abc`);
-the chunk's "cites bổ đề 5đ" note for it can be settled when the lane
-restarts. **No L3/L4/L6 declaration is cited by the transcribed material**;
-confirm the citations of the remaining proofs (below) when they are
-transcribed — that is when their `depends_on` gets set.
+Citations are settled for this fragment: S0 needs no author lemma and no
+primality (`n ∣ a → n ∣ abc`, now encoded and verified), S1/S2 restate GT2/GT3,
+and the S3–S5 chain cites only Fermat's little theorem (via bổ đề 5's helper).
+**No L3/L4/L6 declaration is cited by the transcribed material**; the four
+remaining conclusion groups below rest on bổ đề 5c/5đ — confirm their citations
+when they are transcribed, which is when their `depends_on` gets set.
 
 ### Still to chunk inside bổ đề 7
 
@@ -114,16 +136,30 @@ inference-based because their FLT hypotheses have no witnesses for n ≥ 3.
 
 ### Closing recipe
 
-Follow AGENTS.md's one-step loop and outcome classes exactly: freeze the step
-map → screen → one named declaration per author step → compile → classify
-before the next step → stop on F4 and file a query. At DONE: `#print axioms`;
-fill the chunk's evidence block (`regions`, `renders`, `lean_decls`); update
+The non-divisibility fragment's own loop is finished: S0–S5 are S1 and its
+wiring, evidence and logs are in place. What is left is:
+
+1. **S6 / Q-001** — nothing to do until the author answers whether the
+   product's first factor is the difference `a^n − b^n` (the printed proof's
+   coverage gap) or whether the "chứng minh tương tự" line should read
+   `a^n − b^n` (making the product's factor a sum). Once answered, either
+   encode the corrected S6 (a `DONE` flip needs the chunk's evidence block
+   refreshed and `progress.py --check` green) or, if the answer changes the
+   printed text, re-review the affected region records (`regions.py signoff`)
+   before re-transcribing — a region edit flips the page to `STALE` and fails
+   `--check` for every dependent chunk.
+2. **The four conclusion groups still unchunked** (below): one chunk each,
+   same one-step loop, same single producer edge `L5-01`, with `depends_on`
+   set when their citations are confirmed.
+
+Use AGENTS.md's loop and outcome classes unchanged: freeze the step map →
+screen → one named declaration per author step → compile → classify before the
+next step → stop on F4 and file a query. At DONE: `#print axioms`; fill the
+chunk's evidence block (`regions`, `renders`, `lean_decls`); update
 `status.tsv` + the YAML; `progress.py --write PROGRESS.md`; `progress.py
---check` exit 0; `04-sympy/run_all.py`; then `lake build L7` (publishes the
-olean) and `lake env lean Main.lean` exit 0 with the `Pilot` line replaced —
-that last command is the sorry-free "everything typechecks" gate B-003 asks
-for. Q-001 stays with the author: **no L7 completion without their sign
-answer.**
+--check` exit 0; `04-sympy/run_all.py`; then `compile_lean.sh <chunk>.lean`
+(publishes the olean) and `compile_lean.sh Main.lean` EXIT 0 (the aggregate
+gate B-003 asked for, now in place).
 
 Transcription authority: the signed REVIEWED region records
 (`01-extract/regions/pNNN.yml`, all 33 pages REVIEWED, commit `9cb73f8`) plus

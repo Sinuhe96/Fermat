@@ -48,7 +48,7 @@ clutter this log with mathematical disputes.
   `L3/{Basic.olean, Basic.ilean, Basic.trace}` plus `.lake/build/ir/L3/`, so
   the declared library builds through lake's own route too.
 
-## B-003 `Main.lean` aggregator still lists a sorry-carrying scratch module [OPEN]
+## B-003 `Main.lean` aggregator listed a sorry-carrying scratch module [RESOLVED]
 
 - Impact: the aggregate root cannot serve as a build-all gate.
   `03-lean/Pilot/Basic.lean` is the parked L7-FRAG-01 scratch file and still
@@ -81,6 +81,19 @@ clutter this log with mathematical disputes.
   Note `Common/Basic.lean` is an empty scaffold (2 comment lines, no
   declarations) imported only by `Main.lean`; it is the designated home for
   chunk-shared helpers and needs no change for bổ đề 7.
+- Resolution (2026-09-26, `L7-FRAG-01` lane restart): the chunk's lane was
+  redone one-step-per-compile as `03-lean/L7/Basic.lean` (S0–S5 all S1,
+  `sorry`-free, permitted axioms only) and declared as `lean_lib L7` with
+  `roots = ["L7.Basic"]`; `Main.lean` now imports `L7.Basic` and no longer
+  mentions `Pilot`, whose `[[lean_lib]]` entry is gone from `lakefile.toml`.
+  `Pilot/Basic.lean` stays in the tree, marked "FROZEN PRE-RESTART EXHIBIT", as
+  the Lean exhibit cited by author query Q-001; nothing imports it.
+- Resolution check: PASSED 2026-09-26 — (a) the `import Pilot.Basic` line is
+  gone from `Main.lean` (only `import L7.Basic` was added to the verified set
+  `Common`, `L1`–`L6`); (b) `sh proof/compile_lean.sh Main.lean` → EXIT 0
+  (373 s), i.e. the aggregate root compiles every chunk including L7 — the
+  `sorry`-free "everything typechecks" gate this entry asked for;
+  (c) `python pipeline/progress.py --check` exit 0.
 
 ## B-001 Mathlib olean cache does not unpack [RESOLVED]
 

@@ -66,8 +66,13 @@ Stages:
      cross-references resolve.
 
 3. `03-lean/` — Lean formalization, git-versioned.
-   - `Pilot/` is the FIRST chunk through (Lemma 7 fragment). It validates the
-     flow before bulk work; it is parked at 2 `sorry`s (BLOCKERS B-003).
+   - `Pilot/` holds the FIRST chunk through (Lemma 7 fragment) as it stood
+     before the 2026-09-26 restart: a flat scratch copy of the batch attempt,
+     frozen as the Lean exhibit of author query Q-001 and imported by nothing.
+     The live lane is `L7/Basic.lean` (chunk `L7-FRAG-01`, S0–S5 verified, S6
+     the open Q-001 finding), declared as `lean_lib L7` and listed in
+     `Main.lean`; BLOCKERS B-003 (the aggregate root importing a `sorry`-carrying
+     scratch module) is resolved by that cutover.
    - `Common/` holds shared helpers; `Main.lean` wires module roots.
    - `lakefile.toml` declares one `lean_lib` per verified chunk, so a DONE
      chunk is reused by `import`ing it (`import L3.Basic` → `L3.L3_bo_de_3`)

@@ -198,8 +198,11 @@ recompiling it leaves a consumer importing the older proof; recompiling a
 freshly edited chunk through `compile_lean.sh` refreshes it. This only bites
 while a chunk is under development — a DONE chunk's source is frozen by its
 evidence block. `Main.lean` is the aggregate root; it requires the oleans of
-the chunks it lists, and it deliberately keeps the parked `Pilot` scratch
-module (2 sorries, L7-FRAG-01/Q-001) out of the verified set.
+the chunks it lists. Since the 2026-09-26 L7 restart it lists `Common` and
+`L1`–`L7` (L7's S0–S5 are S1, its S6 is the open author query Q-001 and is
+simply not encoded), and the pre-restart scratch copy `Pilot/Basic.lean` is no
+longer imported by anything (frozen as Q-001's Lean exhibit; the `Pilot`
+`lean_lib` entry is gone from `lakefile.toml`).
 
 ---
 
@@ -880,6 +883,100 @@ bổ đề 6's hypotheses are **unsatisfiable** for `n ≥ 3` (they imply FLT), 
 screens the *inferences* — 19652 triples for the gcd/divisibility steps, 42
 instances of (4'')/(5''), the 16 sign patterns of §6.2.1 — and records four red
 flags (`n` prime, `n` odd, `uv ⋮̸ n`, `n ∤ a b c k` for the `s ≥ 2` implication).
+
+---
+
+## §B. Chunk L7-FRAG-01 — bổ đề 7, non-divisibility conclusion (S0–S5 = S1; BLOCKED on Q-001)
+
+Source: statement p. 1 bottom → p. 2 top; proof p. 4 bottom → p. 5 §7.
+Evidence: `03-lean/L7-FRAG-01_compile_20260926.log` (EXIT 0, zero warnings, zero
+`sorry`; `#print axioms` on all nine declarations = propext, Classical.choice,
+Quot.sound only), `04-sympy/test_l7_frag_01.py` PASS. Nine rounds on the
+2026-09-26 restart (the 2026-09-25 batch attempt is superseded).
+
+### Step table (`03-lean/L7/Basic.lean`, `namespace L7`)
+
+| author step | declaration | content |
+|---|---|---|
+| S0 | `L7_step_S0` | `¬n ∣ abc ⇒ ¬n∣a ∧ ¬n∣b ∧ ¬n∣c` (no cited lemma; primality unused) |
+| S1 | `L7_step_S1` | (b) `c^n ≡ a^n + b^n [ZMOD n²]` **and** its mod-`n` form as a `ZMod n` equality |
+| S2 | `L7_step_S2` | (c) `c^{n(n−2)} ≡ a^{n(n−2)} + b^{n(n−2)}` as a `ZMod n` equality |
+| S3+S4 | `L7_step_S3_S4` | `¬n ∣ b^n + c^n` — the reductio, from `L7_pair_reductio` at `(X,Y,Z) = (b,c,a)` |
+| S5a | `L7_step_S5a` | `¬n ∣ a^n + b^n` (F3 fill-in: the print's own (b) + S0) |
+| S5b | `L7_step_S5b` | `¬n ∣ c^n + a^n` — `L7_pair_reductio` at `(X,Y,Z) = (a,c,b)` |
+| S6 | — | **NOT ENCODED**: F4, author query Q-001 (the product's first factor is the difference `a^n − b^n`) |
+
+Plumbing declarations: `L7_modEq_of_zmod_eq` (a `ZMod n` equality of cast
+integers → `Int.ModEq`, so S1/S2's output feeds the ℤ reductio),
+`L7_pair_reductio` (the printed chain S3a–S3i with the pair `(X,Y)` and the
+third variable `Z` abstracted — the print's own "chứng minh tương tự" made
+reusable), `L7_tail_three` (the printed tail `2^{n−2} ≡ 2 ⇒
+−(2^{n−1} − 1) + 3 ≡ 0 ⇒ (Fermat) 3 ≡ 0 ⇒ n = 3`, absurd).
+
+### Reusable results from this chunk
+
+```lean
+L7.L7_pair_reductio {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {X Y Z : ℤ}
+    (hX : ¬ (n : ℤ) ∣ X)
+    (h1 : Y ^ n ≡ Z ^ n + X ^ n [ZMOD (n : ℤ)])
+    (h2 : Y ^ (n * (n - 2)) ≡ Z ^ (n * (n - 2)) + X ^ (n * (n - 2)) [ZMOD (n : ℤ)]) :
+    ¬ (n : ℤ) ∣ X ^ n + Y ^ n
+
+L7.L7_tail_three {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n)
+    (h22 : (2 : ℤ) ^ (n - 2) ≡ 2 [ZMOD (n : ℤ)]) : False
+
+L7.L7_modEq_of_zmod_eq {n : ℕ} {x y : ℤ} (h : (x : ZMod n) = (y : ZMod n)) :
+    x ≡ y [ZMOD (n : ℤ)]
+```
+
+### Proof patterns added here
+
+**P19 — carry a mod-`n` argument in ℤ, not in a variable-modulus `ZMod n`**
+(the reason the lane was rewritten; see the L7 session entry in
+`MATHLIB_API_LESSONS.md`):
+
+```lean
+-- a congruence from a divisibility hypothesis; the term shape is fixed by `ring`
+have hcz : (c ^ n : ℤ) ≡ -(b ^ n) [ZMOD (n : ℤ)] := by
+  refine (Int.modEq_iff_dvd).mpr ?_
+  have hid : -(b ^ n) - c ^ n = -(b ^ n + c ^ n) := by ring
+  rw [hid]
+  exact dvd_neg.mpr hdvd          -- hdvd : (n : ℤ) ∣ b ^ n + c ^ n
+```
+
+**P20 — S1/S2's `ZMod n` output → `Int.ModEq`** (the bridge used twice):
+
+```lean
+have h1 : (c ^ n : ℤ) ≡ a ^ n + b ^ n [ZMOD (n : ℤ)] :=
+  L7_modEq_of_zmod_eq (by push_cast; exact h1n)
+-- inside the bridge: `push_cast`, `rw [h]`, `sub_self`, then
+-- `(ZMod.intCast_zmod_eq_zero_iff_dvd (y - x) n).mp` and `(Int.modEq_iff_dvd).mpr`
+```
+
+**P21 — the author's "⇒ n = 3, vô lý" tail in ℤ** (no `ZMod`, no `Fact`
+instance; the `: ℤ` annotation is load-bearing — without it the `have` defaults
+to ℕ and the identity is false under truncated subtraction):
+
+```lean
+have hflt : (2 : ℤ) ^ (n - 1) ≡ 1 [ZMOD (n : ℤ)] :=
+  Int.ModEq.pow_card_sub_one_eq_one hn
+    (Int.isCoprime_iff_gcd_eq_one.mpr (L5.L5_gcd_eq_one_of_not_dvd hn hnot2))
+have hd22  : (n : ℤ) ∣ 2 - 2 ^ (n - 2)      := Int.modEq_iff_dvd.mp h22
+have hdflt : (n : ℤ) ∣ 2 ^ (n - 1) - 1      := hflt.symm.dvd
+have hd3'  : (n : ℤ) ∣ (2 * (2 - 2 ^ (n - 2)) + (2 ^ (n - 1) - 1) : ℤ) :=
+  dvd_add (dvd_mul_of_dvd_right hd22 2) hdflt
+have hid : (2 * (2 - 2 ^ (n - 2)) + (2 ^ (n - 1) - 1) : ℤ) = 3 := by
+  rw [show n - 1 = (n - 2) + 1 from by omega, pow_succ]
+  ring
+```
+
+### Method note for the sympy screen
+
+Like L3/L4/L5 and unlike L1/L2/L6, bổ đề 7's hypotheses **are** satisfiable, so
+`test_l7_frag_01.py` runs on real instances (n = 7: 12 witnesses, n = 13: 24;
+zero with the printed product ≡ 0). The statement as printed is therefore true
+on every witness, which is what makes the S6 gap F4 (proof coverage) rather
+than a false claim.
 
 ---
 

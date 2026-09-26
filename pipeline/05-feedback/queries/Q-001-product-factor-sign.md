@@ -21,10 +21,11 @@ For prime n > 3 and integers a, b, c with n ∤ abc:
 Lean statement of the conclusion, verbatim from the PDF statement:
 `(a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n)`.
 
-The author's proof steps were transcribed in order (see the header of
-`03-lean/Pilot/Basic.lean`): the b^n + c^n ≡ 0 contradiction, then
-"chứng minh tương tự" for a^n + b^n and c^n + a^n, then "Tóm lại" for the
-product.
+The author's proof steps were transcribed in order and, since the 2026-09-26
+lane restart, verified step by step: the b^n + c^n reductio, the "chứng minh
+tương tự" instances for a^n + b^n and c^n + a^n, and then "Tóm lại" for the
+product. Verified Lean: `03-lean/L7/Basic.lean` (`L7_step_S0` … `L7_step_S5b`,
+see the update at the end of this query).
 
 ## What failed
 
@@ -63,6 +64,25 @@ In the "Chứng minh tương tự" line, should the first listed congruence read
 (matching the three sums actually proved)? One of the two printed signs must
 be a typo; with either reading the lemma is true, but only one makes the
 printed proof complete.
+
+## Update 2026-09-26 — lane restarted; the finding is unchanged and sharper
+
+The 2026-09-25 batch encoding was replaced by a one-step-per-compile lane.
+`03-lean/L7/Basic.lean` now holds the author's chain, sorry-free, with only the
+permitted axioms (`propext`, `Classical.choice`, `Quot.sound`):
+
+- `L7_step_S3_S4` — "Nếu b^n + c^n ≡ 0 (mod n) ⇒ … ⇒ n = 3, vô lý", so
+  `b^n + c^n ≢ 0 (mod n)`;
+- `L7_step_S5a` — `a^n + b^n ≢ 0 (mod n)`;
+- `L7_step_S5b` — `c^n + a^n ≢ 0 (mod n)`.
+
+So the printed chain provably yields non-divisibility for the **three pairwise
+sums** `a^n + b^n`, `b^n + c^n`, `c^n + a^n` — and the stated product's first
+factor is still the **difference** `a^n − b^n`, for which the print gives no
+step. S6 ("Tóm lại") is therefore left unencoded: it is the one step the
+printed chain does not support. `03-lean/Pilot/Basic.lean` is the frozen
+pre-restart exhibit quoted above (no longer imported by anything; the single
+`sorry` still marks the gap). The question for the author is unchanged.
 
 ## Attachments
 

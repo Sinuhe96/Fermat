@@ -10,7 +10,7 @@ import L3.Basic
 import L4.Basic
 import L5.Basic
 import L6.Basic
-
--- Parked scratch module for the blocked chunk L7-FRAG-01 (2 sorries, author
--- query Q-001 open): kept out of the verified set above and never cited.
-import Pilot.Basic
+-- L7 carries the author's chain of bổ đề 7's non-divisibility conclusion
+-- (S0–S5, all S1). Its S6 — the printed product — is the open author query
+-- Q-001, so no declaration encodes it and the module is `sorry`-free.
+import L7.Basic
