@@ -667,11 +667,11 @@ def main() -> int:
         for q in queries:
             rec = recs.get(q["chunk"] or "")
             (out_dir / f"{q['id']}.html").write_text(
-                build_issue_page(q, rec, out_dir), encoding="utf-8")
+                build_issue_page(q, rec, out_dir), encoding="utf-8", newline="\n")
             (out_dir / f"reply-{q['id']}.md").write_text(
-                build_reply(q, rec), encoding="utf-8")
+                build_reply(q, rec), encoding="utf-8", newline="\n")
         (out_dir / "index.html").write_text(
-            build_index(queries, recs, warnings, out_dir), encoding="utf-8")
+            build_index(queries, recs, warnings, out_dir), encoding="utf-8", newline="\n")
     except OSError as exc:
         print(f"error: cannot write report: {exc}", file=sys.stderr)
         return 2
