@@ -1,0 +1,312 @@
+id: L5-01
+title: "Lemma 5 — the alternating sum A = Σ(–1)^i u^{n−1−i} v^i: gcd(A, u+v), its n-adic position, and Fermat mod n² (full lemma, parts a–d)"
+pdf_pages: [1, 2, 3]
+kind: lemma-statement
+depends_on: []
+source_text: |
+  [PDF p1: Lemma 5 statement — region P001-R3]
+
+  Bổ đề 5:
+  Cho n là số nguyên tố lẻ và hai số nguyên u, v sao cho (u,v) = 1, khi đó:
+  a) Nếu (u+v) ⋮̸ n thì (u+v, Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) = 1
+     và (Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) ⋮̸ n.
+  b) Nếu (u+v) ⋮ n thì (u+v, Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) = n
+     và (Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i) ⋮̸ n².
+  c) Nếu (u^n + v^n) ⋮ n thì (u^n + v^n) ⋮ n² (không cần giả thiết (u,v) = 1).
+  d) Nếu u ⋮̸ n thì u^{n(n−1)} ≡ 1 (mod n²).
+
+  [PDF p2 §5: author's proof ("5. Chứng minh bổ đề 5"), part a) — head, to the
+  page break — region P002-R2]
+
+  5. Chứng minh bổ đề 5
+  a) Đặt A = Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i. Ta có u^n + v^n = [(u+v)−v]^n + v^n
+  = (u+v) Σ_{k=0}^{n−1} (−1)^k C_n^k (u+v)^{n−1−k} v^k, u^n + v^n = (u+v)A mà
+  u+v ≠ 0, nên A = Σ_{k=0}^{n−1} (−1)^k C_n^k (u+v)^{n−k−1} v^k. Ta có
+  A = (u+v) Σ_{k=0}^{n−2} (−1)^k C_n^k (u+v)^{n−k−2} v^k + nv^{n−1}, (u,v) = 1 và
+  (u+v) ⋮̸ n
+
+  [PDF p3 §5: part a) tail, whole b), head of c) — region P003-R1]
+
+  nên (u+v, nv^{n−1}) = 1, suy ra (A,u+v) = 1 (đpcm).
+  b) Ta có A = n(u+v) [ Σ_{k=0}^{n−3} (−1)^k (C_n^k/n)(u+v)^{n−k−2} v^k
+     − ((n−1)v^{n−2})/2 ] + nv^{n−1} = n(u+v)A_1 + nv^{n−1}, với
+  Σ_{k=0}^{n−3} (−1)^k (C_n^k/n)(u+v)^{n−k−2} v^k − ((n−1)v^{n−2})/2 = A_1.
+  Với k = 1,…,n−1 (printed k = 1̄,n−1̄) thì C_n^k ⋮ n (vì n là số nguyên tố),
+  mà (u+v) ⋮ n nên
+  n(u+v)A_1 ⋮ n²; mặt khác nv^{n−1} ⋮ n và nv^{n−1} ⋮̸ n² (do v ⋮̸ n), từ đó
+  suy ra n(u+v)A_1 + nv^{n−1} = A ⋮ n và A ⋮̸ n², hơn nữa (u+v,A) = n (đpcm).
+  c) * Nếu uv ⋮ n thì u ⋮ n ∨ v ⋮ n (vì n là số nguyên tố), suy ra
+  u^n ⋮ n ∨ v^n ⋮ n và do (u^n+v^n) ⋮ n nên u^n ⋮ n ∧ v^n ⋮ n, suy ra
+  u ⋮ n ∧ v ⋮ n (vì n là số nguyên tố), suy ra (u^n+v^n) ⋮ n² (đpcm).
+
+  [PDF p3 §5: rest of c), d), closing line — region P003-R2]
+
+  * Nếu uv ⋮̸ n thì u ⋮̸ n, v ⋮̸ n, suy ra u^{n−1} ≡ v^{n−1} ≡ 1 (mod n)
+  (định lý nhỏ Fermat) suy ra u^{n−1} − v^{n−1} = (u^{n−1} − 1) − (v^{n−1} − 1)
+  ≡ 0 (mod n).
+  Giả sử (u+v) ⋮̸ n, ta có
+  Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = u^{n−1} − v Σ_{i=0}^{n−2} (−1)^i u^{n−2−i} v^i
+  = u^{n−1} − v(u^{n−1} − v^{n−1})/(u+v) ≡ u^{n−1} ≡ 1 (mod n), suy ra
+  Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i ⋮̸ n, suy ra
+  u^n + v^n = (u+v) Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i ⋮̸ n, trái với giả thiết.
+  Vậy (u+v) ⋮ n, theo một kết quả chứng minh ở b) là
+  Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = A ⋮ n, suy ra
+  u^n + v^n = (u+v) Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i ⋮ n² (đpcm).
+  d) Vì n là số nguyên tố và u ⋮̸ n nên u^{n−1} ≡ 1 (mod n) (định lý nhỏ Fermat),
+  suy ra u^{n−1} = 1 + mn, m ∈ ℕ.
+  ⇒ u^{n(n−1)} = (u^{n−1})^n = (1+mn)^n ≡ 1 (mod n²) (đpcm).
+  Bổ đề 5 đã được chứng minh.
+
+  [Notation as printed: the Vietnamese divisibility glyph ⋮ ("a ⋮ b" = "a chia
+  hết cho b" = b | a; argument order flips, see ENCODING_MAP §A) and its
+  vector-slash form ⋮̸ ("không chia hết cho"). (a,b) is the gcd, ℤ* the nonzero
+  integers, C_n^k the binomial coefficient (upper index n, lower index k),
+  printed `k = 1̄,n−1̄` means 1 ≤ k ≤ n−1. Page numbers 2 (p2) and 3 (p3) are
+  printed numerals at the foot of the page and are not transcribed here — cf.
+  P001-R4's isolated `1` and its vision caveat.]
+formal_hint: |
+  Shared hypotheses of the Lean statement:
+    n : ℕ, Nat.Prime n, and n odd (`Nat.Prime n` plus `n ≠ 2` gives `Odd n`;
+    per ENCODING_MAP §A, `Nat.Prime.eq_two_or_odd` yields `n % 2 = 1`, not
+    `Odd n`, so the oddness must be derived/asserted explicitly);
+    u v : ℤ with (u,v) = 1, i.e. Int.gcd u v = 1 (ℕ-valued!);
+    A := ∑ i ∈ Finset.range n, (-1 : ℤ) ^ i * u ^ (n - 1 - i) * v ^ i
+        (the author's A = Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i; the statement
+        spells the sum out inline, the proof abbreviates it as A).
+
+  a) ¬ ((n : ℤ) ∣ (u + v))  ⟹
+       (Int.gcd (u + v) A : ℤ) = 1 ∧ ¬ ((n : ℤ) ∣ A)
+  b) (n : ℤ) ∣ (u + v)  ⟹
+       (Int.gcd (u + v) A : ℤ) = n ∧ ¬ ((n : ℤ) ^ 2 ∣ A)
+  c) (n : ℤ) ∣ u ^ n + v ^ n  ⟹  (n : ℤ) ^ 2 ∣ u ^ n + v ^ n
+     — the parenthetical "(không cần giả thiết (u,v) = 1)" means the Lean
+     statement for c) must NOT carry `Int.gcd u v = 1`.
+  d) ¬ ((n : ℤ) ∣ u)  ⟹  u ^ (n * (n - 1)) ≡ 1 [ZMOD (n : ℤ) ^ 2]
+
+  Notation bridge: `(a,b) = m` is `Int.gcd a b` compared after a cast (the
+  paper's gcd is ℕ-valued in Mathlib); `⋮` is `∣` with the printed argument
+  order flipped (ENCODING_MAP §A); `≡ · (mod n²)` is
+  `Int.ModEq ((n:ℤ)^2) …` / `· ≡ · [ZMOD (n:ℤ)^2]`
+  (MATHLIB_API_LESSONS §Int.ModEq); the sum is a `Finset.sum` over
+  `Finset.range n` with `(-1 : ℤ) ^ i`; `u^{n(n−1)}` is `u ^ (n * (n - 1))`.
+
+  Where the hypotheses are load-bearing (Lean-side, all author-supplied):
+    * n odd is used in the shared expansion — the k = n term of
+      [(u+v)−v]^n cancels +v^n only because (−1)^n = −1 — and in the b)
+      bracket, where the k = n−2 term is (−1)^{n−2}·C_n^{n−2}·v^{n−2}
+      = −n·((n−1)/2)·v^{n−2} (n−2 odd).
+    * n prime is used for: gcd(u+v, n) = 1 from ¬(n ∣ u+v) — note this is
+      an equivalence only for n prime; C_n^k/n ∈ ℤ for 1 ≤ k ≤ n−1; and
+      the step "n | u^n+v^n and n | u+v ⟹ n² | u^n+v^n" plus the mod-n
+      contradiction in c).
+    * (u,v) = 1 is used for gcd(u+v, v^{n−1}) = 1 (hence a)'s
+      (u+v, nv^{n−1}) = 1 and b)'s derivation of v ⋮̸ n from n | u+v),
+      and for b)'s "(u+v, A) = n". It is NOT used in c).
+    * a)'s printed division by (u+v) assumes u+v ≠ 0 ("mà u+v ≠ 0, nên
+      A = (u^n+v^n)/(u+v)"); u+v ≠ 0 is not among the author's hypotheses
+      (a)'s own hypothesis (u+v) ⋮̸ n excludes it, but b)–d) do not). The
+      identity A = Σ_{k} (−1)^k C_n^k (u+v)^{n−1−k} v^k also holds without
+      dividing (verified symbolically), so the Lean lane should prove it
+      as a polynomial identity rather than by division.
+    - d)'s intermediate u^{n−1} = 1 + mn needs m ≥ 0; available because
+      n − 1 is even and u ≠ 0 gives u^{n−1} ≥ 1.
+    - d) ROUTE (raised by the L4-01 lane 2026-09-26, cross-checked against
+      the print): the AUTHOR's own derivation is FLT mod n
+      (u^{n−1} ≡ 1 mod n, "định lý nhỏ Fermat") → u^{n−1} = 1 + mn → then
+      the binomial u^{n(n−1)} = (1+mn)^n ≡ 1 mod n² (every term beyond the
+      first carries n^j, j ≥ 1). Encode THAT chain. The Euler alternative
+      (φ(n²) = n(n−1), i.e. u is a unit of ZMod (n²) and
+      g^{card G} = 1 / Nat.totient_prime_pow_succ, with
+      ZMod.isUnit_natCast_iff_not_dvd_pow converting u ⋮̸ n into a unit)
+      reaches the same conclusion by a DIFFERENT route and must not
+      substitute the author's step (AGENTS.md core rule); it is a
+      documented fallback only if the author's route hits a Mathlib wall,
+      and using it then needs an explicit deviation note in the chunk.
+      Note the tool split: `ZMod.pow_card_sub_one_eq_one` /
+      `Int.prime_dvd_pow_sub_one` is the RIGHT tool for the author's FIRST
+      half (mod n, exponent n−1) and the WRONG one for the final modulus —
+      d)'s modulus is n², exponent n(n−1). Candidate bridge for the ℤ form
+      u^{n−1} = 1 + mn: `Int.modEq_iff_add_fac` (probe it).
+transcription: manual
+author_steps: |
+  Normalized ordered step map — full lemma (statement + proof §5). Evidence:
+  signed, REVIEWED region records 01-extract/regions/p001.yml (P001-R3 =
+  statement), p002.yml (P002-R2 = "5. Chứng minh bổ đề 5" + part a) head) and
+  p003.yml (P003-R1 = a) tail + whole b) + head of c); P003-R2 = rest of c) +
+  d) + "Bổ đề 5 đã được chứng minh."), i.e. the vision→LaTeX render read;
+  cross-checked against BOTH engine text layers (extract_pypdf.txt lines 73-83
+  for the statement and 346-566 for the proof; extract_pymupdf.txt around
+  lines 200 and 1388-2060).
+  Vision capability gap: this session could not re-read the PNG renders (image
+  reads return binary; the repo's own vision-probe.png is unreadable here), so
+  the render read is the human-signed region LaTeX, not a fresh independent
+  vision pass — same gap as recorded in L4-01.
+  Cross-layer divergences (reported, not silently resolved):
+    (D1) Both engine text layers drop every ⋮ / ⋮̸ glyph (unmapped font glyph +
+      vector slash, per the P001-R3/P002-R1 region notes), so NO divisibility
+      direction in the statement or the proof is independently confirmable
+      from the text layers. The text layers do confirm the *number* of
+      conjuncts: a) reads "... , ... = 1 và ... n ." and b) "... = n và ... n² .",
+      matching the signed region LaTeX; only the two glyphs themselves are
+      missing.
+    (D2) The b) bracket formula is scrambled in both text layers (the fractions
+      C_n^k/n and (n−1)v^{n−2}/2 come out as disjoint exponent/fraction
+      fragments in extract_pypdf.txt and extract_pymupdf.txt). The printed
+      sign `− ((n−1)v^{n−2})/2` therefore rests on the signed region LaTeX
+      plus the algebraic re-derivation in 04-sympy/test_l5_01.py, which
+      confirms the sign from the k = n−2 term ((−1)^{n−2} = −1 for odd n).
+    (D3) P002-R2 ends with an isolated `2` and P003-R3 with an isolated `3`:
+      these are the printed page numbers (cf. P001-R4's isolated `1` and its
+      "cannot be determined" vision caveat), not mathematics, and are
+      excluded from source_text.
+    (D4) No other divergence: statement wording, every exponent, the C_n^k
+      indices, the n² moduli, `(u,v) = 1`, `u+v ≠ 0`, k = 1..n−1, and the
+      closing "Bổ đề 5 đã được chứng minh." all agree across the region
+      records and the text layers.
+
+  Shared setup (statement + expansion)
+  S0 [p1 statement; region P001-R3] Hypotheses: n số nguyên tố lẻ; u, v ∈ ℤ
+    with (u,v) = 1. Four claims a)–d) as printed (see source_text).
+  S1 [p2 §5 a); P002-R2] Definition: put A = Σ_{i=0}^{n−1} (−1)^i u^{n−1−i}v^i.
+  S2 [p2 §5 a); P002-R2] Binomial expansion of the Fermat expression:
+    u^n + v^n = [(u+v)−v]^n + v^n = (u+v) Σ_{k=0}^{n−1} (−1)^k C_n^k
+    (u+v)^{n−1−k} v^k, i.e. u^n + v^n = (u+v)A. The k = n term of
+    [(u+v)−v]^n is (−1)^n v^n = −v^n and cancels the added +v^n: n odd is
+    load-bearing here.
+  S3 [p2 §5 a); P002-R2] "mà u+v ≠ 0, nên A = Σ_{k=0}^{n−1} (−1)^k C_n^k
+    (u+v)^{n−k−1} v^k": divide the S2 identity by u+v.
+  S4 [p2 §5 a); P002-R2] Split off the last summand: A = (u+v) Σ_{k=0}^{n−2}
+    (−1)^k C_n^k (u+v)^{n−k−2} v^k + nv^{n−1} (the k = n−1 term is
+    (−1)^{n−1} C_n^{n−1} v^{n−1} = n v^{n−1}, n odd).
+  Part a)
+  S5 [p2 §5 a) → p3 §5 a); P002-R2/P003-R1] (u,v) = 1 and (u+v) ⋮̸ n give
+    (u+v, v^{n−1}) = 1 and (u+v, n) = 1, hence (u+v, nv^{n−1}) = 1
+    ("nên (u+v, nv^{n−1}) = 1").
+  S6 [p3 §5 a); P003-R1] From S4 and S5: A ≡ nv^{n−1} (mod u+v) with
+    (u+v, nv^{n−1}) = 1, so (A, u+v) = 1 — "(đpcm)" of part a).
+  S7 [p1 statement a); P001-R3 — NO matching inference in the printed proof]
+    The second conjunct of a): A ⋮̸ n. The a) proof text closes "(đpcm)"
+    immediately after (A,u+v) = 1 and never derives A ⋮̸ n; the same mod-n
+    technique appears only in c), where (u+v) ⋮̸ n and uv ⋮̸ n are assumed.
+    The claim is TRUE for the lemma's hypotheses, by the c)-style mod-n
+    argument: (u+v)A = u^n + v^n with (u+v) invertible mod n (a)'s own
+    hypothesis, so n | A ⟺ n | u^n+v^n; now if n | uv then (say n | u)
+    u^n ≡ 0 while v^n ≢ 0 mod n (FLT, n ∤ v), and if n ∤ uv then
+    u^n + v^n ≡ u + v ≢ 0 mod n (FLT and (u+v) ⋮̸ n). The screen in
+    04-sympy/test_l5_01.py verifies it on instances (n ∈ {3,5,7,11,13}),
+    but as printed it is stated without a derivation. RED FLAG for the Lean
+    lane (F3 watch-list: SHORTEST ROUTE, supplied by the integration session
+    and checked numerically on 1805 instances — from S4's binomial form
+    A = Σ_{k=0}^{n−1} (−1)^k C_n^k (u+v)^{n−1−k} v^k one gets
+    A ≡ (u+v)^{n−1} (mod n), because C_n^k ⋮ n for 1 ≤ k ≤ n−2 (n prime) and
+    the k = n−1 term is n v^{n−1}; so n | A ⟹ n | (u+v)^{n−1} ⟹ n | (u+v)
+    (n prime), contradicting a)'s own hypothesis (u+v) ⋮̸ n. So a)'s second
+    conjunct is an F3 derivation from the author's S4/S9 material, NOT a
+    missing author assumption.) bổ đề 6 uses BOTH conjuncts of a) — see its
+    "(u+v, Σ…) = … = 1, (Σ…) ⋮̸ n, …" in P003-R3.
+  Part b)
+  S8 [p3 §5 b); P003-R1] Algebraic refinement: A = n(u+v)[Σ_{k=0}^{n−3}
+    (−1)^k (C_n^k/n)(u+v)^{n−k−2} v^k − ((n−1)v^{n−2})/2] + nv^{n−1}
+    = n(u+v)A_1 + nv^{n−1}, with that bracket named A_1. (The bracket's
+    second term is the k = n−2 term of the S3 sum, n·(−1)^{n−2}(C_n^{n−2}/n)
+    v^{n−2} = −n((n−1)/2)v^{n−2} for odd n.)
+  S9 [p3 §5 b); P003-R1] For k = 1,…,n−1, C_n^k ⋮ n because n is prime; with
+    (u+v) ⋮ n this gives n(u+v)A_1 ⋮ n².
+  S10 [p3 §5 b); P003-R1] nv^{n−1} ⋮ n, and nv^{n−1} ⋮̸ n² because v ⋮̸ n
+    (n | u+v together with (u,v) = 1 forces n ∤ v).
+  S11 [p3 §5 b); P003-R1] Therefore A = n(u+v)A_1 + nv^{n−1} ⋮ n and
+    A ⋮̸ n² (A ≡ nv^{n−1} mod n² with n² ∤ nv^{n−1}), and
+    (u+v, A) = (u+v, nv^{n−1}) = (u+v, n) = n — "(đpcm)" of part b).
+  Part c) — case split on uv ⋮ n
+  S12 [p3 §5 c) branch 1; P003-R1] uv ⋮ n ⟹ (u ⋮ n) ∨ (v ⋮ n) (n prime);
+    with (u^n+v^n) ⋮ n both u^n ⋮ n and v^n ⋮ n, hence u ⋮ n ∧ v ⋮ n
+    (n prime), hence (u^n+v^n) ⋮ n². (No use of (u,v) = 1.)
+  S13 [p3 §5 c) branch 2; P003-R2] uv ⋮̸ n ⟹ u ⋮̸ n and v ⋮̸ n, so Fermat's
+    little theorem gives u^{n−1} ≡ v^{n−1} ≡ 1 (mod n), hence
+    u^{n−1} − v^{n−1} = (u^{n−1}−1) − (v^{n−1}−1) ≡ 0 (mod n).
+  S14 [p3 §5 c) branch 2; P003-R2] Identity:
+    Σ_{i=0}^{n−1} (−1)^i u^{n−1−i} v^i = u^{n−1} − v Σ_{i=0}^{n−2} (−1)^i
+    u^{n−2−i} v^i = u^{n−1} − v(u^{n−1} − v^{n−1})/(u+v).
+  S15 [p3 §5 c) branch 2; P003-R2] Suppose (u+v) ⋮̸ n: then (u+v) is
+    invertible mod n, so S13+S14 give A ≡ u^{n−1} ≡ 1 (mod n); hence
+    A ⋮̸ n, hence u^n+v^n = (u+v)A ⋮̸ n (n prime), contradicting the
+    hypothesis (u^n+v^n) ⋮ n. So (u+v) ⋮ n.
+  S16 [p3 §5 c); P003-R2] With (u+v) ⋮ n, "theo một kết quả chứng minh ở b)"
+    gives A ⋮ n, hence u^n+v^n = (u+v)A ⋮ n² — "(đpcm)" of part c). (Cites
+    part b) of this same lemma, not another bổ đề; note that only b)'s
+    "A ⋮ n" half is quoted, and that half follows from S4 without
+    (u,v) = 1, which is why c)'s parenthetical is sound.)
+  Part d)
+  S17 [p3 §5 d); P003-R2] n prime and u ⋮̸ n ⟹ u^{n−1} ≡ 1 (mod n) (Fermat),
+    so u^{n−1} = 1 + mn with m ∈ ℕ.
+  S18 [p3 §5 d); P003-R2] u^{n(n−1)} = (u^{n−1})^n = (1+mn)^n ≡ 1 (mod n²)
+    — every term of (1+mn)^n beyond the first is divisible by n².
+    "Bổ đề 5 đã được chứng minh." ∎
+
+  Lean mapping (PROPOSED ONLY — 03-lean/L5/Basic.lean is NOT created in this
+  chunk; names are proposals for the Lean lane):
+    S0     -> carried as the step theorems' hypotheses (n prime, n odd,
+              Int.gcd u v = 1; c)'s statement drops the gcd hypothesis)
+    S1     -> L5_step_S1     (A as a `let`/defeq; the statement's inline sum
+                              is A — no arithmetic content)
+    S2     -> L5_step_S2     (binomial expansion; k = n term cancels via n odd)
+    S3     -> L5_step_S3     (A equals the binomial sum; prove as polynomial
+                              identity, avoid dividing by u+v)
+    S4     -> L5_step_S4     (A = (u+v)*B + n*v^{n−1})
+    S5     -> L5_step_S5     ((u+v, n*v^{n−1}) = 1 from (u,v) = 1 and n ∤ u+v,
+                              n prime)
+    S6     -> L5_step_S6     (gcd(A, u+v) = 1)
+    S7     -> L5_step_S7     (A not divisible by n — no printed inference;
+                              Lean lane must supply the FLT mod-n argument
+                              from the author's c) method, or file F4)
+    S8     -> L5_step_S8     (A_1 and A = n(u+v)A_1 + n*v^{n−1})
+    S9     -> L5_step_S9     (n(u+v)A_1 ⋮ n², using n prime for C_n^k/n ∈ ℤ)
+    S10    -> L5_step_S10    (n*v^{n−1} ⋮ n and ⋮̸ n², using v ⋮̸ n)
+    S11    -> L5_step_S11    (A ⋮ n, A ⋮̸ n², (u+v, A) = n)
+    S12    -> L5_step_S12    (c) case uv ⋮ n)
+    S13    -> L5_step_S13    (c) case uv ⋮̸ n: FLT residues, cites Fermat's
+                              little theorem (`ZMod`/`Nat.Prime.dvd_of_dvd_pow`
+                              or Mathlib's FLT: `ZMod.pow_card_sub_one_eq_one`)
+    S14    -> L5_step_S14    (the telescoping identity with the geometric
+                              quotient (u^{n−1}−v^{n−1})/(u+v))
+    S15    -> L5_step_S15    (contradiction; conclude (u+v) ⋮ n)
+    S16    -> L5_step_S16    (n² | u^n+v^n, quoting S11/L5_step_S11)
+    S17    -> L5_step_S17    (d): u^{n−1} = 1 + mn, m ≥ 0 (FLT)
+    S18    -> L5_step_S18    (d): (1+mn)^n ≡ 1 mod n²)
+    assembly -> L5_bo_de_5    (chains S1…S18 in the author's order; four
+                              exported conjunct theorems mirroring a) b) c) d))
+
+  Implicit side conditions identified while transcribing (F3 watch-list for
+  the Lean lane, all supplied by the author's own hypotheses except where
+  noted):
+    - S2/S4/S8: n odd — the (u+v)−v expansion's k = n term and the k = n−2
+      sign (−1)^{n−2} = −1; without oddness the identity is false
+      (screen red flag F3).
+    - S3: u+v ≠ 0 — the printed division; NOT a stated hypothesis (see
+      formal_hint; prove the identity without dividing).
+    - S5: n prime (so that ¬(n ∣ u+v) gives gcd(u+v, n) = 1) and (u,v) = 1
+      (so gcd(u+v, v^{n−1}) = 1). Both are load-bearing (screen red flags
+      F1, F2).
+    - S8/S9: the C_n^k/n integrality for 1 ≤ k ≤ n−1 (n prime) and the
+      (n−1)/2 integrality (n odd); n(u+v)A_1 is an integer even though A_1
+      is rational (the k = 0 term of A_1 is (u+v)^{n−2}/n).
+    - S10/S11: v ⋮̸ n, derived from n | u+v and (u,v) = 1; and nonzeroness
+      of v (b)'s statement uses (u+v, A) = n, which needs A ≠ 0 implicitly
+      through the gcd's ℕ value).
+    - S13/S15/S17: Fermat's little theorem with n prime (n ∤ u, n ∤ v there).
+    - S15: n prime for "n ∤ (u+v) and n ∤ A ⟹ n ∤ (u+v)A".
+    - S16: cites this lemma's own part b) (internal citation, no chunk edge).
+    - S12/S16: part c) deliberately does NOT assume (u,v) = 1 — the Lean
+      statement for c) must not add it (and the screen checks c) on
+      non-coprime instances as well).
+    - a)'s second conjunct A ⋮̸ n (S7) is stated but not derived in a): see
+      S7.
+lean_file: 03-lean/L5/Basic.lean
+sympy_test: 04-sympy/test_l5_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-001-300dpi-full.png page-002-300dpi-full.png page-003-300dpi-full.png
+lean_decls: L5_step_S2, L5_step_S3, L5_step_S4, L5_step_S5, L5_step_S6, L5_step_S7, L5_step_S8, L5_step_S9, L5_step_S10, L5_step_S11, L5_step_S12, L5_step_S13, L5_step_S14, L5_step_S15, L5_step_S16, L5_step_S17, L5_step_S18, L5_bo_de_5, L5_gcd_eq_one_of_not_dvd, L5_zmod_intCast_eq_zero_iff, L5_nsq_dvd_mul_pow
+regions: P001-R3, P002-R2, P003-R1, P003-R2
+status: DONE

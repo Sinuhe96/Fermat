@@ -1,0 +1,164 @@
+id: L4-01
+title: "Lemma 4 — m-adic structure of the factorisation ab = c^n when (a,b) = m and m^2 ∤ b (full lemma)"
+pdf_pages: [1, 2]
+kind: lemma-statement
+depends_on: [L3-01]
+source_text: |
+  [PDF p1: Lemma 4 statement — spans regions P001-R2 (tail) and P001-R3 (head)]
+
+  Bổ đề 4:
+  Cho a.b = c^n, n là số nguyên dương lẻ, a,b,c,m ∈ ℤ*, sao cho
+  |a| ≥ 2, |b| ≥ 2, |c| ≥ 2, m là số nguyên tố, (a,b) = m,
+  b ⋮̸ m², khi đó tồn tại số nguyên dương s sao cho ns ≥ 2 và hai số
+  nguyên khác không c₁, c₂ sao cho (c₁,c₂) = 1 đồng thời c₁ ⋮̸ m,
+  c₂ ⋮̸ m, c = m^s c₁.c₂, a = m^{ns−1} c₂^n và b = m c₁^n.
+
+  [PDF p2 §4: author's proof ("4. Chứng minh bổ đề 4") — region P002-R2]
+
+  4. Chứng minh bổ đề 4
+  Vì a ⋮ m, b ⋮ m và a.b = c^n, suy ra c^n ⋮ m², suy ra c ⋮ m (do m
+  là số nguyên tố). Giả sử c = m^s r, với s ∈ ℕ*, r ∈ ℤ* và r ⋮̸ m,
+  mà c^n = m^{ns} r^n ⋮ m², nên ns ≥ 2.
+  Do (a,b) = m và b ⋮̸ m², nên có thể giả sử b = mh và a = m^k l, với
+  k ∈ ℕ*; h,l ∈ ℤ* sao cho (h,l) = 1, h ⋮̸ m, l ⋮̸ m.
+  Vì a.b = c^n nên m^{k+1} hl = m^{ns} r^n, suy ra k+1 = ns, suy ra
+  k = ns−1 và hl = r^n
+  ; áp dụng bổ đề 3, ta có r = c₁.c₂, h = c₁^n, l = c₂^n, trong đó
+  hai số c₁, c₂ là hai số nguyên sao cho (c₁,c₂) = 1. Từ đó
+  ta có c = m^s c₁.c₂, a = m^{ns−1} c₂^n, b = m c₁^n.
+  Bổ đề 4 đã được chứng minh.
+
+  [Notation as printed: the Vietnamese divisibility glyph ⋮ is read
+  "a ⋮ b" = "a chia hết cho b" = b | a (argument order flips, see
+  ENCODING_MAP §A); ⋮̸ is the same glyph with a vector slash. a.b
+  denotes the product a·b. ℤ* = nonzero integers.]
+formal_hint: |
+  Hypotheses:
+    n : ℕ, n positive and odd ("số nguyên dương lẻ");
+    a b c m : ℤ, all nonzero; |a| ≥ 2, |b| ≥ 2, |c| ≥ 2;
+    m prime (Nat.Prime m);
+    (a,b) = m          i.e. Int.gcd a b = m;
+    a * b = c ^ n;
+    m² ∤ b             i.e. ¬ ((m : ℤ) ^ 2 ∣ b).
+  Conclusion:
+    ∃ s : ℕ, ∃ c₁ c₂ : ℤ,
+      s ≥ 1 ∧ n * s ≥ 2 ∧ c₁ ≠ 0 ∧ c₂ ≠ 0 ∧ Int.gcd c₁ c₂ = 1 ∧
+      ¬ ((m : ℤ) ∣ c₁) ∧ ¬ ((m : ℤ) ∣ c₂) ∧
+      c = (m : ℤ) ^ s * (c₁ * c₂) ∧
+      a = (m : ℤ) ^ (n * s - 1) * c₂ ^ n ∧
+      b = (m : ℤ) * c₁ ^ n
+  Reading: with (a,b) = m the prime m splits between a and b; b carries
+  exactly one factor of m, a carries the remaining ns−1, and the coprime
+  part of c returns as the n-th powers c₁^n, c₂^n (via bổ đề 3).
+transcription: manual
+author_steps: |
+  Normalized ordered step map — full lemma. Evidence: signed, REVIEWED
+  region records 01-extract/regions/p001.yml (P001-R2 tail + P001-R3
+  head = statement) and p002.yml (P002-R2 = proof), i.e. the vision→LaTeX
+  render read; cross-checked against BOTH engine text layers
+  (extract_pypdf.txt lines 51-72 for the statement / 320-345 for the
+  proof; extract_pymupdf.txt lines 132-177 and 1241+), which reproduce
+  the same statement and proof but drop the math glyphs (MANUAL page).
+  Vision capability gap: this session could not re-read the PNG renders
+  (image reads return binary; the repo's own vision-probe.png is
+  unreadable here), so the render read is the human-signed region LaTeX,
+  not a fresh independent vision pass.
+
+  S0 [p1 statement] Hypotheses: n ∈ ℕ positive odd; a,b,c,m ∈ ℤ*;
+    |a| ≥ 2, |b| ≥ 2, |c| ≥ 2; m prime; (a,b) = m; a·b = c^n;
+    b ⋮̸ m² (m² ∤ b).
+  S1 [p2 ¶1] (a,b) = m gives m | a and m | b; with a·b = c^n this gives
+    m² | a·b = c^n, i.e. c^n ⋮ m².
+  S2 [p2 ¶1] m prime and m² | c^n ⟹ m | c ("suy ra c ⋮ m (do m là số
+    nguyên tố)").
+  S3 [p2 ¶1] Write c = m^s·r with s ∈ ℕ*, r ∈ ℤ*, r ⋮̸ m (the m-adic
+    decomposition of c, available since m | c and m prime). From
+    c^n = m^{ns}·r^n ⋮ m² and m ∤ r deduce ns ≥ 2.
+  S4 [p2 ¶2] From (a,b) = m and b ⋮̸ m²: b = m·h and a = m^k·l, with
+    k ∈ ℕ*, h,l ∈ ℤ*, (h,l) = 1, h ⋮̸ m, l ⋮̸ m. (b carries exactly one
+    factor of m because m² ∤ b; coprimality of h,l is inherited from
+    (a,b) = m.)
+  S5 [p2 ¶3] Substitute: a·b = m^{k+1}·h·l = c^n = m^{ns}·r^n. Since m
+    is prime and m ∤ h·l·r, the m-adic valuations must match: k+1 = ns,
+    hence k = ns−1, and cancelling m^{ns} gives h·l = r^n.
+  S6 [p2 ¶3] Apply bổ đề 3 to h·l = r^n (n odd, (h,l) = 1): there exist
+    c₁, c₂ ∈ ℤ* with (c₁,c₂) = 1, r = c₁·c₂, h = c₁^n, l = c₂^n.
+  S7 [p2 ¶4] Assemble: c = m^s·c₁·c₂, a = m^{ns−1}·c₂^n, b = m·c₁^n.
+    The statement's extra conclusions c₁ ⋮̸ m and c₂ ⋮̸ m follow from
+    h = c₁^n, l = c₂^n together with h,l ⋮̸ m and m prime. ∎
+
+  Lean mapping (03-lean/L4/Basic.lean; that file `import L3.Basic`, so S6 can
+  cite the verified bổ đề 3 instead of restating or reproving it):
+    S0       -> carried as the step theorems' hypotheses
+    S1+S2    -> L4_step_S1_S2   (m | a, m | b, ab = c^n ⟹ m² | c^n ⟹ m | c)
+    S3       -> L4_step_S3      (m-adic decomposition of c; ns ≥ 2)
+    S4       -> L4_step_S4      (m-adic decomposition of a, b; (h,l) = 1)
+    S5       -> L4_step_S5      (valuation match: k+1 = ns, h·l = r^n)
+    S6       -> L4_step_S6      (cites L3.L3_bo_de_3 — imported, not pasted)
+    S7       -> L4_bo_de_4      (assembly, author's order)
+  Classifications (F1–F4/S1 per AGENTS.md):
+    S1+S2: S1 (round 2, 2026-09-26) — first-try compile, EXIT 0, no warnings,
+      `#print axioms L4.L4_step_S1_S2` = propext, Classical.choice,
+      Quot.sound only. No F1/F2/F3/F4 outcome.
+    S3:    S1 (round 5; round 4 was F2 — representation only). The F2 round
+      was three shape slips, no change of statement or inference: two
+      reversed `.symm`s and one `Int.natAbs_dvd_natAbs` direction (`.mp`
+      should be `.mpr` for ℤ→ℕ). `#print axioms L4.L4_step_S3` = propext,
+      Classical.choice, Quot.sound only.
+    S4:    S1 (round 8; rounds 6 and 7 were F2 — representation only). The F2
+      rounds were: two more reversed `.symm`s after `rw [mul_zero] at h`, and
+      six occurrences of the `Int.gcd` rewrite trap in two shapes — the goal
+      containing `Int.gcd h l`, and (new) the goal's other side containing it,
+      which is what `conv_lhs => rw [...]` fixes. Statement and inference
+      unchanged throughout; see MATHLIB_API_LESSONS § L4-01 item 7.
+      `#print axioms L4.L4_step_S4` = propext, Classical.choice, Quot.sound
+      only.
+    S5:    S1 (round 10; round 9 was F2 — one wrong-direction
+      `Int.natCast_dvd.mp`; ℕ→ℤ is `.mpr`). The m-adic exponent match is done
+      on `natAbs` with `Nat.factorization` rather than a valuations API, via
+      the local fact `(m^a * X).factorization m = a` when `m ∤ X`.
+    S6:    S1 (round 11) — the bổ đề 3 citation. The proof IS the imported
+      `L3.L3_bo_de_3` instantiated at `a := h, b := l, c := r`; nothing is
+      restated or reproved.
+    S7:    S1 (round 11) — assembly `L4_bo_de_4`, chaining S1+S2 → S3 → S4 →
+      S5 → S6 in the author's order; `k = n·s − 1` comes from S5's
+      `k+1 = n·s`; the author's `|a|,|b|,|c| ≥ 2` are carried as
+      `_ha2`/`_hb2`/`_hc2` (no step of his proof consumes them).
+    Whole chunk: DONE (round 11, 2026-09-26). `03-lean/L4/Basic.lean` compiles
+      EXIT:0 with zero warnings and zero `sorry`; `#print axioms` on all six
+      declarations = propext, Classical.choice, Quot.sound only. Eleven
+      compile round-trips: 2 probe rounds, 6 author-step rounds, 4 F2 rounds
+      (4, 6, 7, 9 — all tactic/API shape), no F1/F3/F4 outcome.
+
+  Implicit side conditions identified while transcribing (F3 watch-list
+  for the Lean lane, all supplied by the author's own hypotheses):
+    - S2 needs m prime (m² | c^n does not give m | c for composite m).
+    - S3 needs m | c (from S2) and c ≠ 0 for the decomposition, and
+      s ≥ 1 (author's s ∈ ℕ*).
+    - S5 needs m prime AND m ∤ h·l·r: the exponent comparison k+1 = ns
+      is exactly where coprimality is load-bearing.
+    - S6 needs n odd (bổ đề 3's hypothesis) and (h,l) = 1 (from S4).
+    - S7 needs m ∤ h, m ∤ l (from S4) to conclude c₁, c₂ ⋮̸ m.
+
+  DEPENDENCY (RESOLVED 2026-09-26): S6 cites bổ đề 3 ("áp dụng bổ đề 3").
+  L3-01 is now DONE (statement p1, proof p2 §3; all author steps S1;
+  assembly `L3.L3_bo_de_3`), so this chunk declares
+  `depends_on: [L3-01]`. The Lean lane must import/reuse the bổ đề 3
+  module rather than re-derive it (ENCODING_MAP §A "Reusing a DONE
+  chunk"; §B "Chunk L3-01" carries the exact signature plus the reusable
+  step lemmas `L3_step_S0` and `L3_step_S9_S10`). The module wiring is DONE
+  (BLOCKERS B-002, resolved 2026-09-26): the repo-tracked
+  `pipeline/03-lean/lakefile.toml` declares `[[lean_lib]]` entries with
+  explicit `roots`, and `proof/compile_lean.sh` syncs that file into the
+  package and publishes the olean of every chunk it compiles, so
+  `import L3.Basic` resolves. This chunk registers
+  `[[lean_lib]] name = "L4"` for its own future consumers.
+lean_file: 03-lean/L4/Basic.lean
+sympy_test: 04-sympy/test_l4_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-001-300dpi-full.png page-002-300dpi-full.png
+lean_decls: L4_step_S1_S2, L4_step_S3, L4_step_S4, L4_step_S5, L4_step_S6, L4_bo_de_4
+regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2
+status: DONE

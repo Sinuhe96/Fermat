@@ -502,6 +502,245 @@ satisfiable, prefer this instance-based screen over a vacuity note.
 
 ---
 
+## §B. Chunk L4-01 — bổ đề 4 (DONE, all steps S1)
+
+Source: statement p. 1 (spanning regions P001·R2/R3), proof p. 2 §4. Evidence:
+`03-lean/L4-01_compile_20260926.log` (EXIT:0, no warnings, no `sorry`;
+`#print axioms` on all six declarations = propext, Classical.choice,
+Quot.sound only), `04-sympy/test_l4_01.py` PASS.
+
+| Author step | Content (English; literal text in the chunk YAML) | Lean declaration |
+|---|---|---|
+| S1+S2 | from `(a,b) = m`: `m ∣ a`, `m ∣ b`; with `a·b = c^n` get `m² ∣ c^n`, hence `m ∣ c` (m prime) | `L4.L4_step_S1_S2` |
+| S3 | `c = m^s·r` with `s ≥ 1`, `m ∤ r`; and `n·s ≥ 2` | `L4.L4_step_S3` |
+| S4 | `b = m·h`, `a = m^k·l` with `k ≥ 1`, `(h,l) = 1`, `m ∤ h`, `m ∤ l` | `L4.L4_step_S4` |
+| S5 | `m^{k+1}·(h·l) = m^{ns}·r^n` ⟹ `k+1 = n·s` and `h·l = r^n` | `L4.L4_step_S5` |
+| S6 | bổ đề 3 on `h·l = r^n` (n odd, `(h,l) = 1`) — **imported**, not restated | `L4.L4_step_S6` |
+| assembly | whole bổ đề 4 | `L4.L4_bo_de_4` |
+
+### Reusable results from this chunk
+
+```lean
+-- the lemma itself (statement p. 1):
+L4.L4_bo_de_4 {a b c : ℤ} {m n : ℕ} (hm : Nat.Prime m) (hn : Odd n) (hn0 : 0 < n)
+    (_ha2 : 2 ≤ a.natAbs) (_hb2 : 2 ≤ b.natAbs) (_hc2 : 2 ≤ c.natAbs)
+    (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0)
+    (hab : a * b = c ^ n) (hgcd : Int.gcd a b = m) (hb2 : ¬(m : ℤ) ^ 2 ∣ b) :
+    ∃ s : ℕ, ∃ c1 c2 : ℤ, 1 ≤ s ∧ 2 ≤ n * s ∧ c1 ≠ 0 ∧ c2 ≠ 0 ∧
+      Int.gcd c1 c2 = 1 ∧ ¬(m : ℤ) ∣ c1 ∧ ¬(m : ℤ) ∣ c2 ∧
+      c = (m : ℤ) ^ s * (c1 * c2) ∧ a = (m : ℤ) ^ (n * s - 1) * c2 ^ n ∧
+      b = (m : ℤ) * c1 ^ n
+
+-- directly reusable pieces:
+L4.L4_step_S1_S2 {a b c : ℤ} {m n : ℕ} (hm : Nat.Prime m)
+    (hgcd : Int.gcd a b = m) (hab : a * b = c ^ n) :
+    (m : ℤ) ^ 2 ∣ c ^ n ∧ (m : ℤ) ∣ c
+
+L4.L4_step_S5 {a b c : ℤ} {m n : ℕ} (hm : Nat.Prime m) {k s : ℕ} {h l r : ℤ}
+    (hh : ¬(m : ℤ) ∣ h) (hl : ¬(m : ℤ) ∣ l) (hr : ¬(m : ℤ) ∣ r)
+    (hab : a * b = c ^ n) (ha : a = (m : ℤ) ^ k * l) (hb : b = (m : ℤ) * h)
+    (hc : c = (m : ℤ) ^ s * r) : k + 1 = n * s ∧ h * l = r ^ n
+```
+
+The `_ha2`/`_hb2`/`_hc2` binders carry the author's `|a|,|b|,|c| ≥ 2` for
+faithfulness — no step of his proof consumes them (the `_`-prefix convention).
+
+Every later lemma that needs "an m-adic decomposition of a ℤ number", "the
+prime `m` in `m² ∣ c^n` forces `m ∣ c`", or "compare two m-adic exponents"
+should import/reuse these rather than re-derive them. **Consumers: bổ đề 6
+(`import L4.Basic`, `L4.L4_bo_de_4` at its step S16).**
+
+### Copy-paste proof patterns (all compiled at this pin)
+
+**P12 — m-adic decomposition of a ℤ number** (`m ∣ z`, `z ≠ 0`, `m` prime):
+
+```lean
+obtain ⟨s, R, hR, hCR⟩ := Nat.exists_eq_pow_mul_and_not_dvd hC0 m hm.ne_one
+-- hCR : z.natAbs = m^s * R,  hR : ¬ m ∣ R
+have hmdvd : (m : ℤ) ^ s ∣ z := by
+  have h1 : ((m ^ s : ℕ) : ℤ) ∣ z := Int.natCast_dvd.mpr ⟨R, hCR⟩
+  simpa only [Nat.cast_pow] using h1
+obtain ⟨r, hr⟩ := hmdvd          -- hr : z = (m:ℤ)^s * r
+-- maximality: cancel m^s ≠ 0 in `m^s * r.natAbs = m^s * R` to get
+-- r.natAbs = R, which transfers ¬m ∣ R to ¬(m:ℤ) ∣ r.
+```
+
+**P13 — comparing m-adic exponents** (the S5 shape, `m^{k+1}·(h·l) = m^{ns}·r^n`
+with `m ∤ h·l·r`), two routes:
+(a) `(m^a * X).factorization m = a` for `m ∤ X` — via `Nat.factorization_mul`,
+`Finsupp.add_apply`, `Nat.factorization_pow_self`,
+`Nat.factorization_eq_zero_of_not_dvd` — then evaluate both sides'
+factorizations at `m`. L4 used this because it needs the `natAbs` transport
+anyway;
+(b) the coprime route: `Prime.coprime_iff_not_dvd` + `Nat.Coprime.pow` +
+`Nat.Coprime.dvd_of_dvd_mul_right` + `Nat.pow_dvd_pow_iff_le_right`. Used
+inside `L4_step_S3` for `2 ≤ n·s`. Prefer (b) when no ℕ transport is needed.
+
+### Method note for the sympy screen (reusable — like L3, not like L1/L2)
+
+Bổ đề 4's hypotheses **are** satisfiable, so this screen runs on real
+instances: `test_l4_01.py` builds the conclusion's parametrisation
+(`a = m^{ns−1}c₂^n`, `b = m·c₁^n`, `c = m^s·c₁c₂`) and checks it satisfies the
+hypotheses *and* the conclusion exactly — 1748 witnesses, including 304 each
+at the schema-required `n ∈ {5,7,11,13}`. Two red-flag checks show the
+author's side hypotheses are load-bearing: `m` prime in S2 (composite
+counterexample `16 ∣ 2⁵` yet `4 ∤ 2`) and `m ∤ h·l·r` in S5.
+
+---
+
+## §B. Chunk L5-01 — bổ đề 5 (DONE, all steps S1)
+
+Source: statement p. 1 (region `P001·R3`), proof p. 2 §5 → p. 3 §5. Evidence:
+`03-lean/L5-01_compile_20260926.log` (EXIT:0, no warnings, no `sorry`;
+`#print axioms` on all 21 declarations = propext, Classical.choice, Quot.sound
+only), `04-sympy/test_l5_01.py` PASS. 29 rounds: 1 batched probe + 28 compiles
+of the file, 17 green first try, 10 repaired (all F2 shapes, no F1/F3/F4) and
+one green with two unused-`simp` warnings the next round removed.
+
+| Author step | Content (English; literal text in the chunk YAML) | Lean declaration |
+|---|---|---|
+| S1 | `A := Σ_{i<n} (−1)^i u^{n−1−i}v^i`, plus the notations `B`, `B′`, `A₁` | `L5.A`, `L5.B`, `L5.B'` (generic in the ring), `L5.A1` (in `ℚ`) |
+| S2 | `u^n+v^n = [(u+v)−v]^n + v^n = (u+v)·Σ_k(−1)^kC_n^k(u+v)^{n−1−k}v^k = (u+v)·A` | `L5.L5_step_S2` (both halves) |
+| S3 | "mà u+v ≠ 0, nên A = …" — the binomial form of `A` | `L5.L5_step_S3` (division-free) |
+| S4 | split off the `k = n−1` summand: `A = (u+v)·B′ + n·v^{n−1}` | `L5.L5_step_S4` |
+| S5 | `(u,v) = 1` with `(u+v) ⋮̸ n` ⟹ `(u+v, n·v^{n−1}) = 1` | `L5.L5_step_S5` |
+| S6 | `(A, u+v) = 1` — part a), first conjunct | `L5.L5_step_S6` |
+| S7 | `A ⋮̸ n` — part a), second conjunct (**not derived in the print**: F3) | `L5.L5_step_S7` |
+| S8 | `A = n(u+v)·A₁ + n·v^{n−1}` with the author's rational `A₁` | `L5.L5_step_S8` |
+| S9 | `n(u+v)·A₁ ⋮ n²`, i.e. `n² ∣ (u+v)·B′` | `L5.L5_step_S9` |
+| S10 | `n·v^{n−1} ⋮ n` but `⋮̸ n²` (`v ⋮̸ n`) | `L5.L5_step_S10` |
+| S11 | `A ⋮ n`, `A ⋮̸ n²`, `(u+v, A) = n` — part b) | `L5.L5_step_S11` |
+| S12 | c) branch 1 (`uv ⋮ n`): `n² ∣ u^n+v^n` | `L5.L5_step_S12` |
+| S13 | c) branch 2: FLT mod `n`, `u^{n−1} ≡ v^{n−1}` | `L5.L5_step_S13` |
+| S14 | `A = u^{n−1} − v·A(n−1)` and `(u+v)·A(n−1) = u^{n−1} − v^{n−1}` | `L5.L5_step_S14` |
+| S15 | c) branch 2: `(u+v) ⋮ n`, by a `ZMod n` contradiction | `L5.L5_step_S15` |
+| S16 | c): `(u+v) ⋮ n` ⟹ `n² ∣ u^n+v^n` | `L5.L5_step_S16` |
+| S17 | d): `u^{n−1} = 1 + mn` with `m ∈ ℕ` | `L5.L5_step_S17` |
+| S18 | d): `u^{n(n−1)} ≡ 1 (mod n²)` | `L5.L5_step_S18` |
+| assembly | parts a)–d) | `L5.L5_bo_de_5` |
+
+### Reusable results from this chunk
+
+```lean
+-- the lemma (statement p. 1): one implication per part
+L5.L5_bo_de_5 {n : ℕ} (hn : Nat.Prime n) (hodd : Odd n) {u v : ℤ}
+    (hcop : Int.gcd u v = 1) :
+    (¬(n:ℤ) ∣ u+v → Int.gcd (u+v) (L5.A ℤ n u v) = 1 ∧ ¬(n:ℤ) ∣ L5.A ℤ n u v) ∧
+    ((n:ℤ) ∣ u+v → (n:ℤ) ∣ L5.A ℤ n u v ∧ ¬(n:ℤ)^2 ∣ L5.A ℤ n u v ∧
+        Int.gcd (u+v) (L5.A ℤ n u v) = n) ∧
+    ((n:ℤ) ∣ u^n+v^n → (n:ℤ)^2 ∣ u^n+v^n) ∧
+    (¬(n:ℤ) ∣ u → u^(n*(n-1)) ≡ 1 [ZMOD (n:ℤ)^2])
+
+-- the geometric factorisation, generic in the ring, both halves at once:
+L5.L5_step_S2 {R : Type*} [CommRing R] {n : ℕ} (hn : Odd n) (u v : R) :
+    (u+v) * L5.A R n u v = u^n + v^n ∧ (u+v) * L5.B R n u v = u^n + v^n
+
+-- the n-adic facts later lemmas want:
+L5.L5_step_S4  {n : ℕ} (hn : Odd n) (u v : ℤ) :
+    L5.A ℤ n u v = (u+v) * L5.B' ℤ n u v + (n:ℤ) * v^(n-1)
+L5.L5_step_S9  {n : ℕ} (hn : Nat.Prime n) (hodd : Odd n) {u v : ℤ}
+    (hw : (n:ℤ) ∣ u+v) : (n:ℤ)^2 ∣ (u+v) * L5.B' ℤ n u v
+L5.L5_step_S16 {n : ℕ} (hodd : Odd n) {u v : ℤ} (hw : (n:ℤ) ∣ u+v) :
+    (n:ℤ)^2 ∣ u^n + v^n
+L5.L5_step_S17 {n : ℕ} (hn : Nat.Prime n) (hodd : Odd n) {u : ℤ}
+    (hu : ¬(n:ℤ) ∣ u) : ∃ m : ℕ, u^(n-1) = 1 + (m:ℤ) * n
+L5.L5_step_S18 {n : ℕ} {u m : ℤ} (hm : u^(n-1) = 1 + m*n) :
+    u^(n*(n-1)) ≡ 1 [ZMOD (n:ℤ)^2]
+```
+
+Every later lemma that needs "`u^n + v^n = (u+v)·A` for a fixed `n`", "the
+first `n`-adic step `n ⋮ u+v ⟹ n² ⋮ u^n+v^n` with no coprimality assumption",
+or "`u^{n(n−1)} ≡ 1 (mod n²)` from FLT" should import/reuse these rather than
+re-derive them. **Consumers: bổ đề 6 (5a/5b at its S5 and S16) and bổ đề 7
+(5c/5đ).** L5 has no producer edge: `import Mathlib` only.
+
+### Copy-paste proof patterns (all compiled at this pin)
+
+**P14 — when the print divides, prove the identity division-free in `ℤ[X]`:**
+
+```lean
+-- A = B as polynomials, then evaluate. S2 must be *generic* over `CommRing R`
+-- for this to instantiate at `Polynomial ℤ` (S2 is).
+have hA := (L5_step_S2 hn (Polynomial.X : Polynomial ℤ) (Polynomial.C v)).1
+have hB := (L5_step_S2 hn (Polynomial.X : Polynomial ℤ) (Polynomial.C v)).2
+have hzero : (Polynomial.X + Polynomial.C v) *
+    (A (Polynomial ℤ) n Polynomial.X (Polynomial.C v) -
+      B (Polynomial ℤ) n Polynomial.X (Polynomial.C v)) = 0 := by
+  rw [mul_sub, hA, hB, sub_self]
+rcases mul_eq_zero.mp hzero with h | h
+· exact absurd h (Polynomial.X_add_C_ne_zero v)   -- X + C v ≠ 0 in the domain
+· exact sub_eq_zero.mp h
+-- transfer back to ℤ:
+have hE := congrArg (Polynomial.eval u) hpoly
+unfold A B at hE
+rw [Polynomial.eval_finsetSum, Polynomial.eval_finsetSum] at hE
+simpa [A, B] using hE
+```
+
+**P15 — `Nat` exponent identities that `omega` refuses** (nested `Nat` `-`):
+
+```lean
+-- n - 1 - (i + 1) = n - 1 - 1 - i
+(Nat.sub_succ' (n - 1) i).trans (Nat.sub_right_comm (n - 1) i 1)
+-- n - 1 - k = (n - 2 - k) + 1      (S4; bound k ≤ n - 2 from the sum index)
+calc (n - 2 - k) + 1 = (n - 2) + 1 - k := (Nat.sub_add_comm (m := 1) hk).symm
+  _ = n - 1 - k := by rw [Nat.sub_one_add_one_eq_of_pos hpos]
+```
+
+`Nat.sub_succ` is the *`.pred`* variant (`n - (k+1) = (n-k).pred`) — not
+interchangeable with `Nat.sub_succ'`. And the two sides of an identity must be
+spelled identically: after `rw [A, A]` a printed `n - 2 - i` and an unfolded
+`(n-1) - 1 - i` are equal values but different `ring` atoms.
+
+**P16 — the ℤ-gcd shift lemmas are order-sensitive:**
+
+```lean
+-- _left_right:  m.gcd (n + m*k) = m.gcd n   (the multiple is the 2nd summand)
+-- _right_right: m.gcd (n + k*m) = m.gcd n
+rw [h4, Int.gcd_add_mul_left_right (m := u+v) (n := (n:ℤ)*v^(n-1)) (k := B' ℤ n u v)]
+-- so state the decomposition with the non-multiple summand FIRST (S6/S11/S16 do).
+```
+
+**P17 — `ZMod n` as the field where "a product of two nonzero elements" bites:**
+
+```lean
+have : Fact (Nat.Prime n) := ⟨hn⟩   -- plain `have`: still registers for synthesis,
+have : NeZero n := ⟨hn.ne_zero⟩     -- and keeps linter.style.haveILetI quiet
+have hU0 : (u : ZMod n) ≠ 0 := fun h => hu ((L5_zmod_intCast_eq_zero_iff u).mp h)
+have hU1 : (u : ZMod n) ^ (n - 1) = 1 := ZMod.pow_card_sub_one_eq_one hU0
+-- … then `exact mul_ne_zero hUV0 hAn hprod` against the cast of the hypothesis
+```
+
+with the bridge (note that `CharP.intCast_eq_zero_iff` takes `R` and `p`
+*explicitly* — they are `variable (R : Type*)` / `(p : ℕ)`):
+
+```lean
+theorem L5_zmod_intCast_eq_zero_iff {n : ℕ} [NeZero n] (x : ℤ) :
+    ((x : ZMod n) = 0) ↔ (n : ℤ) ∣ x := CharP.intCast_eq_zero_iff (ZMod n) n x
+```
+
+**P18 — an auxiliary the author defines as a *rational*:** `A₁` is rational
+(`n·A₁ = B′`), so its identity is proved in `ℚ` and the integer content is the
+divisibility statement (`n² ∣ (u+v)·B′`), which is what S9 states:
+
+```lean
+-- S8:  (A : ℚ) = n*(u+v)*A1 + n*v^(n-1)
+-- hkey: (n : ℚ) * A1 = (B' : ℚ)      — content: C_n^{n-2} = n(n-1)/2
+rw [h4q, ← hkey]; ring
+```
+
+### Method note for the sympy screen
+
+Like L3/L4 and unlike L1/L2/L6/L7, bổ đề 5's hypotheses **are** satisfiable
+(`(u,v) = 1`, with or without `n ∣ u+v`), so `test_l5_01.py` runs the author's
+steps on real instances: 1092 identity/real-instance checks (part a) 2190, b)
+416, c) 990, d) 172 instances; n ∈ {5,7,11,13}), plus four red-flag checks that
+isolate the load-bearing hypotheses — `n` prime (n = 9 breaks `(u+v, A) = 1`),
+`n` odd (n = 4 breaks d)), `(u,v) = 1` in a) (u = 2, v = 4 gives gcd 2) and in
+b) (u = 2, v = 8 gives gcd 10).
+
+---
+
 ## §C. Extending this file for the next chunk
 
 1. Add a `## §B. Chunk Lk-01 — …` section with the same four parts: step
@@ -512,4 +751,4 @@ satisfiable, prefer this instance-based screen over a vacuity note.
 4. Record the classification outcome (F1–F4/S1) per step in the chunk YAML,
    not here; here record only the mapping and the surviving code shapes.
 
-Last updated: 2026-09-26, after L3-01 (bổ đề 3) reached DONE (L1-01, L2-01 §B above).
+Last updated: 2026-09-26, after L5-01 (bổ đề 5) reached DONE (§B above holds L1-01 through L5-01).

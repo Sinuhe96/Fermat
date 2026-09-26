@@ -5,7 +5,31 @@ requires skill discovery/activation and infrastructure readiness before any
 chunk or mathematics work; those rules govern *how* to work, while this file
 records *where things stand*. `README.md` is the runtime command reference.
 
-Last updated: 2026-09-26 (sixth session) — **`L3-01` DONE** (bổ đề 3:
+Last updated: 2026-09-26 (eighth session — **`L5-01` Lean lane, now DONE**) —
+bổ đề 5 is verified end to end: `03-lean/L5/Basic.lean` holds `L5_step_S2` …
+`L5_step_S18`, three helpers and the assembly `L5_bo_de_5`, reached in 29
+compile rounds (one batched probe + 18 author-step rounds + the assembly; 8 of
+the rounds were F2 shape repairs, none F1/F3/F4), EXIT:0, zero warnings, zero
+`sorry`, `#print axioms` = propext/Classical.choice/Quot.sound only. The
+chunk's evidence block is filled (`lean_decls`), `status: DONE` in the YAML and
+the ledger, `[[lean_lib]] L5` in the tracked lakefile and `import L5.Basic` in
+`Main.lean`; `progress.py --check` and `04-sympy/run_all.py` (7/7) are green —
+**5/7 chunks DONE, `L6-01` the only chunk left**. The parallel L4 lane finished
+too (bổ đề 4 DONE in `03-lean/L4/Basic.lean`). Eighth-session detail: the
+"Next step" items below, the L5 session entry in
+`03-lean/MATHLIB_API_LESSONS.md` and patterns P14–P18 in
+`03-lean/ENCODING_MAP.md` §B L5-01.
+
+Last updated: 2026-09-26 (seventh session — **transcription lane only, no
+Lean**) — **`L5-01` + `L6-01` frozen for the Lean lane**: bổ đề 5 and bổ
+đề 6 transcribed with both records (literal `source_text` + ordered step
+maps S0–S18 / S0–S27), evidence bound to the current extraction run, and
+sympy screens PASS; `lean_decls` empty and no F1–F4/S1 assigned for
+either. Both chunks are IN_PROGRESS; `progress.py --check` and
+`04-sympy/run_all.py` (7/7) are green. Details, watch items, dependency
+edges and the reconnaissance findings: the "This session (2026-09-26,
+L5-01 + L6-01)" block below and "Hardening candidates" before the gotchas.
+Sixth session (2026-09-26) — **`L3-01` DONE** (bổ đề 3:
 statement p. 1 §A, proof p. 2 §3). All author steps S0–S11 encoded
 one-at-a-time and classified: every step **S1**, assembly `L3.L3_bo_de_3`;
 final compile EXIT:0, zero warnings, zero `sorry`, `#print axioms` on all
@@ -39,24 +63,124 @@ screen PASS (3644 real witnesses at n = 1). L1-01 remains DONE.
 L7-FRAG-01 = BLOCKED on author query Q-001. Next: another small lemma
 (bổ đề 5c/5đ per the earlier directive, or bổ đề 3 in source order).
 
-Concurrent session (2026-09-26, transcription only, stopped before the Lean
-lane): **`L4-01` transcription frozen** — bổ đề 4 (statement p. 1, proof
-p. 2 §4) transcribed into `02-chunks/chunks/L4-01.yml` with both records
-(literal `source_text` + ordered step map S0–S7), evidence bound to the
-current extraction run (pages 1 OK / 2 MANUAL → `PASS_WITH_MANUAL`;
-`page-00{1,2}-300dpi-full.png`). Screen `04-sympy/test_l4_01.py` PASS on
-REAL witnesses (252 inference + 836 parametrisation), with two red-flag
-checks that the author's side hypotheses are load-bearing (m prime in S2;
-m ∤ h·l·r in S5). Status IN_PROGRESS: **no Lean work done** — `lean_decls`
-is empty and no step has an F1–F4/S1 classification. L4's S6 cites bổ đề 3
-("áp dụng bổ đề 3"), so L4-01 must gain `depends_on: [L3-01]` once L3-01 is
-DONE, and the Lean lane must import bổ đề 3 rather than re-derive it.
-Capability note: that session had NO vision (image reads return binary, the
-repo vision-probe included), so the render read for the transcription is the
-human-signed REVIEWED region LaTeX (p1 R2/R3, p2 R2), cross-checked against
-both engine text layers — not a fresh independent vision pass. A second
-session is transcribing bổ đề 3 (`L3-01`, TODO) in parallel; `status.tsv`,
-`PROGRESS.md` and this file are shared write targets between the two.
+This session (2026-09-26, L4-01): **transcription frozen, Lean lane under
+way** — bổ đề 4 (statement p. 1, proof p. 2 §4) transcribed into
+`02-chunks/chunks/L4-01.yml` with both records (literal `source_text` +
+ordered step map S0–S7) and evidence bound to the extraction run (pages
+1 OK / 2 MANUAL → `PASS_WITH_MANUAL`; `page-00{1,2}-300dpi-full.png`).
+Screen `04-sympy/test_l4_01.py` PASS on REAL witnesses (1748 constructed
+witnesses, 304 each at the schema-required n ∈ {5,7,11,13}, plus 252 real
+inference witnesses), with two red-flag checks that the author's side
+hypotheses are load-bearing (m prime in S2; m ∤ h·l·r in S5).
+`depends_on: [L3-01]` is set; `03-lean/L4/Basic.lean` does
+`import L3.Basic` (never a pasted copy) and S6 cites `L3.L3_bo_de_3`.
+
+Lean state — **`L4-01` DONE: all six declarations S1, file EXIT:0, no
+warnings, no `sorry`**, `#print axioms` on every declaration =
+[propext, Classical.choice, Quot.sound]. Eleven rounds:
+
+  round 1  probe, 26 names — `import L3.Basic` resolves (B-002 fixed)
+  round 2  `L4_step_S1_S2` — **S1**, first try
+  round 3  probe batch 2, 16 further names (one unknown, unused)
+  round 4  `L4_step_S3` — **F2** (two reversed `.symm`s, one
+           `Int.natAbs_dvd_natAbs` direction: ℤ→ℕ is `.mpr`)
+  round 5  `L4_step_S3` — **S1**
+  round 6  `L4_step_S4` — **F2** (two more reversed `.symm`s + the
+           `Int.gcd` rewrite trap)
+  round 7  `L4_step_S4` — **F2** (same trap, new shape: the goal's *other*
+           side mentions `Int.gcd h l`)
+  round 8  `L4_step_S4` — **S1** (`conv_lhs => rw [...]`)
+  round 9  `L4_step_S5` — **F2** (one wrong-direction `Int.natCast_dvd.mp`)
+  round 10 `L4_step_S5` — **S1**
+  round 11 `L4_step_S6` + assembly `L4_bo_de_4` — **both S1**, first try
+
+All four F2 rounds were tactic/API shape; no F1/F3/F4, and no author step
+was rejected. `L4-01` is DONE in the ledger; `progress.py --check` exit 0
+with the evidence block machine-verified; the sympy screen covers the
+schema-required `n ∈ {5,7,11,13}` (304 constructed real witnesses each);
+`import L4.Basic` is in `03-lean/Main.lean`. **Bổ đề 6's `depends_on: [L4-01]`
+edge is now satisfied — L6-01 is unblocked as far as L4 goes.**
+Per-round diagnosis log: `03-lean/L4-01_compile_20260926.log`; step table,
+reusable signatures and patterns P12/P13 in `ENCODING_MAP.md` §B Chunk L4-01.
+Capability note: this session had NO vision (image reads return binary, the
+repo's own vision-probe included), so the render read behind the
+transcription is the human-signed REVIEWED region LaTeX (p1 R2/R3, p2 R2)
+cross-checked against both engine text layers — not a fresh vision pass.
+Cost note: one round ≈ 5–6 min wall here (the `import Mathlib` floor);
+do not run two compile-heavy sessions at once.
+
+This session (2026-09-26, **L5-01 + L6-01, transcription lane only** — the
+Lean lane stayed closed because bổ đề 4's lane is live in another process):
+
+- **`L5-01` (bổ đề 5)** — statement p. 1 (region `P001·R3`), proof p. 2 §5
+  → p. 3 §5 (`P002·R2`, `P003·R1`, `P003·R2`); step map **S0–S18** (shared
+  alternating-sum setup, then parts a) b) c) d)); `depends_on: []` (the
+  proof cites no earlier bổ đề — only its own part b)); regions/renders set;
+  sympy `04-sympy/test_l5_01.py` **PASS** (exact symbolic identities, 1092
+  integer instances, a)–d) on real instances — 2190/416/990/172 hits — plus
+  4 load-bearing-hypothesis red flags).
+- **`L6-01` (bổ đề 6)** — statement p. 1 (`P001·R3`), proof p. 3 §6 →
+  p. 4 §6.2.1 (`P003·R2/R3`, `P004·R1/R2`); step map **S0–S27** with the
+  6.1 / 6.2 / 6.2.1 case tree; `depends_on: [L3-01, L4-01, L5-01]` (print
+  cites bổ đề 3 three+two times, bổ đề 4 once, bổ đề 5 a) and b)); sympy
+  `04-sympy/test_l6_01.py` **PASS** (vacuity check + 15 inference /
+  parametrisation checks + 4 red flags).
+- **Watch items recorded in the chunks, no author query needed** (both were
+  re-derived by the integration session and are F3, not F4):
+  1. bổ đề 5 a) states TWO conjuncts but the print derives only
+     `(u+v, A) = 1`; the missing `A ⋮̸ n` follows in one line from the
+     author's own binomial form (`A ≡ (u+v)^{n−1} mod n`) — checked on 1805
+     instances. bổ đề 6 uses both conjuncts.
+  2. bổ đề 6's 6.1 proves `(u+v) ⋮̸ n`, `(t−v) ⋮̸ n`, `(t−u) ⋮̸ n` with a
+     bare "suy ra": `n | (t−v)` gives `n | u` and `n | (t−u)` gives `n | v`
+     via (5)/(6), contradicting the statement's `uv ⋮̸ n`; `n | (u+v)` gives
+     `n | t` via (4), contradicting 6.1's case. One step each.
+  3. bổ đề 6's 6.1 never treats `k = 0` (only §6.2.1 does), yet the
+     conclusion asserts `k ≠ 0`; the author's own §6.2.1 argument
+     (`a^{n−1} = a'` with `(a,a') = 1` ⟹ `|a| = 1`, so `u, v = ±1`,
+     `t = u+v ∈ {−2,0,2}` and `t^n = t` forces `t = 0`) closes it.
+  4. Printed, transcribed as printed: the 6.2 exponent order `n^{sn−1}`
+     (in (4''), (5'')) vs `n^{ns−1}` elsewhere — typographic, since
+     `sn − 1 = ns − 1`; and the case labels (4'),(5'),(6') / (5'') are
+     re-used with different content (do not assume label uniqueness).
+- **Coordination with the L4-01 lane (message received 2026-09-26).** L4-01
+  is at 3 of 6 declarations S1 (S1+S2, S3, S4), file EXIT:0; S5, S6, S7
+  remain, so **L6-01 cannot reach DONE until L4-01 is DONE** (schema
+  criterion 3) — its transcription/screen work is unaffected, its Lean lane
+  is not started, and L5-01's Lean lane is independent of L4. Interfaces
+  promised by that lane: `import L4.Basic`, cite `L4.L4_bo_de_4` (never
+  paste); `L4-01.yml → formal_hint` holds the pre-frozen shape, frozen only
+  at DONE. Its one substantive technical claim that I checked and **partly
+  corrected** is recorded in `L5-01.yml`'s F3 watch-list: bổ đề 5 d) is the
+  author's FLT-mod-n + binomial chain, so
+  `ZMod.pow_card_sub_one_eq_one`/`Int.prime_dvd_pow_sub_one` is the right
+  tool for its first half (exponent n−1 mod n) and the wrong one for its
+  final modulus n² (exponent n(n−1)); the Euler-mod-n² route
+  (`ZMod.isUnit_natCast_iff_not_dvd_pow`, `ZMod.card_units_eq_totient`,
+  `Nat.totient_prime_pow_succ`) is a documented fallback, NOT a substitute
+  for the author's inference (AGENTS.md core rule: no different route to
+  the same conclusion). Its two env/API warnings are logged in
+  `MATHLIB_API_LESSONS.md` (L4 section item 7) and in "Hardening
+  candidates": the generalized `Int.gcd`-argument rewrite trap (never `rw` a
+  hypothesis whose variable occurs as an `Int.gcd` argument — `calc` /
+  `conv_lhs` instead) and the `hx h.symm` reflex after `rw [h, mul_zero]`.
+  House rules restated by that lane and followed here: **no commit while
+  another session has uncommitted edits in `status.tsv`/`PROGRESS.md`/
+  `HANDOFF.md`** (a sweep once captured an L3 ledger row) — this session
+  committed nothing, only re-applied its own paragraphs; exit-code evidence
+  must not travel through the shell bridge (`$?` gets mangled — capture it
+  container-side, as done here: `progress.py --check exit=0`,
+  `run_all.py exit=0` written to a file inside the container and read
+  back); a killed build can leave `.ilean`/`.trace` without `.olean`, which
+  makes Lean refuse the import — recompile the producer instead of
+  `down -v` / image rebuild / `cache get`.
+- **Reconnaissance (two scouts, read-only)** — the verification-needs map
+  (pinned lemma names with `file:line`, the two genuine API gaps to probe
+  first: `Int.gcd_add_mul_left_left` / `Int.gcd_mul_left` have no
+  declaration in the pinned tree, only usages; `Commute.geom_sum₂_mul` is
+  the factorisation workhorse; `Nat.Prime.dvd_choose_self` for `n ∣ C_n^k`)
+  and the build-environment cross-check (wiring, gate blind spots,
+  concurrency plan) are summarised in "Hardening candidates" below.
 
 ---
 
@@ -73,6 +197,12 @@ equation) are unsatisfiable for n ≥ 3. **`L4-01` (bổ đề 4)
 IN_PROGRESS** — transcription, step map S0–S7, sympy screen and evidence
 block are done (parallel session); its Lean lane is not started and now
 carries `depends_on: [L3-01]`.
+**`L5-01` (bổ đề 5) and `L6-01` (bổ đề 6) IN_PROGRESS** — transcription,
+step maps (S0–S18 / S0–S27), sympy screens and evidence blocks complete
+(seventh session, transcription lane only); Lean lanes untouched
+(`lean_decls` empty, no F1–F4/S1 assigned) and `L6-01` declares
+`depends_on: [L3-01, L4-01, L5-01]`, so it is the first chunk that must
+import TWO producers (L4 and L5) as well as L3.
 Lemma 7's non-divisibility chunk stays transcribed, step-mapped,
 sympy-verified and BLOCKED on the author-facing sign inconsistency
 Q-001; its flat-copy Lean file still has F2 errors plus one `sorry`
@@ -281,31 +411,48 @@ so even a recreate is cheap.
 Stages in `pipeline/PIPELINE.md`. Verified working: 01-extract (pypdf +
 pymupdf, SHA256-pinned), 02-chunks (schema + ledger + YAML; all existing
 chunks have both required records), 03-lean (compiles in container; API
-lessons + encoding map live), 04-sympy (L1 + L2 + L3 + L4 + L7 screens all
-PASS — re-run together after L3-01), smoke (exit 0), progress.py (exit 0),
-05-feedback (Q-001 OPEN), BLOCKERS (B-001 RESOLVED).
+lessons + encoding map live), 04-sympy (L1 + L2 + L3 + L4 + L5 + L6 + L7
+screens: `run_all.py` 7/7 PASS as of 2026-09-26, transcription session),
+smoke (exit 0), progress.py (exit 0), 05-feedback (Q-001 OPEN), BLOCKERS
+(B-001/B-002 RESOLVED, B-003 OPEN).
 
 Chunk states: `L3-01` DONE (bổ đề 3, gcd-splitting of a·b = c^n, steps
 S0–S11 all S1, assembly `L3_bo_de_3`); `L2-01` DONE (bổ đề 2,
 contrapositive power-lift, assembly `L2_bo_de_2`); `L1-01` DONE (bổ đề 1,
-six steps S1, assembly `L1_bo_de_1`); `L4-01` IN_PROGRESS (bổ đề 4 —
-transcription, step map S0–S7, sympy screen and evidence block complete
-from a parallel session; Lean lane not started; `depends_on: [L3-01]`);
-`L7-FRAG-01` BLOCKED (Q-001). Five chunks exist: 3 DONE / 1 IN_PROGRESS /
-1 BLOCKED.
+six steps S1, assembly `L1_bo_de_1`); `L4-01` DONE (bổ đề 4 — six
+declarations S1 in `03-lean/L4/Basic.lean`, assembly `L4_bo_de_4`;
+`depends_on: [L3-01]`); `L5-01` DONE
+(bổ đề 5 — statement p. 1, proof p. 2 §5 → p. 3 §5; S2–S18 all S1 plus the
+assembly `L5_bo_de_5` in `03-lean/L5/Basic.lean`, 29 rounds, EXIT:0, zero
+warnings, zero `sorry`, only permitted axioms; no dependency, `import Mathlib`
+only; round log `03-lean/L5-01_compile_20260926.log`); `L6-01` IN_PROGRESS (bổ đề 6 —
+transcription, S0–S27 incl. the 6.1/6.2/6.2.1 case tree, sympy screen,
+evidence block complete; `depends_on: [L3-01, L4-01, L5-01]`; Lean lane
+not started); `L7-FRAG-01` BLOCKED (Q-001). Seven chunks exist:
+5 DONE / 1 IN_PROGRESS / 1 BLOCKED.
 
-Reuse: L1/L2/L3 are now wired as Lean modules (`[[lean_lib]]` entries in
+Reuse: L1–L5 are now wired as Lean modules (`[[lean_lib]]` entries in
 the tracked `03-lean/lakefile.toml`; `proof/compile_lean.sh` syncs it into
 the Lake project and publishes each compiled module's olean, after removing
-any previous one so a failed compile cannot leave a stale artifact). The
-first real consumer exists: `L4-01` declares `depends_on: [L3-01]`, so its
-Lean lane is the first chunk that must import/reuse a DONE chunk's
-declarations (`import L3.Basic`, then `L3.L3_bo_de_3` or its step lemmas)
-instead of re-deriving them; the p. 6 main theorem (bổ đề 1) and bổ đề 6
-remain the other consumers. Rule + cost model + the chunk-file skeleton:
+any previous one so a failed compile cannot leave a stale artifact), and
+`Main.lean` imports `Common`, `L1`–`L5`. The consumers exist: `L4-01` imports
+`L3.Basic` and cites `L3.L3_bo_de_3`; the p. 6 main theorem (bổ đề 1) and
+bổ đề 6 remain the other consumers — L6-01 is the first chunk with three
+producer edges. Rule + cost model + the chunk-file skeleton:
 `pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk"; the fixed
 wiring gap and the still-open `Pilot` aggregator defect:
 `pipeline/BLOCKERS.md` B-002/B-003.
+
+Consumer edges for L6-01 (reconnaissance, 2026-09-26): `L5-01` needs
+`import Mathlib` only (its proof cites no earlier bổ đề — confirmed when its
+lane compiled; `L5` is now declared in the tracked lakefile and in
+`Main.lean`); `L6-01` needs `import L3.Basic`, `import L4.Basic`,
+`import L5.Basic` and must cite `L3.L3_bo_de_3` (five instances),
+`L4.L4_bo_de_4` (once, in 6.2) and `L5_bo_de_5` a)/b). Its `[[lean_lib]]`
+entry must be appended in ONE edit with its `.lean` file (a lib whose root file
+is absent is a lake-configuration hazard, and `compile_lean.sh` copies the repo
+lakefile into the package on every run), and the `import Lk.Basic` line added
+only after each producer has compiled green once.
 
 Workflow hardening (2026-09-25, same day): the extraction-stage
 fidelity gate is now **consumed per chunk** — every chunk carries an
@@ -345,16 +492,42 @@ the page to `STALE`, then `regions.py verify` + `signoff` re-close it).
 records point at them:
 
 1. **`L4-01` (bổ đề 4), Lean lane** — a parallel session already froze its
-   transcription, step map S0–S7, sympy screen and evidence block; the
-   Lean lane is untouched (`lean_decls:` empty, no F1–F4/S1 assigned). It
+   transcription, step map S0–S7, sympy screen and evidence block; it
    declares `depends_on: [L3-01]` because its S6 applies bổ đề 3, so it is
    also the first chunk that must **wire and reuse** a DONE chunk
    (`ENCODING_MAP.md` §A "Reusing a DONE chunk": `[[lean_lib]] name = "L3"`
-   + `import`), rather than re-deriving bổ đề 3.
-2. **bổ đề 5c / 5đ** (user directive 2026-09-25; cited by Lemma 7's proof),
-   or **bổ đề 5 a) b)** (p. 1 §A, cited by the same chain).
-3. **bổ đề 5 in source order** / bổ đề 6 — bổ đề 6 is bổ đề 1's second
-   consumer (`(u,v) = (u,t) = (v,t) = 1` as a hypothesis).
+   + `import`), rather than re-deriving bổ đề 3. (Its lane is live; see the
+   session block above for the round log.)
+2. **`L5-01` (bổ đề 5), Lean lane — DONE (this session, 29 rounds).**
+   `03-lean/L5/Basic.lean` holds `L5_step_S2` … `L5_step_S18`, the helpers
+   `L5_gcd_eq_one_of_not_dvd`, `L5_zmod_intCast_eq_zero_iff`,
+   `L5_nsq_dvd_mul_pow`, and the assembly `L5_bo_de_5`; EXIT:0, zero
+   warnings, zero `sorry`, axioms = propext/Classical.choice/Quot.sound only;
+   the chunk's evidence block is filled (`lean_decls`) and the gate is green.
+   `L5` is declared in the tracked lakefile and imported by `Main.lean`.
+   29 rounds: 1 batched probe + 28 file compiles (17 green first try, 10
+   repairs, all F2 shapes, none F1/F3/F4, plus one warning-only round).
+   The repairs: `neg_mul`
+   fires the other way; `omega` cannot do nested `Nat` subtraction (use
+   `Nat.sub_succ'` / `Nat.sub_right_comm` / `Nat.sub_add_comm`); the two sides
+   of a printed exponent must be *spelled* identically (`n-2-i` vs the
+   unfolded `(n-1)-1-i`); `Int.Prime.dvd_pow'` needs `(k := n)`;
+   `Int.gcd_add_mul_*` shift lemmas are order-sensitive; `sub_zero` can miss a
+   printed `- 0` in `ZMod n` (go through an equality and `ring`);
+   `CharP.intCast_eq_zero_iff` takes `R` and `p` explicitly; `have` (not
+   `haveI`) for Prop-valued local instances. All recorded in
+   `MATHLIB_API_LESSONS.md` (§ L5 session) with patterns P14–P18 in
+   `ENCODING_MAP.md` §B L5-01.
+3. **`L6-01` (bổ đề 6), Lean lane — the remaining chunk** (its producers L3,
+   L4 and L5 are all DONE, so `progress.py` now lists it as "ready to
+   start"). It imports L3, L4 **and** L5 and cites `L3_bo_de_3`
+   (5×), `L4_bo_de_4` (6.2) and `L5_bo_de_5` a)/b). Expect ~12–18 compile
+   rounds if smooth (28 author steps, ~15–20 of them substantive). Watch
+   the three F3 derivations in the chunk's F1 notes (6.1's three `⋮̸ n`,
+   the 6.1 `k = 0` case, 6.2's `(u+v) ⋮ n`), the printed label re-use, and
+   the `n`-adic bookkeeping behind `s ≥ 2`.
+4. **bổ đề 5c / 5đ** (user directive 2026-09-25; cited by Lemma 7's proof)
+   and the rest of bổ đề 7's chain, in source order, after the above.
 
 Whichever is chosen, confirm the statement + proof against a 300 dpi
 render (the reviewed region records are the authoritative transcription;
@@ -383,6 +556,74 @@ Follow AGENTS.md exactly:
 8. Then L7: set `depends_on`, restart its loop at S0 from its existing
    step map. Q-001 stays with the author — no L7 completion without their
    sign answer.
+
+---
+
+## Hardening candidates for the next Lean sessions (reconnaissance 2026-09-26)
+
+Two read-only scouts mapped what verifying L5-01/L6-01 will need and
+cross-checked the build environment. **Nothing found blocks the Lean work**
+(the two candidate author-proof gaps were re-derived and are F3 — see the
+session block); these are the ranked, evidence-backed changes.
+
+Before the L5/L6 Lean lanes start:
+
+1. **Freeze the step→declaration bunching and the whole `#check` name list
+   in the chunk YAML before the first compile.** L5-01/L6-01 already carry
+   proposed `Lk_step_S…` maps; the probe list must be authored from them.
+   Evidence: L4 spent two probe rounds (26 names, then 16 more, one unknown
+   and unused) ≈ 11 min of the ~5.5 min/round floor.
+2. **Probe the two gcd-gap names first.** `Int.gcd_add_mul_left_left` and
+   `Int.gcd_mul_left`/`_right` have **no declaration site in the pinned
+   packages tree**, only usages (`Mathlib/Data/Int/Basic.lean:89`,
+   `Mathlib/NumberTheory/PythagoreanTriples.lean:154`), so get their exact
+   types in one `#check` batch — or route bổ đề 5 b)'s `(u+v, A) = n`
+   through the pin-located `IsCoprime` API
+   (`Int.isCoprime_iff_gcd_eq_one`, `Int.dvd_of_dvd_mul_left_of_gcd_one`).
+   Pin-confirmed workhorses for both chunks: `Commute.geom_sum₂_mul`
+   (`Mathlib/Algebra/Ring/GeomSum.lean:182`) for the `(u+v)·Σ` factorisation,
+   `add_pow`/`sub_pow` (`Mathlib/Data/Nat/Choose/Sum.lean:76/81`) for the
+   `C_n^k` form, `Nat.Prime.dvd_choose_self` (`.../Choose/Dvd.lean:35`) for
+   `n ∣ C_n^k`, `Int.ModEq.pow_card_sub_one_eq_one` /
+   `Int.prime_dvd_pow_sub_one` for FLT.
+3. **Serialise compiles across sessions** — no lock mechanism exists in the
+   repo. One `compile_lean.sh` in flight, order L4 → L5 → L6; a second
+   concurrent compile measured 922 s vs ~150–350 s clean.
+4. **Add the `[[lean_lib]]` entries for L5/L6 in one edit with their
+   `.lean` files**, then `Main.lean` imports only after each producer
+   compiles green (see the "consumer edges" note above).
+
+Gate blind spots (today's DONE evidence gate does not check these — none of
+them blocks the current chunks, all three are worth closing before the
+next DONE flip):
+
+5. `renders:` is **name-blind**: `check_evidence` only tests that the file
+   (and a `page-*.json` sidecar) exists, never that the render belongs to a
+   page in `pdf_pages` (`progress.py:186-192`). L5-01/L6-01 carry the right
+   per-page renders by hand; the gate cannot tell.
+6. `lean_decls` is a **bare word-boundary search** (`progress.py:202-204`):
+   a name appearing only in a docstring or in the `#print axioms
+   Lk.<name>` footer satisfies it. On a 28-step chunk (L6-01) a dropped
+   step theorem is the most plausible way to reach DONE with a missing
+   declaration — require a top-level `theorem|lemma|def <name>` match plus
+   the assembly name.
+7. `transcription:` and `sympy_test:` are **never machine-checked**, and
+   nothing runs `04-sympy/run_all.py` automatically (it was run by hand this
+   session: 7/7 PASS), so DONE criterion 2 has no trace in the gate.
+8. No compile/olean field in the evidence block: a consumer can import a
+   stale producer after a producer source edit (ENCODING_MAP §A "Olean
+   staleness caveat"). L6-01 is the first chunk with three producer edges,
+   so a `lean_file_sha256` + "olean newer than source" check would help.
+
+Nice to have: keep one `LkProbe.lean` per lemma as the durable, reusable
+name list (L4Probe.lean is currently overwritten per round); print the round
+count and wall clock in the compile-log header; add a `read_backing:` field
+recording which read backs a transcription, so a session without working
+vision cannot silently launder an unread render as its authority (this
+session's subagent harness *could* route a crop to a vision model but its
+p. 4 output was self-inconsistent — dropped a superscript character,
+rendered `⋮` as `:` — so the signed region LaTeX stayed the read of
+record, exactly as L4-01 recorded).
 
 ---
 

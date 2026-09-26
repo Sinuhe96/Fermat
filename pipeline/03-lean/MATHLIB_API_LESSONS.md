@@ -403,6 +403,141 @@ over ℤ; these are the API facts that did the work.
    plus one round that compiled but reported the unused-`hb` linter
    warning (fixed in the next round). No F1/F3/F4 outcome occurred.
 
+## Session 2026-09-26 — L4-01 (bổ đề 4), DONE (all six declarations S1)
+
+State: `03-lean/L4/Basic.lean` compiles EXIT:0, zero warnings, zero `sorry`;
+`#print axioms` on `L4_step_S1_S2`, `L4_step_S3`, `L4_step_S4`,
+`L4_step_S5`, `L4_step_S6` and the assembly `L4_bo_de_4` = propext,
+Classical.choice, Quot.sound only. Eleven rounds: 2 probe rounds pinned every
+name below before the first step, 6 author-step rounds, and 4 F2 rounds —
+every F2 tactic/API shape, no F1/F3/F4. Per-round diagnosis:
+`03-lean/L4-01_compile_20260926.log`. Step table, reusable signatures and
+patterns P12/P13: `ENCODING_MAP.md` §B Chunk L4-01.
+
+1. **`Int.pow_dvd_pow_iff` EXISTS** —
+   `∀ {a b : ℤ} {n : ℕ}, n ≠ 0 → (a ^ n ∣ b ^ n ↔ a ∣ b)`. The L1 session's
+   item 10 above ("No `pow_dvd_pow_iff_left` for ℤ/ℕ at this pin") is too
+   strong: the ℤ form is there. L1's own proof routes through
+   `Nat.factorization` and is unaffected.
+2. **`Int.Prime.dvd_pow' {n : ℤ} {k p : ℕ} (hp : Nat.Prime p)
+   (h : (p : ℤ) ∣ n ^ k) : (p : ℤ) ∣ n`** — the ℤ-output prime-power step,
+   taking `Nat.Prime p` directly, so no `Prime (p : ℤ)` bridge is needed
+   (`Int.Prime.dvd_pow` is the ℕ-output / `natAbs` variant).
+3. **An m-adic decomposition of a ℤ number**: Mathlib has no ℤ version, but
+   `Nat.exists_eq_pow_mul_and_not_dvd (hn : n ≠ 0) (p) (hp : p ≠ 1) :
+   ∃ e n', ¬p ∣ n' ∧ n = p ^ e * n'` does the work on `z.natAbs`. Transport
+   back by destructuring `(m : ℤ) ^ s ∣ z`, obtained from the ℕ
+   decomposition with `Int.natCast_dvd.mpr` (`↑m ∣ n ↔ m ∣ n.natAbs`) plus
+   `simpa only [Nat.cast_pow]`; maximality of `s` gives `m ∤ r` (via
+   `r.natAbs = R`, cancelling `m ^ s ≠ 0`). The generic
+   `FiniteMultiplicity.exists_eq_pow_mul_and_not_dvd` is the alternative
+   when a `FiniteMultiplicity` instance is already in context.
+4. **Comparing m-adic exponents without valuations** (the S5 shape): from
+   `m ^ 2 ∣ (m ^ s * R) ^ n` with `¬m ∣ R`, cancel `R ^ n` by coprimality —
+   `(hm.coprime_iff_not_dvd.mpr hR).pow 2 n` gives `Nat.Coprime (m^2) (R^n)`,
+   then `Nat.Coprime.dvd_of_dvd_mul_right` — and finish with
+   `Nat.pow_dvd_pow_iff_le_right hm.one_lt :
+   (m ^ 2 ∣ m ^ (s * n) ↔ 2 ≤ s * n)`. This needs no `Finsupp`-level
+   `factorization` computation at all. Names used:
+   `Nat.Prime.coprime_iff_not_dvd`, `Nat.Coprime.pow`,
+   `Nat.Coprime.dvd_of_dvd_mul_right`, `Nat.pow_dvd_pow_iff_le_right`.
+5. **Two slips that cost the L4 F2 round (round 4)** — both pure shape, no
+   change of statement or inference:
+   - after `rw [h, mul_zero] at h`, the hypothesis IS `c.natAbs = 0`, so
+     `hC0 h` is right and `hC0 h.symm` is a type error;
+   - `Int.natAbs_dvd_natAbs : a.natAbs ∣ b.natAbs ↔ a ∣ b`, so the ℤ→ℕ
+     direction is **`.mpr`** and ℕ→ℤ is `.mp` (L1's item 14 says the same —
+     it is still easy to reach for `.mp` first).
+6. `Nat.factorization_self` does **not** exist (probe-confirmed); the useful
+   companions are `Nat.Prime.factorization_pow`
+   (`(p ^ k).factorization = fun₀ | p => k`) and the already-known
+   `Nat.factorization_pow_self`.
+7. **The `Int.gcd` rewrite trap also bites from the OTHER side of the goal**
+   (L4 rounds 6–7; L3's items 2–3 cover the case where the goal itself
+   contains the gcd). If the goal is `LHS = RHS` and `RHS` mentions
+   `Int.gcd x y` while the rewrite substitutes `x` or `y`, a plain `rw`
+   rewrites *inside* the gcd argument. Relaying a witness for
+   `a = (m:ℤ)^k * l` with `hl' : l = ↑(Int.gcd h l) * l'`, the step
+   `(m:ℤ)*(m:ℤ)^j * l = (m:ℤ)*(m:ℤ)^j * (↑(Int.gcd h l) * l')` by
+   `rw [hl']` produces
+   `… = ↑m * ↑m ^ j * (↑(Int.gcd h (↑(Int.gcd h l) * l')) * l')`.
+   Remedy: `conv_lhs => rw [hl']` (or `conv_rhs`). General rule for this
+   project: **never `rw` a hypothesis whose variable occurs as an `Int.gcd`
+   argument** — either avoid the rewrite (`calc` + `push_cast` + `ring`) or
+   confine it with `conv`. Six occurrences across L3 rounds 1/3 and L4
+   rounds 6/7.
+8. **Exponent comparison has two routes; item 4 above is only one of them.**
+   L4's S5 ended up using the *factorization* route, and it is the better one
+   whenever the equation must be transported to `ℕ` anyway: for prime `m` and
+   `m ∤ X`, `(m ^ a * X).factorization m = a` is a short local fact
+   (`Nat.factorization_mul`, `Finsupp.add_apply`,
+   `Nat.factorization_pow_self`, `Nat.factorization_eq_zero_of_not_dvd`), and
+   two `rw` steps then compare the two sides' `natAbs` factorizations at `m`.
+   The coprime route of item 4 (`Prime.coprime_iff_not_dvd` + `Coprime.pow` +
+   `dvd_of_dvd_mul_right` + `Nat.pow_dvd_pow_iff_le_right`) is better when
+   everything already lives in `ℕ` — it is what `L4_step_S3` uses for
+   `2 ≤ n·s`, where no transport is involved.
+
+## Session 2026-09-26 — L5-01 (bổ đề 5), DONE (all 21 declarations S1)
+
+State: `03-lean/L5/Basic.lean` compiles EXIT:0, zero warnings, zero `sorry`;
+`#print axioms` on `L5_step_S2` … `L5_step_S18`, the assembly `L5_bo_de_5` and
+the three helpers = propext, Classical.choice, Quot.sound only. Twenty-nine
+rounds: one batched probe round (`#check @` list, which also caught the
+`∑ i ∈ s` notation), then 28 compiles of the file — 17 green on the first try
+and **10 repaired, every repair an F2 shape (no F1/F3/F4)** — plus one green
+round with two unused-`simp` warnings that the next round removed.
+Per-round diagnosis: `03-lean/L5-01_compile_20260926.log`. Step
+table, reusable signatures and patterns P14–P18: `ENCODING_MAP.md` §B Chunk
+L5-01.
+
+1. **A printed division can be avoided by proving the identity in `ℤ[X]`.**
+   S3's `A = Σ_k (−1)^kC_n^k(u+v)^{n−1−k}v^k` is the author's "mà u+v ≠ 0,
+   nên …", and dividing is illegitimate in b)–d) where `u+v` may vanish. Both
+   sides satisfy `(X + C v)·Y = X^n + (C v)^n` by S2 — stated *generically*
+   over `CommRing R`, so it instantiates at `ℤ[X]` — hence `(X + C v)·(A−B)
+   = 0`, `mul_eq_zero.mp` plus `Polynomial.X_add_C_ne_zero v` give `A = B` as
+   polynomials, and `congrArg (Polynomial.eval u)` + `unfold A B` +
+   `Polynomial.eval_finsetSum` + `simpa` transfers to `ℤ`. One round, no index
+   arithmetic.
+2. **`CharP.intCast_eq_zero_iff` takes `R` and `p` explicitly** (binders
+   `variable (R : Type*)` outside the namespace and `(p : ℕ)`): the call is
+   `CharP.intCast_eq_zero_iff (ZMod n) n x`; passing only `x` fails with
+   "expected `Type`". It is the bridge `(x : ZMod n) = 0 ↔ n ∣ x`.
+3. **`omega` does not do nested `Nat` subtraction.** Both `n - 1 - (i+1) =
+   n - 1 - 1 - i` and `n - 1 - k = (n - 2 - k) + 1` failed with "No usable
+   constraints found", while `Nat.sub_succ' (m n) : m - n.succ = m - n - 1`,
+   `Nat.sub_right_comm`, `Nat.sub_add_comm (h : k ≤ n) : n + m - k = n - k + m`
+   and `Nat.sub_one_add_one_eq_of_pos` closed them in one or two `rw`s.
+   `Nat.sub_succ` is the **`.pred`** variant (`n - (k+1) = (n-k).pred`).
+4. **`Int.Prime.dvd_pow'` needs its exponent** (`(k := n)`); without it the
+   elaborator cannot synthesize `k` from the divisibility hypothesis.
+5. **The `Int.gcd_add_mul_*` shift lemmas are order-sensitive**:
+   `m.gcd (n + m*k) = m.gcd n` (`_left_right`) versus `m.gcd (n + k*m) =
+   m.gcd n` (`_right_right`). So in `A = (u+v)·B′ + n·v^{n−1}` the non-multiple
+   summand must come first — state the decomposition as `n·v^{n−1} + (u+v)·B′`.
+6. **`sub_zero` may fail to match a printed `- 0` in `ZMod n`** ("Did not find
+   an occurrence of the pattern `?a - 0`" though the target printed exactly
+   that). Going through a separately stated equality and finishing with `ring`
+   (which normalizes the numerals) works.
+7. **Prop-valued local instances: `have` over `haveI`.** `linter.style.haveILetI`
+   fires on `haveI : Fact (Nat.Prime n) := ⟨hn⟩`; plain `have : Fact (Nat.Prime
+   n) := ⟨hn⟩` still registers for instance search (Mathlib uses that form 82
+   times) and keeps the file warning-clean.
+8. **`nonneg_of_mul_nonneg_left` wants the positive factor on the right**:
+   `0 ≤ k * n`, with `0 < n` supplied second.
+9. **`Finset.sum_range_succ'` peels the *first* term** (`∑ k ∈ range (n+1), f k
+   = ∑ k ∈ range n, f (k+1) + f 0`), `Finset.sum_range_succ` the last. The
+   choice matters: the peeled index spelling and the *unfolded* spelling of the
+   same exponent must agree syntactically for `ring` to see one atom.
+10. **`Nat.Prime.dvd_choose_self (hk : k ≠ 0) (hk' : k < p)`** is the
+    `C_n^k ⋮ n` source; `Int.prime_dvd_pow_sub_one`/`Int.ModEq.pow_card_sub_one
+    _eq_one` (both taking `IsCoprime n ↑p`) are the ℤ FLT forms — the first for
+    `u^{n−1} = 1 + mn`, the second for the `≡` statement.
+11. **Cost:** 29 rounds at 374–415 s each (single container, no contention),
+    8 of them F2 repairs; the batched probe round pinned every name that a
+    local grep could not settle.
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,

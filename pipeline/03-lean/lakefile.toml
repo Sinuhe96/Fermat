@@ -44,3 +44,11 @@ roots = ["L2.Basic"]
 [[lean_lib]]
 name = "L3"
 roots = ["L3.Basic"]
+
+[[lean_lib]]
+name = "L4"
+roots = ["L4.Basic"]
+
+[[lean_lib]]
+name = "L5"
+roots = ["L5.Basic"]

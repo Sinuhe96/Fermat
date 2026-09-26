@@ -303,6 +303,46 @@ fast compile-free check; `--full` additionally validates `import Mathlib`.
   math or accented prose into docstrings. If a docstring changes, the
   compiled declarations do not change — a re-compile is only needed when
   the proof text changes.
+- **PowerShell expands `$?` (and `$(…)`) inside a `docker … sh -c "…"`
+  string before it reaches the container.** `echo EXIT=$?` therefore prints
+  `True`, which silently destroys exit-code evidence — the failure looks
+  like success. Never rely on an exit-code echo inside an inline
+  `sh -c` string: write the script to a file (pipe it in and strip CR with
+  `tr -d '\r'`) and/or redirect the command's output to a container-side
+  file and read that back.
+- **`docker compose exec -d` is NOT a safe way to run a long build.** The
+  in-container process dies when the client detaches; three `lake build`
+  runs were killed this way. Use a tracked background task (the harness
+  keeps the client alive) with output redirected to a container-side file,
+  then poll the file. Also: a tracked background task's own log file can be
+  EMPTY for `docker compose exec` (buffered output is not captured) — the
+  container-side file is the reliable evidence channel.
+- **A killed build leaves poisonous state, not just missing output.** A
+  `lean_lib` build dir containing `.ilean` / `.trace` / `.olean.hash` but no
+  `.olean` makes Lean fail with "object file … does not exist" *instead of*
+  falling back to compiling the source — so a consumer's `import` breaks
+  until the producer is rebuilt. Remedy: recompile the producer (harness, or
+  `lake build Lk`). Do NOT read this as a Mathlib/toolchain problem, and do
+  not reach for `docker compose down -v` / image rebuild / `cache get` —
+  see the import-failure triage in `ENCODING_MAP.md` §A.
+- **Foreground tool timeouts kill `lake` mid-round.** Two `lake build` +
+  probe chains exceeded the 10-minute cap and were killed; one a few seconds
+  short of finishing. Split long chains, or run them as tracked background
+  tasks with container-side output capture.
+- **One probe round beats one round per wrong name.** A single batched
+  `#check @` file pinned 42 of 43 intended names before the first author
+  step (L4-01 rounds 1 and 3). The `import Mathlib` elaboration is the whole
+  per-round cost, so the real lever is the NUMBER of rounds: probe in bulk,
+  then one step per compile.
+- **Two sessions in one repo share write targets** (`status.tsv`,
+  `PROGRESS.md`, `HANDOFF.md`, `lakefile.toml`). An edit is rejected as
+  stale when the other session has written the file since your last read —
+  re-read and re-apply ONLY your own paragraph, never wholesale. A
+  concurrent compile session also roughly triples per-round wall time
+  (922 s measured while two sessions compiled).
+- **Cheap habit that keeps paying:** after `rw [h, mul_zero] at hyp`, `hyp`
+  is already `x = 0`, so `hx hyp` is right and `hx hyp.symm` is a type
+  error. This reversal cost a round in two different steps (L4 S3 and S4).
 
 ## Where the contracts live
 

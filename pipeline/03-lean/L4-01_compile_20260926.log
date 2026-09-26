@@ -1,0 +1,229 @@
+=== round 1: PROBE — L4Probe.lean (name/signature check, no author step) ===
+
+Command: docker compose exec -T lean sh /workspace/proof/compile_lean.sh L4Probe.lean
+Result: EXIT 0 — all 26 `#check @` probes resolved, zero errors.
+
+Purpose: ENCODING_MAP §A "Chunk file skeleton" — spend one round on the probe
+before the first step instead of one round per wrong name.
+
+Confirmed this round (the toolkit for L4's m-adic chain):
+
+  import L3.Basic resolves (wiring B-002 fixed):
+    @L3.L3_bo_de_3 : ∀ {a b c : ℤ} {n : ℕ}, Odd n → 0 < n → a ≠ 0 → b ≠ 0 →
+      c ≠ 0 → a * b = c ^ n → a.gcd b = 1 →
+      ∃ c1 c2, c1 ≠ 0 ∧ c2 ≠ 0 ∧ c1.gcd c2 = 1 ∧ c = c1 * c2 ∧
+        a = c1 ^ n ∧ b = c2 ^ n          -- S6's exact reuse target
+    @L3.L3_step_S0 : ∀ {a c : ℤ}, a ≠ 0 → c ≠ 0 → ∃ a1 c2', …
+
+  S1/S2 (m | a, m | b, a*b = c^n  ⟹  m² | c^n  ⟹  m | c):
+    @Int.Prime.dvd_pow' : Nat.Prime p → ↑p ∣ n ^ k → ↑p ∣ n   -- the S2 step, ℤ-out
+    @Int.Prime.dvd_pow  : Nat.Prime p → ↑p ∣ n ^ k → p ∣ n.natAbs
+    @Int.Prime.dvd_mul' : Nat.Prime p → ↑p ∣ m * n → ↑p ∣ m ∨ ↑p ∣ n
+    @Prime.dvd_pow_iff_dvd : Prime p → n ≠ 0 → (p ∣ a^n ↔ p ∣ a)
+    @dvd_pow, @mul_dvd_mul, @pow_dvd_pow_of_dvd
+
+  S3/S4 (the m-adic decomposition c = m^s * r with m ∤ r):
+    @Nat.exists_eq_pow_mul_and_not_dvd : n ≠ 0 → ∀ p, p ≠ 1 → ∃ e n', ¬p ∣ n' ∧ n = p^e * n'
+    Int.natAbs_mul, Int.natAbs_pow, Int.natAbs_natCast
+    @Int.natAbs_dvd_natAbs : a.natAbs ∣ b.natAbs ↔ a ∣ b
+
+  S5 (comparing m-adic exponents: k+1 = ns, then h*l = r^n):
+    @Nat.factorization_mul : a ≠ 0 → b ≠ 0 → (a*b).factorization = a.factorization + b.factorization
+    Nat.factorization_pow : (n^k).factorization = k • n.factorization
+    @Nat.factorization_pow_self : Nat.Prime p → (p^n).factorization p = n   <- exponent extraction
+    @Nat.factorization_eq_zero_of_not_dvd : ¬p ∣ n → n.factorization p = 0
+    Nat.factorization_eq_zero_iff : n.factorization p = 0 ↔ ¬Nat.Prime p ∨ ¬p ∣ n ∨ n = 0
+    @Nat.factorization_le_iff_dvd : d ≠ 0 → n ≠ 0 → (d.factorization ≤ n.factorization ↔ d ∣ n)
+    @Nat.pow_dvd_pow_iff_le_right : 1 < x → (x^k ∣ x^l ↔ k ≤ l)
+    @Int.pow_dvd_pow_iff : n ≠ 0 → (a^n ∣ b^n ↔ a ∣ b)   <- EXISTS (L1 lessons said it did not)
+    @mul_left_cancel₀, @pow_ne_zero, @mul_ne_zero
+
+Diagnosis: no environment or API problem. Two corrections for the record:
+  1. `Int.pow_dvd_pow_iff` DOES exist at this pin
+     (`∀ {a b : ℤ} {n : ℕ}, n ≠ 0 → (a^n ∣ b^n ↔ a ∣ b)`) — MATHLIB_API_LESSONS.md
+     item 10 from the L1 session ("No pow_dvd_pow_iff_left for ℤ/ℕ at this pin")
+     is too strong; the ℤ form is there (the L1 route through
+     Nat.factorization still works, so L1's proof is unaffected).
+  2. `Nat.factorization_eq_zero_iff` is the three-way form
+     (`↔ ¬Nat.Prime p ∨ ¬p ∣ n ∨ n = 0`), not the clean `↔ ¬p ∣ n`; the clean
+     one for an application is `Nat.factorization_eq_zero_of_not_dvd`.
+
+=== round 2: S1+S2 (L4_step_S1_S2) — first-try compile, S1 ===
+
+Command: docker compose exec -T lean sh /workspace/proof/compile_lean.sh L4/Basic.lean
+File at this round: module docstring + `import Mathlib` + `import L3.Basic` +
+L4_step_S1_S2 (plus its #print axioms line).
+Result: EXIT 0, no warnings, no `sorry`.
+
+  'L4.L4_step_S1_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Diagnosis: S1+S2 accepted as written, first try — no F1/F2/F3/F4 round.
+Encoding notes:
+  - `(a,b) = m` is taken as `Int.gcd a b = m`; the author's "a ⋮ m, b ⋮ m"
+    (S1's first clause) is derived from it with `Int.gcd_dvd_left/right`
+    + `simpa [hgcd]` — that derivation IS part of S1, so it lives inside the
+    step, not in the signature.
+  - `m² | a·b` is `mul_dvd_mul hma hmb` after `rw [hab, ← pow_two]`.
+  - `m | c` from `m² | c^n` is `Int.Prime.dvd_pow' hm` — the ℤ form that takes
+    `Nat.Prime m` directly (no `Prime (m:ℤ)` bridge needed).
+  - `m | m²` was built as the `Dvd` witness `⟨m, by rw [pow_two]⟩` rather than
+    `dvd_pow_self`, avoiding that lemma's argument-order trap (L1 lessons item 10).
+
+=== round 3: PROBE batch 2 — 17 further names, one unknown ===
+
+Command: compile_lean.sh L4Probe.lean (extended with the S3/S5 candidates).
+Result: EXIT 1 — exactly ONE unknown identifier: `Nat.factorization_self`
+(L4Probe.lean:51), which is not needed. All 16 others resolved.
+
+Newly pinned (used by S3, and later S4/S5):
+  @Int.natCast_dvd : ↑m ∣ n ↔ m ∣ n.natAbs
+  @Nat.Prime.dvd_of_dvd_pow : Nat.Prime p → p ∣ m ^ n → p ∣ m
+  @Nat.Prime.one_lt / ne_zero / ne_one / two_le
+  @Nat.Prime.pow_dvd_iff_le_factorization : Nat.Prime p → n ≠ 0 → (p^k ∣ n ↔ k ≤ n.factorization p)
+  @Nat.Prime.factorization_pow : Nat.Prime p → (p^k).factorization = fun₀ | p => k
+  @dvd_pow_self : [Monoid α] (a : α) {n : ℕ} → n ≠ 0 → a ∣ a^n   (a explicit, n implicit)
+  @Nat.dvd_of_mul_dvd_mul_left : 0 < k → k * m ∣ k * n → m ∣ n
+  @Nat.Prime.coprime_iff_not_dvd : Nat.Prime p → (p.Coprime n ↔ ¬p ∣ n)
+  @Nat.Coprime.pow : ∀ {k l} (m n : ℕ), k.Coprime l → (k^m).Coprime (l^n)
+  @Nat.Coprime.dvd_of_dvd_mul_right : k.Coprime n → k ∣ m * n → k ∣ m
+  @Finsupp.le_def, @Finsupp.single_eq_same, Nat.eq_zero_or_pos
+
+Diagnosis: S3's "n·s ≥ 2" is proved by the coprime route rather than the
+factorization computation — `m^2 ∣ (m^s·R)^n` plus `Nat.Coprime (m^2) (R^n)`
+(from `Nat.Prime.coprime_iff_not_dvd` + `Coprime.pow`) cancels `R^n` via
+`dvd_of_dvd_mul_right`, and `Nat.pow_dvd_pow_iff_le_right` turns
+`m^2 ∣ m^s·n` into `2 ≤ s·n`. This needs no Finsupp-level computation.
+
+=== round 4: S3 (L4_step_S3), first attempt — F2 (representation only) ===
+
+Result: EXIT 1 — four errors, all F2. No author inference was rejected; the
+reported axioms line already shows `sorryAx` because the failed tactics left
+the proof incomplete (`L4_step_S3` is NOT accepted at this round).
+
+  L4/Basic.lean:85  `hC0 hCR.symm` — after `rw [h, mul_zero] at hCR` the
+      hypothesis IS `c.natAbs = 0`, so `.symm` produced `0 = c.natAbs`.
+  L4/Basic.lean:99  `hc hr.symm` — the same slip in the `r ≠ 0` branch.
+  L4/Basic.lean:110  `Int.natAbs_dvd_natAbs.mp` — the iff is
+      `a.natAbs ∣ b.natAbs ↔ a ∣ b`, so the ℤ→ℕ direction is `.mpr`, not
+      `.mp`. (L1's own lesson already said `.mpr` goes ℤ→ℕ.)
+  L4/Basic.lean:111  consequent of the previous line.
+
+Fix: dropped the two `.symm`s; `.mp` → `.mpr`. Pure shape errors — the
+statement and the author's inference are unchanged.
+
+=== round 5: S3 (L4_step_S3) after the fixes — S1 ===
+
+Result: EXIT 0, no warnings, no `sorry`.
+
+  'L4.L4_step_S1_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S3'    depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Diagnosis: S3 accepted as written (one F2 round to get there — round 4).
+State after this round: L4/Basic.lean compiles cleanly with S1+S2 and S3
+verified; S4–S7 not yet attempted. The compiled module L4/Basic.lean has
+been published as an importable olean by the harness.
+
+=== round 6: S4 (L4_step_S4), first attempt — F2 (representation only) ===
+
+Result: EXIT 1 — four errors, all F2; `L4_step_S4` NOT accepted (sorryAx).
+
+  L4/Basic.lean:146  `hb hh.symm` — after `rw [mul_zero] at hh` the hypothesis
+      IS `b = 0`, so the `.symm` produced `0 = b`. The same reflex as round 4.
+  L4/Basic.lean:166  `ha hl.symm` — the same slip for `a`.
+  L4/Basic.lean:179  `rw [hl']` inside `hda` rewrote `l` in EVERY occurrence,
+      including inside `Int.gcd h l` — the trap L3 hit twice
+      (MATHLIB_API_LESSONS § Session 2026-09-26, items 2–3). The goal became
+      `… = ↑m * ↑m ^ j * l' * ↑(h.gcd (↑(h.gcd l) * l'))`.
+  L4/Basic.lean:184  `rw [hh']` inside `hdb` — the same trap on `h`, goal
+      became `… = ↑m * h' * ↑((↑(h.gcd l) * h').gcd l)`.
+
+Fix: the two `.symm`s dropped; BOTH divisibility witnesses rewritten as
+`calc` chains that only ever rewrite `l` / `h` where they stand alone, never
+inside the `Int.gcd` argument, then `push_cast; ring`.
+
+Diagnosis: pure shape/API errors; the statement and the author's inference are
+unchanged. This is the THIRD and FOURTH occurrence of the `Int.gcd` rewrite
+trap in this project (L3 rounds 1 and 3 were the first two) — the documented
+fix ("write the proof so the rewrite is unnecessary, or target one occurrence
+with conv_lhs/conv_rhs") is now confirmed twice over, in a second session.
+
+=== round 7: S4, second attempt — F2 again, the trap on the calc RHS ===
+
+Result: EXIT 1 — two errors, both the SAME trap in a new place.
+
+  L4/Basic.lean:184  the calc step
+        `_ = (m:ℤ) * (m:ℤ)^j * ((Int.gcd h l : ℤ) * l') := by rw [hl']`
+      The goal of the step is
+        `(m:ℤ) * (m:ℤ)^j * l = (m:ℤ) * (m:ℤ)^j * (↑(h.gcd l) * l')`,
+      so `rw [hl']` rewrites `l` on the LHS (intended) AND `l` inside the
+      `Int.gcd h l` on the RHS (unintended), giving
+        `… = ↑m * ↑m ^ j * (↑(h.gcd (↑(h.gcd l) * l')) * l')`.
+  L4/Basic.lean:190  the same for `rw [hh']` in `hdb`.
+
+  LESSON (new, generalises L3's items 2–3): the trap is not only about the
+  goal BEFORE the rewrite — it also bites when the *rewrite target* mentions
+  `Int.gcd x y` and the rewritten variable is a gcd argument. Any `rw` in a
+  goal whose other side contains the gcd is unsafe.
+
+Fix: `conv_lhs => rw [hl']` / `conv_lhs => rw [hh']`, restricting the rewrite
+to the left-hand side, exactly the "target one occurrence" remedy.
+
+=== round 8: S4 (L4_step_S4) after the conv_lhs fix — S1 ===
+
+Result: EXIT 0, no warnings, no `sorry`.
+
+  'L4.L4_step_S1_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S3'    depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S4'    depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Diagnosis: S4 accepted as written, after two F2 rounds (6 and 7) — six
+occurrences of the `Int.gcd` rewrite trap in total across rounds 6–7.
+State after this round: L4/Basic.lean compiles cleanly with S1+S2, S3 and S4
+verified; S5–S7 not yet attempted.
+
+=== round 9: S5 (L4_step_S5), first attempt — F2 (representation only) ===
+
+Result: EXIT 1 — one error.
+
+  L4/Basic.lean:228  `Int.natCast_dvd.mp hd` with `hd : m ∣ (h*l).natAbs`:
+      the iff is `↑m ∣ n ↔ m ∣ n.natAbs`, so ℕ→ℤ is `.mpr`, not `.mp`.
+      (Third occurrence of this direction slip: rounds 4, 9 — and the L1
+      lessons already say `.mpr` goes ℤ→ℕ.)
+
+Fix: `.mp` → `.mpr`.
+
+=== round 10: S5 (L4_step_S5) after the fix — S1 ===
+
+Result: EXIT 0, no warnings, no `sorry`; `#print axioms L4.L4_step_S5` =
+[propext, Classical.choice, Quot.sound].
+
+=== round 11: S6 + S7 (L4_step_S6, L4_bo_de_4) — both S1 ===
+
+Result: EXIT 0, no warnings, no `sorry`, zero `sorry` in the file.
+
+  'L4.L4_step_S1_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S3'    depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S4'    depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S5'    depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_step_S6'    depends on axioms: [propext, Classical.choice, Quot.sound]
+  'L4.L4_bo_de_4'    depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Both steps were first-try. S6 is a one-line instantiation of the *imported*
+`L3.L3_bo_de_3` at `a := h, b := l, c := r` — the citation is the imported
+proof, not a copy. S7 chains S1+S2 → S3 → S4 → S5 → S6; `k = n·s − 1` comes
+from S5's `k+1 = n·s` via `omega`, and the author's `|a|,|b|,|c| ≥ 2` are
+carried as `_ha2`/`_hb2`/`_hc2` (unused by any step).
+
+=== chunk L4-01: DONE ===
+
+Eleven rounds total: 2 probe, 6 author-step rounds, 4 F2 rounds (4, 6, 7, 9 —
+every one tactic/API shape, no F1/F3/F4). `progress.py --check` exit 0 with
+the chunk DONE (evidence block machine-verified), sympy screen PASS with the
+schema-required range n ∈ {5,7,11,13} covered (304 constructed witnesses each),
+and `import L4.Basic` added to `03-lean/Main.lean`.
+
+
+
+
+
+

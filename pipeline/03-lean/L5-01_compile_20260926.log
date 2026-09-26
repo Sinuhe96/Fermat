@@ -1,0 +1,781 @@
+
+=== probe round 1: name probes + S2 draft + B_mul draft + eval plumbing 2026-09-26 ===
+L5Probe.lean:16:5: error: unexpected token 'in'; expected ','
+L5Probe.lean:20:5: error: unexpected token 'in'; expected ','
+L5Probe.lean:24:5: error: unexpected token 'in'; expected ','
+@Commute.all : ∀ {S : Type u_1} [inst : CommMagma S] (a b : S), Commute a b
+@Commute.mul_geom_sum₂ : ∀ {R : Type u_1} [inst : Ring R] {x y : R},
+  Commute x y → ∀ (n : ℕ), (x - y) * ∑ i ∈ range n, x ^ i * y ^ (n - 1 - i) = x ^ n - y ^ n
+@Commute.geom_sum₂_mul : ∀ {R : Type u_1} [inst : Ring R] {x y : R},
+  Commute x y → ∀ (n : ℕ), (∑ i ∈ range n, x ^ i * y ^ (n - 1 - i)) * (x - y) = x ^ n - y ^ n
+@Commute.sub_dvd_pow_sub_pow : ∀ {R : Type u_1} [inst : Ring R] {x y : R},
+  Commute x y → ∀ (n : ℕ), x - y ∣ x ^ n - y ^ n
+@sub_dvd_pow_sub_pow : ∀ {R : Type u_1} [inst : CommRing R] (x y : R) (n : ℕ), x - y ∣ x ^ n - y ^ n
+@geom_sum₂_mul_add : ∀ {R : Type u_1} [inst : CommSemiring R] (x y : R) (n : ℕ),
+  (∑ i ∈ range n, (x + y) ^ i * y ^ (n - 1 - i)) * x + y ^ n = (x + y) ^ n
+@add_pow : ∀ {R : Type u_1} [inst : CommSemiring R] (x y : R) (n : ℕ),
+  (x + y) ^ n = ∑ m ∈ range (n + 1), x ^ m * y ^ (n - m) * ↑(n.choose m)
+@sub_pow : ∀ {R : Type u_1} [inst : CommRing R] (x y : R) (n : ℕ),
+  (x - y) ^ n = ∑ m ∈ range (n + 1), (-1) ^ (m + n) * x ^ m * y ^ (n - m) * ↑(n.choose m)
+@neg_pow : ∀ {R : Type u_1} [inst : Monoid R] [inst_1 : HasDistribNeg R] (a : R) (n : ℕ), (-a) ^ n = (-1) ^ n * a ^ n
+@Odd.neg_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ},
+  Odd n → ∀ (a : α), (-a) ^ n = -a ^ n
+@Odd.neg_one_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ}, Odd n → (-1) ^ n = -1
+@sum_range_succ : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n
+@sum_range_succ' : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ k ∈ range (n + 1), f k = ∑ k ∈ range n, f (k + 1) + f 0
+@sum_range_reflect : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ j ∈ range n, f (n - 1 - j) = ∑ j ∈ range n, f j
+@sum_congr : ∀ {ι : Type u_1} {M : Type u_2} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M] {f g : ι → M},
+  s₁ = s₂ → (∀ x ∈ s₂, f x = g x) → s₁.sum f = s₂.sum g
+@sum_const : ∀ {ι : Type u_1} {M : Type u_2} {s : Finset ι} [inst : AddCommMonoid M] (b : M), ∑ _x ∈ s, b = #s • b
+card_range : ∀ (n : ℕ), #(range n) = n
+@mul_sum : ∀ {ι : Type u_1} {R : Type u_2} [inst : NonUnitalNonAssocSemiring R] (s : Finset ι) (f : ι → R) (a : R),
+  a * ∑ i ∈ s, f i = ∑ i ∈ s, a * f i
+@sum_mul : ∀ {ι : Type u_1} {R : Type u_2} [inst : NonUnitalNonAssocSemiring R] (s : Finset ι) (f : ι → R) (a : R),
+  (∑ i ∈ s, f i) * a = ∑ i ∈ s, f i * a
+@sum_eq_zero : ∀ {ι : Type u_1} {M : Type u_2} {s : Finset ι} [inst : AddCommMonoid M] {f : ι → M},
+  (∀ x ∈ s, f x = 0) → ∑ x ∈ s, f x = 0
+@dvd_sum : ∀ {ι : Type u_1} {R : Type u_2} {s : Finset ι} [inst : NonUnitalSemiring R] {f : ι → R} {a : R},
+  (∀ i ∈ s, a ∣ f i) → a ∣ ∑ i ∈ s, f i
+@sum_range_zero : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M), ∑ k ∈ range 0, f k = 0
+@sum_sub_distrib : ∀ {ι : Type u_1} {G : Type u_2} {s : Finset ι} [inst : SubtractionCommMonoid G] (f g : ι → G),
+  ∑ x ∈ s, (f x - g x) = ∑ x ∈ s, f x - ∑ x ∈ s, g x
+@sum_neg_distrib : ∀ {ι : Type u_1} {G : Type u_2} {s : Finset ι} [inst : SubtractionCommMonoid G] (f : ι → G),
+  ∑ x ∈ s, -f x = -∑ x ∈ s, f x
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+Nat.choose_self : ∀ (n : ℕ), n.choose n = 1
+Nat.choose_succ_self_right : ∀ (n : ℕ), (n + 1).choose n = n + 1
+Nat.choose_two_right : ∀ (n : ℕ), n.choose 2 = n * (n - 1) / 2
+@Nat.choose_symm : ∀ {n k : ℕ}, k ≤ n → n.choose (n - k) = n.choose k
+Nat.choose_succ_succ : ∀ (n k : ℕ), n.succ.choose k.succ = n.choose k + n.choose k.succ
+@Nat.Prime.dvd_choose_self : ∀ {p k : ℕ}, Nat.Prime p → k ≠ 0 → k < p → p ∣ p.choose k
+@Nat.Prime.coprime_iff_not_dvd : ∀ {p n : ℕ}, Nat.Prime p → (p.Coprime n ↔ ¬p ∣ n)
+@Nat.Prime.dvd_of_dvd_pow : ∀ {p m n : ℕ}, Nat.Prime p → p ∣ m ^ n → p ∣ m
+@Nat.Prime.eq_one_or_self_of_dvd : ∀ {p : ℕ}, Nat.Prime p → ∀ (m : ℕ), m ∣ p → m = 1 ∨ m = p
+@Nat.Prime.two_le : ∀ {p : ℕ}, Nat.Prime p → 2 ≤ p
+@Nat.Prime.one_lt : ∀ {p : ℕ}, Nat.Prime p → 1 < p
+@Nat.Prime.pos : ∀ {p : ℕ}, Nat.Prime p → 0 < p
+@Nat.Prime.ne_one : ∀ {p : ℕ}, Nat.Prime p → p ≠ 1
+@Nat.Prime.ne_zero : ∀ {n : ℕ}, Nat.Prime n → n ≠ 0
+@Int.Prime.dvd_pow' : ∀ {n : ℤ} {k p : ℕ}, Nat.Prime p → ↑p ∣ n ^ k → ↑p ∣ n
+@Int.Prime.dvd_pow : ∀ {n : ℤ} {k p : ℕ}, Nat.Prime p → ↑p ∣ n ^ k → p ∣ n.natAbs
+@Int.Prime.dvd_mul : ∀ {m n : ℤ} {p : ℕ}, Nat.Prime p → ↑p ∣ m * n → p ∣ m.natAbs ∨ p ∣ n.natAbs
+@Int.Prime.dvd_mul' : ∀ {m n : ℤ} {p : ℕ}, Nat.Prime p → ↑p ∣ m * n → ↑p ∣ m ∨ ↑p ∣ n
+@Nat.prime_iff_prime_int : ∀ {p : ℕ}, Nat.Prime p ↔ Prime ↑p
+Int.gcd_add_mul_left_left : ∀ (m n k : ℤ), (n + m * k).gcd m = n.gcd m
+Int.gcd_add_mul_right_right : ∀ (m n k : ℤ), m.gcd (n + k * m) = m.gcd n
+Int.gcd_add_mul_left_right : ∀ (m n k : ℤ), m.gcd (n + m * k) = m.gcd n
+Int.gcd_add_mul_right_left : ∀ (m n k : ℤ), (n + k * m).gcd m = n.gcd m
+Int.gcd_comm : ∀ (a b : ℤ), a.gcd b = b.gcd a
+Int.gcd_dvd_left : ∀ (a b : ℤ), ↑(a.gcd b) ∣ a
+Int.gcd_dvd_right : ∀ (a b : ℤ), ↑(a.gcd b) ∣ b
+@Int.dvd_gcd : ∀ {a b : ℤ} {c : ℕ}, ↑c ∣ a → ↑c ∣ b → c ∣ a.gcd b
+@Int.dvd_coe_gcd : ∀ {a b c : ℤ}, c ∣ a → c ∣ b → c ∣ ↑(a.gcd b)
+@Int.isCoprime_iff_gcd_eq_one : ∀ {m n : ℤ}, IsCoprime m n ↔ m.gcd n = 1
+L5Probe.lean:87:8: error(lean.unknownIdentifier): Unknown constant `Int.gcd_eq_one_iff_coprime`
+Int.gcd_def : ∀ (i j : ℤ), i.gcd j = i.natAbs.gcd j.natAbs
+L5Probe.lean:89:8: error(lean.unknownIdentifier): Unknown constant `Int.gcd_pos_of_pos_left`
+Int.gcd_zero_left : ∀ (a : ℤ), Int.gcd 0 a = a.natAbs
+@Int.natAbs_dvd_natAbs : ∀ {a b : ℤ}, a.natAbs ∣ b.natAbs ↔ a ∣ b
+@Int.natCast_dvd : ∀ {n : ℤ} {m : ℕ}, ↑m ∣ n ↔ m ∣ n.natAbs
+@Int.natCast_dvd_natCast : ∀ {m n : ℕ}, ↑m ∣ ↑n ↔ m ∣ n
+Int.natAbs_pow : ∀ (n : ℤ) (k : ℕ), (n ^ k).natAbs = n.natAbs ^ k
+Int.natAbs_mul : ∀ (a b : ℤ), (a * b).natAbs = a.natAbs * b.natAbs
+@Int.natAbs_ne_zero : ∀ {a : ℤ}, a.natAbs ≠ 0 ↔ a ≠ 0
+@Int.natAbs_pos : ∀ {a : ℤ}, 0 < a.natAbs ↔ a ≠ 0
+@IsCoprime.dvd_of_dvd_mul_left : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R}, IsCoprime x y → x ∣ y * z → x ∣ z
+@IsCoprime.dvd_of_dvd_mul_right : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R},
+  IsCoprime x z → x ∣ y * z → x ∣ y
+@IsCoprime.mul_right : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R},
+  IsCoprime x y → IsCoprime x z → IsCoprime x (y * z)
+@IsCoprime.mul_left : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R},
+  IsCoprime x z → IsCoprime y z → IsCoprime (x * y) z
+@IsCoprime.pow : ∀ {R : Type u_1} [inst : CommSemiring R] {x y : R} {m n : ℕ}, IsCoprime x y → IsCoprime (x ^ m) (y ^ n)
+@IsCoprime.pow_right : ∀ {R : Type u_1} [inst : CommSemiring R] {x y : R} {n : ℕ}, IsCoprime x y → IsCoprime x (y ^ n)
+@IsCoprime.symm : ∀ {R : Type u_1} [inst : CommSemiring R] {x y : R}, IsCoprime x y → IsCoprime y x
+@Nat.Coprime.pow : ∀ {k l : ℕ} (m n : ℕ), k.Coprime l → (k ^ m).Coprime (l ^ n)
+@Nat.Coprime.dvd_of_dvd_mul_right : ∀ {k n m : ℕ}, k.Coprime n → k ∣ m * n → k ∣ m
+@Nat.Coprime.dvd_of_dvd_mul_left : ∀ {k m n : ℕ}, k.Coprime m → k ∣ m * n → k ∣ n
+@dvd_pow : ∀ {α : Type u_1} [inst : Monoid α] {a b : α}, a ∣ b → ∀ {n : ℕ}, n ≠ 0 → a ∣ b ^ n
+@pow_dvd_pow_of_dvd : ∀ {α : Type u_1} [inst : CommMonoid α] {a b : α}, a ∣ b → ∀ (n : ℕ), a ^ n ∣ b ^ n
+@dvd_add : ∀ {α : Type u_1} [inst : Add α] [inst_1 : Semigroup α] [LeftDistribClass α] {a b c : α},
+  a ∣ b → a ∣ c → a ∣ b + c
+@dvd_sub : ∀ {α : Type u_1} [inst : NonUnitalRing α] {a b c : α}, a ∣ b → a ∣ c → a ∣ b - c
+@mul_dvd_mul : ∀ {α : Type u_1} [inst : CommSemigroup α] {a b c d : α}, a ∣ b → c ∣ d → a * c ∣ b * d
+@Nat.dvd_antisymm : ∀ {m n : ℕ}, m ∣ n → n ∣ m → m = n
+@Nat.dvd_one : ∀ {n : ℕ}, n ∣ 1 ↔ n = 1
+@mul_left_cancel₀ : ∀ {M₀ : Type u_1} [inst : Mul M₀] [inst_1 : Zero M₀] [IsLeftCancelMulZero M₀] {a b c : M₀},
+  a ≠ 0 → a * b = a * c → b = c
+@mul_eq_zero : ∀ {M₀ : Type u_1} [inst : MulZeroClass M₀] [NoZeroDivisors M₀] {a b : M₀}, a * b = 0 ↔ a = 0 ∨ b = 0
+@sub_eq_zero : ∀ {G : Type u_1} [inst : AddGroup G] {a b : G}, a - b = 0 ↔ a = b
+@Int.modEq_iff_dvd : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] ↔ n ∣ b - a
+@Int.modEq_zero_iff_dvd : ∀ {n a : ℤ}, a ≡ 0 [ZMOD n] ↔ n ∣ a
+@Int.modEq_iff_add_fac : ∀ {a b n : ℤ}, a ≡ b [ZMOD n] ↔ ∃ t, b = a + n * t
+@Int.ModEq.add : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a + c ≡ b + d [ZMOD n]
+@Int.ModEq.mul : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a * c ≡ b * d [ZMOD n]
+@Int.ModEq.pow : ∀ {n a b : ℤ} (m : ℕ), a ≡ b [ZMOD n] → a ^ m ≡ b ^ m [ZMOD n]
+@Int.ModEq.sub : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a - c ≡ b - d [ZMOD n]
+@ZMod.pow_card_sub_one_eq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {a : ZMod p}, a ≠ 0 → a ^ (p - 1) = 1
+@Int.prime_dvd_pow_sub_one : ∀ {p : ℕ}, Nat.Prime p → ∀ {n : ℤ}, IsCoprime n ↑p → ↑p ∣ n ^ (p - 1) - 1
+@ZMod.isUnit_natCast_iff_not_dvd_pow : ∀ {p d a : ℕ}, Nat.Prime p → 0 < d → (IsUnit ↑a ↔ ¬p ∣ a)
+ZMod.intCast_eq_iff : ∀ (p : ℕ) (n : ℤ) (z : ZMod p) [NeZero p], ↑n = z ↔ ∃ k, n = ↑z.val + ↑p * k
+@Polynomial.X_add_C_ne_zero : ∀ {R : Type u_1} [Nontrivial R] [inst : Semiring R] (r : R),
+  Polynomial.X + Polynomial.C r ≠ 0
+@Polynomial.monic_X_add_C : ∀ {R : Type u_1} [inst : Semiring R] (x : R), (Polynomial.X + Polynomial.C x).Monic
+@Polynomial.eval_sum : ∀ {R : Type u_1} [inst : Semiring R] (p : Polynomial R) (f : ℕ → R → Polynomial R) (x : R),
+  Polynomial.eval x (p.sum f) = p.sum fun n a => Polynomial.eval x (f n a)
+@Polynomial.eval_mul : ∀ {R : Type u_1} [inst : CommSemiring R] {p q : Polynomial R} {x : R},
+  Polynomial.eval x (p * q) = Polynomial.eval x p * Polynomial.eval x q
+@Polynomial.eval_pow : ∀ {R : Type u_1} [inst : CommSemiring R] {p : Polynomial R} {x : R} (n : ℕ),
+  Polynomial.eval x (p ^ n) = Polynomial.eval x p ^ n
+@Polynomial.eval_X : ∀ {R : Type u_1} [inst : Semiring R] {x : R}, Polynomial.eval x Polynomial.X = x
+@Polynomial.eval_C : ∀ {R : Type u_1} {a : R} [inst : Semiring R] {x : R}, Polynomial.eval x (Polynomial.C a) = a
+@Polynomial.eval_intCast : ∀ {R : Type u_1} [inst : Ring R] {n : ℤ} {x : R}, Polynomial.eval x ↑n = ↑n
+@Polynomial.eval_neg : ∀ {R : Type u_1} [inst : Ring R] (p : Polynomial R) (x : R),
+  Polynomial.eval x (-p) = -Polynomial.eval x p
+@Polynomial.eval₂_sum : ∀ {R : Type u_1} {S : Type u_2} {T : Type u_3} [inst : Semiring R] [inst_1 : Semiring S]
+  (f : R →+* S) [inst_2 : Semiring T] (p : Polynomial T) (g : ℕ → T → Polynomial R) (x : S),
+  Polynomial.eval₂ f x (p.sum g) = p.sum fun n a => Polynomial.eval₂ f x (g n a)
+@Polynomial.evalRingHom : {R : Type u_1} → [inst : CommSemiring R] → R → Polynomial R →+* R
+@Polynomial.eval₂_mul : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] {p q : Polynomial R}
+  [inst_1 : CommSemiring S] (f : R →+* S) (x : S),
+  Polynomial.eval₂ f x (p * q) = Polynomial.eval₂ f x p * Polynomial.eval₂ f x q
+@Polynomial.eval₂_pow : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] {p : Polynomial R} [inst_1 : CommSemiring S]
+  (f : R →+* S) (x : S) (n : ℕ), Polynomial.eval₂ f x (p ^ n) = Polynomial.eval₂ f x p ^ n
+@Polynomial.eval₂_X : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] [inst_1 : Semiring S] (f : R →+* S) (x : S),
+  Polynomial.eval₂ f x Polynomial.X = x
+@Polynomial.eval₂_C : ∀ {R : Type u_1} {S : Type u_2} {a : R} [inst : Semiring R] [inst_1 : Semiring S] (f : R →+* S)
+  (x : S), Polynomial.eval₂ f x (Polynomial.C a) = f a
+L5Probe.lean:148:8: error(lean.unknownIdentifier): Unknown constant `Polynomial.eval₂_intCast`
+L5Probe.lean:155:18: error: unexpected token 'in'; expected ','
+L5Probe.lean:155:15: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  AddCommMonoid (Sort ?u.44)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+L5Probe.lean:152:43: error: unsolved goals
+case hsum
+R : Type u_1
+inst✝ : CommRing R
+n : ℕ
+hn : Odd n
+u v : R
+h : -(u + v) * ∑ i ∈ range n, (-v) ^ i * u ^ (n - 1 - i) = (-v) ^ n - u ^ n
+⊢ sorry
+
+R : Type u_1
+inst✝ : CommRing R
+n : ℕ
+hn : Odd n
+u v : R
+h : -(u + v) * ∑ i ∈ range n, (-v) ^ i * u ^ (n - 1 - i) = (-v) ^ n - u ^ n
+hsum : sorry
+⊢ (u + v) * A R n u v = u ^ n + v ^ n
+L5Probe.lean:174:11: error: unexpected token 'in'; expected ','
+L5Probe.lean:187:26: error: unexpected token 'in'; expected ','
+PROBE_EXIT=1
+
+=== round 1: S2 (geometric + binomial halves), defs A/B, lakefile L5 lib ===
+L5/Basic.lean:99:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  -?a * ?b
+in the target expression
+  -((u + v) * A R n u v) = -(u ^ n + v ^ n)
+
+R : Type u_1
+inst✝ : CommRing R
+n : ℕ
+hn : Odd n
+u v : R
+h : -(u + v) * A R n u v = -v ^ n - u ^ n
+hsum : ∑ i ∈ Finset.range n, (-v) ^ i * u ^ (n - 1 - i) = A R n u v
+⊢ -((u + v) * A R n u v) = -(u ^ n + v ^ n)
+L5/Basic.lean:114:51: error: omega could not prove the goal:
+No usable constraints found. You may need to unfold definitions so `omega` can see linear arithmetic facts about `Nat` and `Int`, which may also involve multiplication, division, and modular remainder by constants.
+'L5.L5_step_S2' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND1_EXIT=1
+
+=== round 2: S2 fixes (neg_mul direction; Nat sub lemma instead of omega) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND2_EXIT=0
+
+=== round 3: S3 (division-free binomial identity via Z[X]) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND3_EXIT=0
+
+=== round 4: S4 (split off the k=n-1 summand; def B-prime) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:165:6: error: unsolved goals
+n : ℕ
+hn : Odd n
+u v : ℤ
+hn1 : n = n - 1 + 1
+hpos : 0 < n
+⊢ Finset.range (n - 1 + 1) = Finset.range (n - 1 + 1 - 1 + 1)
+L5/Basic.lean:168:57: error: Application type mismatch: The argument
+  Odd.sub_odd ?m.221 odd_one
+has type
+  Even (?m.219 - @OfNat.ofNat ?m.222 1 One.toOfNat1)
+but is expected to have type
+  Even (n - @OfNat.ofNat ℕ 1 (instOfNatNat 1))
+in the application
+  Even.neg_one_pow (Odd.sub_odd ?m.221 odd_one)
+L5/Basic.lean:191:2: error: No goals to be solved
+'L5.L5_step_S4' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND4_EXIT=1
+
+=== round 5: S4 fixes (congrArg range; Even via Odd witness) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND5_EXIT=0
+
+=== round 6: S5 (gcd of u+v with n*v^(n-1)) + coprime helper ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND6_EXIT=0
+
+=== round 7: S6 (gcd(A, u+v) = 1) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND7_EXIT=0
+
+=== round 8: S7 (A not divisible by n; F3 derivation) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:287:14: error: don't know how to synthesize implicit argument `k`
+  @Int.Prime.dvd_pow' (u + v) ?m.491 n hn ?m.493
+context:
+n : ℕ
+hn : Nat.Prime n
+hodd : Odd n
+u v : ℤ
+huv : ¬↑n ∣ u + v
+hn1 : n = n - 1 + 1
+hEq :
+  A ℤ n u v =
+    (u + v) ^ (n - 1) +
+      ∑ k ∈ Finset.range (n - 1), (-1) ^ (k + 1) * ↑(n.choose (k + 1)) * (u + v) ^ (n - 1 - (k + 1)) * v ^ (k + 1)
+hdvd : ↑n ∣ ∑ k ∈ Finset.range (n - 1), (-1) ^ (k + 1) * ↑(n.choose (k + 1)) * (u + v) ^ (n - 1 - (k + 1)) * v ^ (k + 1)
+c : ℤ
+hc : A ℤ n u v = ↑n * c
+d : ℤ
+hd : A ℤ n u v - (u + v) ^ (n - 1) = ↑n * d
+⊢ ℕ
+L5/Basic.lean:257:57: error: unsolved goals
+n : ℕ
+hn : Nat.Prime n
+hodd : Odd n
+u v : ℤ
+huv : ¬↑n ∣ u + v
+hn1 : n = n - 1 + 1
+hEq :
+  A ℤ n u v =
+    (u + v) ^ (n - 1) +
+      ∑ k ∈ Finset.range (n - 1), (-1) ^ (k + 1) * ↑(n.choose (k + 1)) * (u + v) ^ (n - 1 - (k + 1)) * v ^ (k + 1)
+hdvd : ↑n ∣ ∑ k ∈ Finset.range (n - 1), (-1) ^ (k + 1) * ↑(n.choose (k + 1)) * (u + v) ^ (n - 1 - (k + 1)) * v ^ (k + 1)
+c : ℤ
+hc : A ℤ n u v = ↑n * c
+d : ℤ
+hd : A ℤ n u v - (u + v) ^ (n - 1) = ↑n * d
+⊢ False
+'L5.L5_step_S7' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND8_EXIT=1
+
+=== round 9: S7 fix (explicit k on Int.Prime.dvd_pow-prime) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND9_EXIT=0
+
+=== round 10: S8 (A = n(u+v)A_1 + n v^(n-1); A_1 in Q) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:365:4: error: No goals to be solved
+'L5.L5_step_S8' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND10_EXIT=1
+
+=== round 11: S8 fix (drop ring after field_simp) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND11_EXIT=0
+
+=== round 12: S9 (n^2 | (u+v)*B-prime) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND12_EXIT=0
+
+=== round 13: S10 (n^2 does not divide n*v^(n-1)) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND13_EXIT=0
+
+=== round 14: S11 (part b: n | A, n^2 not | A, gcd(u+v,A) = n) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:444:52: error: Type mismatch: After simplification, term
+  hg
+ has type
+  @Dvd.dvd ℤ Int.instDvd (↑n) 1
+but is expected to have type
+  @Dvd.dvd ℤ Int.instDvd ↑n ↑1
+L5/Basic.lean:474:14: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (u + v).gcd (↑n * v ^ (n - 1) + (u + v) * B' ℤ n u v)
+in the target expression
+  (u + v).gcd ((u + v) * B' ℤ n u v + ↑n * v ^ (n - 1)) = (u + v).gcd (↑n * v ^ (n - 1))
+
+n : ℕ
+hn : Nat.Prime n
+hodd : Odd n
+u v : ℤ
+hcop : u.gcd v = 1
+h4 : A ℤ n u v = (u + v) * B' ℤ n u v + ↑n * v ^ (n - 1)
+h9 : ↑n ^ 2 ∣ (u + v) * B' ℤ n u v
+hnv : ¬↑n ∣ v
+hn2 : ↑n ∣ ↑n ^ 2
+hgv : (u + v).gcd v = 1
+hgvp : (u + v).gcd (v ^ (n - 1)) = 1
+k : ℤ
+hk : u + v = ↑n * k
+hgk : k.gcd v = 1
+hgkp : k.gcd (v ^ (n - 1)) = 1
+⊢ (u + v).gcd ((u + v) * B' ℤ n u v + ↑n * v ^ (n - 1)) = (u + v).gcd (↑n * v ^ (n - 1))
+'L5.L5_step_S11' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND14_EXIT=1
+
+=== round 15: S11 fixes (natCast_dvd route; reordered h4 + shift) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND15_EXIT=0
+
+=== round 16: S12 (branch uv divisible by n) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:505:33: error(lean.unknownIdentifier): Unknown identifier `hv`
+L5/Basic.lean:506:30: error(lean.unknownIdentifier): Unknown identifier `hu`
+'L5.L5_step_S12' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND16_EXIT=1
+
+=== round 17: S12 fix (branch callsite args) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND17_EXIT=0
+
+=== round 18: S13 (FLT mod n for both bases) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND18_EXIT=0
+
+=== round 19: S14 (recursion + geometric quotient) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+L5/Basic.lean:540:2: error: unsolved goals
+case left
+n : ℕ
+hodd : Odd n
+u v : ℤ
+hn1 : n = n - 1 + 1
+hev : Even (n - 1)
+h0 : (-1) ^ 0 * u ^ (n - 1 - 0) * v ^ 0 = u ^ (n - 1)
+hs :
+  ∑ i ∈ Finset.range (n - 1), (-1) ^ (i + 1) * u ^ (n - 1 - (i + 1)) * v ^ (i + 1) =
+    -v * ∑ i ∈ Finset.range (n - 1), (-1) ^ i * u ^ (n - 2 - i) * v ^ i
+⊢ -(v * ∑ x ∈ Finset.range (n - 1), v ^ x * u ^ (n - 2 - x) * (-1) ^ x) + u ^ (n - 1) =
+    -(v * ∑ x ∈ Finset.range (n - 1), v ^ x * u ^ (n - 1 - 1 - x) * (-1) ^ x) + u ^ (n - 1)
+'L5.L5_step_S14' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND19_EXIT=1
+
+=== round 20: S14 fix (exponent spelling to match unfolded A(n-1)) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:550:53: error: unsolved goals
+n : ℕ
+hodd : Odd n
+u v : ℤ
+hn1 : n = n - 1 + 1
+hev : Even (n - 1)
+h0 : (-1) ^ 0 * u ^ (n - 1 - 0) * v ^ 0 = u ^ (n - 1)
+i : ℕ
+x✝ : i ∈ Finset.range (n - 1)
+⊢ (n - i - 1).pred = n - 1 - 1 - i
+'L5.L5_step_S14' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND20_EXIT=1
+
+=== round 21: S14 hexp via Nat.sub_succ-prime + sub_right_comm ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND21_EXIT=0
+
+=== round 22: S15 (ZMod n branch-2 argument) + ZMod bridge helper ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:576:28: error: Application type mismatch: The argument
+  x
+has type
+  ℤ
+of sort `Type` but is expected to have type
+  Type ?u.12
+of sort `Type (?u.12 + 1)` in the application
+  @CharP.intCast_eq_zero_iff x
+L5/Basic.lean:591:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+L5/Basic.lean:592:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+L5/Basic.lean:612:27: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a - 0
+in the target expression
+  ↑u ^ (n - 1) - 0 ≠ 0
+
+n : ℕ
+hn : Nat.Prime n
+hodd : Odd n
+u v : ℤ
+huv : ¬↑n ∣ u * v
+hsol : ↑n ∣ u ^ n + v ^ n
+hw : ¬↑n ∣ u + v
+this✝ : Fact (Nat.Prime n)
+this : NeZero n
+hu : ¬↑n ∣ u
+hv : ¬↑n ∣ v
+hU0 : ↑u ≠ 0
+hV0 : ↑v ≠ 0
+hUV0 : ↑u + ↑v ≠ 0
+hU1 : ↑u ^ (n - 1) = 1
+hV1 : ↑v ^ (n - 1) = 1
+hA1 : ↑(A ℤ (n - 1) u v) = 0
+h' : ↑(A ℤ n u v) = ↑u ^ (n - 1) - ↑v * ↑(A ℤ (n - 1) u v)
+⊢ ↑u ^ (n - 1) - 0 ≠ 0
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, sorryAx, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND22_EXIT=1
+
+=== round 23: S15 fixes (have for Prop instances; hAn via ring) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:576:28: error: Application type mismatch: The argument
+  x
+has type
+  ℤ
+of sort `Type` but is expected to have type
+  Type ?u.12
+of sort `Type (?u.12 + 1)` in the application
+  @CharP.intCast_eq_zero_iff x
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, sorryAx, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND23_EXIT=1
+
+=== round 24: S15 fix (CharP explicit R p) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND24_EXIT=0
+
+=== round 25: S16 (n^2 | u^n+v^n from n | u+v) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S16' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND25_EXIT=0
+
+=== round 26: S17 (FLT gives u^(n-1) = 1 + m n, m in N) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S16' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:668:36: error: Application type mismatch: The argument
+  h
+has type
+  0 ≤ ↑n * k
+but is expected to have type
+  0 ≤ k * ↑n
+in the application
+  nonneg_of_mul_nonneg_left h
+'L5.L5_step_S17' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ROUND26_EXIT=1
+
+=== round 27: S17 fix (product order for nonneg_of_mul_nonneg_left) ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S17' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND27_EXIT=0
+
+=== round 28: S18 (binomial (1+mn)^n mod n^2) + helper ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S17' depends on axioms: [propext, Classical.choice, Quot.sound]
+L5/Basic.lean:699:73: warning: This simp argument is unused:
+  one_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [pow_zero, Nat.choose_zero_right, Nat.cast_one, mul_one, one_pow, Nat.sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+L5/Basic.lean:708:17: warning: This simp argument is unused:
+  pow_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [one_pow, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'L5.L5_nsq_dvd_mul_pow' depends on axioms: [propext, Quot.sound]
+'L5.L5_step_S18' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND28_EXIT=0
+
+=== round 29: assembly L5_bo_de_5 + warning cleanup ===
+'L5.L5_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_gcd_eq_one_of_not_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S14' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_zmod_intCast_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_step_S17' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_nsq_dvd_mul_pow' depends on axioms: [propext, Quot.sound]
+'L5.L5_step_S18' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L5.L5_bo_de_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+ROUND29_EXIT=0
