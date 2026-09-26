@@ -301,6 +301,106 @@ candidates). Two ways to screen the *inference* anyway:
 
 ---
 
+## §B. Chunk L3-01 — bổ đề 3 (DONE, all steps S1)
+
+Source: statement p. 1 (section A, lemma 3), proof p. 2 §3. Evidence:
+`03-lean/L3-01_compile_20260926.log` (EXIT:0, no `sorry`, no warnings;
+`#print axioms` on all eight declarations = propext, Classical.choice,
+Quot.sound only), `04-sympy/test_l3_01.py` PASS.
+
+| Author step | Content (English; literal text in the chunk YAML) | Lean declaration |
+|---|---|---|
+| S0 | divide `a` and `c` by `c'_1 = (a,c)`; quotients `a_1`, `c'_2` coprime | `L3.L3_step_S0` |
+| S1+S2 | from `ab = c^n`: `c'_1·a_1·b = c'_1^n·c'_2^n`, hence `a_1·b = c'_1^{n-1}·c'_2^n` | `L3.L3_step_S1_S2` |
+| S3+S4 | `b ∣ c'_1^{n-1}·c'_2^n`; `(c'_1,b) = 1` gives `c'_2^n = k·b`, `k ≠ 0` | `L3.L3_step_S3_S4` |
+| S5 | cancel `b`: `a_1 = k·c'_1^{n-1}` | `L3.L3_step_S5` |
+| S6+S7+S8 | `a_1^n = k^n·c'_1^{n(n-1)}`, so `k ∣ a_1^n` and `k ∣ c'_2^n` | `L3.L3_step_S6_S8` |
+| S9+S10 | `(a_1,c'_2) = 1 ⟹ (a_1^n,c'_2^n) = 1`, hence `\|k\| = 1` | `L3.L3_step_S9_S10` |
+| S11 | `c_1 = k·c'_1`, `c_2 = k·c'_2`: nonzero, coprime, `c = c_1·c_2`, `a = c_1^n`, `b = c_2^n` | `L3.L3_step_S11` |
+| assembly | whole lemma 3 | `L3.L3_bo_de_3` |
+
+### Reusable results from this chunk
+
+```lean
+-- the lemma itself (statement p. 1):
+L3.L3_bo_de_3 {a b c : ℤ} {n : ℕ} (hn : Odd n) (hn0 : 0 < n)
+    (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0)
+    (hab : a * b = c ^ n) (hgcd_ab : Int.gcd a b = 1) :
+    ∃ c1 c2 : ℤ, c1 ≠ 0 ∧ c2 ≠ 0 ∧ Int.gcd c1 c2 = 1 ∧
+      c = c1 * c2 ∧ a = c1 ^ n ∧ b = c2 ^ n
+
+-- directly reusable pieces:
+L3.L3_step_S0 {a c : ℤ} (ha : a ≠ 0) (hc : c ≠ 0) :
+    ∃ a1 c2' : ℤ, Int.gcd a1 c2' = 1 ∧
+      a = ↑(Int.gcd a c) * a1 ∧ c = ↑(Int.gcd a c) * c2'      -- (drops `hc` in the proof)
+
+L3.L3_step_S9_S10 {n : ℕ} {a1 c2' k : ℤ} (hgcd : Int.gcd a1 c2' = 1)
+    (h7 : k ∣ a1 ^ n) (h8 : k ∣ c2' ^ n) : Int.natAbs k = 1
+```
+
+Every later lemma that needs "divide a pair by its gcd" (bổ đề 4 does, on
+`(a,c)` … `(h,l)`), "coprimality survives powers", "a common divisor of two
+coprime coprime-power facts is `±1`", or "`k ∣ x`, `k ∣ y`, `(x,y) = 1`
+gives `|k| = 1`" should import/reuse these rather than re-derive them.
+Consumers: bổ đề 4 (p. 2 §4) applies lemma 3 to `h·l = r^n` with
+`(h,l) = 1`; bổ đề 7's proof applies it at `u+v = c^n` and `t−v = b^n`.
+
+### Copy-paste proof patterns (all compiled at this pin)
+
+**P8 — the "divide by the gcd" step** (author's `(a,c) = c'_1`):
+
+```lean
+have hpos : 0 < Int.gcd a c := by
+  rw [Int.gcd_def]
+  exact Nat.gcd_pos_of_pos_left c.natAbs
+    (Nat.pos_of_ne_zero (Int.natAbs_ne_zero.mpr ha))
+obtain ⟨a1, c2', hg, h1, h2⟩ := Int.exists_gcd_one hpos
+-- h1 : a = a1 * ↑(Int.gcd a c), h2 : c = c2' * ↑(Int.gcd a c), hg : Int.gcd a1 c2' = 1
+```
+
+**P9 — Euclid + coprime powers in ℤ** (author's S4 and S9):
+
+```lean
+have hcop : IsCoprime b ((Int.gcd a c : ℤ)) := by
+  rw [Int.isCoprime_iff_gcd_eq_one, Int.gcd_comm]   -- lands on the ℕ-side fact
+  exact hg_b                                        -- Int.gcd (↑g) b = 1
+have hcop_pow : IsCoprime b ((Int.gcd a c : ℤ) ^ (n - 1)) := hcop.pow_right
+have hb_dvd_c2 : b ∣ c2' ^ n := hcop_pow.dvd_of_dvd_mul_left hb_dvd
+-- and the same-power instance:  IsCoprime (a1^n) (c2'^n) := hcop.pow
+```
+
+**P10 — `|k| = 1`, then `k^n = k` for odd `n`** (author's S10/S11):
+
+```lean
+have hk_sq : k * k = 1 := Int.isUnit_mul_self (Int.isUnit_iff_natAbs_eq.mpr hkab)
+have hkn : k ^ n = k := by
+  rcases Int.eq_one_or_neg_one_of_mul_eq_one hk_sq with h | h <;> rw [h]
+  · rw [one_pow]
+  · rw [Odd.neg_one_pow hn]        -- hn : Odd n
+```
+
+**P11 — the ℤ-gcd rewrite hazard (do not re-learn this):** if `h : a = …`
+(or `c = …`) and the goal still contains `Int.gcd a c`, a plain `rw [h]`
+rewrites *inside the gcd argument* and destroys the goal. Use `calc`
+(after proving the multiplicativity with `mul_comm`) or
+`conv_lhs => rw [h]` / `conv_rhs => rw [h]`. Full detail:
+`MATHLIB_API_LESSONS.md` § Session 2026-09-26 items 2–3.
+
+### Method note for the sympy screen (reusable — opposite of L1/L2/L6/L7)
+
+**Lemma 3's hypotheses are satisfiable for every odd `n`** (`a = c1^n`,
+`b = c2^n`, `c = c1·c2` with `(c1,c2) = 1`), so unlike the FLT-equation
+lemmas this screen tests every author step on **real instances**:
+`test_l3_01.py` runs the whole S0–S11 chain plus the statement's witness
+construction on 2184 structured instances and 2264 boxed instances
+(`n ∈ {1,3,5,7,11,13}`, which includes the schema-required
+{5,7,11,13}), and exhibits the even-`n` counterexample
+(`a = -4, b = -9, c = 6, n = 2`) that shows the author's oddness
+hypothesis is load-bearing. When a later lemma's hypotheses *are*
+satisfiable, prefer this instance-based screen over a vacuity note.
+
+---
+
 ## §C. Extending this file for the next chunk
 
 1. Add a `## §B. Chunk Lk-01 — …` section with the same four parts: step
@@ -311,4 +411,4 @@ candidates). Two ways to screen the *inference* anyway:
 4. Record the classification outcome (F1–F4/S1) per step in the chunk YAML,
    not here; here record only the mapping and the surviving code shapes.
 
-Last updated: 2026-09-25, after L2-01 (bổ đề 2) reached DONE (L1-01 §B above).
+Last updated: 2026-09-26, after L3-01 (bổ đề 3) reached DONE (L1-01, L2-01 §B above).

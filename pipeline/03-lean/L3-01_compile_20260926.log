@@ -1,0 +1,84 @@
+L3/Basic.lean:42:22: error: unsolved goals
+a c : ℤ
+ha : a ≠ 0
+_hc : c ≠ 0
+hpos : 0 < a.gcd c
+a1 c2' : ℤ
+hg : a1.gcd c2' = 1
+h1 : a = a1 * ↑(a.gcd c)
+h2 : c = c2' * ↑(a.gcd c)
+⊢ ↑(a.gcd c) * a1 = ↑((↑(a.gcd c) * a1).gcd c) * a1
+L3/Basic.lean:42:44: error: unsolved goals
+a c : ℤ
+ha : a ≠ 0
+_hc : c ≠ 0
+hpos : 0 < a.gcd c
+a1 c2' : ℤ
+hg : a1.gcd c2' = 1
+h1 : a = a1 * ↑(a.gcd c)
+h2 : c = c2' * ↑(a.gcd c)
+⊢ ↑(a.gcd c) * c2' = ↑(a.gcd (↑(a.gcd c) * c2')) * c2'
+=== round 2: S0 fixed (calc + mul_comm; round 1 was F2: rw [h1] rewrote a inside Int.gcd a c) ===
+EXIT:0
+=== round 3: + S1+S2 ===
+L3/Basic.lean:76:21: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a * ?b * ?c
+in the target expression
+  ↑(a.gcd c) ^ n * c2' ^ n = ↑(a.gcd (↑(a.gcd c) * c2')) * (↑(a.gcd (↑(a.gcd c) * c2')) ^ (n - 1) * c2' ^ n)
+
+n : ℕ
+hn : 0 < n
+a b c a1 c2' : ℤ
+ha : a ≠ 0
+hab : a * b = c ^ n
+h1 : a = ↑(a.gcd c) * a1
+h2 : c = ↑(a.gcd c) * c2'
+hg0 : ↑(a.gcd c) ≠ 0
+hL : ↑(a.gcd c) * (a1 * b) = c ^ n
+⊢ ↑(a.gcd c) ^ n * c2' ^ n = ↑(a.gcd (↑(a.gcd c) * c2')) * (↑(a.gcd (↑(a.gcd c) * c2')) ^ (n - 1) * c2' ^ n)
+EXIT:1
+=== round 4: S1+S2 hR fixed (conv_lhs: rw [h2] had rewritten c inside Int.gcd a c) ===
+L3/Basic.lean:77:17: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a * ?b * ?c
+in the target expression
+  ↑(a.gcd c) ^ n * c2' ^ n = ↑(a.gcd c) * (↑(a.gcd c) ^ (n - 1) * c2' ^ n)
+
+n : ℕ
+hn : 0 < n
+a b c a1 c2' : ℤ
+ha : a ≠ 0
+hab : a * b = c ^ n
+h1 : a = ↑(a.gcd c) * a1
+h2 : c = ↑(a.gcd c) * c2'
+hg0 : ↑(a.gcd c) ≠ 0
+hL : ↑(a.gcd c) * (a1 * b) = c ^ n
+⊢ ↑(a.gcd c) ^ n * c2' ^ n = ↑(a.gcd c) * (↑(a.gcd c) ^ (n - 1) * c2' ^ n)
+EXIT:1
+=== round 5: S1+S2 hR fixed (← mul_assoc; round 4 was mul_assoc direction) ===
+EXIT:0
+=== round 6: + S3+S4 ===
+L3/Basic.lean:89:64: warning: Variable name `hb` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hb
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+EXIT:0
+=== round 7: S3+S4 _hb linter fix + S5 ===
+EXIT:0
+=== round 8: + S6+S7+S8 ===
+EXIT:0
+=== round 9: + S9+S10 ===
+EXIT:0
+=== round 10: + S11 ===
+EXIT:0
+=== round 11 (FINAL): + assembly L3_bo_de_3, #print axioms, English docstrings ===
+'L3.L3_step_S0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_step_S1_S2' depends on axioms: [propext, Quot.sound]
+'L3.L3_step_S3_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_step_S5' depends on axioms: [propext]
+'L3.L3_step_S6_S8' depends on axioms: [propext]
+'L3.L3_step_S9_S10' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_step_S11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L3.L3_bo_de_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXIT:0

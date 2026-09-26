@@ -323,6 +323,86 @@ mapping and reusable proof patterns for the next chunks:
     explain in the docstring rather than dropping it (dropping would
     misrepresent the author's stated hypotheses).
 
+## Session 2026-09-26 — L3-01 (bổ đề 3) — all steps S1
+
+Verified at this pin by compile (`03-lean/L3-01_compile_20260926.log`,
+final file: `03-lean/L3/Basic.lean`). The chunk is gcd/divisibility algebra
+over ℤ; these are the API facts that did the work.
+
+1. **`Int.exists_gcd_one` is the author's whole S0 sentence.** At
+   `Mathlib/Data/Int/GCD.lean:203`:
+   `Int.exists_gcd_one {m n : ℤ} (H : 0 < Int.gcd m n) :
+   ∃ m' n' : ℤ, Int.gcd m' n' = 1 ∧ m = m' * ↑(Int.gcd m n) ∧ n = n' * ↑(Int.gcd m n)`
+   — the witnesses are the quotients `m / ↑(m.gcd n)`, `n / ↑(m.gcd n)`
+   (`Int.ediv_mul_cancel`), i.e. exactly the author's `a_1`, `c'_2`; the
+   `↑` on the gcd is inserted automatically (Int.gcd is ℕ-valued).
+   Positivity of the gcd: `Int.gcd_def` (`gcd i j = Nat.gcd i.natAbs
+   j.natAbs`, `:159`, `:= rfl`) plus
+   `Nat.gcd_pos_of_pos_left c.natAbs (Nat.pos_of_ne_zero (Int.natAbs_ne_zero.mpr ha))`.
+   There is **no** `Int.natAbs_pos`; the idiom is
+   `Nat.pos_of_ne_zero (Int.natAbs_ne_zero.mpr h)`.
+2. **Rewriting `a` / `c` when the goal still contains `Int.gcd a c`
+   mangles the goal.** `rw [h]` with `h : a = …` (or `c = …`) rewrites
+   *every* occurrence, including the `a` inside the `Int.gcd a c`
+   argument, producing nonsense such as `Int.gcd (↑(a.gcd c) * a1) c`.
+   Two fixes that compiled:
+   - write the proof so the rewrite is unnecessary, e.g.
+     `calc a = a1 * ↑(Int.gcd a c) := h1; _ = ↑(Int.gcd a c) * a1 := mul_comm _ _`;
+   - or target one occurrence: `conv_lhs => rw [h2]`, `conv_rhs => rw [ha_fin]`.
+   This cost two full compile round-trips (S0 round 1; S1+S2 round 3).
+   Read the log with care: round 3's *reported* message is a `mul_assoc`
+   pattern miss — a symptom. The cause was the earlier `rw` in the same
+   tactic block, which had already mangled the goal's gcd argument.
+3. **`mul_assoc` reassociates leftwards**: its statement is
+   `(a*b)*c = a*(b*c)`, so to turn `g * (g^(n-1) * x)` into
+   `(g * g^(n-1)) * x` the rewrite is `rw [← mul_assoc]`; plain
+   `rw [mul_assoc]` fails with "Did not find an occurrence of the pattern
+   `?a * ?b * ?c`". Then `rw [← pow_succ']` folds `g * g^(n-1)` into
+   `g^((n-1)+1)` and `Nat.sub_add_cancel (by omega)` turns that into `g^n`.
+   Pin facts: `pow_succ' (a : M) : ∀ n, a^(n+1) = a * a^n`
+   (`Mathlib/Algebra/Group/Monoid.lean:419`); `pow_mul :
+   a^(m*n) = (a^m)^n` (used `←` to fold `(g^(n-1))^n` into `g^((n-1)*n)`).
+   This cost one compile round-trip (S1+S2 round 4).
+4. **Int gcd ↔ `IsCoprime` bridge + Euclid.** `Int.isCoprime_iff_gcd_eq_one
+   {m n : ℤ} : IsCoprime m n ↔ Int.gcd m n = 1`
+   (`Mathlib/RingTheory/Coprime/Lemmas.lean:38`). With it:
+   - `IsCoprime.dvd_of_dvd_mul_left (H1 : IsCoprime x y) (H2 : x ∣ y*z) : x ∣ z`
+     and the `_right` version (`Mathlib/RingTheory/Coprime/Basic.lean:100/105`)
+     are Euclid's lemma — the author's "`(c'_1,b) = 1`, hence `c'_2^n = k·b`";
+   - `IsCoprime.pow (H : IsCoprime x y) : IsCoprime (x^m) (y^n)`, plus
+     `.pow_left` / `.pow_right` (`…/Coprime/Lemmas.lean:196–205`) — the
+     author's `(a_1,c'_2) = 1 ⟹ (a_1^n,c'_2^n) = 1`.
+   `Int.gcd_comm` flips argument order when the bridge lands reversed.
+5. **`(c'_1,b) = 1` from `(a,b) = 1` and `c'_1 ∣ a`**: `Int.dvd_gcd`
+   (ℕ-out) closes it, e.g.
+   `have h := Int.dvd_gcd hm_a hm_b; simpa only [hgcd_ab] using h`,
+   with `hm_a : ↑m ∣ a` from `dvd_trans (Int.gcd_dvd_left _ b) hg_dvd_a`.
+6. **`|k| = 1` is cleanest through `IsUnit`.** `Int.isUnit_iff_natAbs_eq :
+   IsUnit u ↔ u.natAbs = 1` (`Mathlib/Algebra/Group/Int/Units.lean:76`),
+   then `Int.isUnit_mul_self (hu : IsUnit u) : u * u = 1` (`:83`) and
+   `Int.eq_one_or_neg_one_of_mul_eq_one (h : u*v = 1) : u = 1 ∨ u = -1`
+   (`:51`). The odd-power step is
+   `Odd.neg_one_pow (h : Odd n) : (-1 : α)^n = -1`
+   (`Mathlib/Algebra/Ring/Parity.lean:191`, `@[simp]`).
+   `k ∣ 1` route: `Int.dvd_coe_gcd h7 h8 : k ∣ ↑(Int.gcd …)` (ℤ-out),
+   rewrite by `Int.gcd … = 1`, then `(Int.natAbs_dvd_natAbs).mpr` (ℤ→ℕ)
+   + `Nat.dvd_one.mp`.
+7. **Misc confirmed at this pin:** `dvd_pow (hab : a ∣ b) (hn : n ≠ 0) :
+   a ∣ b^n` (`Mathlib/Algebra/Divisibility/Basic.lean:189`);
+   `dvd_mul_of_dvd_left (h : a ∣ b) (c) : a ∣ b * c` (`:83`);
+   `dvd_mul_right (a b) : a ∣ a * b` (`:80`); `pow_ne_zero`; `mul_ne_zero`;
+   `mul_left_cancel₀` / `mul_right_cancel₀`; `Nat.dvd_one.mp`;
+   `dvd_trans`; `Dvd` witness form `⟨w, (h : b = a * w)⟩`.
+8. **`Odd n` does not hand you `0 < n`**: the author's "odd positive
+   integer" is carried as two binders — `hn : Odd n` (for `Odd.neg_one_pow`)
+   and `hn0 : 0 < n` (for `Nat.sub_add_cancel`, and `hn0.ne'` for
+   `dvd_pow`).
+9. **Cost:** 11 compile round-trips (~150–350 s each warm) for 8 step
+   declarations + assembly. Of those, **three failed rounds, all F2**
+   (round 1 = S0; rounds 3 and 4 = S1+S2 — the traps in items 2 and 3),
+   plus one round that compiled but reported the unused-`hb` linter
+   warning (fixed in the next round). No F1/F3/F4 outcome occurred.
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,

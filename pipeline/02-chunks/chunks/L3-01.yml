@@ -1,0 +1,137 @@
+id: L3-01
+title: "Lemma 3 — coprime a·b = c^n with n odd splits into coprime nth-power factors c = c₁·c₂"
+pdf_pages: [1, 2]
+kind: lemma-statement
+depends_on: []
+source_text: |
+  [PDF p1: Lemma 3 statement]
+
+  Bổ đề 3:
+  Cho a.b = c^n, n là số nguyên dương lẻ; a,b,c ∈ ℤ* sao cho
+  (a,b) = 1, khi đó tồn tại hai số nguyên khác không c1, c2
+  sao cho (c1,c2) = 1, c = c1.c2, a = c1^n và b = c2^n.
+
+  [PDF p2 §3: author's proof ("3. Chứng minh bổ đề 3")]
+
+  Giả sử (a,c) = c'_1, khi đó tồn tại hai số nguyên a_1, c'_2 sao cho
+  (a_1,c'_2) = 1 và a = c'_1 a_1, c = c'_1 c'_2. Vì ab = c^n, nên
+  c'_1 a_1 b = c'_1^n c'_2^n, suy ra a_1 b = c'_1^{n-1} c'_2^n,
+  suy ra b ∣ c'_1^{n-1} c'_2^n. Vì (c'_1,b) = 1 (do (a,b) = 1)
+  nên c'_2^n = kb, với k là số nguyên khác không, từ đẳng thức
+  a_1 b = c'_1^{n-1} c'_2^n, ta suy ra a_1 = k c'_1^{n-1},
+  suy ra a_1^n = k^n c'_1^{n(n-1)}, suy ra k ∣ a_1^n và
+  k ∣ c'_2^n ; vì (a_1,c'_2) = 1 nên (a_1^n, c'_2^n) = 1, từ đó
+  suy ra |k| = 1.
+  Vậy b = k(kb) = k c'_2^n = (k c'_2)^n = c_2^n, a = k(ka) = k c'_1^n =
+  (k c'_1)^n = c_1^n, c = c_1 c_2, (vì |k| = 1, n lẻ) với c_1 = k c'_1,
+  c_2 = k c'_2 nguyên tố cùng nhau.
+  Bổ đề 3 đã được chứng minh.
+formal_hint: |
+  Hypotheses:
+    a b c : ℤ, a ≠ 0, b ≠ 0, c ≠ 0          (a,b,c ∈ ℤ*)
+    n : ℕ, 0 < n and Odd n                  (n là số nguyên dương lẻ)
+    a * b = c ^ n                           (a.b = c^n)
+    Int.gcd a b = 1                         ((a,b) = 1)
+  Conclusion:
+    ∃ c₁ c₂ : ℤ, c₁ ≠ 0 ∧ c₂ ≠ 0 ∧ Int.gcd c₁ c₂ = 1 ∧
+      c = c₁ * c₂ ∧ a = c₁ ^ n ∧ b = c₂ ^ n
+  Proof strategy (author p. 2): divide a and c by their gcd
+  c'_1 = (a,c), leaving coprime (a_1, c'_2); from ab = c^n get
+  a_1·b = c'_1^{n-1}·c'_2^n and b ∣ c'_1^{n-1}·c'_2^n; since
+  (c'_1,b) = 1 write c'_2^n = k·b with k ≠ 0 and cancel b to get
+  a_1 = k·c'_1^{n-1}; then k divides both a_1^n and c'_2^n, which are
+  coprime, so |k| = 1; finally c_1 := k·c'_1, c_2 := k·c'_2 (n odd so
+  k^n = k) satisfy a = c_1^n, b = c_2^n, c = c_1·c_2, (c_1,c_2) = 1.
+transcription: manual
+author_steps: |
+  Normalized ordered step map — full lemma (evidence: 300 dpi renders
+  page-001-300dpi-full.png / page-002-300dpi-full.png + region crops
+  page-001-300dpi-region-02.png, page-002-300dpi-region-01.png,
+  page-002-300dpi-region-02.png; reviewed region records
+  01-extract/regions/p001.yml (R2) and p002.yml (R1, R2), both REVIEWED
+  and signed 2026-09-26; text layer extract_pypdf.txt p.1 "Bổ đề 3:" /
+  p.2 "3. Chứng minh bổ đề 3"; three independent reads agree verbatim —
+  reviewed LaTeX, pypdf text layer, and fresh visual reads of the 300 dpi
+  crops, including the connective "; vì" at p2 R2 line 1 (first visual
+  pass misread it as "và"; a zoom read, the text layer, and the reviewed
+  record all give "vì", the "vì … nên" correlative).
+
+  S0 [p2 §3 ¶1] Set c'_1 = (a,c); there exist integers a_1, c'_2 with
+    (a_1,c'_2) = 1, a = c'_1·a_1 and c = c'_1·c'_2.
+  S1 [p2 §3 ¶1] From ab = c^n: c'_1·a_1·b = c'_1^n·c'_2^n.
+  S2 [p2 §3 ¶1] Cancel c'_1: a_1·b = c'_1^{n-1}·c'_2^n.
+  S3 [p2 §3 ¶1] Hence b ∣ c'_1^{n-1}·c'_2^n.
+  S4 [p2 §3 ¶1] (c'_1,b) = 1 (do (a,b) = 1), therefore c'_2^n = k·b
+    with k a nonzero integer.
+  S5 [p2 §3 ¶1] From the identity a_1·b = c'_1^{n-1}·c'_2^n cancel b:
+    a_1 = k·c'_1^{n-1}.
+  S6 [p2 §3 ¶1] Power: a_1^n = k^n·c'_1^{n(n-1)}.
+  S7 [p2 §3 ¶1] Hence k ∣ a_1^n.
+  S8 [p2 §3 ¶1] And k ∣ c'_2^n.
+  S9 [p2 §3 ¶2] (a_1,c'_2) = 1 ⟹ (a_1^n, c'_2^n) = 1.
+  S10 [p2 §3 ¶2] k divides both powers, so |k| = 1.
+  S11 [p2 §3 ¶3] With c_1 = k·c'_1, c_2 = k·c'_2 (using |k| = 1 and
+    n odd): b = c_2^n, a = c_1^n, c = c_1·c_2, and (c_1,c_2) are
+    coprime. ∎
+
+  Lean mapping (one named theorem per author step, 03-lean/L3/Basic.lean):
+    S0       -> L3_step_S0     (gcd division with the coprimality
+                                (a_1,c'_2) = 1)
+    S1+S2    -> L3_step_S1_S2  (conclusion a_1·b = c'_1^{n-1}·c'_2^n;
+                                S1's substitution is the internal calc)
+    S3+S4    -> L3_step_S3_S4  (conclusion ∃ k, c'_2^n = k·b ∧ k ≠ 0;
+                                S3's dvd and the parenthetical
+                                (c'_1,b) = 1 derivation are internal)
+    S5       -> L3_step_S5     (cancellation of b ≠ 0)
+    S6+S7+S8 -> L3_step_S6_S8  (conclusion k ∣ a_1^n ∧ k ∣ c'_2^n;
+                                S6's power identity is the internal have)
+    S9+S10   -> L3_step_S9_S10 (conclusion |k| = 1, i.e.
+                                Int.natAbs k = 1; S9's coprime-powers
+                                claim is the internal have)
+    S11      -> L3_step_S11    (the constructed witnesses c_1, c_2 with
+                                nonzero, coprime, c = c_1·c_2,
+                                a = c_1^n, b = c_2^n)
+    whole    -> L3_bo_de_3     (assembly, author's order)
+
+  Classifications (per AGENTS.md F1-F4/S1) — ALL S1 (three F2 rounds plus
+  one linter round, no F1/F3/F4 outcomes):
+    S0:       S1. One F2 round: `rw [h1]` with `h1 : a = a1 * ↑(a.gcd c)`
+              rewrote `a` inside `Int.gcd a c`; fixed by stating the
+              orientation with `calc` + `mul_comm`.
+    S1+S2:    S1. Two F2 rounds, both tactic shape: (a) `rw [h2]` rewrote
+              `c` inside `Int.gcd a c` (fixed with `conv_lhs => rw [h2]`);
+              (b) `rw [mul_assoc]` is the wrong direction for
+              reassociation (fixed with `← mul_assoc`, then `← pow_succ'`
+              + `Nat.sub_add_cancel`).
+    S3+S4:    S1. One linter round: the author's `b ≠ 0` is not needed by
+              this step (`c'_2 ≠ 0` already forces `k ≠ 0`), so it is
+              carried as `_hb` with a docstring note.
+    S5:       S1 (first try).
+    S6+S7+S8: S1 (first try).
+    S9+S10:   S1 (first try).
+    S11:      S1 (first try).
+    Assembly: S1 (final round EXIT:0, no warnings, no sorry).
+  Zero F1/F3/F4 outcomes: every author step was accepted as written.
+  Formal additions (implicit side conditions only, no new mathematics):
+    - c'_1 ≠ 0 (it divides the nonzero a) for the cancellation of S2;
+    - c'_2 ≠ 0 (from c = c'_1·c'_2 and c ≠ 0), so that k ≠ 0 at S4;
+    - 1 ≤ n from the author's "n nguyên dương" for
+      c'_1^n = c'_1·c'_1^{n-1} at S2 and for k ∣ k^n at S7;
+    - `Odd n` and `0 < n` are two binders of the paper's "n là số nguyên
+      dương lẻ"; `Odd n` supplies (-1)^n = -1 at S11.
+  Evidence: 03-lean/L3-01_compile_20260926.log (11 rounds; final round
+  EXIT:0, no warnings, no sorry; `#print axioms` on all eight
+  declarations = propext, Classical.choice, Quot.sound only);
+  04-sympy/test_l3_01.py PASS (2184 structured + 2264 boxed real
+  instances, n ∈ {1,3,5,7,11,13}, full S0–S11 chain + statement
+  witnesses; the even-n counterexample a=-4, b=-9, c=6, n=2 shows the
+  author's oddness hypothesis is load-bearing).
+lean_file: 03-lean/L3/Basic.lean
+sympy_test: 04-sympy/test_l3_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-001-300dpi-full.png page-002-300dpi-full.png
+lean_decls: L3_step_S0, L3_step_S1_S2, L3_step_S3_S4, L3_step_S5, L3_step_S6_S8, L3_step_S9_S10, L3_step_S11, L3_bo_de_3
+regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2
+status: DONE

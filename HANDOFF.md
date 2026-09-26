@@ -5,7 +5,23 @@ requires skill discovery/activation and infrastructure readiness before any
 chunk or mathematics work; those rules govern *how* to work, while this file
 records *where things stand*. `README.md` is the runtime command reference.
 
-Last updated: 2026-09-26 (fifth session) — **vision→LaTeX extraction
+Last updated: 2026-09-26 (sixth session) — **`L3-01` DONE** (bổ đề 3:
+statement p. 1 §A, proof p. 2 §3). All author steps S0–S11 encoded
+one-at-a-time and classified: every step **S1**, assembly `L3.L3_bo_de_3`;
+final compile EXIT:0, zero warnings, zero `sorry`, `#print axioms` on all
+eight declarations = `[propext, Classical.choice, Quot.sound]`. Three F2
+rounds, all tactic-shape (two of them the *same* trap: `rw` on
+`a = …`/`c = …` rewrites **inside** the `Int.gcd a c` argument — fixed
+with `calc` / `conv_lhs`; one `mul_assoc` direction), plus one
+linter-naming round — of 11 compile round-trips in total.
+Sympy screen PASS on **real instances** (2184 structured + 2264 boxed,
+n ∈ {1,3,5,7,11,13}) — unlike L1/L2/L7 the hypotheses are satisfiable;
+the even-n counterexample shows the author's oddness hypothesis is
+load-bearing. Docs: `ENCODING_MAP.md` §B L3-01 (patterns P8–P11) and
+`MATHLIB_API_LESSONS.md` § Session 2026-09-26. **`L4-01` (bổ đề 4) is
+IN_PROGRESS from a parallel session**: its `depends_on: [L3-01]` edge is
+now set, and its Lean lane (not started) should reuse `L3.L3_bo_de_3`.
+Prior session (fifth, 2026-09-26) — **vision→LaTeX extraction
 stage COMPLETE** (commit `9cb73f8`): `regions.py` gates + `regions/pNNN.yml`
 records for **all 33 pages REVIEWED** (`regions.py status --pages 33`
 exit 0 = the two-phase switch), chunk evidence gate extended with
@@ -23,16 +39,40 @@ screen PASS (3644 real witnesses at n = 1). L1-01 remains DONE.
 L7-FRAG-01 = BLOCKED on author query Q-001. Next: another small lemma
 (bổ đề 5c/5đ per the earlier directive, or bổ đề 3 in source order).
 
+Concurrent session (2026-09-26, transcription only, stopped before the Lean
+lane): **`L4-01` transcription frozen** — bổ đề 4 (statement p. 1, proof
+p. 2 §4) transcribed into `02-chunks/chunks/L4-01.yml` with both records
+(literal `source_text` + ordered step map S0–S7), evidence bound to the
+current extraction run (pages 1 OK / 2 MANUAL → `PASS_WITH_MANUAL`;
+`page-00{1,2}-300dpi-full.png`). Screen `04-sympy/test_l4_01.py` PASS on
+REAL witnesses (252 inference + 836 parametrisation), with two red-flag
+checks that the author's side hypotheses are load-bearing (m prime in S2;
+m ∤ h·l·r in S5). Status IN_PROGRESS: **no Lean work done** — `lean_decls`
+is empty and no step has an F1–F4/S1 classification. L4's S6 cites bổ đề 3
+("áp dụng bổ đề 3"), so L4-01 must gain `depends_on: [L3-01]` once L3-01 is
+DONE, and the Lean lane must import bổ đề 3 rather than re-derive it.
+Capability note: that session had NO vision (image reads return binary, the
+repo vision-probe included), so the render read for the transcription is the
+human-signed REVIEWED region LaTeX (p1 R2/R3, p2 R2), cross-checked against
+both engine text layers — not a fresh independent vision pass. A second
+session is transcribing bổ đề 3 (`L3-01`, TODO) in parallel; `status.tsv`,
+`PROGRESS.md` and this file are shared write targets between the two.
+
 ---
 
 ## One-line status
 
-Docker stack healthy; smoke green. **`L2-01` DONE** — bổ đề 2 verified
-with the one-step loop, one named Lean declaration per author step
-(`03-lean/L2/Basic.lean`), final compile EXIT:0, `#print axioms` =
-[propext, Classical.choice, Quot.sound] only, sympy screen PASS
-(`04-sympy/test_l2_01.py`: identity 1000 cases, 3644 real witnesses
-lifted at n = 1, vacuity on {5,7,11,13}). `L1-01` DONE (prior session).
+Docker stack healthy; smoke green. **`L3-01` DONE, `L2-01` DONE,
+`L1-01` DONE** — three lemmas fully verified with the one-step loop (one
+named Lean declaration per author step, final compile EXIT:0, `#print
+axioms` = [propext, Classical.choice, Quot.sound] only). `L3-01`'s sympy
+screen is the first **instance-based** one (`04-sympy/test_l3_01.py`:
+2184 structured + 2264 boxed real instances, n ∈ {1,3,5,7,11,13});
+L1/L2's screens are inference-only because their hypotheses (the FLT
+equation) are unsatisfiable for n ≥ 3. **`L4-01` (bổ đề 4)
+IN_PROGRESS** — transcription, step map S0–S7, sympy screen and evidence
+block are done (parallel session); its Lean lane is not started and now
+carries `depends_on: [L3-01]`.
 Lemma 7's non-divisibility chunk stays transcribed, step-mapped,
 sympy-verified and BLOCKED on the author-facing sign inconsistency
 Q-001; its flat-copy Lean file still has F2 errors plus one `sorry`
@@ -139,6 +179,52 @@ so even a recreate is cheap.
    `01-extract/out/` (same on-disk status as the L1 renders — evidence
    PNGs are not tracked in git).
 
+## What the L3 session established (evidence, no rework needed)
+
+1. **Chunk `L3-01` DONE** (`pipeline/02-chunks/chunks/L3-01.yml`,
+   `status.tsv`, `PROGRESS.md`): bổ đề 3 — statement p. 1 §A, proof
+   p. 2 §3 — transcribed from the signed REVIEWED region records
+   (`01-extract/regions/p001.yml` R2, `p002.yml` R1–R2) and re-read
+   visually from the 300 dpi crops (`page-001-300dpi-region-02.png`,
+   `page-002-300dpi-region-01/02.png`); three reads agree, including the
+   contested connective `; vì` at p2 R2 line 1 (a first vision pass
+   misread it as `và`; zoom read + text layer + reviewed record all give
+   `vì`, the `vì … nên` correlative). Step map S0–S11 in the chunk YAML.
+2. **Lean: one declaration per author step, all S1** —
+   `L3_step_S0`, `L3_step_S1_S2`, `L3_step_S3_S4`, `L3_step_S5`,
+   `L3_step_S6_S8`, `L3_step_S9_S10`, `L3_step_S11`, plus the assembly
+   `L3_bo_de_3` (`03-lean/L3/Basic.lean`). Final compile EXIT:0, no
+   `sorry`, no warnings; `#print axioms` on all eight = propext,
+   Classical.choice, Quot.sound. Log:
+   `03-lean/L3-01_compile_20260926.log` (11 rounds kept as evidence).
+3. **Sympy screen PASS on real instances** (`04-sympy/test_l3_01.py`):
+   the whole S0–S11 chain plus the statement's witness construction on
+   2184 structured + 2264 boxed instances (n ∈ {1,3,5,7,11,13}); the
+   even-n counterexample (a = -4, b = -9, c = 6, n = 2) exhibits that the
+   author's oddness hypothesis is load-bearing. New method note: when a
+   lemma's hypotheses *are* satisfiable, use an instance-based screen
+   instead of the L1/L2/L7 vacuity note.
+4. **Formal additions were side conditions only** — c'_1 ≠ 0 (divides
+   the nonzero a) for the S2 cancellation, c'_2 ≠ 0 (from c = c'_1·c'_2)
+   so that k ≠ 0 at S4, 1 ≤ n for `c'_1^n = c'_1·c'_1^{n-1}` (S2) and
+   `k ∣ k^n` (S7), and `Odd n`/`0 < n` as two binders of the paper's
+   "n là số nguyên dương lẻ" (the oddness is used only at S11 via
+   `(-1)^n = -1`).
+5. **Two reusable API lessons + one trap** (`MATHLIB_API_LESSONS.md`
+   § Session 2026-09-26): `Int.exists_gcd_one` does S0 in one shot;
+   `Int.isCoprime_iff_gcd_eq_one` bridges to `IsCoprime` so that
+   `IsCoprime.dvd_of_dvd_mul_left` (Euclid) and `IsCoprime.pow` do S4/S9;
+   and the trap that cost two rounds — **`rw` with `h : a = …` (or
+   `c = …`) rewrites inside the `Int.gcd a c` argument of the goal**, so
+   use `calc` or `conv_lhs`/`conv_rhs`. Patterns P8–P11 and the
+   step→declaration table: `ENCODING_MAP.md` §B Chunk L3-01.
+6. **Downstream integration:** `L4-01` (bổ đề 4, a parallel session's
+   transcription) cites bổ đề 3 at its S6; its `depends_on: [L3-01]` is
+   now declared (the chunk's own note asked for this once bổ đề 3
+   existed), and its Lean lane must reuse `L3.L3_bo_de_3` — module
+   wiring (`[[lean_lib]] name = "L3"`) is still pending per
+   `ENCODING_MAP.md` §A.
+
 ### Prior session (L7 pilot) — still stands
 
 1. **Smoke/sympy green.** `04-sympy/test_l7_frag_01.py` exit 0 — n=7: 12
@@ -192,18 +278,26 @@ so even a recreate is cheap.
 Stages in `pipeline/PIPELINE.md`. Verified working: 01-extract (pypdf +
 pymupdf, SHA256-pinned), 02-chunks (schema + ledger + YAML; all existing
 chunks have both required records), 03-lean (compiles in container; API
-lessons + encoding map live), 04-sympy (L1 + L2 + L7 tests pass), smoke
-(exit 0), progress.py (exit 0), 05-feedback (Q-001 OPEN),
-BLOCKERS (B-001 RESOLVED).
+lessons + encoding map live), 04-sympy (L1 + L2 + L3 + L4 + L7 screens all
+PASS — re-run together after L3-01), smoke (exit 0), progress.py (exit 0),
+05-feedback (Q-001 OPEN), BLOCKERS (B-001 RESOLVED).
 
-Chunk states: `L2-01` DONE (bổ đề 2, contrapositive power-lift, all
-steps S1, assembly `L2_bo_de_2`); `L1-01` DONE (bổ đề 1, six steps S1,
-assembly `L1_bo_de_1`); `L7-FRAG-01` BLOCKED (Q-001). Three chunks exist.
+Chunk states: `L3-01` DONE (bổ đề 3, gcd-splitting of a·b = c^n, steps
+S0–S11 all S1, assembly `L3_bo_de_3`); `L2-01` DONE (bổ đề 2,
+contrapositive power-lift, assembly `L2_bo_de_2`); `L1-01` DONE (bổ đề 1,
+six steps S1, assembly `L1_bo_de_1`); `L4-01` IN_PROGRESS (bổ đề 4 —
+transcription, step map S0–S7, sympy screen and evidence block complete
+from a parallel session; Lean lane not started; `depends_on: [L3-01]`);
+`L7-FRAG-01` BLOCKED (Q-001). Five chunks exist: 3 DONE / 1 IN_PROGRESS /
+1 BLOCKED.
 
-Reuse: L1/L2 are **not** wired as Lean modules yet — deferred by user
-decision to the first real consumers (p. 6 main theorem "áp dụng bổ đề 1",
-or bổ đề 6; L2's nk-scaling for the main theorem). Rule + wiring recipe +
-the volume-only `Pilot` lean_lib reproducibility gap:
+Reuse: L1/L2/L3 are **not** wired as Lean modules yet — deferred by user
+decision to the first real consumers. That consumer now exists: `L4-01`
+declares `depends_on: [L3-01]`, so its Lean lane is the first chunk that
+must import/reuse a DONE chunk's declarations (`L3.L3_bo_de_3`, or its
+step lemmas) instead of re-deriving them; the p. 6 main theorem (bổ đề 1)
+and bổ đề 6 remain the other consumers. Rule + wiring recipe + the
+volume-only `Pilot` lean_lib reproducibility gap:
 `pipeline/03-lean/ENCODING_MAP.md` §A "Reusing a DONE chunk".
 
 Workflow hardening (2026-09-25, same day): the extraction-stage
@@ -240,28 +334,45 @@ the text-only Lean phase may resume — provided the human edit pass over
 `out/review/` is accepted (or skipped by user decision; any edit flips
 the page to `STALE`, then `regions.py verify` + `signoff` re-close it).
 
-**L2-01 is closed. Next lemma:** bổ đề 5c / 5đ (user directive
-2026-09-25; cited by Lemma 7's proof — formalizing them first also serves
-L7's `depends_on`), or bổ đề 3 (p. 1, next in source order — proof p. 2
-§3). Confirm against a 300 dpi render before freezing the chunk; the text
-layer is navigation only.
+**L2-01 and L3-01 are closed.** Candidates, in the order the repo's own
+records point at them:
 
-Either way, follow AGENTS.md exactly:
+1. **`L4-01` (bổ đề 4), Lean lane** — a parallel session already froze its
+   transcription, step map S0–S7, sympy screen and evidence block; the
+   Lean lane is untouched (`lean_decls:` empty, no F1–F4/S1 assigned). It
+   declares `depends_on: [L3-01]` because its S6 applies bổ đề 3, so it is
+   also the first chunk that must **wire and reuse** a DONE chunk
+   (`ENCODING_MAP.md` §A "Reusing a DONE chunk": `[[lean_lib]] name = "L3"`
+   + `import`), rather than re-deriving bổ đề 3.
+2. **bổ đề 5c / 5đ** (user directive 2026-09-25; cited by Lemma 7's proof),
+   or **bổ đề 5 a) b)** (p. 1 §A, cited by the same chain).
+3. **bổ đề 5 in source order** / bổ đề 6 — bổ đề 6 is bổ đề 1's second
+   consumer (`(u,v) = (u,t) = (v,t) = 1` as a hypothesis).
+
+Whichever is chosen, confirm the statement + proof against a 300 dpi
+render (the reviewed region records are the authoritative transcription;
+the text layer is navigation only).
+
+Follow AGENTS.md exactly:
 
 1. **Load the Lean skill first** (mandatory gate: `SKILL.md` +
    `references/*` + `MATHLIB_API_LESSONS.md` + `ENCODING_MAP.md`).
 2. `docker compose exec -T lean sh /workspace/proof/check_env.sh` — green before math.
-3. Locate the statement + proof in the PDF: search the text layer, render
-   those pages at 300 dpi, transcribe literally (two visual reads if
-   ambiguous; the text layer is navigation only).
+3. Locate the statement + proof in the PDF: use the REVIEWED region
+   records (`01-extract/regions/pNNN.yml`); re-read the 300 dpi crops if
+   anything is ambiguous.
 4. Create the chunk YAML with BOTH records — L1-01 is the shape reference
-   for `author_steps:`.
-5. Sympy-screen the *inferences*, not witnesses (see ENCODING_MAP §B
-   method note: for n ≥ 3 the hypothesis is unsatisfiable).
+   for `author_steps:`, L3-01 for the full classification block.
+5. Sympy-screen the *inferences*; if the lemma's hypotheses are
+   satisfiable (as bổ đề 3/4 are), screen **real instances** instead of
+   writing a vacuity note (`ENCODING_MAP.md` §B L3-01 method note).
 6. One-step loop: encode ONE author step → compile → classify
    F1/F2/F3/F4/S1 → only then continue. Stop on F4 and file a query.
+   Watch L3's two F2 traps: `rw` on `a = …`/`c = …` rewrites inside
+   `Int.gcd a c` (use `calc`/`conv_*`), and `mul_assoc` reassociates
+   *leftwards* (`← mul_assoc` to expose `a * b`).
 7. On S1 for all steps: `#print axioms`, update ledger +
-   `progress.py --write`, commit.
+   `progress.py --write PROGRESS.md`, commit.
 8. Then L7: set `depends_on`, restart its loop at S0 from its existing
    step map. Q-001 stays with the author — no L7 completion without their
    sign answer.
