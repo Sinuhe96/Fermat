@@ -78,6 +78,14 @@ successful compile, so a producer becomes importable by being compiled once —
 no separate `lake build` step. The copies under `pipeline/03-lean/` stay the
 source of truth; never edit the Lake-volume copies.
 
+**If `import Lk.Basic` fails**, it means the producer has not been compiled
+yet (its olean appears on the first successful compile of that source) or its
+`lean_lib` is missing from the repo `lakefile.toml`. Fix that; do **not**
+rebuild the environment. `docker compose down -v`, image rebuilds, and
+`lake exe cache get` are for a broken toolchain or Mathlib cache
+(`check_env.sh` red), never for a wiring problem — they destroy or
+re-download state that `check_env.sh` reports as fine.
+
 **Never run `lake`, `lake exe cache get`, or Lean compilation in
 `/workspace/proof`, `/workspace/pipeline`, `proof_verify`, or another Windows
 bind mount.** Lake work belongs only in `/workspace/work/testproj` on the

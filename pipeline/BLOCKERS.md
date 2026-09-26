@@ -43,7 +43,10 @@ clutter this log with mathematical disputes.
   works (olean written, 4 s, no Mathlib import); (c) a real
   `compile_lean.sh L3/Basic.lean` round leaves
   `.lake/build/lib/lean/L3/Basic.olean` in place (round 12 of
-  `03-lean/L3-01_compile_20260926.log`).
+  `03-lean/L3-01_compile_20260926.log`); (d) independently corroborated by
+  the other session: `lake build L3` (01:20) published
+  `L3/{Basic.olean, Basic.ilean, Basic.trace}` plus `.lake/build/ir/L3/`, so
+  the declared library builds through lake's own route too.
 
 ## B-003 `Main.lean` aggregator still lists a sorry-carrying scratch module [OPEN]
 

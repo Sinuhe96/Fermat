@@ -160,6 +160,26 @@ file (olean written in 4 s, no Mathlib), plus a real round on
 `L3/Basic.lean` through the updated harness
 (`03-lean/L3-01_compile_20260926.log`, round 12).
 
+**Two routes publish the module, and mixing them is harmless** (both write
+the same olean path from the same source): the harness `-o` above (default —
+no extra round), or lake itself,
+`docker compose exec -T lean sh -c 'cd /workspace/work/testproj && lake build L3'`
+(also writes `.ilean`/`Basic.trace`, so lake's own fingerprinting is in
+place; costs one full same-size round). Observed 2026-09-26: the L4 session's
+`lake build L3` succeeded on the first try once the repo lakefile was synced.
+
+**If `import Lk.Basic` fails, work this list — and leave the environment
+alone:** (1) is the producer compiled at all? Its olean appears only after
+one successful compile of that source, so compile the producer (harness, or
+`lake build Lk`); (2) is `Lk` declared in the *repo* `lakefile.toml` with
+`roots = ["Lk.Basic"]`? Volume-side edits are discarded by the harness;
+(3) the environment comes into play only if the toolchain or Mathlib cache
+itself looks broken (`Mathlib.olean` missing, `check_env.sh` red) — then run
+`check_env.sh --full` and follow `docs/IMAGE_BUILD.md`. Never
+`docker compose down -v`, never rebuild the image, and never re-run
+`lake exe cache get` for a wiring problem: those destroy or re-download the
+toolchain/Mathlib state that `check_env.sh` just told you is fine.
+
 **Cost model (measured; corrects the older claim that a consumer pays
 "minutes" for a paste).** The per-round floor in this container is the
 `import Mathlib` elaboration — ~150–350 s per round across L1–L3 — and a
