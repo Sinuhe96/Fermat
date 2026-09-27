@@ -1,0 +1,9 @@
+# L7-FRAG-03: 2026-09-28 rounds (consolidated; round 1 of this chunk is in
+# L7-FRAG-03_compile_20260927.log if present, otherwise round 1 is the first block below).
+
+=== round 3 (2026-09-28): re-run after the L7F2 olean was restored (source unchanged since round 2). ===
+L7F3/Basic.lean:1:0: error: object file '/workspace/work/testproj/.lake/build/lib/lean/L7F2/Basic.olean' of module L7F2.Basic does not exist
+EXIT=1
+
+=== L7F3/Basic.lean (2026-09-28) ===
+EXIT=0

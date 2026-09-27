@@ -1,0 +1,56 @@
+=== round 1 (2026-09-27): S5, S6, S7, S8_S9, S10, S11 + helpers five_c, five_d_cube, chain_ab -- first write of L7F3/Basic.lean. ===
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+L7F3/Basic.lean:143:57: error: unsolved goals
+n : ℕ
+hn : Nat.Prime n
+hodd : Odd n
+Y c : ℤ
+h6 : Y ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n]
+hX : Y ^ (3 * n) ≡ -c ^ (3 * n) [ZMOD ↑n]
+hp : (Y ^ (3 * n)) ^ n ≡ -(c ^ (3 * n)) ^ n [ZMOD ↑n]
+hneg : (-c ^ (3 * n)) ^ n = -(c ^ (3 * n)) ^ n
+h : ↑n ∣ -(c ^ (3 * n)) ^ n - (Y ^ (3 * n)) ^ n
+⊢ Y ^ (n ^ 2 * 3) + c ^ (n ^ 2 * 3) = Y ^ (n ^ 2 * 3) - c ^ (n ^ 2 * 3) * (-1) ^ n
+L7F3/Basic.lean:145:22: error: Application type mismatch: The argument
+  h
+has type
+  ↑n ∣ -(c ^ (3 * n)) ^ n - (Y ^ (3 * n)) ^ n
+but is expected to have type
+  ↑n ∣ (-c ^ (3 * n)) ^ n - (Y ^ (3 * n)) ^ n
+in the application
+  dvd_neg.mpr h
+L7F3/Basic.lean:167:34: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a ^ ?m * ?a ^ ?n
+in the target expression
+  x ^ (3 * (n * (n - 1))) * (x ^ 3) ^ n = ((x ^ 3) ^ n) ^ n
+
+n : ℕ
+Y c : ℤ
+h7 : ↑n ^ 2 ∣ (Y ^ (3 * n)) ^ n + (c ^ (3 * n)) ^ n
+hY3 : (Y ^ 3) ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hc3 : (c ^ 3) ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+x : ℤ
+hexp : n * (n - 1) + n = n * n
+⊢ x ^ (3 * (n * (n - 1))) * (x ^ 3) ^ n = ((x ^ 3) ^ n) ^ n
+L7F3/Basic.lean:207:72: error: Application type mismatch: The argument
+  h1
+has type
+  c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n]
+but is expected to have type
+  c ^ n ≡ b ^ n + a ^ n [ZMOD ↑n]
+in the application
+  L7F3_step_S5 h1
+L7F3/Basic.lean:220:38: error: Application type mismatch: The argument
+  h10
+has type
+  a ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+but is expected to have type
+  a ^ (3 * n) + -b ^ (3 * n) ≡ ?m.228 [ZMOD ↑n ^ 2]
+in the application
+  Int.ModEq.trans (Int.ModEq.add_left (a ^ (3 * n)) hm) h10
+EXIT=1

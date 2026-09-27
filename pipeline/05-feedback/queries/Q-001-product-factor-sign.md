@@ -1,4 +1,17 @@
-# Q-001 Product factor sign mismatch: a^n − b^n vs a^n + b^n [OPEN]
+# Q-001 Product factor sign mismatch: a^n − b^n vs a^n + b^n [RESOLVED]
+
+> **RESOLVED 2026-09-27 — the printed statement is right; nothing to change in
+> it.** The main proof uses the DIFFERENCE: at p32 R1 it cancels by
+> `a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0 (mod n)` to obtain its display (27), and
+> the only non-trivial factor there is `a^n − b^n` (the sum is available from
+> the case hypothesis). So no sign in the statement is a typo. What the print
+> under-covers is its own first factor: the "chứng minh tương tự" line lists
+> the three pairwise sums. That missing instance is an F3 fill-in — the printed
+> reductio re-instantiated at `(X, Y, Z) = (−b, a, c)` via the author's own
+> "Lưu ý" symmetry — encoded as `L7_step_S5c`, after which `L7_step_S6` (the
+> printed product) closes and the chunk is DONE. See "Update 2026-09-27".
+> The remaining item is editorial: the author may want the "tương tự" line to
+> list the difference instance too.
 
 ## Chunk + PDF ref
 
@@ -138,6 +151,71 @@ renders.
 
 ## Attachments
 
-- sympy: `pipeline/04-sympy/test_l7_frag_01.py` (statement as printed: PASS)
-- Lean: `pipeline/03-lean/Pilot/Basic.lean` (single `sorry` at the gap)
+- sympy: `pipeline/04-sympy/test_l7_frag_01.py` (statement as printed: PASS;
+  the 2026-09-27 version also prints a per-factor tally — all seven checked
+  factor forms are ≢ 0 on all 36 hypothesis-witnesses at n = 7/13)
+- Lean: `pipeline/03-lean/L7/Basic.lean` (no `sorry` since 2026-09-27)
 - PDF screenshot: `pipeline/05-feedback/assets/Q-001-p4-5-proof.png`
+
+## Update 2026-09-27 — answered by the main proof: the difference is what is used
+
+Scouting the main proof for its uses of bổ đề 7 settles the question without
+waiting for the author. The signed region records
+(`pipeline/01-extract/regions/`, all 33 pages REVIEWED) cite "bổ đề 7" outside
+the lemma's own pages exactly twice:
+
+1. **p30 R2** — "Vì n là số nguyên tố lớn hơn 5, abc ∤ n,
+   a^n+b^n−c^n ≡ 0 (mod n^s), s ≥ 2 và a^{n(n−2)}+b^{n(n−2)}−c^{n(n−2)} ≡ 0
+   (mod n) nên theo bổ đề 7, ta có … (18) … (22') và n ≡ 1 (mod 6)": the
+   congruence conclusions, used in the §1.2 computation of `H(c^n, b)`.
+2. **p32 R1** — case 1.2 (`h = c^n`) closes via
+   `−a^n b^n (a^n − b^n)(a^n + b^n)[a^{n(n−2)}+b^{n(n−2)}−c^{n(n−2)}] ≡ 0
+   (mod n^{s+1})` ⇒ `(27)` "**vì** a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0 (mod n)".
+
+The cancellation in (27) needs all four factors non-zero mod n. Two are free:
+`a^n, b^n` from `abc ∤ n`, and `a^n + b^n` from the case hypothesis itself
+(`h = c^n`, `a^n + b^n ≡ c^n (mod n^s)`, `n ∤ c`). The one non-trivial factor is
+the **difference `a^n − b^n`** — precisely the statement's first factor, and
+precisely the instance the proof's "tương tự" line does not list (it lists the
+sums `a^n + b^n`, `b^n + c^n`, `c^n + a^n`).
+
+So the statement's sign is not a typo: it is the factor the main theorem
+consumes. And the missing instance is not new mathematics — the lemma's own
+"Lưu ý" paragraph states that the hypotheses (b)/(c) are symmetric in ℤ under
+the pairs `(a; b)`, `(c; −a)`, `(c; −b)`; at `(X, Y, Z) = (−b, a, c)` the
+printed reductio (`n` odd turns `c^n ≡ a^n + b^n` into `Y^n ≡ Z^n + X^n`, and
+likewise at the exponent `n(n−2)`) applies verbatim and concludes
+`¬ n ∣ X^n + Y^n`, i.e. `¬ n ∣ a^n − b^n`. Encoded as:
+
+```lean
+theorem L7.L7_step_S5c {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
+    (hb : ¬ (n : ℤ) ∣ b)
+    (h1n : (c : ZMod n) ^ n = (a : ZMod n) ^ n + (b : ZMod n) ^ n)
+    (h2n : (c : ZMod n) ^ (n * (n - 2))
+      = (a : ZMod n) ^ (n * (n - 2)) + (b : ZMod n) ^ (n * (n - 2))) :
+    ¬ (n : ℤ) ∣ a ^ n - b ^ n
+```
+
+(its body is `L7_pair_reductio (X := -b) (Y := a) (Z := c)`, with (b)/(c)
+rearranged), and then the printed "Tóm lại" closes:
+
+```lean
+theorem L7.L7_step_S6 {n : ℕ} (hn : Nat.Prime n) {a b c : ℤ}
+    (hd : ¬ (n : ℤ) ∣ a ^ n - b ^ n)
+    (hbc : ¬ (n : ℤ) ∣ b ^ n + c ^ n)
+    (hca : ¬ (n : ℤ) ∣ c ^ n + a ^ n) :
+    ¬ (n : ℤ) ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n)
+```
+
+Verification: `compile_lean.sh L7/Basic.lean` EXIT 0, zero warnings, zero
+`sorry`, `#print axioms` = propext / Classical.choice / Quot.sound on all
+eleven declarations; `04-sympy/run_all.py` 7/7 (per-factor tally: no factor
+form is ≡ 0 on any of the 36 hypothesis-witnesses); `progress.py --check`
+exit 0. Chunk `L7-FRAG-01`: **DONE**.
+
+Classification bookkeeping: the earlier F4 was based on the print's *proof*
+line only; with the downstream use checked and the instance derived from the
+author's own symmetry, the correct class is F3, and the printed statement is
+verified as written. No author action is required to proceed; the only
+author-facing item left is editorial (the "tương tự" line could name the
+difference instance).

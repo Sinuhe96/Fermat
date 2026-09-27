@@ -112,6 +112,13 @@ Prepare in this order:
 3. Read its `references/search.md` and `references/reference.md` in full.
 4. Read `pipeline/03-lean/MATHLIB_API_LESSONS.md`.
 5. Read `pipeline/03-lean/ENCODING_MAP.md`.
+6. Read `pipeline/03-lean/SIGNATURES.md` — the generated call-site ABI sheet
+   (every declaration of every DONE module, with its source signature and the
+   four header facts that decide a call: coordinate, modulus, form,
+   orientation). It exists because the 2026-09-28 lane spent *every* one of its
+   error rounds on a call-site shape a 10-second read of the producer's header
+   would have caught. Regenerate with `python pipeline/03-lean/gen_signatures.py`
+   after each DONE flip.
 
 Load `lean-proof` through the active harness, or read its linked file directly,
 only for a local proof-state or dependent-rewrite blocker. Never edit a `.lean`
@@ -264,6 +271,31 @@ behind a cheap check:
    (extraction binding, page verdicts, render provenance, `lean_decls` in the
    Lean file, no `sorry`).
 
+### Chunking a multi-page section (leaf chunks, not one giant chunk)
+
+The loop above was calibrated on lemmas (L5: 29 rounds for 21 declarations;
+L6: 35 declarations in 1328 lines). A dense multi-page section such as §1
+(~23 pages) is never one chunk: split it into leaf chunks first, then chain
+them with a section assembly.
+
+- **Leaf cap:** one leaf chunk covers at most ~2 PDF pages, ~10 author steps,
+  or ~300 Lean lines — whichever binds first. A proposed chunk exceeding any
+  bound is re-split before transcription, not after a failed compile.
+- **Boundaries** follow the author's own structure (numbered displays, `§`
+  headings, "ta có"/"suy ra" closures), with `kind:` recording the role:
+  existing kinds for steps, plus `section-assembly` (below) for the chain.
+- **Leaves verify independently** in source order, one leaf at a time, each
+  with its own YAML, sympy screen, Lean file, and DONE flip. A leaf's
+  `depends_on` names only the DONE chunks it cites (sibling leaves included);
+  `progress.py` already enforces acyclicity and DONE-order.
+- **Section assembly** (`kind: section-assembly`, e.g. `M1-ASM`): a thin chunk
+  whose Lean file only imports the leaf modules and chains their assembly
+  theorems in the author's order — no new mathematics, no re-proved steps.
+  It gets its own sympy screen only if the section states an intermediate
+  conclusion its leaves do not already screen. The section is DONE when every
+  leaf is DONE and the assembly compiles `sorry`-free with permitted axioms
+  only.
+
 Run `docker compose exec -T lean sh /workspace/proof/check_env.sh` before any
 large work — if it is red, fix the machine, not the math. The default is a
 fast compile-free check; `--full` additionally validates `import Mathlib`.
@@ -341,6 +373,12 @@ fast compile-free check; `--full` additionally validates `import Mathlib`.
   once and then deleted, so the names they pinned are not archived anywhere.
   Re-check names against the pinned Mathlib source and re-run a bulk `#check`
   in the container instead of trusting a stale list.
+- **Archived probes are the starting name list, not a trusted oracle.** Probes
+  live tracked as `pipeline/03-lean/probes/<CHUNK>.probe.lean` plus
+  `<CHUNK>.probe.log` (never imported, never in `lakefile.toml`/`Main.lean`).
+  Consume per `ENCODING_MAP.md` §A "Probe archive": read your dependencies'
+  probes first, `rg`-check each reused name free, extend-don't-fork, and
+  re-run whenever the rev, log, or name is missing.
 - **Two sessions in one repo share write targets** (`status.tsv`,
   `PROGRESS.md`, `HANDOFF.md`, `lakefile.toml`). An edit is rejected as
   stale when the other session has written the file since your last read —

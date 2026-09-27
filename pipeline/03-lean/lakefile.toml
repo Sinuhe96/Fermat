@@ -54,8 +54,35 @@ roots = ["L5.Basic"]
 name = "L6"
 roots = ["L6.Basic"]
 
-# L7 (bổ đề 7, non-divisibility conclusion) is in progress: its S0–S5 are S1,
-# its S6 is the open author query Q-001 (no declaration for it, no `sorry`).
+# L7 (bổ đề 7): FRAG-01's non-divisibility conclusion S0–S6 are all S1 (S5c is
+# the F3 difference instance, S6 the printed product); the remaining conclusion
+# groups live in the L7F2…L7F6 leaves and are chained by L7ASM.
 [[lean_lib]]
 name = "L7"
 roots = ["L7.Basic"]
+
+# L7's remaining conclusion groups (bổ đề 7): each leaf is one group of the
+# printed proof, and L7ASM chains them into the lemma's full conclusion list.
+[[lean_lib]]
+name = "L7F2"
+roots = ["L7F2.Basic"]
+
+[[lean_lib]]
+name = "L7F3"
+roots = ["L7F3.Basic"]
+
+[[lean_lib]]
+name = "L7F4"
+roots = ["L7F4.Basic"]
+
+[[lean_lib]]
+name = "L7F5"
+roots = ["L7F5.Basic"]
+
+[[lean_lib]]
+name = "L7F6"
+roots = ["L7F6.Basic"]
+
+[[lean_lib]]
+name = "L7ASM"
+roots = ["L7ASM.Basic"]

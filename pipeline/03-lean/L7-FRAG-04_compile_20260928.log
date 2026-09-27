@@ -1,0 +1,31 @@
+# L7-FRAG-04 — 2026-09-28 compile rounds (consolidated, in order).
+#
+# PROVENANCE: blocks marked [recovered] are the compiler's output exactly as
+# recorded in this session's tool history; a host-side log-consolidation race
+# deleted the original round files, so they are restored verbatim. Blocks marked
+# [lost] had their round file deleted by the same race and are summarised from
+# the recorded diagnosis rather than reproduced. The authoritative evidence for
+# each chunk's DONE flip remains the published olean plus the final
+# `probes/L7-ASM.axioms.lean` compile (log L7-ASM.axioms_20260928.log), which
+# re-checks the declarations transitively.
+
+=== round 1 (2026-09-28): first write of L7F4/Basic.lean (S12, S13, S14 + sum_chain).
+    [lost] Cascade round of the all-files chain: L7F2 had failed in that chain, so this
+    round died immediately with `object file '.../L7F2/Basic.olean' of module
+    L7F2.Basic does not exist` (the same text is archived verbatim in
+    L7-ASM_compile_20260928.log, round 3). ===
+
+=== round 2 (2026-09-28): first real compile of L7F4/Basic.lean.
+    [recovered, partial] 5 errors, EXIT=1; the recorded diagnosis (first line plus the
+    full analysis in this session's history):
+      L7F4/Basic.lean:96:16: error: Function expected at ... (IsCoprime.pow applied to
+        positional exponents; also at 142, 265)
+      L7F4/Basic.lean:201:4: the rewritten `hX` is a divisibility where the goal is a ≡
+      L7F4/Basic.lean:231:...: `dvd_add hdiff h0` elaborated against the wrong summand
+    All five were F2 (encoding/API), no F1/F3/F4. Fixes: `IsCoprime.pow_left (m := 2)`,
+    `rw [hid] at hX` + `exact Int.modEq_zero_iff_dvd.mpr hX`, and an explicit
+    `dvd_add h0 hdiff` with a `ring` identity. ===
+
+=== round 3 (2026-09-28): IsCoprime.pow_left with explicit exponent; rw-instead-of-rwa at hX; explicit dvd_add composition in hraised.
+    [recovered] ===
+EXIT=0

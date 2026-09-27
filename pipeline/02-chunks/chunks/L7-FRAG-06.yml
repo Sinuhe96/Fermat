@@ -1,0 +1,74 @@
+id: L7-FRAG-06
+title: "Bổ đề 7 — display (21) and (22): the n(n−4) chain and the n(n−3) sum"
+pdf_pages: [2, 4, 5]
+kind: lemma-proof-step
+depends_on: [L5-01, L7-FRAG-02, L7-FRAG-03, L7-FRAG-04, L7-FRAG-05]
+source_text: |
+  [PDF p2 top: bổ đề 7's conclusion list]
+  a^{n(n-3)} + b^{n(n-3)} + c^{n(n-3)} \equiv 0(\mathrm{mod}\ n^2)
+  a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv a^{n(n-4)} + c^{n(n-4)}
+    \equiv b^{n(n-4)} + c^{n(n-4)} \equiv a^{n(n-4)} - b^{n(n-4)} \equiv 0 (\mathrm{mod}\ n^2).
+
+  [PDF p5 §7, the closing bullet]
+  * Vì n \equiv 1 \pmod 6, nên n = 6l + 1, l \in \mathbb{N}^*. Do đó
+  a^{n(n-4)} + c^{n(n-4)} = a^{3n(2p-1)} + (c^{3n})^{(2p-1)}
+    \equiv a^{3n(2p-1)} - a^{3n(2p-1)} = 0 \pmod n
+    \text{ (vì } c^{3n} \equiv -a^{3n} \pmod{n^2}\text{), suy ra}
+  a^{n(n-4)} + c^{n(n-4)} \equiv 0 \pmod{n^2}.
+  Chứng minh tương tự ta cũng có: b^{n(n-4)} + c^{n(n-4)} \equiv 0 \pmod{n^2}
+  suy ra a^{n(n-4)} - b^{n(n-4)} \equiv 0 \pmod n \text{ (đpcm).}
+
+  [PDF p30 R2: the numbered forms the main proof cites]
+  a^{n(n-4)} + c^{n(n-4)} \equiv b^{n(n-4)} + c^{n(n-4)} \equiv a^{n(n-4)} - b^{n(n-4)} \equiv 0 (\mathrm{mod}\ n^2)\ (21)
+  a^{n(n-3)} + b^{n(n-3)} + c^{n(n-3)} \equiv 0 (\mathrm{mod}\ n^2)\ (22)
+formal_hint: |
+  S18: `n % 6 = 1` gives `n = 6l+1`, hence `n − 4 = 3(2l−1)` with `2l−1` odd;
+  from (21)'s input `c^{3n} ≡ −a^{3n} (mod n²)` (i.e. (19)), the sum
+  `a^{n(n−4)}+c^{n(n−4)} = (a^{3n})^{2l−1} + (c^{3n})^{2l−1}` collapses to
+  `x − x = 0`. The printed line shows the congruence mod n and then concludes
+  mod n²; the encoded statement is the mod-n² one (the display's (21) form),
+  which is what the algebra actually gives.
+  S19: the same with `(a; c)` replaced by `(b; c)`.
+  S20: `a^{n(n−4)} ≡ −c^{n(n−4)} ≡ b^{n(n−4)} (mod n²)` ⇒
+  `a^{n(n−4)} − b^{n(n−4)} ≡ 0 (mod n²)`.
+  S21: (22) `a^{n(n−3)}+b^{n(n−3)}+c^{n(n−3)} ≡ 0 (mod n²)` — stated on p2 and
+  used by the main proof at p30 R2 ("Từ (17), (21), (22), ta có"), but NOT
+  derived on p5: an F3 fill-in, derived here from the author's own material —
+  `a^{n(n−3)} = a^n·a^{n(n−4)}` together with (21)'s
+  `a^{n(n−4)} ≡ b^{n(n−4)} ≡ −c^{n(n−4)}` and (b) `c^n ≡ a^n+b^n (mod n²)`.
+transcription: manual
+author_steps: |
+  Normalized ordered step map — chunk L7-FRAG-06 ((21), (22)).
+  Evidence: signed region records P002-R1 (the conclusion list), P005-R2 (the
+  closing bullet) and P030-R2 (the numbered forms (21), (22) the main proof
+  cites), plus the 300 dpi crops page-002-300dpi-region-01.png and
+  page-005-300dpi-region-02.png read on 2026-09-27.
+  S18 [p5 §7] "Vì n ≡ 1 (mod 6) … suy ra a^{n(n−4)}+c^{n(n−4)} ≡ 0 (mod n²)"
+        (the print's "n = 6l+1" is abstracted to `n − 4 = 3k` with `Odd k`)
+                                                             -> L7F6_step_S18
+  S19 [p5 §7] "Chứng minh tương tự" ⇒ b^{n(n−4)}+c^{n(n−4)} ≡ 0 (mod n²)
+                                                             -> L7F6_step_S19
+  S20 [p5 §7] "suy ra a^{n(n−4)}−b^{n(n−4)} ≡ 0" (the print writes mod n; the
+        storage form (21) and the derivation are mod n²)      -> L7F6_step_S20
+  S21 [p2 display] (22) a^{n(n−3)}+b^{n(n−3)}+c^{n(n−3)} ≡ 0 (mod n²)
+        F3 fill-in from (21) + (b) (see formal_hint)          -> L7F6_step_S21
+  Classification: recorded at DONE below.
+lean_file: 03-lean/L7F6/Basic.lean
+sympy_test: 04-sympy/test_l7_frag_06.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png L7_stmt_p2.png L7_proof_p4b.png L7_proof_p5b.png
+lean_decls: L7F6_step_S18, L7F6_step_S19, L7F6_step_S20, L7F6_step_S21
+regions: P002-R1, P004-R2, P005-R2, P030-R2
+status: DONE
+# DONE 2026-09-28: S18-S21 all S1 (EXIT 0, zero warnings, zero sorry, axioms =
+# propext / Classical.choice / Quot.sound only). S21 is the printed (22)
+# `a^{n(n−3)}+b^{n(n−3)}+c^{n(n−3)} ≡ 0 (mod n²)`: it is stated on p. 2 and
+# consumed by the main proof at p. 30 R2, but the printed proof on p. 5 derives
+# only (21) — so it is the chunk's declared **F3 fill-in**, derived from (21)
+# plus (b) and screen-verified on real instances (hypothesis-neutral: no new
+# assumption, and the author's own material suffices).
+# The printed S18/S19 congruence-mod-`n` line is encoded at `n²`, the modulus
+# its own inputs (19) carry once raised to the odd power.
+# Screen: 04-sympy/test_l7_frag_06.py exit 0.

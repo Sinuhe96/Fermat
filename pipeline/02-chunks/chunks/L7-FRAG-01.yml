@@ -93,6 +93,11 @@ author_steps: |
   S4 [p5] ∴ b^n + c^n ≢ 0 (mod n)
   S5 [p5] "Chứng minh tương tự": a^n + b^n ≢ (mod n) [0 missing in print];
           c^n + a^n ≢ 0 (mod n)
+  S5c [p2 statement + p5 "Tóm lại"] a^n − b^n ≢ 0 (mod n): printed in the
+          statement's product (and repeated in "Tóm lại"), NOT listed in the
+          proof's "tương tự" line; the author's own symmetry remark on p5
+          ("Lưu ý ... mỗi cặp (a;b), (c;−a), (c;−b) đối xứng nhau") makes it
+          the printed reductio at (X, Y, Z) = (−b, a, c)
   S6 [p5] "Tóm lại": (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n) (đpcm)
   Classifications (2026-09-26 lane restart, one step per compile, per
   AGENTS.md F1-F4/S1; evidence: 03-lean/L7-FRAG-01_compile_20260926.log):
@@ -118,18 +123,41 @@ author_steps: |
            The 2026-09-25 batch attempt's F2 classification is superseded; the
            restart produced F2 rounds only (ZMod numeral/negation shapes, one
            rewrite direction) — no author step was rejected.
-  F3 (fill-in from the author's own material, no new assumption): S5a's
-    "a^n + b^n ≢ 0 (mod n)".  The b^n + c^n chain is vacuous for that pair
-    (its cancellation needs b ≢ 0 and the pair is (a,b)); the printed claim
-    follows from the print's own (b) and S0: if a^n + b^n ≡ 0 then
+  Classifications (2026-09-27 lane close, one step per compile, per AGENTS.md
+  F1-F4/S1; evidence: 03-lean/L7-FRAG-01_compile_20260926.log for S0-S5b and
+  the 2026-09-27 round for S5c/S6 — EXIT 0, zero warnings, zero sorry for both;
+  #print axioms on all eleven declarations = propext / Classical.choice /
+  Quot.sound only):
+    S5c -> L7_step_S5c, S6 -> L7_step_S6, both S1. See the F3/F4 records below.
+  F3 (fill-ins from the author's own material, no new assumption):
+    (i) S5a's "a^n + b^n ≢ 0 (mod n)". The b^n + c^n chain is vacuous for that
+    pair (its cancellation needs b ≢ 0 and the pair is (a,b)); the printed
+    claim follows from the print's own (b) and S0: if a^n + b^n ≡ 0 then
     c^n ≡ a^n + b^n ≡ 0, so n ∣ c^n and, n being prime, n ∣ c — contradicting
     c ≢ 0 (mod n). Encoded as L7_step_S5a.
-  F4 (unchanged, the chunk's open finding): S6 — the printed chain establishes
-    ≢ 0 (mod n) for the three pairwise SUMS a^n+b^n (S5a), b^n+c^n (S3+S4) and
-    c^n+a^n (S5b), while the product's first factor is the DIFFERENCE a^n − b^n,
-    which no printed step excludes (sign mismatch; text-layer verified, so not
-    F1). Author query Q-001 OPEN: the statement is true as printed on every
-    witness the sympy screen found, but the printed proof does not cover it.
+    (ii) S5c's "a^n − b^n ≢ 0 (mod n)" — the instance the printed "chứng minh tương tự"
+    line does not list. It is the author's own reductio re-instantiated, not a
+    new argument: the print's "Lưu ý" paragraph (p5) states that the
+    hypotheses (b)/(c) are symmetric in ℤ under the pairs (a;b), (c;−a),
+    (c;−b), and at (X, Y, Z) = (−b, a, c) the printed chain L7_pair_reductio
+    consumes exactly (b) and (c) (n odd turns c^n ≡ a^n + b^n into
+    Y^n ≡ Z^n + X^n, and likewise at the exponent n(n−2)) and concludes
+    ¬ n ∣ X^n + Y^n, i.e. ¬ n ∣ a^n − b^n. Encoded as L7_step_S5c.
+    Downstream evidence that this reading is the author's (recorded in Q-001):
+    the main proof cites bổ đề 7 exactly twice — p30 R2 (conclusions
+    (18)–(22') + n ≡ 1 (mod 6), used for the H(c^n, b) computation) and p32 R1
+    — and p32 R1 cancels by a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0 (mod n) to
+    obtain (27). There a^n, b^n come from abc ≢ 0 and a^n + b^n from the case
+    hypothesis (h = c^n, a^n + b^n ≡ c^n mod n^s, n ∤ c); the ONE non-trivial
+    factor is the difference a^n − b^n — the statement's first factor, and the
+    one the printed proof's list of sums omits.
+  F4 (withdrawn 2026-09-27): the earlier finding that S6 is unsupported is
+    superseded — with S5c supplied, S6 follows (L7_step_S6) and the printed
+    statement is verified as written. The sign in the statement's product is
+    NOT a typo: it is what the main proof uses. The residual editorial point
+    for the author (Q-001, now RESOLVED, not blocking) is that the proof's
+    "tương tự" line enumerates the three pairwise sums where the statement's
+    product needs the difference for the (a,b) pair.
   Scope note: displayed (a), (d), the (b^{3n})^n + (c^{3n})^n chain via
   bổ đề 5c/5đ, and the "Lưu ý" paragraph on p4-p5 prove Lemma 7's OTHER
   listed conclusions — separate chunks. User directive 2026-09-25 (start
@@ -143,11 +171,15 @@ source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
 extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
 fidelity: PASS_WITH_MANUAL
 renders: L7_stmt_p1.png z_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
-lean_decls: L7_step_S0, L7_step_S1, L7_step_S2, L7_step_S3_S4, L7_step_S5a, L7_step_S5b
-regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2, P004-R1, P004-R2, P004-R3, P005-R1, P005-R2
-status: BLOCKED
-# BLOCKED on author query Q-001 (pipeline/05-feedback/queries/): S0-S5 are S1
-# in 03-lean/L7/Basic.lean (sorry-free, permitted axioms only) and S6 is the
-# open finding — the printed chain covers the three pairwise sums a^n+b^n,
-# b^n+c^n, c^n+a^n, not the product's first factor a^n−b^n (sign mismatch: one
-# of the two printed signs is a typo). No L7 completion without that answer.
+lean_decls: L7_step_S0, L7_step_S1, L7_step_S2, L7_step_S3_S4, L7_step_S5a, L7_step_S5b, L7_step_S5c, L7_step_S6
+regions: P001-R1, P001-R2, P001-R3, P001-R4, P002-R1, P002-R2, P004-R1, P004-R2, P004-R3, P005-R1, P005-R2, P030-R2, P032-R1
+status: DONE
+# DONE 2026-09-27: every step S1 — S0-S5 in 03-lean/L7/Basic.lean (2026-09-26
+# round) plus S5c (the difference instance, an F3 fill-in: the printed reductio
+# re-instantiated at (X,Y,Z) = (−b,a,c) via the author's own "Lưu ý" symmetry)
+# and S6 (the printed product) in the 2026-09-27 round. EXIT 0, zero warnings,
+# zero sorry, axioms = propext / Classical.choice / Quot.sound only. The
+# printed statement stands as written: the main proof's p32 R1 cancels by
+# a^n b^n (a^n − b^n)(a^n + b^n), so the difference factor is exactly what is
+# used downstream. Q-001 RESOLVED (editorial point only: the printed
+# "tương tự" line lists the sums, not the difference instance).

@@ -1,0 +1,23 @@
+# L7-FRAG-06 — 2026-09-28 compile rounds (consolidated, in order).
+#
+# PROVENANCE: blocks marked [recovered] are the compiler's output exactly as
+# recorded in this session's tool history; a host-side log-consolidation race
+# deleted the original round files, so they are restored verbatim. Blocks marked
+# [lost] had their round file deleted by the same race and are summarised from
+# the recorded diagnosis rather than reproduced. The authoritative evidence for
+# each chunk's DONE flip remains the published olean plus the final
+# `probes/L7-ASM.axioms.lean` compile (log L7-ASM.axioms_20260928.log), which
+# re-checks the declarations transitively.
+
+=== round 1 (2026-09-28): first write of L7F6/Basic.lean (S18, S19, S20, S21).
+    [lost] Cascade round of the all-files chain (missing leaf olean), same text as the
+    archived sibling rounds. ===
+
+=== round 2 (2026-09-28): first real compile of L7F6/Basic.lean.
+    [recovered, partial] Errors were the exponent identity direction (`rw [← hnk]` where
+    the goal needs `rw [hnk]`) in S18/S19 and the transposed `c`-power in S20; EXIT=1.
+    Both F2. ===
+
+=== round 3 (2026-09-28): exponent identity forward; S20 double-negation fix.
+    [recovered] ===
+EXIT=0

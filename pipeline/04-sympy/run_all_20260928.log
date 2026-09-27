@@ -1,0 +1,109 @@
+--- test_l1_01.py: PASS ---
+S1 ok (216000 nonzero triples reduce to triple gcd 1)
+S2+S3 ok (6472 solutions: (u,v)^n divides t^n)
+S4 ok (16000 (n,d,t) cases: d^n | t^n => d | t)
+S5/S6 ok (12674 triples with (u,v,t) = 1 have no common divisor > 1)
+vacuity ok (n in (5, 7, 11, 13), |x|,|y| <= 40: 0 solutions found)
+L1 SMOKE PASS
+--- test_l2_01.py: PASS ---
+S1 ok (1000 (n,k,u) cases: (u^k)^n = u^(k*n), nonzero preserved)
+S2 ok (3644 witnesses of x^(kn)+y^(kn)=z^(kn) lift to x^n+y^n=z^n)
+vacuity ok (n in (5, 7, 11, 13), k in (2, 3, 5), |u|,|v| <= 40: 0 candidates)
+L2 SMOKE PASS
+--- test_l3_01.py: PASS ---
+structured ok (2184 instances, n in (1, 3, 5, 7, 11, 13): S0-S11 chain + statement witnesses)
+box ok (2264 boxed instances with a*b = c^n, n in (1, 3, 5, 7, 11, 13): S0-S11 chain + statement witnesses)
+oddness sanity ok (even-n counterexample a=-4, b=-9, c=6, n=2: conclusion fails as expected)
+L3 SMOKE PASS
+--- test_l4_01.py: PASS ---
+S1+S2 ok (252 real witnesses: m|a, m|b, ab=c^n => m^2|c^n => m|c)
+S2 side condition ok (m prime is needed; counterexamples [(4, 5, 2), (4, 5, 6), (4, 5, 10)])
+S3 ok (39 m-multiples: c = m^s*r, m∤r, and n*s>=2 <=> m^2|c^n)
+S5 ok (119 matches: m^P*X = m^Q*Y with m∤X, m∤Y => P=Q, X=Y)
+S5 side condition ok (m ∤ h*l*r is needed; 2^1*6 = 2^2*3 with exponents 1 != 2)
+S6 ok (406 coprime (h,l) with h*l = r^n: r = c1*c2, h = c1^n, l = c2^n exists)
+S7 ok (1748 constructed witnesses satisfy the hypotheses and the parametrisation exactly)
+       per-n: n=1:228, n=3:304, n=5:304, n=7:304, n=11:304, n=13:304
+       schema-required range covered: n=5, n=7, n=11, n=13
+L4 SMOKE PASS
+--- test_l5_01.py: PASS ---
+identities ok (exact symbolic, n in (1, 3, 5, 7, 11, 13)): A = sum_k (-1)^k C_n^k (u+v)^{n-1-k} v^k; u^n+v^n = (u+v)A for odd n; and the k=n-1 term is +n*v^{n-1}
+b) identity ok (exact symbolic, n in (3, 5, 7, 11, 13)): A = n(u+v)A_1 + n*v^(n-1) with the printed A_1; the k=n-2 term is (-1)^{n-2}*C_n^{n-2}*v^{n-2} = -n*((n-1)/2)*v^{n-2}, i.e. the printed bracket sign is right
+identities ok (1092 integer instances: A*(u+v) = u^n+v^n and, for odd n, A = (u^n+v^n)/(u+v))
+a) ok ({3: 374, 5: 418, 7: 450, 11: 470, 13: 478} real instances with (u,v)=1, n∤(u+v): (u+v, n v^(n-1)) = 1 => (u+v, A) = 1 and n∤A)
+b) ok ({3: 152, 5: 100, 7: 76, 11: 48, 13: 40} real instances with (u,v)=1, n|(u+v): printed A_1 exact, n(u+v)A_1 ⋮ n^2, n v^(n-1) ⋮ n but ⋮̸ n^2, A ⋮ n but ⋮̸ n^2, (u+v,A) = n)
+c) ok (uv ⋮ n branch {3: 144, 5: 36, 7: 16, 11: 4, 13: 4}, uv ⋮̸ n branch with (u+v) ⋮ n {3: 288, 5: 226, 7: 172, 11: 118, 13: 98}; every (u^n+v^n) ⋮ n instance also has n^2 | u^n+v^n, and the uv ⋮̸ n, (u+v) ⋮̸ n sub-case is empty because there A = 1 (mod n))
+d) ok ({3: 28, 5: 32, 7: 36, 11: 38, 13: 38} real u with n ∤ u: u^(n-1) = 1+mn with m >= 0 and u^{n(n-1)} = (1+mn)^n = 1 (mod n^2))
+red flag ok: 'n prime' is needed -- n=9, (u,v)=(1,2): (u+v,A) = 3 != 1 (a) fails) and 9 | 513 but 81 ∤ 513 (c) fails)
+red flag ok: '(u,v) = 1' is needed in a) -- n=5, (u,v)=(2,4), u+v=6, A=176: (u+v, A) = 2 != 1
+red flag ok: 'n le' is needed -- n=4: (u+v)A = -15 != u^n+v^n = 17, and the k=n-1 term is -n*v^(n-1)
+red flag ok: '(u,v) = 1' is needed in b) -- n=5, (u,v)=(2,8), u+v=10, A=3280: (u+v, A) = 10 != 5
+L5 SMOKE PASS
+--- test_l6_01.py: PASS ---
+vacuity ok (n in (5, 7, 11, 13), |u|,|v| <= 24: 0 solutions of (1) -- the hypothesis of bo de 6 is unsatisfiable; all steps below are screened as inferences, not on witnesses)
+small-n ok (n=1: (2,3,5) and (7,-4,3): (3) => (4),(5),(6); n=2: (3,4,5): (5),(6) only -- (4) is the odd-n factorisation of a SUM, so 'n nguyen to le' is load-bearing for it)
+factorisations ok (676 (u,v) pairs, n in (5, 7, 11, 13): (3) => (4),(5),(6) reduce to these unconditional identities)
+6.1 head ok (19652 triples, n in (5, 7, 11, 13): n | (u+v),(t-v),(t-u) forces n | t,u,v resp.; the case hypothesis t not-divisible-by-n and uv not-divisible-by-n then contradict it)
+FLT mod n ok (n in (5, 7, 11, 13): C(n,k) = 0 mod n for 1 <= k <= n-1, (u+v)^(n-1) = 1 mod n for n not dividing (u+v))
+c'^n - 1 identity ok (484 (u,v) pairs, n in (5, 7, 11, 13): the printed decomposition is an identity and gives c'^n - 1 = 0 mod n for n prime, n not dividing u+v)
+c' = 1 + n k_3 ok (31 residues with c'^n = 1 mod n, n in (5, 7, 11, 13): n prime and n not dividing c' turn c'^n - 1 = 0 mod n into c' = 1 mod n; note the printed intermediate 'c'^(n-1) - 1 = 0 mod n' is FLT and holds unconditionally, while c'^n - 1 = 0 mod n is the real case hypothesis)
+n^2 chain ok (n in (5, 7, 11, 13): (1+nk)^n - 1, c^n[(1+nk)^n-1], a^n[...], b^n[...] all 0 mod n^2; 2X = 0 mod n^2 => X = 0 mod n^2 for n odd; the three-term sum identity = (u^n+v^n-t^n) + 2(u+v-t))
+parametrisation shape ok (39 constructed (n,s,a,b,c,k): u+v-t = n^s abck with n not dividing abck gives n^2 | u+v-t and s = v_n(u+v-t) >= 2, and conversely)
+6.2 (4'')/(5'') ok (42 instances, n in (5, 7, 11, 13): the printed (5'') identity holds and gives n^2 | t^n-u-v; the printed exponent order sn-1 vs ns-1 is typographic -- n^(sn-1) = n^(ns-1))
+6.2.1 (k = 0) ok (16 sign patterns, n in (5, 7, 11, 13): |a|=|a'|=|b|=|b'|=1, t = u+v in {-2,0,2}, and t^n = u^n+v^n forces t = 0 or t^n = +-2; printed 't^n = 2' is the positive-sign branch, the negative one gives t^n = -2, both absurd for n >= 2)
+conclusion shape ok (symbolic: the four printed formulas imply t = h-X, u+v = h, t-v = b^n, t-u = a^n, u+v-t = n^s abck, for either h-alternative; numeric: 26 families, n in (5, 7, 11, 13), s >= 2, pairwise coprime a,b,c,k not divisible by n, n^2 | u+v-t)
+  coupled instances (h exact, k integral, n in (3,5), s in (2,3), a,b,c <= 8): with the conclusion's pairwise coprimality of k enforced -- 6.1 0, 6.2 0; UNDETERMINED: the conclusion's satisfiability is not established by this search, and an empty box is not evidence either way. With coprimality of k RELAXED 2 instance(s) exist, each satisfying every printed relation (u+v = h, t-v = b^n, t-u = a^n, u+v-t = n^s abck, n^2 | u+v-t, a,b,c pairwise coprime, n not dividing abck) while FAILING k pairwise coprime and FAILING u^n+v^n = t^n: [('6.2', 3, 3, 1, 8, 1, 14, (3536, 3025, 3537), True, True), ('6.2', 3, 3, 8, 1, 1, 14, (3025, 3536, 3537), True, True)] (tuple = branch, n, s, a, b, c, k, (u,v,t), coprime-triple-of-u,v,t, uv not divisible by n) -- so the printed shape does NOT force (1): (1)/(3) stays an independent hypothesis, and the printed coprimality clause is not automatic
+red flag n prime ok (composite n: C(n,k) = 0 mod n and x^(n-1) = 1 mod n fail; n=4 c'=3 resp. n=6 c'=5 have c'^n = 1 mod n but c' != 1 mod n, so S9/S10 needs primality)
+red flag n odd ok (n = 2: 2X = 0 mod n^2 does not give X = 0 mod n^2, so the halving step S12/S22 needs n odd; holds for n in (5, 7, 11, 13))
+red flag a,b,c not divisible by n ok (n = 5, s = 1, a = 5, b = c = k = 1: u+v-t = 25 = n^2 is divisible by n^2 although s = 1 < 2, so the printed 'nen s >= 2' needs n not dividing abck)
+red flag uv not divisible by n ok (n = 5, a = 5: t - u = a^n = 3125 is divisible by n, so the '(t-u) khong chia het cho n' fact used by 6.1 and 6.2 needs n not dividing a, which the hypothesis uv not divisible by n (n prime) supplies)
+L6 SMOKE PASS
+--- test_l7_asm.py: PASS ---
+n=5: 0 witness(es)
+n=7: 4116 witness(es)
+n=11: 0 witness(es)
+n=13: 52728 witness(es)
+smoke OK — 56844 real instances, all assertions hold
+--- test_l7_frag_01.py: PASS ---
+n=5: 0 hypothesis-witnesses, 0 with product==0 (mod n)
+   zero factors mod n: {'a^n-b^n': 0, 'c^n+a^n': 0, 'c^n+b^n': 0, 'a^n+b^n': 0, 'b^n+c^n': 0}
+n=7: 12 hypothesis-witnesses, 0 with product==0 (mod n)
+   zero factors mod n: {'a^n-b^n': 0, 'c^n+a^n': 0, 'c^n+b^n': 0, 'a^n+b^n': 0, 'b^n+c^n': 0}
+n=11: 0 hypothesis-witnesses, 0 with product==0 (mod n)
+   zero factors mod n: {'a^n-b^n': 0, 'c^n+a^n': 0, 'c^n+b^n': 0, 'a^n+b^n': 0, 'b^n+c^n': 0}
+n=13: 24 hypothesis-witnesses, 0 with product==0 (mod n)
+   zero factors mod n: {'a^n-b^n': 0, 'c^n+a^n': 0, 'c^n+b^n': 0, 'a^n+b^n': 0, 'b^n+c^n': 0}
+smoke OK — no counterexample at small primes
+--- test_l7_frag_02.py: PASS ---
+n=5: 0 witness(es)
+n=7: 4116 witness(es)
+n=11: 0 witness(es)
+n=13: 52728 witness(es)
+smoke OK — 56844 real instances, all assertions hold
+--- test_l7_frag_03.py: PASS ---
+n=5: 0 witness(es)
+n=7: 4116 witness(es)
+n=11: 0 witness(es)
+n=13: 52728 witness(es)
+smoke OK — 56844 real instances, all assertions hold
+--- test_l7_frag_04.py: PASS ---
+n=5: 0 witness(es)
+n=7: 4116 witness(es)
+n=11: 0 witness(es)
+n=13: 52728 witness(es)
+smoke OK — 56844 real instances, all assertions hold
+--- test_l7_frag_05.py: PASS ---
+n=5: 0 witness(es)
+n=7: 4116 witness(es)
+n=11: 0 witness(es)
+n=13: 52728 witness(es)
+  [extra] S16 substitution (n ≡ 5 mod 6): ok — 908 (a,b,c) instances of (19)/(20) with n ≡ 5 (mod 6)
+smoke OK — 56844 real instances, all assertions hold
+--- test_l7_frag_06.py: PASS ---
+n=5: 0 witness(es)
+n=7: 4116 witness(es)
+n=11: 0 witness(es)
+n=13: 52728 witness(es)
+smoke OK — 56844 real instances, all assertions hold
+all 13 sympy smoke tests passed
+EXIT=0

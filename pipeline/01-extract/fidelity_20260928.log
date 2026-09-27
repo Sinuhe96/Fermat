@@ -1,0 +1,3 @@
+overall=PASS_WITH_MANUAL manual_pages=19 failing_pages=0
+review=out/review/index.html (19 pages)
+EXIT=0

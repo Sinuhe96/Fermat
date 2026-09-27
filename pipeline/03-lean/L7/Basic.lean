@@ -22,12 +22,12 @@ One named declaration per author step (English paraphrase):
          (the shared chain of that reductio: L7_pair_reductio)
   S5a    "Chứng minh tương tự ta cũng có a^n + b^n ≢ 0"     -> L7_step_S5a
   S5b    "… c^n + a^n ≢ 0 (mod n)"                          -> L7_step_S5b
+  S5c    "… a^n − b^n ≢ 0 (mod n)" — not in the printed
+         "tương tự" list, but required by the printed statement's
+         product; the author's own "Lưu ý" symmetry makes it the
+         printed reductio at `(X, Y, Z) = (−b, a, c)`               -> L7_step_S5c
   S6     "Tóm lại, ta luôn có (a^n − b^n)(c^n + a^n)(c^n + b^n) ≢ 0 (mod n)"
-         — NOT encoded: the printed chain establishes ≢ 0 for the three
-         pairwise SUMS a^n+b^n (S5a), b^n+c^n (S3+S4), c^n+a^n (S5b), while
-         the product's first factor is the DIFFERENCE a^n − b^n. Faithful
-         transcription, classification F4; author query
-         `pipeline/05-feedback/queries/Q-001-product-factor-sign.md` (OPEN).
+                                                                    -> L7_step_S6
 
 ## Encoding decisions
 
@@ -49,6 +49,17 @@ One named declaration per author step (English paraphrase):
   the contradiction the print's own material gives, recorded as an F3 fill-in
   in the chunk YAML — if `a^n + b^n ≡ 0` then (b) makes `c^n ≡ 0`, so
   `n ∣ c^n` and, `n` being prime, `n ∣ c`, contradicting S0's `c ≢ 0 (mod n)`.
+* S5c is the one instance the printed "chứng minh tương tự" line leaves out
+  (the print lists the three pairwise sums), while the statement's product —
+  and the main proof's own use of the lemma — needs the difference
+  `a^n − b^n ≢ 0`. It is still the author's own argument, not ours: the
+  lemma's "Lưu ý" paragraph states that the hypotheses (b)/(c) are symmetric
+  under the pairs `(a; b)`, `(c; −a)`, `(c; −b)`, and at `(X, Y, Z) = (−b, a, c)`
+  the printed reductio `L7_pair_reductio` has exactly (b) and (c) as inputs
+  (`n` odd turns `c^n ≡ a^n + b^n` into `Y^n ≡ Z^n + X^n`) and concludes
+  `¬ n ∣ a^n − b^n`. Recorded as an F3 fill-in in the chunk YAML, with the
+  downstream evidence (main proof p. 32, display (27)) that the difference is
+  the intended reading — author query Q-001 is answered by that evidence.
 * The import of `L5.Basic` is this chunk's declared dependency
   (`depends_on: [L5-01]`): bổ đề 7's *other* printed conclusions (displays (a)
   and (d), the b^{3n}+c^{3n} chain) rest on bổ đề 5c/5đ via
@@ -318,6 +329,78 @@ theorem L7_step_S5b {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
   have h := L7_pair_reductio hn h3 ha h1' h2'
   rwa [add_comm] at h
 
+/-- **S5c** — the instance the printed "Chứng minh tương tự" line does not list
+while the printed statement's product needs it: "… ta cũng có
+`a^n − b^n ≢ 0 (mod n)`".
+
+It is the printed reductio `L7_pair_reductio` re-instantiated, not a new
+argument — this is the symmetry the author states in the lemma's own "Lưu ý"
+paragraph ("trong hai giả thiết đồng dư (c) và (b) của Bổ đề 7 có mỗi cặp
+(a; b), (c; −a), (c; −b) đối xứng nhau, nó bình đẳng và có cùng cấu trúc số học
+trong vành ℤ"). Since `n` is odd, the lemma's (b) `c^n ≡ a^n + b^n` is
+`a^n ≡ c^n + (−b)^n`, and its (c) is the same rearrangement at the exponent
+`n(n−2)`; the reductio's conclusion `¬ n ∣ X^n + Y^n` at `(X, Y, Z) = (−b, a, c)`
+is exactly `¬ n ∣ a^n − b^n`. The cancelled factor's nonzero-ness ("vì b ≢ 0"
+in the printed instance) is S0's `b ≢ 0 (mod n)`. -/
+theorem L7_step_S5c {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
+    (hb : ¬ (n : ℤ) ∣ b)
+    (h1n : (c : ZMod n) ^ n = (a : ZMod n) ^ n + (b : ZMod n) ^ n)
+    (h2n : (c : ZMod n) ^ (n * (n - 2))
+      = (a : ZMod n) ^ (n * (n - 2)) + (b : ZMod n) ^ (n * (n - 2))) :
+    ¬ (n : ℤ) ∣ a ^ n - b ^ n := by
+  have h1 : (c ^ n : ℤ) ≡ a ^ n + b ^ n [ZMOD (n : ℤ)] :=
+    L7_modEq_of_zmod_eq (by push_cast; exact h1n)
+  have h2 : (c ^ (n * (n - 2)) : ℤ) ≡ a ^ (n * (n - 2)) + b ^ (n * (n - 2))
+      [ZMOD (n : ℤ)] :=
+    L7_modEq_of_zmod_eq (by push_cast; exact h2n)
+  have hodd : Odd n := hn.odd_of_ne_two (by omega)
+  have hodd2 : Odd (n - 2) := by
+    obtain ⟨k, hk⟩ := hodd
+    exact ⟨k - 1, by omega⟩
+  -- (b), rearranged: a^n ≡ c^n + (−b)^n
+  have h1' : (a ^ n : ℤ) ≡ c ^ n + (-b) ^ n [ZMOD (n : ℤ)] := by
+    refine (Int.modEq_iff_dvd).mpr ?_
+    have hd := Int.modEq_iff_dvd.mp h1
+    have hnb : ((-b : ℤ) ^ n) = -(b ^ n) := Odd.neg_pow hodd b
+    have hid : (c ^ n + (-b) ^ n) - a ^ n = -((a ^ n + b ^ n) - c ^ n) := by
+      rw [hnb]; ring
+    rw [hid]
+    exact dvd_neg.mpr hd
+  -- (c), the same rearrangement at the exponent n(n−2) (odd, so (−b)^e = −b^e)
+  have h2' : (a ^ (n * (n - 2)) : ℤ) ≡ c ^ (n * (n - 2)) + (-b) ^ (n * (n - 2))
+      [ZMOD (n : ℤ)] := by
+    refine (Int.modEq_iff_dvd).mpr ?_
+    have hd := Int.modEq_iff_dvd.mp h2
+    have hnb : ((-b : ℤ) ^ (n * (n - 2))) = -(b ^ (n * (n - 2))) :=
+      Odd.neg_pow (hodd.mul hodd2) b
+    have hid : (c ^ (n * (n - 2)) + (-b) ^ (n * (n - 2))) - a ^ (n * (n - 2))
+        = -((a ^ (n * (n - 2)) + b ^ (n * (n - 2))) - c ^ (n * (n - 2))) := by
+      rw [hnb]; ring
+    rw [hid]
+    exact dvd_neg.mpr hd
+  have hX : ¬ (n : ℤ) ∣ (-b) := fun h => hb (dvd_neg.mp h)
+  have h := L7_pair_reductio (X := -b) (Y := a) (Z := c) hn h3 hX h1' h2'
+  have hid : ((-b : ℤ) ^ n + a ^ n) = a ^ n - b ^ n := by
+    rw [Odd.neg_pow hodd b]; ring
+  rwa [hid] at h
+
+/-- **S6** (author p. 5, "Tóm lại, ta luôn có: (a^n − b^n)(c^n + a^n)(c^n + b^n)
+≢ 0 (mod n) (đpcm)."): the product of the three facts the chain established —
+S5c's `a^n − b^n ≢ 0`, S5b's `c^n + a^n ≢ 0` and S3+S4's `b^n + c^n ≢ 0` (the
+printed third factor reads `c^n + b^n`, the same sum commuted) — is ≢ 0 because
+`n` is prime and a prime dividing a product divides one of its factors. -/
+theorem L7_step_S6 {n : ℕ} (hn : Nat.Prime n) {a b c : ℤ}
+    (hd : ¬ (n : ℤ) ∣ a ^ n - b ^ n)
+    (hbc : ¬ (n : ℤ) ∣ b ^ n + c ^ n)
+    (hca : ¬ (n : ℤ) ∣ c ^ n + a ^ n) :
+    ¬ (n : ℤ) ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n) := by
+  intro h
+  rcases Int.Prime.dvd_mul' hn h with h' | h'
+  · rcases Int.Prime.dvd_mul' hn h' with h'' | h''
+    · exact hd h''
+    · exact hca h''
+  · exact hbc (by simpa [add_comm] using h')
+
 -- evidence: permitted axioms only (propext, Classical.choice, Quot.sound)
 #print axioms L7.L7_step_S0
 #print axioms L7.L7_step_S1
@@ -325,6 +408,8 @@ theorem L7_step_S5b {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
 #print axioms L7.L7_step_S3_S4
 #print axioms L7.L7_step_S5a
 #print axioms L7.L7_step_S5b
+#print axioms L7.L7_step_S5c
+#print axioms L7.L7_step_S6
 
 -- plumbing (bridges + the author's shared reductio chain and tail)
 #print axioms L7.L7_modEq_of_zmod_eq

@@ -688,6 +688,128 @@ author query Q-001 (its S6 is not encoded). All names pinned by the probe:
    (343–358 s) were the cheapest way to settle the `ZMod n` question before
    rewriting the lane in ℤ.
 
+## Session 2026-09-27 — L7-FRAG-01 closed (S5c + S6, one round, zero F2)
+
+The chunk's open F4 ("the printed product's first factor is the difference
+`a^n − b^n`, which no printed step excludes") was **withdrawn**, not proved
+around. Two findings, in this order:
+
+1. **Check how the main proof USES the lemma before escalating to the author.**
+   Grepping the signed region records (`01-extract/regions/p*.yml`) for the
+   lemma's name outside its own pages found exactly two citations: p30 R2 (the
+   congruence conclusions) and p32 R1, where the case `h = c^n` closes by
+   cancelling `a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0 (mod n)` out of a product
+   `≡ 0 (mod n^{s+1})`. Only one of those four factors is non-trivial
+   (`a^n, b^n` from `abc ∤ n`; `a^n + b^n` from the case hypothesis) — the
+   **difference**, i.e. the statement's sign as printed. That single data point
+   turned "one of the two printed signs is a typo" into "the statement is
+   right; the printed proof's enumeration is incomplete".
+2. **The missing instance was the printed chain re-instantiated.** The print's
+   own "Lưu ý" symmetry (`(a; b)`, `(c; −a)`, `(c; −b)`) makes the existing
+   abstractions consume (b)/(c) verbatim at `(X, Y, Z) = (−b, a, c)`, whose
+   conclusion is `¬n ∣ a^n − b^n`. Both new declarations compiled on the first
+   attempt (EXIT 0, zero warnings, 148 s round).
+
+Reusable API/technique facts confirmed here:
+
+- `Odd.mul : Odd a → Odd b → Odd (a * b)` (so `Odd (n * (n - 2))` from
+  `Odd n` + `Odd (n - 2)`), and `Odd.neg_pow (h : Odd k) (a) : (-a) ^ k = -a ^ k`
+  — one rewrite gives `(−b)^{n(n−2)} = −b^{n(n−2)}`, no case analysis on the
+  exponent's parity.
+- `dvd_neg : a ∣ -b ↔ a ∣ b` (and `neg_dvd`) are the whole bridge for passing
+  `¬ n ∣ b` to the instantiated chain's `X = -b`.
+- `Int.Prime.dvd_mul' (hp : Nat.Prime p) (h : (p : ℤ) ∣ m * n) : (p : ℤ) ∣ m ∨ (p : ℤ) ∣ n`
+  — the print's "Tóm lại" (a prime dividing a product divides a factor);
+  `Int.Prime.dvd_pow'` is its power form, used for cancellation.
+- Rearranging a printed congruence for an instantiation is cheapest as a
+  divisibility obligation plus `ring`, e.g. for `a^n ≡ c^n + (−b)^n`:
+  `refine (Int.modEq_iff_dvd).mpr ?_` / `have hid : (c ^ n + (-b) ^ n) - a ^ n = -((a ^ n + b ^ n) - c ^ n) := by rw [hnb]; ring` /
+  `rw [hid]; exact dvd_neg.mpr hd`. No `Int.ModEq` combinator chain needed.
+- **F3 vs F4 is decided by downstream use plus derivability from the author's
+  own material, not by "the printed page has no such step".** The classification
+  moved to F3 once (i) the main proof required the instance and (ii) the print's
+  own symmetry instantiation produced it. Recorded in the chunk YAML, and Q-001
+  turned from an author blocker into an editorial note (the printed "tương tự"
+  line could name the difference instance).
+
+
+## Session 2026-09-28 — L7-FRAG-02 … L7-FRAG-06 + L7-ASM (bổ đề 7 done, all S1)
+
+26 declarations over six chunks (L7-FRAG-02 … L7-FRAG-06 + the assembly
+L7-ASM) in about 28 container rounds — but only ~10 of those rounds carried
+real errors, and **every one was F2** (encoding/API; no F1/F4 anywhere in the
+lane). The rest were cascade failures (a leaf's olean missing after an earlier
+failed round in the same chain) or clean. What cost the rounds, and the exact
+names/signatures — checked against the pinned tree, not guessed:
+
+1. **`Int.gcd_comm` does not exist.** The generic `gcd_comm` is *not*
+   `Int`-namespaced, so `rw [Int.gcd_comm]` fails. To get
+   `IsCoprime (↑n) X` from the ℤ-gcd helper:
+   `Int.isCoprime_iff_gcd_eq_one.mpr` needs `Int.gcd X ↑n = 1` — the order
+   `L5_gcd_eq_one_of_not_dvd hn hX` returns — so derive `IsCoprime X ↑n` and
+   flip with `IsCoprime.symm`.
+
+2. **`IsCoprime.pow` / `pow_left` / `pow_right` take their exponents
+   implicitly** (`{m n : ℕ}`); `h.pow 2 1` is a hard error ("expected a
+   function"). Use named arguments: `h.pow_left (m := 2)`,
+   `h.pow (m := 2) (n := 1)`. Also: unification cannot invent an exponent when
+   the goal's term is not syntactically a power (`X` vs `X ^ 1`), so prefer
+   `pow_left` (which keeps the second factor as-is) over `pow` + `simpa`.
+
+3. **`(n ^ 2 : ℤ)` *is* `(↑n) ^ 2`.** The ascription forces the power into ℤ,
+   so no `Nat.cast_pow` bridge is needed — and `rw [Nat.cast_pow]` on
+   `↑n ∣ ↑n ^ 2` fails with "did not find an occurrence". The same fact makes
+   `Int.ModEq.of_dvd (dvd_pow_self (n : ℤ) (by norm_num)) h` the one-liner that
+   lowers `[ZMOD (↑n)^2]` to `[ZMOD ↑n]` (`dvd_pow_self`'s hypothesis is about
+   the *exponent* being nonzero).
+
+4. **Prefix `-` binds tighter than `^`** (again): `-(c ^ n) ^ k` is
+   `((-(c^n))^k)`, not `-((c^n)^k)`. Inside `ring`, the former becomes
+   `c^(n*k) * (-1)^k` and then ring stalls on `(-1)^k = -1`. Write
+   `-((c ^ n) ^ k)` and, for odd `k`, rewrite with
+   `Odd.neg_pow (hodd : Odd k) (c ^ n) : (-(c^n))^k = -((c^n)^k)`.
+
+5. **`pow_add` produces `x ^ (m + n)` from `x ^ m * x ^ n`.** State the ℕ
+   exponent identity in that order; for a product written the other way round,
+   add a mirrored copy via `Nat.add_comm` (four lines, `Nat.mul_add` +
+   `Nat.sub_one_add_one_eq_of_pos`). Two traps: `omega` cannot do these
+   (nonlinear `n * (n - 2)`), and `Nat.sub_one_add_one_eq_of_pos` needs the
+   literal `(n - 1) + 1`, not `n.succ - 1` / `Nat.succ (n-1)`.
+
+6. **`omega` cannot read `Nat.Prime n`.** Any omega that needs `2 ≤ n` must be
+   given `have h2 : 2 ≤ n := hn.two_le` first. (It *can* close
+   `n % 6 = 1 ∨ n % 6 = 5` from `n % 2 = 1` + `n % 3 ≠ 0`, and the
+   `% 3` / `% 2` residue facts of S16/S17.)
+
+7. **`Nat.dvd_prime` goes the divisor way** (`m ∣ p ↔ m = 1 ∨ m = p`). For
+   `3 ∣ n` with `n` prime, use
+   `Nat.Prime.dvd_iff_eq (hn) (a1 : a ≠ 1) : a ∣ p ↔ p = a` (or
+   `Nat.Prime.dvd_prime_iff_eq`).
+
+8. **`rwa [h] at X` = `rw` + `assumption`.** When `X` is a divisibility and the
+   goal is a `≡`, the trailing `assumption` fails; use
+   `rw [h] at X` then `exact Int.modEq_zero_iff_dvd.mpr X`. Likewise mind
+   directions: `Int.modEq_zero_iff_dvd.mp : a ≡ 0 → n ∣ a`,
+   `.mpr : n ∣ a → a ≡ 0`; `Int.modEq_iff_dvd` is about `n ∣ b - a`, so
+   `h.mpr` wants the *reversed* difference.
+
+9. **`dvd_add` needs both summands of the same term shape.** To assemble
+   `n² ∣ big` from `n² ∣ small` and `n² ∣ big - small`, do
+   `dvd_add hsmall hdiff` and then rewrite with an explicit `ring` identity —
+   `dvd_add hdiff hsmall` elaborates against the wrong side.
+
+10. **Modulus discipline per step.** Take an author step's inputs at the
+    modulus the *source line* uses, not at the strongest available one: the
+    printed (c) is mod `n` while (b) is mod `n²`, and feeding S3 the mod-`n²`
+    form is a type error the assembly surfaces only at the end.
+
+11. **Compile-cost note (this machine, this session):** one warm
+    `import Mathlib` round is **~250–340 s**, and the harness backgrounds long
+    commands, so chain several files in ONE container call
+    (`sh compile_lean.sh A; sh compile_lean.sh B`) and read the per-file logs
+    afterwards; the per-round cost is dominated by re-loading Mathlib, not by
+    the declarations.
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,

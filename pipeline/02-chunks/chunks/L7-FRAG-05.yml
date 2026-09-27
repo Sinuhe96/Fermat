@@ -1,0 +1,66 @@
+id: L7-FRAG-05
+title: "Bổ đề 7 — n ≡ 1 (mod 6)"
+pdf_pages: [2, 4, 5]
+kind: lemma-proof-step
+depends_on: [L5-01, L7-FRAG-02, L7-FRAG-03, L7-FRAG-04]
+source_text: |
+  [PDF p5 §7]
+
+  * Vì n là số nguyên tố lớn hơn 3 nên n \equiv \pm 1 \pmod 6
+  Giả sử n \equiv -1 \pmod 6, suy ra n = 6l - 1, l \in \mathbb{N}^*. Khi đó, từ
+  a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv 0 \pmod{n^2}, ta suy ra
+  a^{3n(2l-1)} + b^{3n(2l-1)} - c^{3n(2l-1)} \equiv 0 \pmod n
+  \Rightarrow a^{3n(2l-1)} + a^{3n(2l-1)} + a^{3n(2l-1)} \equiv 0 \pmod{n^2}
+    \text{ (vì } c^{3n} \equiv -a^{3n} \pmod{n^2}, b^{3n} \equiv a^{3n} \pmod{n^2}\text{)}
+  \Rightarrow 3a^{n(n-2)} \equiv 0 \pmod{n^2}, vô lý
+    \text{ (vì n là số nguyên tố lớn hơn 3 và } a^{n(n-2)} \not\equiv 0 \pmod n\text{.)}
+  Vậy n \equiv 1 \pmod 6 \text{ (đpcm).}
+
+  [PDF p30 R2, the form the main proof cites: "và n ≡ 1 (mod 6)"]
+formal_hint: |
+  S15: `n` prime > 3 ⇒ `n % 6 = 1 ∨ n % 6 = 5` (n is odd and 3 ∤ n).
+  S16: the printed reductio — assume `n % 6 = 5` (i.e. `n = 6l−1`, so
+  `n − 2 = 3(2l−1)` with `2l−1` odd); from (22') and (19), (20), the sum
+  `a^{n(n−2)}+b^{n(n−2)}−c^{n(n−2)}` becomes `3·a^{n(n−2)} ≡ 0 (mod n²)`; since
+  `3 < n` is prime, `3` is invertible mod n², so `n² ∣ a^{n(n−2)}`, hence
+  `n ∣ a` — contradicting S0's `a ≢ 0 (mod n)`.
+  S17: `n % 6 = 1`.
+  Bookkeeping note: the printed line "a^{3n(2l−1)} + … ≡ 0 (mod n)" weakens to
+  mod n, but the next line uses the mod-n² hypothesis (22') directly, which is
+  what this chunk's S16 does; the substitution
+  `b^{3n(2l−1)} ≡ a^{3n(2l−1)}` needs the mod-n² forms (19)/(20) anyway.
+transcription: manual
+author_steps: |
+  Normalized ordered step map — chunk L7-FRAG-05 (n ≡ 1 (mod 6)).
+  Evidence: signed region record P005-R2 (the whole bullet) and P030-R2 (the
+  cited form), plus the 300 dpi crop page-005-300dpi-region-02.png read on
+  2026-09-27.
+  S15 [p5 §7] "Vì n là số nguyên tố lớn hơn 3 nên n ≡ ±1 (mod 6)"
+                                                             -> L7F5_step_S15
+  S16 [p5 §7] "Giả sử n ≡ −1 (mod 6) … ⇒ 3a^{n(n−2)} ≡ 0 (mod n²), vô lý":
+        the reductio, stated with the hypothesis `n % 6 = 5`, the hypothesis
+        `n − 2 = 3k` with `Odd k` being exactly what `n = 6l−1` supplies, and
+        the inputs (22') [L7-FRAG-04], (19)/(20) [L7-FRAG-03], `a ≢ 0 (mod n)`
+        [L7-FRAG-01's S0]                                     -> L7F5_step_S16
+  S17 [p5 §7] "Vậy n ≡ 1 (mod 6) (đpcm)"                      -> L7F5_step_S17
+  Classification: recorded at DONE below.
+lean_file: 03-lean/L7F5/Basic.lean
+sympy_test: 04-sympy/test_l7_frag_05.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
+lean_decls: L7F5_step_S15, L7F5_step_S16, L7F5_step_S17
+regions: P002-R1, P004-R2, P005-R2, P030-R2
+status: DONE
+# DONE 2026-09-28: S15/S16/S17 all S1 (EXIT 0, zero warnings, zero sorry,
+# axioms = propext / Classical.choice / Quot.sound only). F2: `Nat.dvd_prime`
+# is the divisor direction (`m ∣ p`), so `3 ∣ n` with `n` prime goes through
+# `Nat.Prime.dvd_iff_eq`. F1 record (transcription, not author error): the
+# printed S16 line prints its congruence mod `n`, while the line after it
+# consumes the mod-`n²` hypothesis (22') and the substitution
+# `b^{3n(2l−1)} ≡ a^{3n(2l−1)}` needs the mod-`n²` forms (19)/(20); the
+# encoded statement is the mod-`n²` one — the form the algebra actually
+# yields. `omega` closes both residue goals here (with `hn.two_le` supplied
+# explicitly, since `Nat.Prime` gives omega nothing).
+# Screen: 04-sympy/test_l7_frag_05.py exit 0 (incl. 908 reductio instances).

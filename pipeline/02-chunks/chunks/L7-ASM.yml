@@ -1,0 +1,64 @@
+id: L7-ASM
+title: "Bổ đề 7 — section assembly (all conclusion groups chained)"
+pdf_pages: [1, 2, 4, 5]
+kind: section-assembly
+depends_on: [L7-FRAG-01, L7-FRAG-02, L7-FRAG-03, L7-FRAG-04, L7-FRAG-05, L7-FRAG-06]
+source_text: |
+  [PDF p1 bottom → p2 top: bổ đề 7 in full]
+
+  Bổ đề 7:
+  Nếu n là số nguyên tố lớn hơn 3 và ba số nguyên a, b, c, thỏa mãn
+    abc \not\equiv 0 (\mathrm{mod}\ n),
+    a^n + b^n - c^n \equiv 0 (\mathrm{mod}\ n^2),
+    a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv 0 (\mathrm{mod}\ n)
+  thì ta có
+    (a^n - b^n)(c^n + a^n)(c^n + b^n) \not\equiv 0 (\mathrm{mod}\ n),
+    a^{n^2} + b^{n^2} - c^{n^2} \equiv 0 (\mathrm{mod}\ n^2),
+    a^{n(n-3)} + b^{n(n-3)} + c^{n(n-3)} \equiv c^{3n} + b^{3n} \equiv a^{3n} - b^{3n}
+      \equiv b^n c^n + a^{2n} \equiv c^n a^n + b^{2n} \equiv b^n a^n - c^{2n} \equiv 0 (\mathrm{mod}\ n^2),
+    n \equiv 1 (\mathrm{mod}\ 6),
+    a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv a^{n(n-4)} + c^{n(n-4)}
+      \equiv b^{n(n-4)} + c^{n(n-4)} \equiv a^{n(n-4)} - b^{n(n-4)} \equiv 0 (\mathrm{mod}\ n^2).
+
+  Assembly contract (AGENTS.md "Section assembly"): the Lean file only imports
+  the leaf modules and chains their assembly theorems in the author's order —
+  no new mathematics, no re-proved steps.
+formal_hint: |
+  `L7_bo_de_7`: bổ đề 7's three hypotheses in, ALL of the printed conclusions
+  out (the non-divisibility product, (a) and the remaining congruences in the
+  numbered forms (18)–(22') the main proof cites, plus `n % 6 = 1`), each
+  chained from the corresponding leaf assembly:
+    L7_bo_de_7 = L7F2_bo_de_7 ∧ L7F3 ∧ L7F4 ∧ L7F5 ∧ L7F6 ∧ <S6 product>.
+transcription: manual
+author_steps: |
+  Section assembly — no author step of its own. The step maps live in the leaf
+  chunks L7-FRAG-01 (S0–S6) and L7-FRAG-02 … L7-FRAG-06; this chunk only chains
+  their assembly theorems in the order
+    (a)/(b)/(c)/(d) → b^{3n}+c^{3n} chain → (18)/(22') → n ≡ 1 (mod 6) → (21)/(22)
+  and returns bổ đề 7's full conclusion list.
+lean_file: 03-lean/L7ASM/Basic.lean
+sympy_test: 04-sympy/test_l7_asm.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5b.png
+lean_decls: L7_bo_de_7
+regions: P001-R3, P002-R1, P004-R2, P004-R3, P005-R1, P005-R2, P030-R2
+status: DONE
+
+# DONE 2026-09-28: the section assembly. `L7_bo_de_7` chains L7-FRAG-01's product,
+# L7-FRAG-02's (a)-(d), L7-FRAG-03's (19)/(20), L7-FRAG-04's (18)/(22'),
+# L7-FRAG-05's `n % 6 = 1` and L7-FRAG-06's (21)/(22) in the author's order and
+# returns the printed conclusion list in the numbered forms the main proof cites.
+# No new mathematics (AGENTS.md "Section assembly"): every line is a call into a
+# leaf plus a `simpa`/`Int.ModEq` re-orientation; the sub-derivations that belong to
+# this chunk are only the two bookkeeping bridges the printed text leaves to the
+# reader — `n ≡ 1 (mod 6)` -> `n = 6l+1` -> `n − 4 = 3(2l−1)` with `2l−1` odd (the
+# printed `n − 4 = 3(2p−1)`) and `h20` restated as the congruence `a^{3n} ≡ b^{3n}`.
+# Rounds 2-4 were cascade failures (missing leaf oleans); round 5's four errors were
+# F2 call-site mismatches (argument shapes, not proof content); round 6 is clean:
+# EXIT 0, zero warnings, zero sorry, and the final gate
+# `03-lean/probes/L7-ASM.axioms.lean` reports propext / Classical.choice /
+# Quot.sound only for `L7_bo_de_7` and for every declaration of L7-FRAG-02..06
+# (log 03-lean/L7-ASM.axioms_20260928.log). The aggregate root also compiles:
+# `compile_lean.sh Main.lean` EXIT 0 (03-lean/Main_20260928.log).

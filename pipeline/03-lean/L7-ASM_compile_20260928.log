@@ -1,0 +1,113 @@
+# L7-ASM — 2026-09-28 compile rounds, in order. The 2026-09-27 file (if present) holds this chunk's round 1.
+
+=== round 1 (2026-09-28): first write of L7ASM/Basic.lean (the section assembly). ===
+L7ASM/Basic.lean:1:0: error: object file '/workspace/work/testproj/.lake/build/lib/lean/L7F2/Basic.olean' of module L7F2.Basic does not exist
+EXIT=1
+
+=== L7ASM/Basic.lean (2026-09-28) ===
+L7ASM/Basic.lean:1:0: error: object file '/workspace/work/testproj/.lake/build/lib/lean/L7F4/Basic.olean' of module L7F4.Basic does not exist
+EXIT=1
+
+=== round 3 (2026-09-28): hAn cast-pow fix. ===
+L7ASM/Basic.lean:1:0: error: object file '/workspace/work/testproj/.lake/build/lib/lean/L7F5/Basic.olean' of module L7F5.Basic does not exist
+EXIT=1
+
+=== round 4 (2026-09-28): first full run with all leaf oleans present. ===
+L7ASM/Basic.lean:72:30: error: Application type mismatch: The argument
+  hbc.right
+has type
+  c ^ (n * (n - 2)) ≡ a ^ (n * (n - 2)) + b ^ (n * (n - 2)) [ZMOD ↑n]
+but is expected to have type
+  ?m.722 ^ (n * (n - 2)) ≡ ?m.720 ^ (n * (n - 2)) + ?m.721 ^ (n * (n - 2)) [ZMOD ↑n ^ 2]
+in the application
+  L7F2_step_S3 hn hbc.right
+L7ASM/Basic.lean:92:63: error: Application type mismatch: The argument
+  ha
+has type
+  ¬↑n ∣ a
+but is expected to have type
+  ¬↑n ∣ c
+in the application
+  L7_step_S5b hn h3 ha
+L7ASM/Basic.lean:65:19: error: unsolved goals
+n : ℕ
+hn : Nat.Prime n
+h3 : 3 < n
+a b c : ℤ
+habc : ¬↑n ∣ a * b * c
+h2 : a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2]
+h3c : a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n]
+hodd : Odd n
+ha : ¬↑n ∣ a
+hb : ¬↑n ∣ b
+hc : ¬↑n ∣ c
+h5d : a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] ∧ b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] ∧ c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hbc : c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] ∧ c ^ (n * (n - 2)) ≡ a ^ (n * (n - 2)) + b ^ (n * (n - 2)) [ZMOD ↑n]
+hS3 : a ^ n * b ^ n ≡ c ^ n * (a ^ n + b ^ n) [ZMOD ↑n]
+hS4 : a ^ n * b ^ n ≡ c ^ (2 * n) [ZMOD ↑n]
+hAn : c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2]
+hAn' : c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n]
+hqa : a ^ n ^ 2 + b ^ n ^ 2 - c ^ n ^ 2 ≡ 0 [ZMOD ↑n ^ 2]
+h1z : c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] ∧ ↑c ^ n = ↑a ^ n + ↑b ^ n
+h2z : ↑c ^ (n * (n - 2)) = ↑a ^ (n * (n - 2)) + ↑b ^ (n * (n - 2))
+hprod : ¬↑n ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n)
+h19 : b ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+h19neg : c ^ (3 * n) ≡ -b ^ (3 * n) [ZMOD ↑n ^ 2]
+h10 : a ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+h20 : a ^ (3 * n) - b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+hS12 : a ^ (2 * n) + b ^ n * c ^ n ≡ 0 [ZMOD ↑n ^ 2]
+⊢ ¬↑n ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n) ∧
+    a ^ n ^ 2 + b ^ n ^ 2 - c ^ n ^ 2 ≡ 0 [ZMOD ↑n ^ 2] ∧
+      c ^ (3 * n) + b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+        a ^ (3 * n) - b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+          b ^ n * c ^ n + a ^ (2 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+            c ^ n * a ^ n + b ^ (2 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+              b ^ n * a ^ n - c ^ (2 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                a ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                  b ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                    a ^ (n * (n - 4)) - b ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                      a ^ (n * (n - 3)) + b ^ (n * (n - 3)) + c ^ (n * (n - 3)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                        a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n ^ 2] ∧ n % 6 = 1
+EXIT=1
+
+=== round 5 (2026-09-28): all leaf oleans present, S3 modulus + S5b fixes. ===
+
+=== round 5 (2026-09-28): full assembly compile with every leaf olean present; the previous attempt's log was lost to a host-side consolidation race, so this round is the recorded one. ===
+L7ASM/Basic.lean:83:58: error: Application type mismatch: The argument
+  hc
+has type
+  ¬↑n ∣ c
+but is expected to have type
+  ¬↑n ∣ a
+in the application
+  L7_step_S5b hn h3 hc
+L7ASM/Basic.lean:93:58: error: Application type mismatch: The argument
+  h2z
+has type
+  ↑c ^ (n * (n - 2)) = ↑a ^ (n * (n - 2)) + ↑b ^ (n * (n - 2))
+but is expected to have type
+  ↑?m.946 ^ (n * (n - 2)) = ↑c ^ (n * (n - 2)) + ↑?m.945 ^ (n * (n - 2))
+in the application
+  L7_step_S5b hn h3 hc ?m.949 h2z
+L7ASM/Basic.lean:97:50: error: Application type mismatch: The argument
+  h20
+has type
+  a ^ (3 * n) - b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+but is expected to have type
+  a ^ (3 * n) ≡ b ^ (3 * n) [ZMOD ↑n ^ 2]
+in the application
+  L7F5_step_S17 hn h3 ha h22' h19neg h20
+L7ASM/Basic.lean:112:4: error: Type mismatch: After simplification, term
+  h19
+ has type
+  b ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+but is expected to have type
+  c ^ (3 * n) + b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+EXIT=1
+
+=== round 6 (2026-09-28): F2 call-site repairs -- S5b takes  (its conclusion is ¬ n ∤ c^n + a^n), S17 takes the congruence form a^{3n} ≡ b^{3n}, and the c^{3n}+b^{3n} conjunct needs add_comm. All four errors of round 5 were argument-shape mismatches at call sites, no proof content changed. ===
+EXIT=0
+
+# (the round-5 fragment file, folded in; the compile that wrote it had had its
+#  log deleted mid-run by the consolidation race, so its diagnostics are lost)
+EXIT=1

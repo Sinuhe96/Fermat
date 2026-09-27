@@ -14,6 +14,7 @@ Division of labour with the neighbouring docs:
 |---|---|
 | `pipeline/03-lean/MATHLIB_API_LESSONS.md` | API pitfalls (what fails, exact signatures, workarounds) |
 | `pipeline/03-lean/ENCODING_MAP.md` (this) | term/notation mapping + reusable proof patterns |
+| `pipeline/03-lean/SIGNATURES.md` (generated) | every declaration's exact source signature — the ABI sheet to read before writing a call site (`gen_signatures.py` + `probes/SIGNATURES.probe.lean/.log` pin it) |
 | `pipeline/02-chunks/chunks/*.yml` | the literal transcription + ordered step map (S0…Sn) |
 | `.github/skills/fermat-lean-mathlib/SKILL.md` | toolchain, container loop, search ladder |
 
@@ -117,9 +118,43 @@ What the skeleton encodes (each item cost compile time in L1–L3):
   `03-lean/Lk-01_compile_YYYYMMDD.log` under a `=== round N: … ===` marker and
   put the *diagnosis* in the marker — the F2 items in
   `MATHLIB_API_LESSONS.md` cite those lines later.
-- Before the first step, spend one round on a **probe file** (untracked, e.g.
-  `LkProbe.lean`) holding `#check @` for every lemma you intend to cite —
-  instead of one round per wrong name.
+
+### Probe archive (`03-lean/probes/`) — pin once, reuse by rule
+
+Untracked scratch probes rot: `proof/NameCheck.lean` was never executed and
+falsified a recipe, while `L4Probe`/`L6Probe` were deleted after one green run.
+Every probe is therefore archived, tracked, as a pair:
+
+`probes/<CHUNK>.probe.lean` — header (chunk id, date, toolchain + Mathlib rev,
+run command, log pointer, status VERIFIED / UNVERIFIED) plus `import Mathlib`
+and one `#check @name` per pinned lemma. Tactic probes use the same shape
+(`<CHUNK>.tactic-probe.lean`): a minimal goal with the tactic under test, not
+a name list.
+`probes/<CHUNK>.probe.log` — stdout signatures plus `EXIT` and wall time. No
+log, or a non-zero log, means UNVERIFIED: re-run before reuse, same as never
+archived.
+
+Probes are never `import`ed, never listed in `lakefile.toml` or `Main.lean`,
+and never cited by `depends_on`. Compile with `sh proof/compile_lean.sh
+probes/<CHUNK>.probe.lean` (the harness copies any `03-lean/`-relative path).
+Before the first author step, spend one round on the chunk's probe instead of
+one round per wrong name.
+
+Consume rule for a later agent opening a chunk:
+
+1. Read the archived probes of your `depends_on` chunks plus the closest
+sibling chunk first — do not start from a blank name list.
+2. Free-check each reused name with `rg` on the pinned tree
+(`proof_verify/.lake/packages/mathlib/Mathlib/`, no round-trip). On conflict
+the `rg` hit wins over the archive.
+3. Extend, don't fork: copy the nearest probe as the base, append the new
+names, run one `compile_lean.sh probes/<NEW>.probe.lean` round, archive the
+pair under the new chunk's id.
+4. Re-run is mandatory when the header's toolchain/Mathlib rev differs from
+the current pin, the log is missing or non-zero, or a needed name is absent
+from the archive.
+5. Promote survivors to `MATHLIB_API_LESSONS.md` (lemma fact) or this file's
+§B (pattern); the probe stays as evidence.
 
 ### Reusing a DONE chunk (wiring in place since 2026-09-26)
 
@@ -199,10 +234,11 @@ freshly edited chunk through `compile_lean.sh` refreshes it. This only bites
 while a chunk is under development — a DONE chunk's source is frozen by its
 evidence block. `Main.lean` is the aggregate root; it requires the oleans of
 the chunks it lists. Since the 2026-09-26 L7 restart it lists `Common` and
-`L1`–`L7` (L7's S0–S5 are S1, its S6 is the open author query Q-001 and is
-simply not encoded), and the pre-restart scratch copy `Pilot/Basic.lean` is no
-longer imported by anything (frozen as Q-001's Lean exhibit; the `Pilot`
-`lean_lib` entry is gone from `lakefile.toml`).
+`L1`–`L7` (L7 is complete since 2026-09-27: S0–S6 are S1, the added S5c being
+the F3 difference instance and S6 the printed product), and the pre-restart
+scratch copy `Pilot/Basic.lean` is no longer imported by anything (kept as
+Q-001's Lean exhibit; the `Pilot` `lean_lib` entry is gone from
+`lakefile.toml`).
 
 ---
 
@@ -886,13 +922,15 @@ flags (`n` prime, `n` odd, `uv ⋮̸ n`, `n ∤ a b c k` for the `s ≥ 2` impli
 
 ---
 
-## §B. Chunk L7-FRAG-01 — bổ đề 7, non-divisibility conclusion (S0–S5 = S1; BLOCKED on Q-001)
+## §B. Chunk L7-FRAG-01 — bổ đề 7, non-divisibility conclusion (DONE, all steps S1)
 
 Source: statement p. 1 bottom → p. 2 top; proof p. 4 bottom → p. 5 §7.
-Evidence: `03-lean/L7-FRAG-01_compile_20260926.log` (EXIT 0, zero warnings, zero
-`sorry`; `#print axioms` on all nine declarations = propext, Classical.choice,
-Quot.sound only), `04-sympy/test_l7_frag_01.py` PASS. Nine rounds on the
-2026-09-26 restart (the 2026-09-25 batch attempt is superseded).
+Evidence: `03-lean/L7-FRAG-01_compile_20260926.log` (S0–S5b) and the 2026-09-27
+round for S5c/S6 (both EXIT 0, zero warnings, zero `sorry`; `#print axioms` on
+all eleven declarations = propext, Classical.choice, Quot.sound only),
+`04-sympy/test_l7_frag_01.py` PASS (per-factor tally). Nine rounds on the
+2026-09-26 restart (the 2026-09-25 batch attempt is superseded) plus one round
+on 2026-09-27 (S5c + S6 on the first try).
 
 ### Step table (`03-lean/L7/Basic.lean`, `namespace L7`)
 
@@ -904,7 +942,8 @@ Quot.sound only), `04-sympy/test_l7_frag_01.py` PASS. Nine rounds on the
 | S3+S4 | `L7_step_S3_S4` | `¬n ∣ b^n + c^n` — the reductio, from `L7_pair_reductio` at `(X,Y,Z) = (b,c,a)` |
 | S5a | `L7_step_S5a` | `¬n ∣ a^n + b^n` (F3 fill-in: the print's own (b) + S0) |
 | S5b | `L7_step_S5b` | `¬n ∣ c^n + a^n` — `L7_pair_reductio` at `(X,Y,Z) = (a,c,b)` |
-| S6 | — | **NOT ENCODED**: F4, author query Q-001 (the product's first factor is the difference `a^n − b^n`) |
+| S5c | `L7_step_S5c` | `¬n ∣ a^n − b^n` (F3 fill-in, the instance the print's "tương tự" line omits) — `L7_pair_reductio` at `(X,Y,Z) = (−b,a,c)`, the author's own "Lưu ý" symmetry |
+| S6 | `L7_step_S6` | the printed product `¬n ∣ (a^n−b^n)(c^n+a^n)(c^n+b^n)`, from S5c/S5b/S3+S4 by primality |
 
 Plumbing declarations: `L7_modEq_of_zmod_eq` (a `ZMod n` equality of cast
 integers → `Int.ModEq`, so S1/S2's output feeds the ℤ reductio),
@@ -970,13 +1009,178 @@ have hid : (2 * (2 - 2 ^ (n - 2)) + (2 ^ (n - 1) - 1) : ℤ) = 3 := by
   ring
 ```
 
+**P22 — a "chứng minh tương tự" instance that the print does not spell out is
+usually the printed chain re-instantiated, not new mathematics** (L7's S5c,
+verified 2026-09-27 in one round). When a printed *conclusion* has no matching
+printed step, first check the paper's own symmetry remark and try to make the
+abstracted chain consume the printed hypotheses verbatim at another triple:
+
+```lean
+-- L7's printed reductio takes (h1) Y^n ≡ Z^n + X^n and (h2) Y^e ≡ Z^e + X^e
+-- and concludes ¬n ∣ X^n + Y^n. The difference instance a^n − b^n ≢ 0 is that
+-- same call at (X,Y,Z) = (−b,a,c): with `n` odd, c^n ≡ a^n + b^n IS
+-- a^n ≡ c^n + (−b)^n, and likewise at e = n(n−2) ((−b)^e = −b^e, e odd).
+have h1' : (a ^ n : ℤ) ≡ c ^ n + (-b) ^ n [ZMOD (n : ℤ)] := by
+  refine (Int.modEq_iff_dvd).mpr ?_
+  have hd := Int.modEq_iff_dvd.mp h1
+  have hnb : ((-b : ℤ) ^ n) = -(b ^ n) := Odd.neg_pow hodd b
+  have hid : (c ^ n + (-b) ^ n) - a ^ n = -((a ^ n + b ^ n) - c ^ n) := by
+    rw [hnb]; ring
+  rw [hid]
+  exact dvd_neg.mpr hd
+have h := L7_pair_reductio (X := -b) (Y := a) (Z := c) hn h3 hX h1' h2'
+```
+
+Exponent-side API that made the instantiation cheap (names checked against the
+pin): `Odd.mul` (odd × odd), `Odd.neg_pow (hodd : Odd k) (a) : (-a)^k = -a^k`,
+`dvd_neg : a ∣ -b ↔ a ∣ b`, `Int.Prime.dvd_mul' (hp : Nat.Prime p)
+(h : (p:ℤ) ∣ m * n) : (p:ℤ) ∣ m ∨ (p:ℤ) ∣ n`. Read the difference instance's
+`(X,Y,Z)` off the *conclusion* first (`¬n ∣ a^n − b^n` is `¬n ∣ X^n + Y^n` for
+`X = −b`, `Y = a`), then check the two hypotheses fall out.
+
 ### Method note for the sympy screen
 
 Like L3/L4/L5 and unlike L1/L2/L6, bổ đề 7's hypotheses **are** satisfiable, so
 `test_l7_frag_01.py` runs on real instances (n = 7: 12 witnesses, n = 13: 24;
-zero with the printed product ≡ 0). The statement as printed is therefore true
-on every witness, which is what makes the S6 gap F4 (proof coverage) rather
-than a false claim.
+zero with the printed product ≡ 0). The screen also tallies each factor form
+(the three printed factors and the two extra sums) separately: all are ≢ 0 on
+all 36 witnesses, so the difference factor `a^n − b^n` is no exception — that
+tally is what let Q-001 be classified F3 (missing printed step) instead of a
+false statement.
+
+**Lesson for the next chunk (Q-001's real yield):** when a printed lemma's
+statement outruns its printed proof, check how the *main proof* uses the lemma
+before asking the author. The use site pins which reading is meant — here
+p32 R1 cancels by `a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0 (mod n)`, so the
+statement's difference sign is operative and the gap was in the proof's
+"tương tự" enumeration, closable as F3 from the print's own symmetry remark.
+
+---
+
+## §B. Chunks L7-FRAG-02 … L7-FRAG-06 + L7-ASM — bổ đề 7's remaining conclusions
+
+Source span: p. 2 top (the lemma's conclusion list), p. 4 bottom → p. 5 §7 (the
+proof after the displayed (a)-(d) block), p. 30 R2 (the numbered forms
+(18)-(22') the main proof cites). Split per AGENTS.md's leaf cap into five
+`lemma-proof-step` chunks (each ≤ 2 pages / ≤ 10 steps) plus one thin
+`section-assembly`. **All declarations are S1** (compiled, permitted axioms
+only).
+
+### Step table (author step → declaration)
+
+| chunk | author step | Lean declaration |
+|---|---|---|
+| FRAG-02 | S0 5d at `a, b, c` (`x^{n(n−1)} ≡ 1 (mod n²)`) | `L7F2_step_S0` |
+| FRAG-02 | S1 the printed identity ⇒ (a) `a^{n²}+b^{n²}−c^{n²} ≡ 0 (mod n²)` | `L7F2_step_S1` |
+| FRAG-02 | S2 (b) `c^n ≡ a^n+b^n (mod n²)`, (c) `c^{n(n−2)} ≡ a^{n(n−2)}+b^{n(n−2)} (mod n)` | `L7F2_step_S2` |
+| FRAG-02 | S3 multiply (c) by `a^nb^nc^n`, collapse by 5d ⇒ `a^nb^n ≡ c^n(a^n+b^n) (mod n)` | `L7F2_step_S3` |
+| FRAG-02 | S4 (d) `a^nb^n ≡ c^{2n} (mod n)` | `L7F2_step_S4` |
+| FRAG-03 | S5 `b^{2n}+a^nc^n ≡ 0 (mod n)` (abstract pair) | `L7F3_step_S5` |
+| FRAG-03 | S6 `b^{3n}+c^{3n} ≡ 0 (mod n)` | `L7F3_step_S6` |
+| FRAG-03 | S7 bổ đề 5c lifted ⇒ `n² ∣ (b^{3n})^n+(c^{3n})^n` | `L7F3_step_S7` |
+| FRAG-03 | S8+S9 the `(b³)^{n(n−1)}·b^{3n}` rewrite + 5d ⇒ `b^{3n}+c^{3n} ≡ 0 (mod n²)` | `L7F3_step_S8_S9` |
+| FRAG-03 | S9 (printed instance, gives (19)) | `L7F3_chain_ab` |
+| FRAG-03 | S10 the "Lưu ý" (a;b) symmetry ⇒ `a^{3n}+c^{3n} ≡ 0 (mod n²)` | `L7F3_step_S10` |
+| FRAG-03 | S11 (20) `a^{3n}−b^{3n} ≡ 0 (mod n²)` | `L7F3_step_S11` |
+| FRAG-04 | S12/S13 the `(b^n+c^n)[(c^n−b^n)²+b^nc^n]` factorization + cancellation ⇒ (18) | `L7F4_sum_chain`, `L7F4_step_S12`, `L7F4_step_S13` |
+| FRAG-04 | S14 ⇒ (22') `a^{n(n−2)}+b^{n(n−2)}−c^{n(n−2)} ≡ 0 (mod n²)` | `L7F4_step_S14` |
+| FRAG-05 | S15 `n ≡ ±1 (mod 6)` | `L7F5_step_S15` |
+| FRAG-05 | S16 the reductio at `n ≡ −1 (mod 6)` ⇒ `3a^{n(n−2)} ≡ 0 (mod n²)`, absurd | `L7F5_step_S16` |
+| FRAG-05 | S17 `n ≡ 1 (mod 6)` | `L7F5_step_S17` |
+| FRAG-06 | S18/S19/S20 (21) the `n(n−4)` group | `L7F6_step_S18`, `L7F6_step_S19`, `L7F6_step_S20` |
+| FRAG-06 | S21 (22) `a^{n(n−3)}+b^{n(n−3)}+c^{n(n−3)} ≡ 0 (mod n²)` | `L7F6_step_S21` |
+| L7-ASM | the assembled conclusion list | `L7_bo_de_7` |
+
+### Reusable results (reuse — do not re-derive)
+
+- `L7F3_five_c` — bổ đề 5c **without** bổ đề 5's coprimality hypothesis, which
+  is exactly the author's own remark "(không cần giả thiết (u,v) = 1)";
+  assembled from bổ đề 5's exposed branches `L5_step_S12` / `S15` / `S16`.
+- `L7F3_five_d_cube` — bổ đề 5d at a cube (`x³ ⋮̸ n`), the form §7 uses.
+- `L7F2_step_S0`…`S4` — the (a)-(d) toolkit: 5d at three coordinates, the
+  printed identity for (a), (b)/(c) restated, the `a^nb^nc^n` multiplication,
+  and (d).
+- `L7F3_chain_ab` → (19); `L7F3_step_S10` → `a^{3n}+c^{3n} ≡ 0`; `L7F3_step_S11` → (20).
+- `L7F4_sum_chain` — the §7 factorization/cancellation at an abstract pair, the
+  device that makes the printed "chứng minh tương tự" (§13) an *instance*
+  rather than a new argument.
+- `L7F5_step_S15`…`S17` → `n % 6 = 1`; `L7F6_step_S18`…`S21` → (21)/(22).
+- **`L7_bo_de_7`** — the single entry point for the main proof: hypotheses
+  `abc ⋮̸ n`, `a^n+b^n−c^n ≡ 0 (mod n²)`, `a^{n(n−2)}+… ≡ 0 (mod n)`; conclusion
+  the whole numbered list (17)?/(18)/(19)/(20)/(21)/(22)/(22') + `n % 6 = 1`.
+
+### Patterns that compiled (copy these)
+
+**P-coprime (cancelling a factor coprime to `n²`).** From `¬ n ∣ X` get
+`IsCoprime X (↑n)`; note the ℤ-gcd helper returns `Int.gcd X ↑n = 1`, i.e. the
+order `(X, ↑n)` — `Int.gcd_comm` does **not** exist, so use `.symm` to flip:
+
+```lean
+have hug : IsCoprime X (n : ℤ) :=
+  Int.isCoprime_iff_gcd_eq_one.mpr (L5.L5_gcd_eq_one_of_not_dvd hn hX)
+have hcop : IsCoprime ((n : ℤ) ^ 2) X := hug.symm.pow_left (m := 2)
+exact Int.modEq_zero_iff_dvd.mpr (hcop.dvd_of_dvd_mul_left hdvd)   -- hdvd : n² ∣ X * z
+```
+
+**P-5d-collapse (the `a^nb^nc^n` multiplication).** Multiply the congruence by
+`a^nb^nc^n` (`Int.ModEq.mul`), then collapse each `x^{n(n−1)}` by 5d
+(`x^{n(n−1)} * X ≡ X` via `hc1'.mul_left X` / `.mul_right X` + `simpa`), and
+regroup the product by `ring` — the three-term product identity is the printed
+"c^na^n.1 + c^nb^n.1 − a^nb^n.1" line.
+
+**P-exponent-identity.** `pow_add` turns `x^m * x^n` into `x^(m+n)`, so state
+the ℕ identity in the *same* order as the product in the goal; for a product
+written in the other order add a mirrored copy via `Nat.add_comm`. Both are
+calcs over `Nat.mul_add` / `Nat.mul_succ` / `Nat.sub_one_add_one_eq_of_pos`:
+
+```lean
+have h2n : 2 ≤ n := hn.two_le                    -- omega cannot read Nat.Prime
+have hexp' : n * (n - 2) + n = n * (n - 1) := by
+  calc n * (n - 2) + n = n * (n - 2) + n * 1 := by rw [mul_one]
+    _ = n * ((n - 2) + 1) := (Nat.mul_add n (n - 2) 1).symm
+    _ = n * (n - 1) := by rw [show n - 2 + 1 = n - 1 from by omega]
+have hexp : n + n * (n - 2) = n * (n - 1) := by rw [Nat.add_comm, hexp']
+```
+
+**P-of_dvd (drop a modulus).** `Int.ModEq.of_dvd (dvd_pow_self (n : ℤ) (by norm_num)) h`
+sends `[ZMOD (↑n)^2]` to `[ZMOD ↑n]`; the same expression in reverse (with
+`pow_add`-style exponent identities) raises a modulus only with an odd
+exponent, as in S18/S19.
+
+**P-div-cong (`.mp` vs `.mpr`, and `rwa … at`).** `Int.modEq_zero_iff_dvd`:
+`.mp` extracts `n ∣ a` from `a ≡ 0`, `.mpr` builds the congruence from the
+divisibility. `rwa [h] at X` is `rw` + `assumption`, so it *fails* when `X` is
+a divisibility and the goal a congruence; use
+`rw [h] at X; exact Int.modEq_zero_iff_dvd.mpr X`.
+
+**P-omega.** Give `omega` numeric hypotheses explicitly (`Nat.Prime` is
+opaque to it). It does close the disjunctive residue goals here
+(`n % 6 = 1 ∨ n % 6 = 5` from `n % 2 = 1` and `n % 3 ≠ 0`), the
+`(n − 2) % 3 = 0` / `((n − 4) / 3) % 2 = 1` facts of S17/S16, and the
+mod-`n²` reductio of S16 — but *not* nonlinear exponent identities.
+
+### Screen note (sympy)
+
+`04-sympy/l7_common.py` + `test_l7_frag_0{2,3,4,5,6}.py` + `test_l7_asm.py`
+screen on **real instances** (bổ đề 7's hypotheses are satisfiable, unlike
+L1/L2/L6): a table join gives 56,844 witnesses at n = 5, 7, 11, 13, and every
+claimed conclusion — (a), (b), (c), (d), (18), (19), (20), (21), (22), (22'),
+`n ≡ 1 (mod 6)` — holds on all of them. `reductio_screen` additionally checks
+S16's substitution on instances of (19)/(20) with `n ≡ 5 (mod 6)`.
+
+### Findings recorded while verifying (no author query open)
+
+- **F3 (FRAG-03, S7)**: bổ đề 5c's premise `n ∣ (b^{3n})^n + (c^{3n})^n` is not
+  displayed; the print raises the congruence to the n-th power (n odd) and
+  applies 5c. Derived inside `L7F3_step_S7`, hypothesis-neutral, and the
+  *conclusion* is the printed one — so it stays in-lane (no new assumption).
+- **F3 (FRAG-06, S21 = (22))**: `a^{n(n−3)}+b^{n(n−3)}+c^{n(n−3)} ≡ 0 (mod n²)`
+  is stated on p. 2 and used at p. 30 R2 ("Từ (17), (21), (22), ta có") but
+  never derived on p. 5; derived in-chunk from (21) + (b) and screen-verified.
+- **F1 (FRAG-05, S16)**: the printed line "⇒ a^{3n(2l−1)} + … ≡ 0 (mod n)"
+  states the congruence mod `n`, although the following line uses the mod-`n²`
+  hypothesis and the substitution needs the mod-`n²` forms (19)/(20); the
+  encoded statement is the mod-`n²` one, which is what the algebra gives.
 
 ---
 
@@ -990,4 +1194,6 @@ than a false claim.
 4. Record the classification outcome (F1–F4/S1) per step in the chunk YAML,
    not here; here record only the mapping and the surviving code shapes.
 
-Last updated: 2026-09-26, after L6-01 (bổ đề 6) reached DONE (§B above holds L1-01 through L6-01).
+Last updated: 2026-09-28, after L7-FRAG-02 … L7-FRAG-06 and the section
+assembly L7-ASM reached DONE (§B holds L1-01 … L7-FRAG-06 and L7-ASM; the
+assembled `L7_bo_de_7` is the main proof's entry point).

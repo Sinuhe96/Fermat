@@ -5,13 +5,23 @@ one-step verification loop, the F1–F4/S1 outcome classes) and **README.md**
 (runtime commands, container policy, mount table). This file records *where
 things stand* and deliberately does not repeat what those two say.
 
-Last updated: 2026-09-26 (**tenth session**): the `L7-FRAG-01` Lean lane was
-restarted one-step-per-compile, and its non-divisibility chain now verifies
-**S0–S5, all S1**, in `03-lean/L7/Basic.lean` (sorry-free, permitted axioms
-only). Only **S6** — the printed product — is left, and it is F4, blocked on
-author query Q-001. So six chunks are DONE and one is BLOCKED; BLOCKERS B-003
-is resolved. See "Next step" below.
-
+Last updated: 2026-09-28 (**twelfth session**): **bổ đề 7 is complete.**
+`L7-FRAG-02` … `L7-FRAG-06` (its remaining conclusion groups) and the thin
+section assembly `L7-ASM` are **DONE**: the assembly's `L7_bo_de_7` in
+`03-lean/L7ASM/Basic.lean` returns the lemma's full printed conclusion list in
+the numbered forms the main proof cites — the non-divisibility product,
+(a)/(b)/(c)/(d), (18), (19), (20), (21), (22), (22') and `n ≡ 1 (mod 6)`.
+Six new chunks, 26 declarations, about 28 container rounds — of which only
+~10 carried real errors and **every one was F2** (encoding/API; some siblings
+were cascade failures, a leaf's olean missing after an earlier failed round in
+the same chain). There is **no F1/F4** anywhere in this lane. Two items are recorded in
+`05-feedback/queries/Q-002-under-printed-steps.md` as **EDITORIAL, not
+blocking** (F3): the printed p. 5 proof never derives (22) although the
+statement list prints it and p. 30 R2 consumes it, and one underlined line of
+the `n ≡ −1 (mod 6)` reductio is printed at modulus `n` where the argument
+needs `n²`. So: **all thirteen chunks are DONE**, none BLOCKED, and no query is
+OPEN. The remaining verification work is the **main proof (pp. 6–33)** — see
+"Next step" below.
 ---
 
 ## Chunk ledger
@@ -24,7 +34,13 @@ is resolved. See "Next step" below.
 | `L4-01` | bổ đề 4 | DONE | `03-lean/L4/Basic.lean`, `L4_bo_de_4`, log `03-lean/L4-01_compile_20260926.log` |
 | `L5-01` | bổ đề 5, parts a)–d) | DONE | `03-lean/L5/Basic.lean`, `L5_bo_de_5`, log `03-lean/L5-01_compile_20260926.log` |
 | `L6-01` | bổ đề 6 | DONE | `03-lean/L6/Basic.lean`, `L6_bo_de_6`, log `03-lean/L6-01_compile_20260926.log` |
-| `L7-FRAG-01` | bổ đề 7, non-divisibility conclusion | **BLOCKED** on Q-001 (S0–S5 = S1; S6 = F4) | `03-lean/L7/Basic.lean`, `lean_lib L7`, log `03-lean/L7-FRAG-01_compile_20260926.log`; pre-restart exhibit `03-lean/Pilot/Basic.lean` (frozen, imported by nothing) |
+| `L7-FRAG-01` | bổ đề 7, non-divisibility conclusion | DONE | `03-lean/L7/Basic.lean`, `lean_lib L7`, log `03-lean/L7-FRAG-01_compile_20260926.log` + the 2026-09-27 S5c/S6 round; pre-restart exhibit `03-lean/Pilot/Basic.lean` (frozen, imported by nothing) |
+| `L7-FRAG-02` | bổ đề 7, display (a) + the (b)/(c)/(d) toolkit | DONE | `03-lean/L7F2/Basic.lean`, log `03-lean/L7-FRAG-02_compile_2026*.log` |
+| `L7-FRAG-03` | bổ đề 7, (19), (20) (the `b^{3n}+c^{3n}` chain + the "Lưu ý" symmetry) | DONE | `03-lean/L7F3/Basic.lean`, log `03-lean/L7-FRAG-03_compile_2026*.log` |
+| `L7-FRAG-04` | bổ đề 7, (18) and (22') (the factorization + cancellation) | DONE | `03-lean/L7F4/Basic.lean`, log `03-lean/L7-FRAG-04_compile_20260928.log` |
+| `L7-FRAG-05` | bổ đề 7, `n ≡ 1 (mod 6)` | DONE | `03-lean/L7F5/Basic.lean`, log `03-lean/L7-FRAG-05_compile_20260928.log` |
+| `L7-FRAG-06` | bổ đề 7, (21) and (22) | DONE | `03-lean/L7F6/Basic.lean`, log `03-lean/L7-FRAG-06_compile_20260928.log` |
+| `L7-ASM` | bổ đề 7, section assembly (`L7_bo_de_7`, the main proof's entry point) | DONE | `03-lean/L7ASM/Basic.lean`, logs `03-lean/L7-ASM_compile_20260928.log` + `03-lean/L7-ASM.axioms_20260928.log` |
 
 Every DONE row is machine-verified, not asserted: the chunk YAML's evidence
 block (`source_pdf_sha`, `extract_run_sha`, `fidelity`, `renders`, `regions`,
@@ -43,123 +59,76 @@ gone — that module is a frozen exhibit). Producer edges in
 use: `L4-01 → L3-01`; `L6-01 → L3-01 + L4-01 + L5-01`; `L7-FRAG-01 → L5-01`
 (the tail reuses `L5_gcd_eq_one_of_not_dvd` for Fermat's little theorem).
 
-Gate status at the tenth session's close (2026-09-26): `progress.py --check`
-exit 0, `proof/check_env.sh` SMOKE PASS, `04-sympy/run_all.py` 7/7,
-`compile_lean.sh L7/Basic.lean` EXIT 0 (zero warnings, zero `sorry`; `#print
-axioms` on all nine declarations = propext / Classical.choice / Quot.sound
-only), and `compile_lean.sh Main.lean` EXIT 0 — the aggregate root now compiles
-every chunk including L7, which is the "everything typechecks" gate B-003
-asked for (B-003 RESOLVED).
+Gate status at the twelfth session's close (2026-09-28): `progress.py --check`
+exit 0 with **13/13 DONE**, `proof/check_env.sh` SMOKE PASS,
+`01-extract/fidelity_check.py out` exit 0 (PASS_WITH_MANUAL, 19 manual pages),
+`04-sympy/run_all.py` 13/13 (`04-sympy/run_all_20260928.log`),
+`compile_lean.sh L7ASM/Basic.lean` EXIT 0 (zero warnings, zero `sorry`;
+`03-lean/L7-ASM_compile_20260928.log`) and the axioms gate
+`compile_lean.sh probes/L7-ASM.axioms.lean` EXIT 0: all 26 declarations of this
+lane depend only on propext / Classical.choice / Quot.sound (23 on exactly that
+set, 3 on a subset) — `03-lean/L7-ASM.axioms_20260928.log`. The aggregate root
+`compile_lean.sh Main.lean` (which now imports `L1`–`L7`, `L7F2`–`L7F6`,
+`L7ASM`) also exits 0 (`03-lean/Main_20260928.log`) — the "everything
+typechecks" gate — so every gate of the DONE recipe is green.
 
 ---
 
-## Next step — bổ đề 7 (the only remaining verification work)
+## Next step — the main proof (pp. 6–33)
 
-### What exists
+### What is now closed
 
-- `02-chunks/chunks/L7-FRAG-01.yml` (`pdf_pages: [1, 2, 4, 5]`) holds the
-  statement, the literal `source_text`, a normalized step map **S0–S6** for
-  the non-divisibility conclusion, the evidence block and the sympy screen
-  (`04-sympy/test_l7_frag_01.py` exit 0: 12 witnesses at n = 7, 24 at n = 13,
-  zero counterexamples to the printed statement).
-- Its Lean lane was attempted **once, in a single batch** on 2026-09-25 (a
-  process violation: it cascaded instead of localising) and is now
-  **superseded**. The 2026-09-26 restart redid it one step per compile:
-  `03-lean/L7/Basic.lean` verifies **S0–S5, all S1** (nine declarations,
-  EXIT 0, zero warnings, zero `sorry`, axioms = propext / Classical.choice /
-  Quot.sound). S0–S2 are `ZMod n` statements; S3–S5 are carried out in ℤ
-  congruence/divisibility form (`L7_pair_reductio` is the printed reductio with
-  the pair abstracted — the print's own "chứng minh tương tự" — and
-  `L7_tail_three` is its printed tail, Fermat/3 ≡ 0/n = 3). S5a is an F3
-  fill-in from the author's own (b) plus S0. Per-round diagnosis:
-  `03-lean/L7-FRAG-01_compile_20260926.log`; the ZMod-vs-ℤ lesson that forced
-  the rewrite is the L7 session entry in `MATHLIB_API_LESSONS.md` (and §B Chunk
-  L7-FRAG-01 in `ENCODING_MAP.md`).
-- **S6 remains F4**:
-  `05-feedback/queries/Q-001-product-factor-sign.md` (OPEN, screenshot asset
-  attached, no declaration encodes it). The printed chain establishes ≢ 0 for
-  the three pairwise **sums** `a^n+b^n` (S5a), `b^n+c^n` (S3+S4), `c^n+a^n`
-  (S5b), but the stated product's first factor is the **difference**
-  `a^n − b^n`, which no printed step excludes. Classification F4, not F1: our
-  transcription matches the print; the print is internally inconsistent
-  (typographic). The pre-restart file `03-lean/Pilot/Basic.lean` is kept as a
-  frozen exhibit for that query (its single `sorry` marks the gap) and is
-  imported by nothing; BLOCKERS **B-003** is RESOLVED (the `import Pilot.Basic`
-  line left `Main.lean`, and `compile_lean.sh Main.lean` now exits 0).
+bổ đề 7 is fully verified and **assembled**: `L7_bo_de_7` (chunk `L7-ASM`)
+takes the lemma's three hypotheses and returns every printed conclusion in the
+numbered forms the main proof cites. Per-chunk step tables, the reused
+signatures and the compiled proof patterns are in `03-lean/ENCODING_MAP.md` §B
+("Chunks L7-FRAG-02 … L7-FRAG-06 + L7-ASM") and the API pitfalls that cost the
+nine rounds are in `03-lean/MATHLIB_API_LESSONS.md` (the 2026-09-28 session
+entry) — read those before writing Lean; the round count there is the evidence
+that guessing is expensive at this pin.
 
-### Wiring (in place since the tenth session)
+Facts a main-proof chunk will need:
 
-The lane's header is **`import Mathlib` + `import L5.Basic`**; `lakefile.toml`
-declares `[[lean_lib]] name = "L7"` with `roots = ["L7.Basic"]`, and
-`Main.lean` lists `L7.Basic` in the verified set (the `Pilot` line and the
-`Pilot` `lean_lib` entry are gone). `L7-FRAG-01.yml` carries
-`depends_on: [L5-01]`. Fermat's little theorem in the tail is bổ đề 5's
-`L5_gcd_eq_one_of_not_dvd`; `L5_bo_de_5`'s conjuncts `.2.2.1` (5c) / `.2.2.2`
-(5d) are what bổ đề 7's **other** conclusions need when their chunks arrive.
+- `L5_bo_de_5` conjuncts `.2.2.1` (5c) / `.2.2.2` (5d) are the primitive
+  number theory bổ đề 7 needed; `L7F3_five_c` is 5c **without** bổ đề 5's
+  coprimality hypothesis (the author's own remark: "(không cần giả thiết
+  (u,v) = 1)");
+- the two use sites of bổ đề 7 are p. 30 R2 ("Từ (17), (21), (22), ta có …")
+  and p. 32 R1 (the cancellation by `a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0
+  (mod n)` that yields (27)); p. 32 R1 is why the statement's *difference*
+  factor is operative (Q-001);
+- the author's p. 9 R2 "Quy ước" governs every denominator the main proof
+  introduces (`m (h − b^n)^r ≢ 0 (mod n)`), so the cancellation at p. 32 R1 is
+  the one place where a non-divisibility fact has to be *proved* rather than
+  quoted.
 
-### The bổ đề 5 surface this chunk reuses
+### The work itself
 
-`L5_bo_de_5`'s four conjuncts (the print's parts a)–d)), at
-`L5_bo_de_5 hn hodd hcop`:
+The main proof has **no chunk yet**. Structure to plan against (scouted
+2026-09-27, unchanged): §1.1 `H(h, b)` / `H(h, a)`, §1.2 `h = c^n`, §1.3
+`h = n^{ns−1} c^n`, then the `k = 0` case and the small-`n` / `n = pk` wrap-up.
+Required first pass (AGENTS.md's "Section assembly" and leaf-cap rules apply):
 
-| print | `L5_bo_de_5 hn hodd hcop` |
-|---|---|
-| bổ đề 5 a) | `.1 hw` — `¬ n ∣ u+v → gcd (u+v) A = 1 ∧ ¬ n ∣ A` |
-| bổ đề 5 b) | `.2.1 hw` — `n ∣ u+v → n ∣ A ∧ ¬ n² ∣ A ∧ gcd (u+v) A = n` |
-| bổ đề 5 c) | `.2.2.1 hw` — `n ∣ u^n+v^n → n² ∣ u^n+v^n` |
-| bổ đề 5 d) | `.2.2.2 hw` — `¬ n ∣ u → u^{n(n−1)} ≡ 1 [ZMOD n²]` (Euler, φ(n²)=n(n−1)) |
+1. Bind the pages to signed region records and freeze the transit
+   `fidelity_check.py` verdict (`PASS_WITH_MANUAL`, 19 manual pages).
+2. Split into **leaf chunks** of ≤ 2 PDF pages / ≤ 10 author steps / ≤ 300 Lean
+   lines each, with a `kind: section-assembly` per author section; record the
+   citations of bổ đề 1–7 per leaf (that is what sets `depends_on`).
+3. Screen each leaf on real instances where its hypotheses are satisfiable
+   (`04-sympy/l7_common.py` shows the witness-search pattern), and record
+   vacuity honestly where they are not (as L1/L2 do).
+4. Then the one-step loop, unchanged: one named declaration per author step,
+   compile, classify (F1–F4/S1) before the next step, stop on F4 and file a
+   query — but **check the main proof's own use of a lemma first**, which is
+   what turned Q-001 from F4 into F3.
 
-Citations are settled for this fragment: S0 needs no author lemma and no
-primality (`n ∣ a → n ∣ abc`, now encoded and verified), S1/S2 restate GT2/GT3,
-and the S3–S5 chain cites only Fermat's little theorem (via bổ đề 5's helper).
-**No L3/L4/L6 declaration is cited by the transcribed material**; the four
-remaining conclusion groups below rest on bổ đề 5c/5đ — confirm their citations
-when they are transcribed, which is when their `depends_on` gets set.
-
-### Still to chunk inside bổ đề 7
-
-Four conclusion groups are already in `L7-FRAG-01.yml`'s `source_text` but not
-chunked (their proofs are on pp. 2/4/5; displays (a) and (d) are in the
-transcribed p. 4 → p. 5 proof):
-
-1. `a^{n²} + b^{n²} − c^{n²} ≡ 0 (mod n²)` (display (a), from bổ đề 5d);
-2. `a^{n(n−3)} + b^{n(n−3)} + c^{n(n−3)} ≡ c^{3n} + b^{3n} ≡ a^{3n} − b^{3n}
-   ≡ b^n c^n + a^{2n} ≡ c^n a^n + b^{2n} ≡ b^n a^n − c^{2n} ≡ 0 (mod n²)`;
-3. `n ≡ 1 (mod 6)`;
-4. `a^{n(n−2)} + b^{n(n−2)} − c^{n(n−2)} ≡ a^{n(n−4)} + c^{n(n−4)}
-   ≡ b^{n(n−4)} + c^{n(n−4)} ≡ a^{n(n−4)} − b^{n(n−4)} ≡ 0 (mod n²)`.
-
-Same single producer edge (`L5-01`), same one-step loop. Screen these **on
-real instances**, not by vacuity — bổ đề 7's hypotheses are satisfiable (the
-fragment's screen found witnesses), unlike `L1-01`/`L2-01`, whose screens are
-inference-based because their FLT hypotheses have no witnesses for n ≥ 3.
-
-### Closing recipe
-
-The non-divisibility fragment's own loop is finished: S0–S5 are S1 and its
-wiring, evidence and logs are in place. What is left is:
-
-1. **S6 / Q-001** — nothing to do until the author answers whether the
-   product's first factor is the difference `a^n − b^n` (the printed proof's
-   coverage gap) or whether the "chứng minh tương tự" line should read
-   `a^n − b^n` (making the product's factor a sum). Once answered, either
-   encode the corrected S6 (a `DONE` flip needs the chunk's evidence block
-   refreshed and `progress.py --check` green) or, if the answer changes the
-   printed text, re-review the affected region records (`regions.py signoff`)
-   before re-transcribing — a region edit flips the page to `STALE` and fails
-   `--check` for every dependent chunk.
-2. **The four conclusion groups still unchunked** (below): one chunk each,
-   same one-step loop, same single producer edge `L5-01`, with `depends_on`
-   set when their citations are confirmed.
-
-Use AGENTS.md's loop and outcome classes unchanged: freeze the step map →
-screen → one named declaration per author step → compile → classify before the
-next step → stop on F4 and file a query. At DONE: `#print axioms`; fill the
-chunk's evidence block (`regions`, `renders`, `lean_decls`); update
-`status.tsv` + the YAML; `progress.py --write PROGRESS.md`; `progress.py
---check` exit 0; `04-sympy/run_all.py`; then `compile_lean.sh <chunk>.lean`
-(publishes the olean) and `compile_lean.sh Main.lean` EXIT 0 (the aggregate
-gate B-003 asked for, now in place).
+At DONE (the recipe that worked for the six chunks of this session):
+`#print axioms` on the assembly and every declaration (`probes/L7-ASM.axioms.lean`
+is the template), fill the chunk's evidence block, `status.tsv` + YAML
+`# DONE` comment, `progress.py --write PROGRESS.md`, `progress.py --check`
+exit 0, `04-sympy/run_all.py`, then `compile_lean.sh <chunk>.lean` (publishes
+the olean) and `compile_lean.sh Main.lean` EXIT 0 — `Main.lean` already imports
+`L1`–`L7`, `L7F2`–`L7F6` and `L7ASM`.
 
 Transcription authority: the signed REVIEWED region records
 (`01-extract/regions/pNNN.yml`, all 33 pages REVIEWED, commit `9cb73f8`) plus
@@ -179,6 +148,10 @@ This file deliberately does not duplicate them:
   hardening backlog, and the review → edit → re-sign runbook (a region-record
   edit flips the page to `STALE` and fails `--check` for every chunk that
   depends on it): `pipeline/PIPELINE.md`.
+- Per-chunk step tables, reusable signatures and compiled patterns:
+  `pipeline/03-lean/ENCODING_MAP.md` §B. Call-site ABI for every declaration of
+  every DONE module: `pipeline/03-lean/SIGNATURES.md` (generated; regenerate
+  after each DONE flip) — read the producer's header before writing a call.
 - Live dashboard `pipeline/PROGRESS.md` (generated — never hand-edited);
   obstacle log `pipeline/BLOCKERS.md`; author queries
   `pipeline/05-feedback/`.

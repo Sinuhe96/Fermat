@@ -69,11 +69,20 @@ Stages:
    - `Pilot/` holds the FIRST chunk through (Lemma 7 fragment) as it stood
      before the 2026-09-26 restart: a flat scratch copy of the batch attempt,
      frozen as the Lean exhibit of author query Q-001 and imported by nothing.
-     The live lane is `L7/Basic.lean` (chunk `L7-FRAG-01`, S0–S5 verified, S6
-     the open Q-001 finding), declared as `lean_lib L7` and listed in
-     `Main.lean`; BLOCKERS B-003 (the aggregate root importing a `sorry`-carrying
-     scratch module) is resolved by that cutover.
+     The live lanes are `L7/Basic.lean` (chunk `L7-FRAG-01`: the whole
+     non-divisibility conclusion, S0–S6 verified) together with the five
+     remaining conclusion groups of bổ đề 7 — `L7F2`…`L7F6` — and the section
+     assembly `L7ASM` (`L7_bo_de_7`, the main proof's entry point), each
+     declared as its own `lean_lib` and listed in `Main.lean`; BLOCKERS B-003
+     (the aggregate root importing a `sorry`-carrying scratch module) is
+     resolved by that cutover, and Q-001/Q-002 are closed (Q-002 is an
+     editorial note: two steps the printed proof leaves implicit).
    - `Common/` holds shared helpers; `Main.lean` wires module roots.
+   - `SIGNATURES.md` is generated (`gen_signatures.py`) from the module
+     sources: every `theorem`/`def` header verbatim, indexed by module, with an
+     entry-point table and the call-site shape checklist. Regenerate after each
+     DONE flip; `probes/SIGNATURES.probe.lean` + its log pin the names to the
+     toolchain.
    - `lakefile.toml` declares one `lean_lib` per verified chunk, so a DONE
      chunk is reused by `import`ing it (`import L3.Basic` → `L3.L3_bo_de_3`)
      rather than pasting a copy that can drift; `proof/compile_lean.sh` syncs
@@ -148,9 +157,11 @@ each is worth closing before the next DONE flip:
    caveat"). A `lean_file_sha256` plus an "olean newer than source"
    comparison would close it.
 
-Parked, lower priority: archive one `LkProbe.lean` per lemma as a reusable
-name list (the L4/L6 probe files were transient `#check` scratch and are gone,
-so the names they pinned are not archived); print the round count and wall
+Implemented 2026-09-27: probes are archived per chunk as
+`03-lean/probes/<CHUNK>.probe.lean` + `.probe.log`, with the consume rule in
+`ENCODING_MAP.md` §A "Probe archive" (replaces the transient `LkProbe.lean`
+scratch; the L4/L6 probe sources are gone, so those chunks have no archive).
+Parked, lower priority: print the round count and wall
 clock in each compile-log header; add a `read_backing:` chunk field recording
 which read backs a transcription, so a session without working vision cannot
 launder an unread render as its transcription authority.

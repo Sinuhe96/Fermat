@@ -1,0 +1,50 @@
+# L7-FRAG-02: 2026-09-28 rounds (consolidated; round 1 of this chunk is in
+# L7-FRAG-02_compile_20260927.log if present, otherwise round 1 is the first block below).
+
+=== round 3 (2026-09-28): .mp/.mpr directions, cast-pow no-ops removed, exponent-sum order fixed, S3/S4 associations. ===
+L7F2/Basic.lean:90:26: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  n - 1 + 1
+in the target expression
+  n * (n - 1).succ = n * n
+
+n : ℕ
+hn : Nat.Prime n
+a b c : ℤ
+h2 : a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2]
+ha1 : a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hb1 : b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hc1 : c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+⊢ n * (n - 1).succ = n * n
+L7F2/Basic.lean:138:65: error: omega could not prove the goal:
+No usable constraints found. You may need to unfold definitions so `omega` can see linear arithmetic facts about `Nat` and `Int`, which may also involve multiplication, division, and modular remainder by constants.
+L7F2/Basic.lean:151:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  n + n * (n - 2)
+in the target expression
+  c ^ (n * (n - 2) + n) * (a ^ n * b ^ n) = a ^ n * b ^ n * c ^ (n * (n - 1))
+
+n : ℕ
+hn : Nat.Prime n
+a b c : ℤ
+hc : c ^ (n * (n - 2)) ≡ a ^ (n * (n - 2)) + b ^ (n * (n - 2)) [ZMOD ↑n ^ 2]
+ha1 : a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hb1 : b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hc1 : c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+hred : ∀ {x y : ℤ}, x ≡ y [ZMOD ↑n ^ 2] → x ≡ y [ZMOD ↑n]
+hc1' : c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n]
+ha1' : a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n]
+hb1' : b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n]
+hexp : n + n * (n - 2) = n * (n - 1)
+hA : a ^ n * a ^ (n * (n - 2)) = a ^ (n * (n - 1))
+hB : b ^ n * b ^ (n * (n - 2)) = b ^ (n * (n - 1))
+hC : c ^ n * c ^ (n * (n - 2)) = c ^ (n * (n - 1))
+hmul :
+  c ^ (n * (n - 2)) * (a ^ n * b ^ n * c ^ n) ≡ (a ^ (n * (n - 2)) + b ^ (n * (n - 2))) * (a ^ n * b ^ n * c ^ n) [ZMOD
+    ↑n]
+⊢ c ^ (n * (n - 2) + n) * (a ^ n * b ^ n) = a ^ n * b ^ n * c ^ (n * (n - 1))
+EXIT=1
+
+=== round 4 (2026-09-28): S1 hsucc calc; S3 2<=n for omega + the reverse-ordered exponent identity for hidL. ===
+EXIT=0
+
+=== round 5 (2026-09-28): S3 takes (c) at modulus n (the printed (c) is mod n); S5b coordinate + add_comm in the assembly. ===
+EXIT=0

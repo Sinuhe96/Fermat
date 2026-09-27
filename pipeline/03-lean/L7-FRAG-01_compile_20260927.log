@@ -1,0 +1,52 @@
+=== L7-FRAG-01 (bổ đề 7, non-divisibility conclusion) — S5c + S6, 2026-09-27 ===
+Closes the chunk that the 2026-09-26 restart left at S0-S5b with S6 = F4. The
+F4 was withdrawn after scouting the main proof: bổ đề 7 is cited at p30 R2 (the
+congruence conclusions) and p32 R1, where the case h = c^n cancels
+a^n b^n (a^n − b^n)(a^n + b^n) ≢ 0 (mod n) to obtain its (27) — so the
+statement's DIFFERENCE factor is what the main proof consumes, and the missing
+instance is an F3 fill-in, not a sign error.
+
+Classification: F3 for S5c (the printed reductio L7_pair_reductio
+re-instantiated at (X,Y,Z) = (−b,a,c), the author's own "Lưu ý" symmetry),
+S1 for S5c and S6. One round, first-attempt clean, no F2 repair needed.
+
+=== round 1: `compile_lean.sh L7/Basic.lean` — 148 s ===
+Command (host, repo root):
+    docker compose exec -T lean sh /workspace/proof/compile_lean.sh L7/Basic.lean
+Result: EXIT 0, zero warnings, zero `sorry` (raw output = the #print axioms
+block below). Two new declarations:
+  * L7_step_S5c  {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
+      (hb : ¬ (n : ℤ) ∣ b)
+      (h1n : (c : ZMod n) ^ n = (a : ZMod n) ^ n + (b : ZMod n) ^ n)
+      (h2n : (c : ZMod n) ^ (n * (n - 2))
+        = (a : ZMod n) ^ (n * (n - 2)) + (b : ZMod n) ^ (n * (n - 2))) :
+      ¬ (n : ℤ) ∣ a ^ n - b ^ n
+    body: (b)/(c) rearranged to a^n ≡ c^n + (−b)^n and a^e ≡ c^e + (−b)^e
+    (e = n(n−2), Odd.neg_pow with Odd (n * (n - 2)) from Odd.mul), then
+    `L7_pair_reductio (X := -b) (Y := a) (Z := c)` and one final
+    `rw [Odd.neg_pow hodd b]; ring` to read (−b)^n + a^n as a^n − b^n.
+  * L7_step_S6   {n : ℕ} (hn : Nat.Prime n) {a b c : ℤ}
+      (hd : ¬ (n : ℤ) ∣ a ^ n - b ^ n)
+      (hbc : ¬ (n : ℤ) ∣ b ^ n + c ^ n)
+      (hca : ¬ (n : ℤ) ∣ c ^ n + a ^ n) :
+      ¬ (n : ℤ) ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n)
+    body: two `Int.Prime.dvd_mul' hn` splits; the third printed factor c^n + b^n
+    is matched to S3+S4's b^n + c^n with `simpa [add_comm]`.
+
+Raw output:
+
+'L7.L7_step_S0' depends on axioms: [propext]
+'L7.L7_step_S1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S3_S4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S5a' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S5b' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S5c' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_step_S6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_modEq_of_zmod_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_tail_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'L7.L7_pair_reductio' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Round cost: 148 s (below the usual 285–375 s window — no concurrent session was
+compiling). The 2026-09-26 log holds the S0-S5b rounds and the ZMod-vs-ℤ lesson;
+this file holds the closing round only.

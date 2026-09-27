@@ -1,0 +1,81 @@
+id: L7-FRAG-02
+title: "Bổ đề 7 — display (a) and the mod-n² / mod-n toolkit (b), (c), (d)"
+pdf_pages: [1, 2, 4, 5]
+kind: lemma-proof-step
+depends_on: [L5-01]
+source_text: |
+  [PDF p2 top: bổ đề 7's remaining conclusions (statement)]
+  a^{n^2} + b^{n^2} - c^{n^2} \equiv 0(\mathrm{mod}\ n^2), a^{n(n-3)} + b^{n(n-3)} + c^{n(n-3)}
+  \equiv c^{3n} + b^{3n} \equiv a^{3n} - b^{3n} \equiv b^n c^n + a^{2n} \equiv c^n a^n + b^{2n}
+  \equiv b^n a^n - c^{2n} \equiv 0(\mathrm{mod}\ n^2), n \equiv 1(\mathrm{mod}6)
+  a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv a^{n(n-4)} + c^{n(n-4)} \equiv b^{n(n-4)} + c^{n(n-4)}
+  \equiv a^{n(n-4)} - b^{n(n-4)} \equiv 0 (\mathrm{mod}\ n^2).
+
+  [PDF p4 bottom: "7. Chứng minh bổ đề 7", opening bullet]
+  * Vì abc \not\vdots n, nên a \not\vdots n, b \not\vdots n, c \not\vdots n, vì vậy theo bổ đề 5d), ta có:
+  c^{n(n-1)} \equiv a^{n(n-1)} \equiv b^{n(n-1)} \equiv 1 \pmod{n^2}, suy ra
+  a^{n^2} + b^{n^2} - c^{n^2} = (a^n + b^n - c^n) - c^n [c^{n(n-1)} - 1] + a^n [a^{n(n-1)} - 1] + b^n [b^{n(n-1)} - 1] \equiv 0 \pmod{n^2}
+
+  [PDF p4 §7 → p5 §7]
+  \Rightarrow a^{n^2} + b^{n^2} - c^{n^2} \equiv 0 \pmod{n^2} \text{ (a).}
+  * Ta có c^n \equiv a^n + b^n \pmod{n^2} \text{ (b) và } c^{n(n-2)} \equiv a^{n(n-2)} + b^{n(n-2)} \pmod{n} \text{ (c). Từ (c) suy ra}
+  c^{n(n-1)} a^n b^n \equiv a^{n(n-1)} c^n b^n + b^{n(n-1)} c^n a^n \pmod{n}
+    \text{(nhân hai vế của đồng dư thức (c) cho } a^n b^n c^n \not\equiv 0 \pmod n\text{)}
+  \Rightarrow a^n b^n \equiv c^n (a^n + b^n) \pmod{n}
+  \Rightarrow a^n b^n \equiv c^{2n} \pmod n \text{ (d) (vì } a^n + b^n \equiv c^n \pmod{n^2}\text{)}
+formal_hint: |
+  Hypotheses (bổ đề 7's, unchanged):
+    n prime > 3, integers a b c with n ∤ a*b*c,
+    GT2: a^n + b^n - c^n ≡ 0 [ZMOD n^2],
+    GT3: a^{n(n−2)} + b^{n(n−2)} - c^{n(n−2)} ≡ 0 [ZMOD n].
+  Conclusion of this chunk — the author's displays (a)–(d):
+    S0: a^{n(n−1)} ≡ b^{n(n−1)} ≡ c^{n(n−1)} ≡ 1 [ZMOD n^2]   (bổ đề 5d at a, b, c)
+    S1: (a) a^{n^2} + b^{n^2} - c^{n^2} ≡ 0 [ZMOD n^2]
+    S2: (b) c^n ≡ a^n + b^n [ZMOD n^2]  and  (c) c^{n(n−2)} ≡ a^{n(n−2)} + b^{n(n−2)} [ZMOD n]
+    S3: the multiplication of (c) by a^n b^n c^n, after 5d: a^n b^n ≡ c^n (a^n + b^n) [ZMOD n]
+    S4: (d) a^n b^n ≡ c^{2n} [ZMOD n]
+  Modulus spelling: `(n^2 : ℤ)` and the `(↑n)^2` that bổ đề 5's statements
+  display are the same term (the ascription takes the power in ℤ), so no cast
+  bridge is needed between the two chunks.
+transcription: manual
+author_steps: |
+  Normalized ordered step map — chunk L7-FRAG-02 (displays (a)–(d)).
+  Evidence: signed region records P001-R3 (statement), P002-R1 (displays),
+  P004-R2, P004-R3, P005-R1 (proof), plus the 300 dpi crops
+  L7_stmt_p2.png / page-004-300dpi-region-02/03.png /
+  page-005-300dpi-region-01.png (read on 2026-09-27 together with the signed
+  LaTeX: the display chain on p2 and the (a)–(d) lines on p4/p5 were checked
+  visually, not only from the text layer).
+  S0 [p4 §7 line 1] abc ≢ 0 (mod n) ⇒ a, b, c ≢ 0 (mod n); với bổ đề 5d):
+        c^{n(n−1)} ≡ a^{n(n−1)} ≡ b^{n(n−1)} ≡ 1 (mod n²)      -> L7F2_step_S0
+  S1 [p4 §7] the printed identity
+        a^{n²}+b^{n²}−c^{n²} = (a^n+b^n−c^n) − c^n[c^{n(n−1)}−1]
+                              + a^n[a^{n(n−1)}−1] + b^n[b^{n(n−1)}−1] ≡ 0 (mod n²)
+        ⇒ (a)                                                -> L7F2_step_S1
+  S2 [p4 §7] GT2/GT3 restated: (b) c^n ≡ a^n+b^n (mod n²) and
+        (c) c^{n(n−2)} ≡ a^{n(n−2)}+b^{n(n−2)} (mod n)        -> L7F2_step_S2
+  S3 [p4 → p5 §7] "Nhân hai vế của (c) cho a^nb^nc^n ≢ 0 (mod n)":
+        c^{n(n−1)}a^nb^n ≡ a^{n(n−1)}c^nb^n + b^{n(n−1)}c^na^n (mod n),
+        và theo 5d ⇒ a^nb^n ≡ c^n(a^n+b^n) (mod n)            -> L7F2_step_S3
+  S4 [p5 §7] (d) a^nb^n ≡ c^{2n} (mod n) (vì a^n+b^n ≡ c^n (mod n²))
+                                                              -> L7F2_step_S4
+  Classification: recorded at DONE below (one declaration per step, compiled
+  and classified in source order per AGENTS.md's one-step loop).
+lean_file: 03-lean/L7F2/Basic.lean
+sympy_test: 04-sympy/test_l7_frag_02.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
+lean_decls: L7F2_step_S0, L7F2_step_S1, L7F2_step_S2, L7F2_step_S3, L7F2_step_S4
+regions: P001-R3, P002-R1, P004-R2, P004-R3, P005-R1, P030-R2
+status: DONE
+# DONE 2026-09-28: S0-S4 all S1 in 03-lean/L7F2/Basic.lean (EXIT 0, zero warnings,
+# zero sorry; `#print axioms` = propext / Classical.choice / Quot.sound only).
+# Five compile rounds, every failure F2 (encoding only): the `(n^2 : ℤ)` /
+# `(↑n)^2` cast bridge is a no-op (same term), the `.mp`/`.mpr` direction of
+# `Int.modEq_iff_dvd`, the order in which `pow_add` emits its sum, and the
+# `mul_assoc` shapes of `simpa`-ed `Int.ModEq.mul_left/right` steps.
+# The printed (c) stays at modulus `n` (that is the author's own modulus) while
+# (b) is at `n²`; S3's signature mirrors exactly that.
+# Screen: 04-sympy/test_l7_frag_02.py exit 0 over 56,844 real witnesses.

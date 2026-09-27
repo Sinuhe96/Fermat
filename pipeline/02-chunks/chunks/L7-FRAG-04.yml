@@ -1,0 +1,74 @@
+id: L7-FRAG-04
+title: "Bổ đề 7 — display (18) and the mod-n² form (22') of GT3"
+pdf_pages: [2, 4, 5]
+kind: lemma-proof-step
+depends_on: [L5-01, L7-FRAG-01, L7-FRAG-02, L7-FRAG-03]
+source_text: |
+  [PDF p5 §7, the two bullets after the non-divisibility "(đpcm)"]
+
+  * Vì c^n + b^n \not\equiv 0 \pmod n, b^{3n} + c^{3n} = (b^n + c^n)[(c^n - b^n)^2 + b^n c^n]
+    \equiv (b^n + c^n)(a^{2n} + b^n c^n) \equiv 0 \pmod{n^2} nên a^{2n} + b^n c^n \equiv 0 \pmod{n^2}
+
+  Chứng minh tương tự ta cũng có b^{2n} + a^n c^n \equiv c^{2n} - a^n b^n \equiv 0 \pmod{n^2}.
+
+  * Ta có c^{2n} - a^n b^n \equiv 0 \pmod{n^2}
+  \Rightarrow c^n (a^n + b^n) - a^n b^n \equiv 0 \pmod{n^2} \text{ (vì } a^n + b^n \equiv c^n \pmod{n^2}\text{)}
+  \Rightarrow c^n a^n . 1 + c^n b^n . 1 - a^n b^n . 1 \equiv 0 \pmod{n^2}
+  \Rightarrow c^n a^n b^{n(n-1)} + c^n b^n a^{n(n-1)} - a^n b^n c^{n(n-1)} \equiv 0 \pmod{n^2}
+    \text{ (theo bổ đề 5 d)), ta có } a^{n(n-1)} \equiv b^{n(n-1)} \equiv c^{n(n-1)} \equiv 1 \pmod{n^2}\text{)}
+  \Rightarrow b^{n(n-2)} + a^{n(n-2)} - c^{n(n-2)} \equiv 0 \pmod{n^2} \text{ (đpcm).}
+
+  [PDF p30 R2, the numbered forms the main proof cites]
+  c^n b^n + a^{2n} \equiv c^n a^n + b^{2n} \equiv b^n a^n - c^{2n} \equiv 0 (\mathrm{mod}\ n^2)\ (18)
+  a^{n(n-2)} + b^{n(n-2)} - c^{n(n-2)} \equiv 0 (\mathrm{mod}\ n^2)\ (22')
+formal_hint: |
+  S12: from (19) `b^{3n}+c^{3n} ≡ 0 [ZMOD n²]`, (b) and `n ∤ b^n+c^n`, factor
+  `b^{3n}+c^{3n} = (b^n+c^n)((c^n−b^n)²+b^nc^n)`, replace `(c^n−b^n)²` by `a^{2n}`
+  (it is `(c^n−b^n) ≡ a^n` squared) and cancel the factor `b^n+c^n`, which is
+  invertible mod n² because it is ≢ 0 mod n.
+  S13: the same argument with `(b; c)` replaced by `(a; c)` gives
+  `b^{2n}+a^nc^n ≡ 0`, and the difference form `a^{3n}−b^{3n} = (a^n−b^n)(a^{2n}+a^nb^n+b^{2n})`
+  with `a^n−b^n ≢ 0 (mod n)` gives `a^{2n}+a^nb^n+b^{2n} ≡ 0`, which is
+  `c^{2n}−a^nb^n` because `c^{2n} ≡ (a^n+b^n)²` — the printed "tương tự".
+  S14: the printed derivation of (22') from `c^{2n}−a^nb^n ≡ 0`, using (b) to
+  turn `c^{2n}` into `c^n(a^n+b^n)`, then 5d to raise each factor, and
+  cancelling `a^nb^nc^n` (invertible mod n²).
+transcription: manual
+author_steps: |
+  Normalized ordered step map — chunk L7-FRAG-04 ((18), (22')).
+  Evidence: signed region records P005-R2 (both bullets) and P030-R2 (the
+  numbered forms), plus the 300 dpi crop page-005-300dpi-region-02.png read on
+  2026-09-27.
+  S12 [p5 §7 bullet 1] the factorization + cancellation ⇒
+        a^{2n} + b^n c^n ≡ 0 (mod n²)                        -> L7F4_step_S12
+  S13 [p5 §7 bullet 1, "Chứng minh tương tự"] ⇒
+        b^{2n} + a^n c^n ≡ 0 (mod n²) and c^{2n} − a^n b^n ≡ 0 (mod n²)
+                                                             -> L7F4_step_S13
+  S14 [p5 §7 bullet 2] "Ta có c^{2n}−a^nb^n ≡ 0 … (đpcm)" ⇒
+        b^{n(n−2)} + a^{n(n−2)} − c^{n(n−2)} ≡ 0 (mod n²), the main proof's (22')
+                                                             -> L7F4_step_S14
+  Helper: `L7F4_sum_chain` — the printed S12 argument with the pair (U,V)
+  abstracted (`V^{3n}+c^{3n} ≡ 0`, `c^n ≡ U^n+V^n`, `n ∤ V^n+c^n` ⇒
+  `U^{2n}+V^nc^n ≡ 0`), instantiated at (a,b) for S12 and at (b,a) for S13's
+  first half; the print's own "chứng minh tương tự" is that instantiation.
+  Classification: recorded at DONE below.
+lean_file: 03-lean/L7F4/Basic.lean
+sympy_test: 04-sympy/test_l7_frag_04.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
+lean_decls: L7F4_sum_chain, L7F4_step_S12, L7F4_step_S13, L7F4_step_S14
+regions: P002-R1, P004-R2, P005-R2, P030-R2
+status: DONE
+# DONE 2026-09-28: S12/S13/S14 + `L7F4_sum_chain` all S1 (EXIT 0, zero warnings,
+# zero sorry, axioms = propext / Classical.choice / Quot.sound only). The
+# printed "chứng minh tương tự" is the (U,V) instance of the same
+# factorization/cancellation, so the S12 argument is stated once and
+# instantiated twice — the transcription-speed device (same shape as
+# `L7_pair_reductio` in L7-FRAG-01), not a new route. F2 repairs only:
+# `Int.gcd_comm` does not exist, `IsCoprime.pow` takes its exponents
+# implicitly (use `pow_left (m := 2)`), `dvd_add` argument order, and
+# `rwa … at` (whose trailing `assumption` fails across a divisibility/≡
+# mismatch) vs `rw … at` + `modEq_zero_iff_dvd.mpr`.
+# Screen: 04-sympy/test_l7_frag_04.py exit 0.

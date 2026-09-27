@@ -1,0 +1,38 @@
+# L7-FRAG-05 — 2026-09-28 compile rounds (consolidated, in order).
+#
+# PROVENANCE: blocks marked [recovered] are the compiler's output exactly as
+# recorded in this session's tool history; a host-side log-consolidation race
+# deleted the original round files, so they are restored verbatim. Blocks marked
+# [lost] had their round file deleted by the same race and are summarised from
+# the recorded diagnosis rather than reproduced. The authoritative evidence for
+# each chunk's DONE flip remains the published olean plus the final
+# `probes/L7-ASM.axioms.lean` compile (log L7-ASM.axioms_20260928.log), which
+# re-checks the declarations transitively.
+
+=== round 1 (2026-09-28): first write of L7F5/Basic.lean (S15, S16, S17).
+    [lost] Cascade round of the all-files chain (missing L7F2 olean), same text as the
+    archived sibling rounds. ===
+
+=== round 2 (2026-09-28): L7F5 with all leaf oleans present.
+    [lost] Failed EXIT=1 with the single `Nat.dvd_prime` error that is reproduced
+    verbatim in the next block. ===
+
+=== round 3 (2026-09-28): exponent identity uses hnk forward (rw [hnk]).
+    [recovered] ===
+L7F5/Basic.lean:46:58: error: Application type mismatch: The argument
+  h
+has type
+  3 ∣ n
+but is expected to have type
+  ?m.52 ∣ 3
+in the application
+  (Nat.dvd_prime
+        (Mathlib.Meta.NormNum.isNat_prime_2 (Mathlib.Meta.NormNum.isNat_ofNat ℕ (Eq.refl 3)) (Eq.refl true)
+          (Mathlib.Meta.NormNum.isNat_minFac_4 (Mathlib.Meta.NormNum.IsNat.raw_refl 3)
+            (Mathlib.Meta.NormNum.minFacHelper_0 3 (Eq.refl true) (Eq.refl 1)) (Eq.refl false)))).mp
+    h
+EXIT=1
+
+=== round 4 (2026-09-28): S15 prime-divisibility via Nat.Prime.dvd_iff_eq.
+    [recovered] ===
+EXIT=0

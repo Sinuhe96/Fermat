@@ -1,0 +1,81 @@
+id: L7-FRAG-03
+title: "Bổ đề 7 — b^{3n}+c^{3n} ≡ 0 (mod n²) and its symmetric instances (19), (20)"
+pdf_pages: [2, 4, 5]
+kind: lemma-proof-step
+depends_on: [L5-01, L7-FRAG-02]
+source_text: |
+  [PDF p5 §7, immediately after (d)]
+
+  \Rightarrow a^n b^n \equiv (a^n + b^n)^2 \pmod n
+  \Rightarrow b^{2n} + a^n b^n + a^{2n} \equiv 0 \pmod n
+  \Rightarrow b^{2n} + a^n (a^n + b^n) \equiv 0 \pmod n
+  \Rightarrow b^{2n} + a^n c^n \equiv 0 \pmod n \text{ (vì } a^n + b^n \equiv c^n \pmod{n^2}\text{)}
+  \Rightarrow b^{3n} + c^n (a^n b^n) \equiv 0 \pmod n
+  \Rightarrow b^{3n} + c^{3n} \equiv 0 \pmod n \text{ (vì } a^n b^n \equiv c^{2n} \pmod n\text{)}
+  \Rightarrow (b^{3n})^n + (c^{3n})^n \equiv 0 \pmod{n^2} \text{ (áp dụng bổ đề 5c)}
+  \Rightarrow (b^3)^{n(n-1)} . b^{3n} + (c^3)^{n(n-1)} . c^{3n} \equiv 0 \pmod{n^2}
+  \Rightarrow b^{3n} + c^{3n} \equiv 0 \pmod{n^2} \text{ (áp dụng bổ đề 5d): }
+    (b^3)^{n(n-1)} \equiv (c^3)^{n(n-1)} \equiv 1 \pmod{n^2}\text{)}
+
+  [PDF p5 §7, the "Lưu ý" symmetry paragraph]
+  Lưu ý rằng trong hai giả thiết đồng dư (c) và (b) của Bổ đề 7 có mỗi cặp
+  (a;b), (c;-a), (c;-b) đối xứng nhau, nó bình đẳng và có cùng cấu trúc số học
+  trong vành ℤ. Cho nên, nếu có b^{3n} + c^{3n} \equiv 0 \pmod{n^2} thì ta cũng có
+  a^{3n} + c^{3n} \equiv a^{3n} + (-b)^{3n} \equiv 0 \pmod{n^2}
+  \text{ hay } a^{3n} + c^{3n} \equiv a^{3n} - b^{3n} \equiv 0 \pmod{n^2}.
+
+  [PDF p30 R2: the two numbered forms the main proof cites]
+  c^{3n} \equiv -b^{3n} (\mathrm{mod}\ n^2)\ (19), a^{3n} \equiv b^{3n} (\mathrm{mod}\ n^2)\ (20)
+formal_hint: |
+  From (d) `a^n * b^n ≡ c^{2n} [ZMOD n]` and (b) `c^n ≡ a^n + b^n [ZMOD n]`, the
+  printed chain derives `b^{3n} + c^{3n} ≡ 0 [ZMOD n]` (S5, S6), lifts it to
+  modulus n² by bổ đề 5c at `(b^{3n}, c^{3n})` and bổ đề 5d at `b^3`, `c^3`
+  (S7, S8, S9), and then re-instantiates the same chain with `(a; b)` swapped
+  (the print's own "Lưu ý" symmetry) to obtain
+  `a^{3n} + c^{3n} ≡ 0 [ZMOD n^2]` (S10) and `a^{3n} - b^{3n} ≡ 0 [ZMOD n^2]`
+  (S11) — the main proof's (19) and (20).
+  S5–S9 are stated for an abstract pair `(X, Y)` (with `X = a, Y = b` in the
+  printed instance): the print itself asserts the swap is the same argument,
+  which is what makes the abstraction faithful rather than a new route.
+transcription: manual
+author_steps: |
+  Normalized ordered step map — chunk L7-FRAG-03 ((19), (20)).
+  Evidence: signed region records P005-R1 (the chain and the "Lưu ý"
+  paragraph) and P030-R2 (the numbered forms (19), (20) the main proof cites),
+  plus the 300 dpi crop page-005-300dpi-region-01.png read on 2026-09-27.
+  S5 [p5 §7] a^n b^n ≡ (a^n+b^n)² (mod n); hence
+        b^{2n}+a^nb^n+a^{2n} ≡ 0, i.e. b^{2n}+a^nc^n ≡ 0 (mod n)   -> L7F3_step_S5
+        (three printed lines; stated for the abstract pair (X,Y))
+  S6 [p5 §7] ⇒ b^{3n}+c^n(a^nb^n) ≡ 0 ⇒ b^{3n}+c^{3n} ≡ 0 (mod n)  -> L7F3_step_S6
+  S7 [p5 §7] "áp dụng bổ đề 5c": n² ∣ (b^{3n})^n + (c^{3n})^n        -> L7F3_step_S7
+        F3 fill-in: bổ đề 5c's premise `n ∣ (b^{3n})^n + (c^{3n})^n` is
+        implicit — the print raises `n ∣ b^{3n}+c^{3n}` (S6) to the n-th power
+        (n odd) and then applies 5c. Encoded as the premise inside S7.
+  S8+S9 [p5 §7] the rewrite (b^{3n})^n = (b³)^{n(n−1)}·b^{3n} and bổ đề 5d at
+        b³, c³ ⇒ b^{3n}+c^{3n} ≡ 0 (mod n²)                          -> L7F3_step_S8_S9
+  S10 [p5 §7 "Lưu ý"] the same chain with (a; b) swapped ⇒
+        a^{3n}+c^{3n} ≡ 0 (mod n²)                                  -> L7F3_step_S10
+  S11 [p5 §7 "Lưu ý"] with c^{3n} ≡ −b^{3n}: a^{3n}−b^{3n} ≡ 0 (mod n²), the
+        main proof's (20)                                           -> L7F3_step_S11
+  Helper: `L7F3_five_c` — bổ đề 5c's statement without bổ đề 5's coprimality
+  hypothesis (the print's own "không cần giả thiết (u,v) = 1"), assembled from
+  L5's exposed branch theorems S12/S15/S16.
+  Classification: recorded at DONE below.
+lean_file: 03-lean/L7F3/Basic.lean
+sympy_test: 04-sympy/test_l7_frag_03.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: L7_stmt_p1.png L7_stmt_p2.png L7_proof_p4a.png L7_proof_p5a.png
+lean_decls: L7F3_five_c, L7F3_five_d_cube, L7F3_step_S5, L7F3_step_S6, L7F3_step_S7, L7F3_step_S8_S9, L7F3_chain_ab, L7F3_step_S10, L7F3_step_S11
+regions: P002-R1, P004-R3, P005-R1, P030-R2
+status: DONE
+# DONE 2026-09-28: S5-S11 (9 declarations incl. `L7F3_five_c` — bổ đề 5c
+# without bổ đề 5's coprimality hypothesis, the author's own remark — and
+# `L7F3_five_d_cube`) all S1: EXIT 0, zero warnings, zero sorry, axioms =
+# propext / Classical.choice / Quot.sound only. Round 1's four errors were F2
+# (prefix `-` binds tighter than `^`; an ambiguous `rw [← pow_mul]`; the
+# (a;b)-swap of the "Lưu ý" instance needs `add_comm`/`mul_comm` at the call;
+# a `trans` direction). S7's F3 fill-in (bổ đề 5c's premise, printed implicit)
+# is derived inside the declaration from the printed S6 output.
+# Screen: 04-sympy/test_l7_frag_03.py exit 0.
