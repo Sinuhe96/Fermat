@@ -1,0 +1,690 @@
+@L1.L1_reduce_coprime : ∀ {n : ℕ},
+  3 ≤ n →
+    ∀ {u₀ v₀ t₀ : ℤ},
+      u₀ ≠ 0 →
+        v₀ ≠ 0 →
+          t₀ ≠ 0 →
+            u₀ ^ n + v₀ ^ n = t₀ ^ n →
+              ∃ u v t,
+                u ≠ 0 ∧
+                  v ≠ 0 ∧
+                    t ≠ 0 ∧
+                      u.gcd ↑(v.gcd t) = 1 ∧
+                        u₀ = u * ↑(u₀.gcd ↑(v₀.gcd t₀)) ∧
+                          v₀ = v * ↑(u₀.gcd ↑(v₀.gcd t₀)) ∧ t₀ = t * ↑(u₀.gcd ↑(v₀.gcd t₀)) ∧ u ^ n + v ^ n = t ^ n
+@L1.L1_step_S2_S3 : ∀ {n : ℕ} {u v t : ℤ}, u ^ n + v ^ n = t ^ n → ↑(u.gcd v) ^ n ∣ t ^ n
+@L1.L1_step_S4 : ∀ {n : ℕ}, n ≠ 0 → ∀ {d : ℕ} {t : ℤ}, ↑d ^ n ∣ t ^ n → ↑d ∣ t
+@L1.L1_step_S5 : ∀ {u v t : ℤ} {d : ℕ}, ↑d ∣ u → ↑d ∣ v → ↑d ∣ t → u.gcd ↑(v.gcd t) = 1 → d = 1
+@L1.L1_step_S6 : ∀ {n : ℕ},
+  n ≠ 0 → ∀ {u v t : ℤ}, u ^ n + v ^ n = t ^ n → u.gcd ↑(v.gcd t) = 1 → u.gcd t = 1 ∧ v.gcd t = 1
+@L1.L1_bo_de_1 : ∀ {n : ℕ},
+  3 ≤ n →
+    ∀ {u₀ v₀ t₀ : ℤ},
+      u₀ ≠ 0 →
+        v₀ ≠ 0 →
+          t₀ ≠ 0 →
+            u₀ ^ n + v₀ ^ n = t₀ ^ n →
+              ∃ u v t, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧ u ^ n + v ^ n = t ^ n ∧ u.gcd v = 1 ∧ u.gcd t = 1 ∧ v.gcd t = 1
+@L2.L2_step_S1 : ∀ {n k : ℕ} {u v t : ℤ},
+  u ≠ 0 →
+    v ≠ 0 →
+      t ≠ 0 →
+        u ^ (k * n) + v ^ (k * n) = t ^ (k * n) →
+          u ^ k ≠ 0 ∧ v ^ k ≠ 0 ∧ t ^ k ≠ 0 ∧ (u ^ k) ^ n + (v ^ k) ^ n = (t ^ k) ^ n
+@L2.L2_bo_de_2 : ∀ {n k : ℕ},
+  3 ≤ n →
+    k ≠ 0 →
+      (¬∃ u v t, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧ u ^ n + v ^ n = t ^ n) →
+        ¬∃ u v t, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧ u ^ (k * n) + v ^ (k * n) = t ^ (k * n)
+@L3.L3_step_S0 : ∀ {a c : ℤ}, a ≠ 0 → c ≠ 0 → ∃ a1 c2', a1.gcd c2' = 1 ∧ a = ↑(a.gcd c) * a1 ∧ c = ↑(a.gcd c) * c2'
+@L3.L3_step_S1_S2 : ∀ {n : ℕ},
+  0 < n →
+    ∀ {a b c a1 c2' : ℤ},
+      a ≠ 0 → a * b = c ^ n → a = ↑(a.gcd c) * a1 → c = ↑(a.gcd c) * c2' → a1 * b = ↑(a.gcd c) ^ (n - 1) * c2' ^ n
+@L3.L3_step_S3_S4 : ∀ {n : ℕ} {a b c a1 c2' : ℤ},
+  a ≠ 0 →
+    b ≠ 0 →
+      c ≠ 0 →
+        a.gcd b = 1 →
+          a = ↑(a.gcd c) * a1 →
+            c = ↑(a.gcd c) * c2' → a1 * b = ↑(a.gcd c) ^ (n - 1) * c2' ^ n → ∃ k, k ≠ 0 ∧ c2' ^ n = k * b
+@L3.L3_step_S5 : ∀ {n : ℕ} {a c a1 c2' k b : ℤ},
+  b ≠ 0 → a1 * b = ↑(a.gcd c) ^ (n - 1) * c2' ^ n → c2' ^ n = k * b → a1 = k * ↑(a.gcd c) ^ (n - 1)
+@L3.L3_step_S6_S8 : ∀ {n : ℕ},
+  0 < n → ∀ {a c a1 c2' k b : ℤ}, a1 = k * ↑(a.gcd c) ^ (n - 1) → c2' ^ n = k * b → k ∣ a1 ^ n ∧ k ∣ c2' ^ n
+@L3.L3_step_S9_S10 : ∀ {n : ℕ} {a1 c2' k : ℤ}, a1.gcd c2' = 1 → k ∣ a1 ^ n → k ∣ c2' ^ n → k.natAbs = 1
+@L3.L3_step_S11 : ∀ {n : ℕ},
+  Odd n →
+    0 < n →
+      ∀ {a b c a1 c2' k : ℤ},
+        a ≠ 0 →
+          b ≠ 0 →
+            c ≠ 0 →
+              a.gcd b = 1 →
+                a = ↑(a.gcd c) * a1 →
+                  c = ↑(a.gcd c) * c2' →
+                    c2' ^ n = k * b →
+                      k ≠ 0 →
+                        a1 = k * ↑(a.gcd c) ^ (n - 1) →
+                          k.natAbs = 1 →
+                            ∃ c1 c2, c1 ≠ 0 ∧ c2 ≠ 0 ∧ c1.gcd c2 = 1 ∧ c = c1 * c2 ∧ a = c1 ^ n ∧ b = c2 ^ n
+@L3.L3_bo_de_3 : ∀ {a b c : ℤ} {n : ℕ},
+  Odd n →
+    0 < n →
+      a ≠ 0 →
+        b ≠ 0 →
+          c ≠ 0 →
+            a * b = c ^ n →
+              a.gcd b = 1 → ∃ c1 c2, c1 ≠ 0 ∧ c2 ≠ 0 ∧ c1.gcd c2 = 1 ∧ c = c1 * c2 ∧ a = c1 ^ n ∧ b = c2 ^ n
+@L4.L4_step_S1_S2 : ∀ {a b c : ℤ} {m n : ℕ}, Nat.Prime m → a.gcd b = m → a * b = c ^ n → ↑m ^ 2 ∣ c ^ n ∧ ↑m ∣ c
+@L4.L4_step_S3 : ∀ {c : ℤ} {m n : ℕ},
+  Nat.Prime m → ↑m ∣ c → c ≠ 0 → ↑m ^ 2 ∣ c ^ n → ∃ s r, 1 ≤ s ∧ r ≠ 0 ∧ ¬↑m ∣ r ∧ c = ↑m ^ s * r ∧ 2 ≤ n * s
+@L4.L4_step_S4 : ∀ {a b : ℤ} {m : ℕ},
+  Nat.Prime m →
+    a ≠ 0 →
+      b ≠ 0 →
+        a.gcd b = m →
+          ¬↑m ^ 2 ∣ b → ∃ k h l, 1 ≤ k ∧ h ≠ 0 ∧ l ≠ 0 ∧ h.gcd l = 1 ∧ ¬↑m ∣ h ∧ ¬↑m ∣ l ∧ b = ↑m * h ∧ a = ↑m ^ k * l
+@L4.L4_step_S5 : ∀ {a b c : ℤ} {m n : ℕ},
+  Nat.Prime m →
+    ∀ {k s : ℕ} {h l r : ℤ},
+      ¬↑m ∣ h →
+        ¬↑m ∣ l → ¬↑m ∣ r → a * b = c ^ n → a = ↑m ^ k * l → b = ↑m * h → c = ↑m ^ s * r → k + 1 = n * s ∧ h * l = r ^ n
+@L4.L4_step_S6 : ∀ {h l r : ℤ} {n : ℕ},
+  h ≠ 0 →
+    l ≠ 0 →
+      r ≠ 0 →
+        Odd n →
+          0 < n →
+            h.gcd l = 1 →
+              h * l = r ^ n → ∃ c1 c2, c1 ≠ 0 ∧ c2 ≠ 0 ∧ c1.gcd c2 = 1 ∧ r = c1 * c2 ∧ h = c1 ^ n ∧ l = c2 ^ n
+@L4.L4_bo_de_4 : ∀ {a b c : ℤ} {m n : ℕ},
+  Nat.Prime m →
+    Odd n →
+      0 < n →
+        2 ≤ a.natAbs →
+          2 ≤ b.natAbs →
+            2 ≤ c.natAbs →
+              a ≠ 0 →
+                b ≠ 0 →
+                  c ≠ 0 →
+                    a * b = c ^ n →
+                      a.gcd b = m →
+                        ¬↑m ^ 2 ∣ b →
+                          ∃ s c1 c2,
+                            1 ≤ s ∧
+                              2 ≤ n * s ∧
+                                c1 ≠ 0 ∧
+                                  c2 ≠ 0 ∧
+                                    c1.gcd c2 = 1 ∧
+                                      ¬↑m ∣ c1 ∧
+                                        ¬↑m ∣ c2 ∧
+                                          c = ↑m ^ s * (c1 * c2) ∧ a = ↑m ^ (n * s - 1) * c2 ^ n ∧ b = ↑m * c1 ^ n
+L5.A : (R : Type u_1) → [CommRing R] → ℕ → R → R → R
+L5.B : (R : Type u_1) → [CommRing R] → ℕ → R → R → R
+L5.B' : (R : Type u_1) → [CommRing R] → ℕ → R → R → R
+@L5.L5_step_S2 : ∀ {R : Type u_1} [inst : CommRing R] {n : ℕ},
+  Odd n → ∀ (u v : R), (u + v) * L5.A R n u v = u ^ n + v ^ n ∧ (u + v) * L5.B R n u v = u ^ n + v ^ n
+@L5.L5_step_S3 : ∀ {n : ℕ}, Odd n → ∀ (u v : ℤ), L5.A ℤ n u v = L5.B ℤ n u v
+@L5.L5_step_S4 : ∀ {n : ℕ}, Odd n → ∀ (u v : ℤ), L5.A ℤ n u v = (u + v) * L5.B' ℤ n u v + ↑n * v ^ (n - 1)
+@L5.L5_gcd_eq_one_of_not_dvd : ∀ {n : ℕ}, Nat.Prime n → ∀ {u : ℤ}, ¬↑n ∣ u → u.gcd ↑n = 1
+@L5.L5_step_S5 : ∀ {n : ℕ}, Nat.Prime n → ∀ {u v : ℤ}, u.gcd v = 1 → ¬↑n ∣ u + v → (u + v).gcd (↑n * v ^ (n - 1)) = 1
+@L5.L5_step_S6 : ∀ {n : ℕ},
+  Nat.Prime n → Odd n → ∀ {u v : ℤ}, u.gcd v = 1 → ¬↑n ∣ u + v → (u + v).gcd (L5.A ℤ n u v) = 1
+@L5.L5_step_S7 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u v : ℤ}, ¬↑n ∣ u + v → ¬↑n ∣ L5.A ℤ n u v
+L5.A1 : ℕ → ℚ → ℚ → ℚ
+@L5.L5_step_S8 : ∀ {n : ℕ},
+  Odd n → 3 ≤ n → ∀ (u v : ℤ), ↑(L5.A ℤ n u v) = ↑n * (↑u + ↑v) * L5.A1 n ↑u ↑v + ↑n * ↑v ^ (n - 1)
+@L5.L5_step_S9 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u v : ℤ}, ↑n ∣ u + v → ↑n ^ 2 ∣ (u + v) * L5.B' ℤ n u v
+@L5.L5_step_S10 : ∀ {n : ℕ}, Nat.Prime n → ∀ {v : ℤ}, ¬↑n ∣ v → ¬↑n ^ 2 ∣ ↑n * v ^ (n - 1)
+@L5.L5_step_S11 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v : ℤ},
+        u.gcd v = 1 → ↑n ∣ u + v → ↑n ∣ L5.A ℤ n u v ∧ ¬↑n ^ 2 ∣ L5.A ℤ n u v ∧ (u + v).gcd (L5.A ℤ n u v) = n
+@L5.L5_step_S12 : ∀ {n : ℕ}, Nat.Prime n → ∀ {u v : ℤ}, ↑n ∣ u * v → ↑n ∣ u ^ n + v ^ n → ↑n ^ 2 ∣ u ^ n + v ^ n
+@L5.L5_step_S13 : ∀ {n : ℕ}, Nat.Prime n → ∀ {u v : ℤ}, ¬↑n ∣ u → ¬↑n ∣ v → u ^ (n - 1) ≡ v ^ (n - 1) [ZMOD ↑n]
+@L5.L5_step_S14 : ∀ {n : ℕ},
+  Odd n →
+    ∀ (u v : ℤ),
+      L5.A ℤ n u v = u ^ (n - 1) - v * L5.A ℤ (n - 1) u v ∧ (u + v) * L5.A ℤ (n - 1) u v = u ^ (n - 1) - v ^ (n - 1)
+@L5.L5_zmod_intCast_eq_zero_iff : ∀ {n : ℕ} [NeZero n] (x : ℤ), ↑x = 0 ↔ ↑n ∣ x
+@L5.L5_step_S15 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u v : ℤ}, ¬↑n ∣ u * v → ↑n ∣ u ^ n + v ^ n → ↑n ∣ u + v
+@L5.L5_step_S16 : ∀ {n : ℕ}, Odd n → ∀ {u v : ℤ}, ↑n ∣ u + v → ↑n ^ 2 ∣ u ^ n + v ^ n
+@L5.L5_step_S17 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u : ℤ}, ¬↑n ∣ u → ∃ m, u ^ (n - 1) = 1 + ↑m * ↑n
+@L5.L5_nsq_dvd_mul_pow : ∀ {n m : ℤ} {j : ℕ}, 2 ≤ j → n ^ 2 ∣ (m * n) ^ j
+@L5.L5_step_S18 : ∀ {n : ℕ} {u m : ℤ}, u ^ (n - 1) = 1 + m * ↑n → u ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+@L5.L5_bo_de_5 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v : ℤ},
+        u.gcd v = 1 →
+          (¬↑n ∣ u + v → (u + v).gcd (L5.A ℤ n u v) = 1 ∧ ¬↑n ∣ L5.A ℤ n u v) ∧
+            (↑n ∣ u + v → ↑n ∣ L5.A ℤ n u v ∧ ¬↑n ^ 2 ∣ L5.A ℤ n u v ∧ (u + v).gcd (L5.A ℤ n u v) = n) ∧
+              (↑n ∣ u ^ n + v ^ n → ↑n ^ 2 ∣ u ^ n + v ^ n) ∧ (¬↑n ∣ u → u ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2])
+L6.L6_gcd_neg_right : ∀ (a b : ℤ), a.gcd (-b) = a.gcd b
+L6.L6_gcd_neg_left : ∀ (a b : ℤ), (-a).gcd b = a.gcd b
+@L6.L6_step_S2 : ∀ {n : ℕ},
+  Odd n →
+    ∀ {u v t : ℤ},
+      u ^ n + v ^ n = t ^ n →
+        (u + v) * L5.A ℤ n u v = t ^ n ∧ (t - v) * L5.A ℤ n t (-v) = u ^ n ∧ (t - u) * L5.A ℤ n t (-u) = v ^ n
+@L6.L6_step_S3 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n → ∀ {u v t : ℤ}, u ^ n + v ^ n = t ^ n → ¬↑n ∣ u * v → ¬↑n ∣ t → ¬↑n ∣ u + v ∧ ¬↑n ∣ t - v ∧ ¬↑n ∣ t - u
+@L6.L6_step_S4 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t : ℤ},
+        u.gcd v = 1 →
+          u.gcd t = 1 →
+            v.gcd t = 1 →
+              ¬↑n ∣ u + v →
+                ¬↑n ∣ t - v →
+                  ¬↑n ∣ t - u →
+                    (u + v).gcd (L5.A ℤ n u v) = 1 ∧
+                      ¬↑n ∣ L5.A ℤ n u v ∧
+                        (t - v).gcd (L5.A ℤ n t (-v)) = 1 ∧
+                          ¬↑n ∣ L5.A ℤ n t (-v) ∧ (t - u).gcd (L5.A ℤ n t (-u)) = 1 ∧ ¬↑n ∣ L5.A ℤ n t (-u)
+@L6.L6_step_S5 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t : ℤ},
+        u ≠ 0 →
+          v ≠ 0 →
+            t ≠ 0 →
+              u ^ n + v ^ n = t ^ n →
+                u.gcd v = 1 →
+                  u.gcd t = 1 →
+                    v.gcd t = 1 →
+                      ¬↑n ∣ u * v →
+                        ¬↑n ∣ t →
+                          (∃ c c',
+                              c ≠ 0 ∧
+                                c' ≠ 0 ∧
+                                  c.gcd c' = 1 ∧
+                                    t = c * c' ∧ u + v = c ^ n ∧ L5.A ℤ n u v = c' ^ n ∧ ¬↑n ∣ c ∧ ¬↑n ∣ c') ∧
+                            (∃ b b',
+                                b ≠ 0 ∧
+                                  b' ≠ 0 ∧
+                                    b.gcd b' = 1 ∧
+                                      u = b * b' ∧ t - v = b ^ n ∧ L5.A ℤ n t (-v) = b' ^ n ∧ ¬↑n ∣ b ∧ ¬↑n ∣ b') ∧
+                              ∃ a a',
+                                a ≠ 0 ∧
+                                  a' ≠ 0 ∧
+                                    a.gcd a' = 1 ∧
+                                      v = a * a' ∧ t - u = a ^ n ∧ L5.A ℤ n t (-u) = a' ^ n ∧ ¬↑n ∣ a ∧ ¬↑n ∣ a'
+@L6.L6_gcd_eq_one_of_dvd : ∀ {x y p q : ℤ}, x ∣ p → y ∣ q → p.gcd q = 1 → x.gcd y = 1
+@L6.L6_step_S6 : ∀ {u v t a a' b b' c c' : ℤ},
+  u = b * b' →
+    v = a * a' → t = c * c' → u.gcd v = 1 → u.gcd t = 1 → v.gcd t = 1 → a.gcd b = 1 ∧ a.gcd c = 1 ∧ c.gcd b = 1
+@L6.L6_step_S7 : ∀ {n : ℕ},
+  Odd n →
+    ∀ {u v c' : ℤ},
+      L5.A ℤ n u v = c' ^ n →
+        c' ^ n - 1 =
+          ∑ k ∈ Finset.range (n - 1), (-1) ^ (k + 1) * ↑(n.choose (k + 1)) * (u + v) ^ (n - 1 - (k + 1)) * v ^ (k + 1) +
+            ((u + v) ^ (n - 1) - 1)
+@L6.L6_step_S8 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u v c' : ℤ}, ¬↑n ∣ u + v → L5.A ℤ n u v = c' ^ n → ↑n ∣ c' ^ n - 1
+@L6.L6_one_add_n_mul_of : ∀ {n : ℕ},
+  Nat.Prime n → Odd n → ∀ {x y z : ℤ}, ¬↑n ∣ x + y → L5.A ℤ n x y = z ^ n → ¬↑n ∣ z → ∃ k, z = 1 + ↑n * k
+@L6.L6_step_S9 : ∀ {n : ℕ},
+  Nat.Prime n → Odd n → ∀ {u v c' : ℤ}, ¬↑n ∣ u + v → L5.A ℤ n u v = c' ^ n → ¬↑n ∣ c' → ∃ k, c' = 1 + ↑n * k
+@L6.L6_step_S10 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {t v u b' a' : ℤ},
+        ¬↑n ∣ t - v →
+          ¬↑n ∣ t - u →
+            L5.A ℤ n t (-v) = b' ^ n →
+              L5.A ℤ n t (-u) = a' ^ n → ¬↑n ∣ b' → ¬↑n ∣ a' → (∃ k, b' = 1 + ↑n * k) ∧ ∃ k, a' = 1 + ↑n * k
+L6.L6_nsq_dvd_one_add_mul_pow : ∀ (n : ℕ) (k : ℤ), ↑n ^ 2 ∣ (1 + ↑n * k) ^ n - 1
+@L6.L6_isCoprime_sq_two : ∀ {n : ℕ}, Odd n → IsCoprime (↑n ^ 2) 2
+@L6.L6_step_S11 : ∀ {n : ℕ} {u v t c c' k : ℤ},
+  u + v = c ^ n → t = c * c' → c' = 1 + ↑n * k → t ^ n - u - v = c ^ n * ((1 + ↑n * k) ^ n - 1) ∧ ↑n ^ 2 ∣ t ^ n - u - v
+@L6.L6_step_S12 : ∀ {n : ℕ},
+  Odd n →
+    ∀ {u v t a a' b b' k₁ k₂ : ℤ},
+      u ^ n + v ^ n = t ^ n →
+        u = b * b' →
+          t - v = b ^ n →
+            b' = 1 + ↑n * k₂ →
+              v = a * a' →
+                t - u = a ^ n →
+                  a' = 1 + ↑n * k₁ →
+                    ↑n ^ 2 ∣ t ^ n - u - v →
+                      ↑n ^ 2 ∣ u ^ n - t + v ∧
+                        ↑n ^ 2 ∣ v ^ n - t + u ∧
+                          u ^ n - t + v + (v ^ n - t + u) - (t ^ n - u - v) = 2 * (u + v - t) ∧ ↑n ^ 2 ∣ u + v - t
+@L6.L6_gcd_eq_one_of_dvd_left : ∀ {k A a : ℤ}, k ∣ A → A.gcd a = 1 → k.gcd a = 1
+@L6.L6_gcd_sub_pow_eq_one : ∀ {n : ℕ}, 2 ≤ n → ∀ {x x' : ℤ}, x.gcd x' = 1 → (x' - x ^ (n - 1)).gcd x = 1
+@L6.L6_gcd_pow_sub_eq_one : ∀ {n : ℕ}, 2 ≤ n → ∀ {x x' : ℤ}, x.gcd x' = 1 → (x ^ (n - 1) - x').gcd x = 1
+@L6.L6_gcd_self_pow : ∀ {n : ℕ}, 2 ≤ n → ∀ (x : ℤ), x.gcd (x ^ (n - 1)) = x.natAbs
+@L6.L6_step_S13 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a a' b b' c c' X : ℤ},
+      a ≠ 0 →
+        b ≠ 0 →
+          c ≠ 0 →
+            ¬↑n ∣ a →
+              ¬↑n ∣ b →
+                ¬↑n ∣ c →
+                  a.gcd b = 1 →
+                    a.gcd c = 1 →
+                      c.gcd b = 1 →
+                        a.gcd a' = 1 →
+                          b.gcd b' = 1 →
+                            c.gcd c' = 1 →
+                              X = a * (a' - a ^ (n - 1)) →
+                                X = b * (b' - b ^ (n - 1)) →
+                                  X = c * (c ^ (n - 1) - c') →
+                                    X ≠ 0 →
+                                      ↑n ^ 2 ∣ X →
+                                        ∃ s k,
+                                          2 ≤ s ∧
+                                            X = ↑n ^ s * (a * b * c * k) ∧
+                                              k ≠ 0 ∧ ¬↑n ∣ k ∧ k.gcd a = 1 ∧ k.gcd b = 1 ∧ k.gcd c = 1
+@L6.L6_zero_case : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t a a' b b' : ℤ},
+        a ≠ 0 →
+          b ≠ 0 →
+            t ≠ 0 →
+              u ^ n + v ^ n = t ^ n →
+                v = a * a' →
+                  t - u = a ^ n → a.gcd a' = 1 → u = b * b' → t - v = b ^ n → b.gcd b' = 1 → u + v - t = 0 → False
+@L6.L6_step_S14 : ∀ {n : ℕ},
+  Odd n →
+    ∀ {u v t a a' b b' c c' k : ℤ} {s : ℕ},
+      a ≠ 0 →
+        b ≠ 0 →
+          c ≠ 0 →
+            u + v = c ^ n →
+              t = c * c' →
+                u = b * b' →
+                  v = a * a' →
+                    u + v - t = a * (a' - a ^ (n - 1)) →
+                      u + v - t = b * (b' - b ^ (n - 1)) →
+                        u + v - t = c * (c ^ (n - 1) - c') →
+                          u + v - t = ↑n ^ s * (a * b * c * k) →
+                            v = a ^ n + ↑n ^ s * (a * b * c * k) ∧
+                              u = b ^ n + ↑n ^ s * (a * b * c * k) ∧
+                                t = c ^ n - ↑n ^ s * (a * b * c * k) ∧
+                                  a ^ n + b ^ n = c ^ n - 2 * (↑n ^ s * (a * b * c * k))
+@L6.L6_step_S15 : ∀ {n : ℕ}, Nat.Prime n → ∀ {u v t : ℤ}, u ^ n + v ^ n = t ^ n → ¬↑n ∣ u * v → ↑n ∣ t → ↑n ∣ u + v
+@L6.L6_step_S16 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t : ℤ},
+        t ≠ 0 →
+          ↑n ∣ t →
+            (u + v) * L5.A ℤ n u v = t ^ n →
+              u.gcd v = 1 →
+                ↑n ∣ u + v →
+                  ∃ s c c',
+                    1 ≤ s ∧
+                      2 ≤ n * s ∧
+                        c ≠ 0 ∧
+                          c' ≠ 0 ∧
+                            c.gcd c' = 1 ∧
+                              ¬↑n ∣ c ∧
+                                ¬↑n ∣ c' ∧
+                                  t = ↑n ^ s * (c * c') ∧ u + v = ↑n ^ (n * s - 1) * c ^ n ∧ L5.A ℤ n u v = ↑n * c' ^ n
+@L6.L6_step_S17 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t c c' : ℤ} {s : ℕ},
+        1 ≤ s →
+          t = ↑n ^ s * (c * c') →
+            u + v = ↑n ^ (n * s - 1) * c ^ n →
+              t ^ n - u - v = ↑n ^ (n * s - 1) * c ^ n * (↑n * c' ^ n - 1) ∧ ↑n ^ 2 ∣ t ^ n - u - v
+@L6.L6_step_S18 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t : ℤ},
+        ¬↑n ∣ u * v →
+          ↑n ∣ t →
+            u.gcd t = 1 →
+              v.gcd t = 1 →
+                ¬↑n ∣ t - v ∧
+                  ¬↑n ∣ t - u ∧
+                    (t - v).gcd (L5.A ℤ n t (-v)) = 1 ∧
+                      ¬↑n ∣ L5.A ℤ n t (-v) ∧ (t - u).gcd (L5.A ℤ n t (-u)) = 1 ∧ ¬↑n ∣ L5.A ℤ n t (-u)
+@L6.L6_step_S19 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t c c' : ℤ} {s : ℕ},
+        u ≠ 0 →
+          v ≠ 0 →
+            (t - v) * L5.A ℤ n t (-v) = u ^ n →
+              (t - u) * L5.A ℤ n t (-u) = v ^ n →
+                (t - v).gcd (L5.A ℤ n t (-v)) = 1 →
+                  (t - u).gcd (L5.A ℤ n t (-u)) = 1 →
+                    ¬↑n ∣ t - v →
+                      ¬↑n ∣ t - u →
+                        ¬↑n ∣ L5.A ℤ n t (-v) →
+                          ¬↑n ∣ L5.A ℤ n t (-u) →
+                            t = ↑n ^ s * (c * c') →
+                              u.gcd v = 1 →
+                                u.gcd t = 1 →
+                                  v.gcd t = 1 →
+                                    ∃ a a' b b',
+                                      a ≠ 0 ∧
+                                        a' ≠ 0 ∧
+                                          a.gcd a' = 1 ∧
+                                            v = a * a' ∧
+                                              t - u = a ^ n ∧
+                                                L5.A ℤ n t (-u) = a' ^ n ∧
+                                                  ¬↑n ∣ a ∧
+                                                    ¬↑n ∣ a' ∧
+                                                      b ≠ 0 ∧
+                                                        b' ≠ 0 ∧
+                                                          b.gcd b' = 1 ∧
+                                                            u = b * b' ∧
+                                                              t - v = b ^ n ∧
+                                                                L5.A ℤ n t (-v) = b' ^ n ∧
+                                                                  ¬↑n ∣ b ∧
+                                                                    ¬↑n ∣ b' ∧ a.gcd b = 1 ∧ a.gcd c = 1 ∧ c.gcd b = 1
+@L6.L6_step_S20_S22 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t a a' b b' : ℤ},
+        u ^ n + v ^ n = t ^ n →
+          ¬↑n ∣ t - v →
+            ¬↑n ∣ t - u →
+              L5.A ℤ n t (-v) = b' ^ n →
+                L5.A ℤ n t (-u) = a' ^ n →
+                  ¬↑n ∣ b' →
+                    ¬↑n ∣ a' →
+                      u = b * b' →
+                        t - v = b ^ n →
+                          v = a * a' →
+                            t - u = a ^ n →
+                              ↑n ^ 2 ∣ t ^ n - u - v →
+                                (∃ k, b' = 1 + ↑n * k) ∧
+                                  (∃ k, a' = 1 + ↑n * k) ∧
+                                    ↑n ^ 2 ∣ u ^ n - t + v ∧
+                                      ↑n ^ 2 ∣ v ^ n - t + u ∧
+                                        u ^ n - t + v + (v ^ n - t + u) - (t ^ n - u - v) = 2 * (u + v - t) ∧
+                                          ↑n ^ 2 ∣ u + v - t
+@L6.L6_gcd_mul_pow_sub_eq_one : ∀ {n : ℕ}, 2 ≤ n → ∀ {x x' N : ℤ}, x.gcd x' = 1 → (N * x ^ (n - 1) - x').gcd x = 1
+@L6.L6_step_S23 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t a a' b b' c c' : ℤ} {s : ℕ},
+        a ≠ 0 →
+          b ≠ 0 →
+            c ≠ 0 →
+              ¬↑n ∣ a →
+                ¬↑n ∣ b →
+                  ¬↑n ∣ c →
+                    ¬↑n ∣ c' →
+                      a.gcd b = 1 →
+                        a.gcd c = 1 →
+                          c.gcd b = 1 →
+                            a.gcd a' = 1 →
+                              b.gcd b' = 1 →
+                                c.gcd c' = 1 →
+                                  1 ≤ s →
+                                    t = ↑n ^ s * (c * c') →
+                                      u + v = ↑n ^ (n * s - 1) * c ^ n →
+                                        v = a * a' →
+                                          t - u = a ^ n →
+                                            u = b * b' →
+                                              t - v = b ^ n →
+                                                u + v - t ≠ 0 →
+                                                  ↑n ^ 2 ∣ u + v - t →
+                                                    ∃ k,
+                                                      2 ≤ s ∧
+                                                        u + v - t = ↑n ^ s * (a * b * c * k) ∧
+                                                          k ≠ 0 ∧ ¬↑n ∣ k ∧ k.gcd a = 1 ∧ k.gcd b = 1 ∧ k.gcd c = 1
+@L6.L6_step_S24 : ∀ {n : ℕ},
+  Odd n →
+    ∀ {u v t a a' b b' c c' k : ℤ} {s : ℕ},
+      a ≠ 0 →
+        b ≠ 0 →
+          u + v = ↑n ^ (n * s - 1) * c ^ n →
+            t = ↑n ^ s * (c * c') →
+              u = b * b' →
+                v = a * a' →
+                  u + v - t = a * (a' - a ^ (n - 1)) →
+                    u + v - t = b * (b' - b ^ (n - 1)) →
+                      u + v - t = ↑n ^ s * (a * b * c * k) →
+                        v = a ^ n + ↑n ^ s * (a * b * c * k) ∧
+                          u = b ^ n + ↑n ^ s * (a * b * c * k) ∧
+                            t = ↑n ^ (n * s - 1) * c ^ n - ↑n ^ s * (a * b * c * k) ∧
+                              a ^ n + b ^ n = ↑n ^ (n * s - 1) * c ^ n - 2 * (↑n ^ s * (a * b * c * k))
+@L6.L6_step_S25_S26 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t a a' b b' c k : ℤ} {s : ℕ},
+        a ≠ 0 →
+          b ≠ 0 →
+            t ≠ 0 →
+              u ^ n + v ^ n = t ^ n →
+                v = a * a' →
+                  t - u = a ^ n →
+                    a.gcd a' = 1 →
+                      u = b * b' → t - v = b ^ n → b.gcd b' = 1 → k = 0 → u + v - t = ↑n ^ s * (a * b * c * k) → False
+@L6.L6_bo_de_6 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t : ℤ},
+        u ≠ 0 →
+          v ≠ 0 →
+            t ≠ 0 →
+              u ^ n + v ^ n = t ^ n →
+                u.gcd v = 1 →
+                  u.gcd t = 1 →
+                    v.gcd t = 1 →
+                      ¬↑n ∣ u * v →
+                        ∃ a b c k h s,
+                          a ≠ 0 ∧
+                            b ≠ 0 ∧
+                              c ≠ 0 ∧
+                                k ≠ 0 ∧
+                                  a.gcd b = 1 ∧
+                                    a.gcd c = 1 ∧
+                                      c.gcd b = 1 ∧
+                                        a.gcd k = 1 ∧
+                                          b.gcd k = 1 ∧
+                                            c.gcd k = 1 ∧
+                                              ¬↑n ∣ a ∧
+                                                ¬↑n ∣ b ∧
+                                                  ¬↑n ∣ c ∧
+                                                    ¬↑n ∣ k ∧
+                                                      2 ≤ s ∧
+                                                        v = a ^ n + ↑n ^ s * (a * b * c * k) ∧
+                                                          u = b ^ n + ↑n ^ s * (a * b * c * k) ∧
+                                                            t = h - ↑n ^ s * (a * b * c * k) ∧
+                                                              a ^ n + b ^ n = h - 2 * (↑n ^ s * (a * b * c * k)) ∧
+                                                                (¬↑n ∣ t → h = c ^ n) ∧
+                                                                  (↑n ∣ t → h = ↑n ^ (n * s - 1) * c ^ n)
+@L7.L7_modEq_of_zmod_eq : ∀ {n : ℕ} {x y : ℤ}, ↑x = ↑y → x ≡ y [ZMOD ↑n]
+@L7.L7_tail_three : ∀ {n : ℕ}, Nat.Prime n → 3 < n → 2 ^ (n - 2) ≡ 2 [ZMOD ↑n] → False
+@L7.L7_pair_reductio : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {X Y Z : ℤ},
+        ¬↑n ∣ X →
+          Y ^ n ≡ Z ^ n + X ^ n [ZMOD ↑n] →
+            Y ^ (n * (n - 2)) ≡ Z ^ (n * (n - 2)) + X ^ (n * (n - 2)) [ZMOD ↑n] → ¬↑n ∣ X ^ n + Y ^ n
+@L7.L7_step_S0 : ∀ {n : ℕ} {a b c : ℤ}, ¬↑n ∣ a * b * c → ¬↑n ∣ a ∧ ¬↑n ∣ b ∧ ¬↑n ∣ c
+@L7.L7_step_S1 : ∀ {n : ℕ} {a b c : ℤ},
+  a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2] → c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] ∧ ↑c ^ n = ↑a ^ n + ↑b ^ n
+@L7.L7_step_S2 : ∀ {n : ℕ} {a b c : ℤ},
+  a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n] →
+    ↑c ^ (n * (n - 2)) = ↑a ^ (n * (n - 2)) + ↑b ^ (n * (n - 2))
+@L7.L7_step_S3_S4 : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ b →
+          ↑c ^ n = ↑a ^ n + ↑b ^ n → ↑c ^ (n * (n - 2)) = ↑a ^ (n * (n - 2)) + ↑b ^ (n * (n - 2)) → ¬↑n ∣ b ^ n + c ^ n
+@L7.L7_step_S5a : ∀ {n : ℕ}, Nat.Prime n → ∀ {a b c : ℤ}, ¬↑n ∣ c → ↑c ^ n = ↑a ^ n + ↑b ^ n → ¬↑n ∣ a ^ n + b ^ n
+@L7.L7_step_S5b : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ a →
+          ↑c ^ n = ↑a ^ n + ↑b ^ n → ↑c ^ (n * (n - 2)) = ↑a ^ (n * (n - 2)) + ↑b ^ (n * (n - 2)) → ¬↑n ∣ c ^ n + a ^ n
+@L7.L7_step_S5c : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ b →
+          ↑c ^ n = ↑a ^ n + ↑b ^ n → ↑c ^ (n * (n - 2)) = ↑a ^ (n * (n - 2)) + ↑b ^ (n * (n - 2)) → ¬↑n ∣ a ^ n - b ^ n
+@L7.L7_step_S6 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a b c : ℤ},
+      ¬↑n ∣ a ^ n - b ^ n →
+        ¬↑n ∣ b ^ n + c ^ n → ¬↑n ∣ c ^ n + a ^ n → ¬↑n ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n)
+@L7.L7F2_step_S0 : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ a →
+          ¬↑n ∣ b →
+            ¬↑n ∣ c →
+              a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] ∧
+                b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] ∧ c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+@L7.L7F2_step_S2 : ∀ {n : ℕ} {a b c : ℤ},
+  a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2] →
+    a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n] →
+      c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] ∧ c ^ (n * (n - 2)) ≡ a ^ (n * (n - 2)) + b ^ (n * (n - 2)) [ZMOD ↑n]
+@L7.L7F2_step_S1 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a b c : ℤ},
+      a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2] →
+        a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+          b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+            c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] → a ^ n ^ 2 + b ^ n ^ 2 - c ^ n ^ 2 ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F2_step_S3 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a b c : ℤ},
+      c ^ (n * (n - 2)) ≡ a ^ (n * (n - 2)) + b ^ (n * (n - 2)) [ZMOD ↑n] →
+        a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+          b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+            c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] → a ^ n * b ^ n ≡ c ^ n * (a ^ n + b ^ n) [ZMOD ↑n]
+@L7.L7F2_step_S4 : ∀ {n : ℕ} {a b c : ℤ},
+  a ^ n * b ^ n ≡ c ^ n * (a ^ n + b ^ n) [ZMOD ↑n] →
+    c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] → a ^ n * b ^ n ≡ c ^ (2 * n) [ZMOD ↑n]
+@L7.L7F3_five_c : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u v : ℤ}, ↑n ∣ u ^ n + v ^ n → ↑n ^ 2 ∣ u ^ n + v ^ n
+@L7.L7F3_five_d_cube : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {x : ℤ}, ¬↑n ∣ x → (x ^ 3) ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+@L7.L7F3_step_S5 : ∀ {n : ℕ} {X Y c : ℤ},
+  c ^ n ≡ X ^ n + Y ^ n [ZMOD ↑n] → X ^ n * Y ^ n ≡ c ^ (2 * n) [ZMOD ↑n] → Y ^ (2 * n) + X ^ n * c ^ n ≡ 0 [ZMOD ↑n]
+@L7.L7F3_step_S6 : ∀ {n : ℕ} {X Y c : ℤ},
+  Y ^ (2 * n) + X ^ n * c ^ n ≡ 0 [ZMOD ↑n] →
+    X ^ n * Y ^ n ≡ c ^ (2 * n) [ZMOD ↑n] → Y ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n]
+@L7.L7F3_step_S7 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n → ∀ {Y c : ℤ}, Y ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n] → ↑n ^ 2 ∣ (Y ^ (3 * n)) ^ n + (c ^ (3 * n)) ^ n
+@L7.L7F3_step_S8_S9 : ∀ {n : ℕ} {Y c : ℤ},
+  ↑n ^ 2 ∣ (Y ^ (3 * n)) ^ n + (c ^ (3 * n)) ^ n →
+    (Y ^ 3) ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+      (c ^ 3) ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] → Y ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F3_chain_ab : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ b →
+          ¬↑n ∣ c →
+            c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n] →
+              a ^ n * b ^ n ≡ c ^ (2 * n) [ZMOD ↑n] → b ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F3_step_S10 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ a →
+          ¬↑n ∣ c →
+            c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n] →
+              a ^ n * b ^ n ≡ c ^ (2 * n) [ZMOD ↑n] → a ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F3_step_S11 : ∀ {n : ℕ} {a b c : ℤ},
+  b ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] →
+    a ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] → a ^ (3 * n) - b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F4_sum_chain : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {U V c : ℤ},
+      V ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] →
+        c ^ n ≡ U ^ n + V ^ n [ZMOD ↑n ^ 2] → ¬↑n ∣ V ^ n + c ^ n → U ^ (2 * n) + V ^ n * c ^ n ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F4_step_S12 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a b c : ℤ},
+      b ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] →
+        c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] → ¬↑n ∣ b ^ n + c ^ n → a ^ (2 * n) + b ^ n * c ^ n ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F4_step_S13 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a b c : ℤ},
+      a ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] →
+        a ^ (3 * n) - b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] →
+          c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] →
+            ¬↑n ∣ a ^ n + c ^ n →
+              ¬↑n ∣ a ^ n - b ^ n →
+                b ^ (2 * n) + a ^ n * c ^ n ≡ 0 [ZMOD ↑n ^ 2] ∧ c ^ (2 * n) - a ^ n * b ^ n ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F4_step_S14 : ∀ {n : ℕ},
+  Nat.Prime n →
+    ∀ {a b c : ℤ},
+      c ^ (2 * n) - a ^ n * b ^ n ≡ 0 [ZMOD ↑n ^ 2] →
+        c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] →
+          a ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+            b ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+              c ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2] →
+                ¬↑n ∣ a →
+                  ¬↑n ∣ b → ¬↑n ∣ c → a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F5_step_S15 : ∀ {n : ℕ}, Nat.Prime n → 3 < n → n % 6 = 1 ∨ n % 6 = 5
+@L7.L7F5_step_S16 : ∀ {n k : ℕ},
+  Nat.Prime n →
+    3 < n →
+      Odd k →
+        n - 2 = 3 * k →
+          ∀ {a b c : ℤ},
+            ¬↑n ∣ a →
+              a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n ^ 2] →
+                c ^ (3 * n) ≡ -b ^ (3 * n) [ZMOD ↑n ^ 2] → a ^ (3 * n) ≡ b ^ (3 * n) [ZMOD ↑n ^ 2] → False
+@L7.L7F5_step_S17 : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ a →
+          a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n ^ 2] →
+            c ^ (3 * n) ≡ -b ^ (3 * n) [ZMOD ↑n ^ 2] → a ^ (3 * n) ≡ b ^ (3 * n) [ZMOD ↑n ^ 2] → n % 6 = 1
+@L7.L7F6_step_S18 : ∀ {n k : ℕ},
+  Odd k →
+    n - 4 = 3 * k →
+      ∀ {a c : ℤ}, a ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] → a ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F6_step_S19 : ∀ {n k : ℕ},
+  Odd k →
+    n - 4 = 3 * k →
+      ∀ {b c : ℤ}, b ^ (3 * n) + c ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] → b ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F6_step_S20 : ∀ {n : ℕ} {a b c : ℤ},
+  a ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] →
+    b ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] → a ^ (n * (n - 4)) - b ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7F6_step_S21 : ∀ {n : ℕ},
+  3 < n →
+    ∀ {a b c : ℤ},
+      a ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] →
+        b ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] →
+          c ^ n ≡ a ^ n + b ^ n [ZMOD ↑n ^ 2] →
+            a ^ (n * (n - 3)) + b ^ (n * (n - 3)) + c ^ (n * (n - 3)) ≡ 0 [ZMOD ↑n ^ 2]
+@L7.L7_bo_de_7 : ∀ {n : ℕ},
+  Nat.Prime n →
+    3 < n →
+      ∀ {a b c : ℤ},
+        ¬↑n ∣ a * b * c →
+          a ^ n + b ^ n - c ^ n ≡ 0 [ZMOD ↑n ^ 2] →
+            a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n] →
+              ¬↑n ∣ (a ^ n - b ^ n) * (c ^ n + a ^ n) * (c ^ n + b ^ n) ∧
+                a ^ n ^ 2 + b ^ n ^ 2 - c ^ n ^ 2 ≡ 0 [ZMOD ↑n ^ 2] ∧
+                  c ^ (3 * n) + b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                    a ^ (3 * n) - b ^ (3 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                      b ^ n * c ^ n + a ^ (2 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                        c ^ n * a ^ n + b ^ (2 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                          b ^ n * a ^ n - c ^ (2 * n) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                            a ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                              b ^ (n * (n - 4)) + c ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                                a ^ (n * (n - 4)) - b ^ (n * (n - 4)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                                  a ^ (n * (n - 3)) + b ^ (n * (n - 3)) + c ^ (n * (n - 3)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                                    a ^ (n * (n - 2)) + b ^ (n * (n - 2)) - c ^ (n * (n - 2)) ≡ 0 [ZMOD ↑n ^ 2] ∧
+                                      n % 6 = 1
+EXIT=0
