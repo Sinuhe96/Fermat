@@ -1,0 +1,25 @@
+@pow_eq_zero_iff : ∀ {M₀ : Type u_1} [inst : MonoidWithZero M₀] {a : M₀} {n : ℕ} [IsReduced M₀],
+  n ≠ 0 → (a ^ n = 0 ↔ a = 0)
+@dvd_pow_self : ∀ {α : Type u_1} [inst : Monoid α] (a : α) {n : ℕ}, n ≠ 0 → a ∣ a ^ n
+@sub_eq_zero : ∀ {G : Type u_1} [inst : AddGroup G] {a b : G}, a - b = 0 ↔ a = b
+@neg_inj : ∀ {G : Type u_1} [inst : InvolutiveNeg G] {a b : G}, -a = -b ↔ a = b
+@add_eq_zero_iff_eq_neg : ∀ {G : Type u_1} [inst : AddGroup G] {a b : G}, a + b = 0 ↔ a = -b
+@mul_eq_zero : ∀ {M₀ : Type u_1} [inst : MulZeroClass M₀] [NoZeroDivisors M₀] {a b : M₀}, a * b = 0 ↔ a = 0 ∨ b = 0
+@mul_eq_zero_iff_right : ∀ {M₀ : Type u_1} [inst : MulZeroClass M₀] [NoZeroDivisors M₀] {a b : M₀},
+  b ≠ 0 → (a * b = 0 ↔ a = 0)
+@pow_ne_zero : ∀ {M₀ : Type u_1} [inst : MonoidWithZero M₀] {a : M₀} [IsReduced M₀] (n : ℕ), a ≠ 0 → a ^ n ≠ 0
+@mul_pow : ∀ {M : Type u_1} [inst : CommMonoid M] (a b : M) (n : ℕ), (a * b) ^ n = a ^ n * b ^ n
+@Odd.neg_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ},
+  Odd n → ∀ (a : α), (-a) ^ n = -a ^ n
+@Nat.Prime.odd_of_ne_two : ∀ {p : ℕ}, Nat.Prime p → p ≠ 2 → Odd p
+@Nat.Prime.eq_two_or_odd' : ∀ {p : ℕ}, Nat.Prime p → p = 2 ∨ Odd p
+@Int.Prime.dvd_pow' : ∀ {n : ℤ} {k p : ℕ}, Nat.Prime p → ↑p ∣ n ^ k → ↑p ∣ n
+@Int.modEq_zero_iff_dvd : ∀ {n a : ℤ}, a ≡ 0 [ZMOD n] ↔ n ∣ a
+@Int.modEq_iff_dvd : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] ↔ n ∣ b - a
+@Int.natCast_dvd_natCast : ∀ {m n : ℕ}, ↑m ∣ ↑n ↔ m ∣ n
+ZMod.intCast_zmod_eq_zero_iff_dvd : ∀ (a : ℤ) (b : ℕ), ↑a = 0 ↔ ↑b ∣ a
+@ZMod.pow_card_sub_one_eq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {a : ZMod p}, a ≠ 0 → a ^ (p - 1) = 1
+@ZMod.pow_card : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (x : ZMod p), x ^ p = x
+@L5.L5_zmod_intCast_eq_zero_iff : ∀ {n : ℕ} [NeZero n] (x : ℤ), ↑x = 0 ↔ ↑n ∣ x
+@L5.L5_gcd_eq_one_of_not_dvd : ∀ {n : ℕ}, Nat.Prime n → ∀ {u : ℤ}, ¬↑n ∣ u → u.gcd ↑n = 1
+EXIT=0

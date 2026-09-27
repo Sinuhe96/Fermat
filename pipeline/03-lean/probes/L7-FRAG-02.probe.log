@@ -1,0 +1,103 @@
+@Int.ModEq.mul : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a * c ≡ b * d [ZMOD n]
+@Int.ModEq.add : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a + c ≡ b + d [ZMOD n]
+@Int.ModEq.sub : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a - c ≡ b - d [ZMOD n]
+@Int.ModEq.neg : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] → -a ≡ -b [ZMOD n]
+@Int.ModEq.pow : ∀ {n a b : ℤ} (m : ℕ), a ≡ b [ZMOD n] → a ^ m ≡ b ^ m [ZMOD n]
+@Int.ModEq.add_left : ∀ {n a b : ℤ} (c : ℤ), a ≡ b [ZMOD n] → c + a ≡ c + b [ZMOD n]
+@Int.ModEq.add_right : ∀ {n a b : ℤ} (c : ℤ), a ≡ b [ZMOD n] → a + c ≡ b + c [ZMOD n]
+@Int.ModEq.mul_left : ∀ {n a b : ℤ} (c : ℤ), a ≡ b [ZMOD n] → c * a ≡ c * b [ZMOD n]
+@Int.ModEq.mul_right : ∀ {n a b : ℤ} (c : ℤ), a ≡ b [ZMOD n] → a * c ≡ b * c [ZMOD n]
+@Int.ModEq.refl : ∀ {n : ℤ} (a : ℤ), a ≡ a [ZMOD n]
+@Int.ModEq.trans : ∀ {n a b c : ℤ}, a ≡ b [ZMOD n] → b ≡ c [ZMOD n] → a ≡ c [ZMOD n]
+@Int.ModEq.symm : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] → b ≡ a [ZMOD n]
+@Int.ModEq.dvd : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] → n ∣ b - a
+@Int.ModEq.of_dvd : ∀ {m n a b : ℤ}, m ∣ n → a ≡ b [ZMOD n] → a ≡ b [ZMOD m]
+@Int.modEq_iff_dvd : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] ↔ n ∣ b - a
+@Int.modEq_zero_iff_dvd : ∀ {n a : ℤ}, a ≡ 0 [ZMOD n] ↔ n ∣ a
+@Int.ModEq.pow_prime_eq_self : ∀ {p : ℕ}, Nat.Prime p → ∀ (n : ℤ), n ^ p ≡ n [ZMOD ↑p]
+@Int.ModEq.pow_card_sub_one_eq_one : ∀ {p : ℕ}, Nat.Prime p → ∀ {n : ℤ}, IsCoprime n ↑p → n ^ (p - 1) ≡ 1 [ZMOD ↑p]
+@Int.ModEq.of_dvd : ∀ {m n a b : ℤ}, m ∣ n → a ≡ b [ZMOD n] → a ≡ b [ZMOD m]
+@Int.natCast_dvd_natCast : ∀ {m n : ℕ}, ↑m ∣ ↑n ↔ m ∣ n
+@Int.natCast_dvd : ∀ {n : ℤ} {m : ℕ}, ↑m ∣ n ↔ m ∣ n.natAbs
+@Int.dvd_natCast : ∀ {m : ℤ} {n : ℕ}, m ∣ ↑n ↔ m.natAbs ∣ n
+@dvd_pow_self : ∀ {α : Type u_1} [inst : Monoid α] (a : α) {n : ℕ}, n ≠ 0 → a ∣ a ^ n
+@dvd_mul_of_dvd_right : ∀ {α : Type u_1} [inst : CommSemigroup α] {a b : α}, a ∣ b → ∀ (c : α), a ∣ c * b
+@dvd_mul_of_dvd_left : ∀ {α : Type u_1} [inst : Semigroup α] {a b : α}, a ∣ b → ∀ (c : α), a ∣ b * c
+@dvd_sub : ∀ {α : Type u_1} [inst : NonUnitalRing α] {a b c : α}, a ∣ b → a ∣ c → a ∣ b - c
+@dvd_add : ∀ {α : Type u_1} [inst : Add α] [inst_1 : Semigroup α] [LeftDistribClass α] {a b c : α},
+  a ∣ b → a ∣ c → a ∣ b + c
+@dvd_neg : ∀ {α : Type u_1} [inst : Semigroup α] [inst_1 : HasDistribNeg α] {a b : α}, a ∣ -b ↔ a ∣ b
+@neg_dvd : ∀ {α : Type u_1} [inst : Semigroup α] [inst_1 : HasDistribNeg α] {a b : α}, -a ∣ b ↔ a ∣ b
+@dvd_trans : ∀ {α : Type u_1} [inst : Semigroup α] {a b c : α}, a ∣ b → b ∣ c → a ∣ c
+@Int.Prime.dvd_mul' : ∀ {m n : ℤ} {p : ℕ}, Nat.Prime p → ↑p ∣ m * n → ↑p ∣ m ∨ ↑p ∣ n
+@Int.Prime.dvd_pow' : ∀ {n : ℤ} {k p : ℕ}, Nat.Prime p → ↑p ∣ n ^ k → ↑p ∣ n
+@Int.pow_dvd_pow_iff : ∀ {a b : ℤ} {n : ℕ}, n ≠ 0 → (a ^ n ∣ b ^ n ↔ a ∣ b)
+@Int.isCoprime_iff_gcd_eq_one : ∀ {m n : ℤ}, IsCoprime m n ↔ m.gcd n = 1
+@Int.isCoprime_iff_nat_coprime : ∀ {a b : ℤ}, IsCoprime a b ↔ a.natAbs.Coprime b.natAbs
+@IsCoprime.dvd_of_dvd_mul_left : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R}, IsCoprime x y → x ∣ y * z → x ∣ z
+@IsCoprime.dvd_of_dvd_mul_right : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R},
+  IsCoprime x z → x ∣ y * z → x ∣ y
+@IsCoprime.pow : ∀ {R : Type u_1} [inst : CommSemiring R] {x y : R} {m n : ℕ}, IsCoprime x y → IsCoprime (x ^ m) (y ^ n)
+@pow_mul : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (m n : ℕ), a ^ (m * n) = (a ^ m) ^ n
+@pow_add : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (m n : ℕ), a ^ (m + n) = a ^ m * a ^ n
+@pow_succ : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (n : ℕ), a ^ (n + 1) = a ^ n * a
+@pow_succ' : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (n : ℕ), a ^ (n + 1) = a * a ^ n
+@pow_two : ∀ {M : Type u_1} [inst : Monoid M] (a : M), a ^ 2 = a * a
+@mul_pow : ∀ {M : Type u_1} [inst : CommMonoid M] (a b : M) (n : ℕ), (a * b) ^ n = a ^ n * b ^ n
+Nat.mul_sub_left_distrib : ∀ (n m k : ℕ), n * (m - k) = n * m - n * k
+@Nat.sub_add_cancel : ∀ {n m : ℕ}, m ≤ n → n - m + m = n
+@Nat.sub_one_add_one_eq_of_pos : ∀ {n : ℕ}, 0 < n → n - 1 + 1 = n
+Nat.mul_add : ∀ (n m k : ℕ), n * (m + k) = n * m + n * k
+Nat.add_mul : ∀ (n m k : ℕ), (n + m) * k = n * k + m * k
+Nat.mul_sub_right_distrib : ∀ (n m k : ℕ), (n - m) * k = n * k - m * k
+Nat.sub_mul : ∀ (n m k : ℕ), (n - m) * k = n * k - m * k
+@Nat.sub_eq_iff_eq_add : ∀ {b a c : ℕ}, b ≤ a → (a - b = c ↔ a = c + b)
+@Nat.Coprime.dvd_of_dvd_mul_right : ∀ {k n m : ℕ}, k.Coprime n → k ∣ m * n → k ∣ m
+@Nat.Prime.coprime_iff_not_dvd : ∀ {p n : ℕ}, Nat.Prime p → (p.Coprime n ↔ ¬p ∣ n)
+@Nat.Prime.dvd_of_dvd_pow : ∀ {p m n : ℕ}, Nat.Prime p → p ∣ m ^ n → p ∣ m
+@Nat.le_of_dvd : ∀ {m n : ℕ}, 0 < n → m ∣ n → m ≤ n
+@Nat.mul_right_cancel : ∀ {n m k : ℕ}, 0 < m → n * m = k * m → n = k
+@Odd.neg_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ},
+  Odd n → ∀ (a : α), (-a) ^ n = -a ^ n
+@Odd.mul : ∀ {α : Type u_1} [inst : Semiring α] {a b : α}, Odd a → Odd b → Odd (a * b)
+@Odd.pow : ∀ {α : Type u_1} [inst : Semiring α] {a : α} {n : ℕ}, Odd a → Odd (a ^ n)
+@Odd.neg_one_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ}, Odd n → (-1) ^ n = -1
+@Nat.Prime.odd_of_ne_two : ∀ {p : ℕ}, Nat.Prime p → p ≠ 2 → Odd p
+@Nat.Prime.eq_two_or_odd : ∀ {p : ℕ}, Nat.Prime p → p = 2 ∨ p % 2 = 1
+@Nat.Prime.eq_two_or_odd' : ∀ {p : ℕ}, Nat.Prime p → p = 2 ∨ Odd p
+@Nat.Prime.two_le : ∀ {p : ℕ}, Nat.Prime p → 2 ≤ p
+@Nat.Prime.one_lt : ∀ {p : ℕ}, Nat.Prime p → 1 < p
+@Nat.Prime.pos : ∀ {p : ℕ}, Nat.Prime p → 0 < p
+@Nat.Prime.ne_one : ∀ {p : ℕ}, Nat.Prime p → p ≠ 1
+@Nat.Prime.ne_zero : ∀ {n : ℕ}, Nat.Prime n → n ≠ 0
+@Nat.odd_iff : ∀ {n : ℕ}, Odd n ↔ n % 2 = 1
+@Nat.even_iff : ∀ {n : ℕ}, Even n ↔ n % 2 = 0
+@Nat.dvd_prime : ∀ {p m : ℕ}, Nat.Prime p → (m ∣ p ↔ m = 1 ∨ m = p)
+@Nat.Prime.eq_one_or_self_of_dvd : ∀ {p : ℕ}, Nat.Prime p → ∀ (m : ℕ), m ∣ p → m = 1 ∨ m = p
+@Nat.Prime.dvd_iff_eq : ∀ {p a : ℕ}, Nat.Prime p → a ≠ 1 → (a ∣ p ↔ p = a)
+@Nat.Prime.not_dvd_one : ∀ {p : ℕ}, Nat.Prime p → ¬p ∣ 1
+@Nat.dvd_of_mod_eq_zero : ∀ {m n : ℕ}, n % m = 0 → m ∣ n
+@Nat.mod_eq_of_lt : ∀ {a b : ℕ}, a < b → a % b = a
+Nat.div_add_mod : ∀ (m n : ℕ), n * (m / n) + m % n = m
+Nat.mod_lt : ∀ (x : ℕ) {y : ℕ}, 0 < y → x % y < y
+@Nat.dvd_iff_mod_eq_zero : ∀ {m n : ℕ}, m ∣ n ↔ n % m = 0
+@L5.L5_step_S12 : ∀ {n : ℕ}, Nat.Prime n → ∀ {u v : ℤ}, ↑n ∣ u * v → ↑n ∣ u ^ n + v ^ n → ↑n ^ 2 ∣ u ^ n + v ^ n
+@L5.L5_step_S15 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u v : ℤ}, ¬↑n ∣ u * v → ↑n ∣ u ^ n + v ^ n → ↑n ∣ u + v
+@L5.L5_step_S16 : ∀ {n : ℕ}, Odd n → ∀ {u v : ℤ}, ↑n ∣ u + v → ↑n ^ 2 ∣ u ^ n + v ^ n
+@L5.L5_step_S17 : ∀ {n : ℕ}, Nat.Prime n → Odd n → ∀ {u : ℤ}, ¬↑n ∣ u → ∃ m, u ^ (n - 1) = 1 + ↑m * ↑n
+@L5.L5_step_S18 : ∀ {n : ℕ} {u m : ℤ}, u ^ (n - 1) = 1 + m * ↑n → u ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2]
+@L5.L5_bo_de_5 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v : ℤ},
+        u.gcd v = 1 →
+          (¬↑n ∣ u + v → (u + v).gcd (L5.A ℤ n u v) = 1 ∧ ¬↑n ∣ L5.A ℤ n u v) ∧
+            (↑n ∣ u + v → ↑n ∣ L5.A ℤ n u v ∧ ¬↑n ^ 2 ∣ L5.A ℤ n u v ∧ (u + v).gcd (L5.A ℤ n u v) = n) ∧
+              (↑n ∣ u ^ n + v ^ n → ↑n ^ 2 ∣ u ^ n + v ^ n) ∧ (¬↑n ∣ u → u ^ (n * (n - 1)) ≡ 1 [ZMOD ↑n ^ 2])
+@L5.L5_gcd_eq_one_of_not_dvd : ∀ {n : ℕ}, Nat.Prime n → ∀ {u : ℤ}, ¬↑n ∣ u → u.gcd ↑n = 1
+@L5.L5_step_S2 : ∀ {R : Type u_1} [inst : CommRing R] {n : ℕ},
+  Odd n → ∀ (u v : R), (u + v) * L5.A R n u v = u ^ n + v ^ n ∧ (u + v) * L5.B R n u v = u ^ n + v ^ n
+@L5.L5_step_S4 : ∀ {n : ℕ}, Odd n → ∀ (u v : ℤ), L5.A ℤ n u v = (u + v) * L5.B' ℤ n u v + ↑n * v ^ (n - 1)
+L5.A : (R : Type u_1) → [CommRing R] → ℕ → R → R → R
+L5.B' : (R : Type u_1) → [CommRing R] → ℕ → R → R → R
+EXIT=0
