@@ -1,0 +1,111 @@
+id: M1-FRAG-05
+title: "Main proof / 1, p. 7 R2 l0-l3 - the ten remaining binomial-to-factorial conversions (X^3, X^2, X^1, X^0 groups) - BLOCKED (F4) on a dropped factor 1/2 in the printed (j,l)=(2,1) sum"
+pdf_pages: [6, 7]
+kind: lemma-proof-step
+depends_on: [M1-FRAG-04]
+source_text: |
+  [PDF p7 R2 lines 0-3 (the ten conversions this leaf covers), byte-copied from
+  the signed region record pipeline/01-extract/regions/p007.yml (REVIEWED,
+  signed 2026-09-26), plus the binomial side of the (n^s abck)^3 group from
+  p006.yml R3 (REVIEWED). Region boundaries MEASURED 2026-09-28: the display is
+  one continuous re-statement, so this leaf takes the four X^3 sums (R2 l0-l1),
+  the three X^2 sums (R2 l2), the two X^1 sums and the X^0 sum (R2 l3); the
+  X^4 group is M1-FRAG-04's S4 and is NOT repeated here.]
+
+  The binomial side (p. 6 R3, the (n^s abck)^3 group - what these ten sums are
+  rewrites of):
+  \[ + \sum_{i=1}^{n-3} (-1)^2 C_{n-1-i}^{2} C_{i}^{1} h^{n-3-i} b^{n(i-1)} (n^s abck)^{3} + \sum_{i=2}^{n-2} (-1)^1 C_{n-1-i}^{1} C_{i}^{2} h^{n-2-i} b^{n(i-2)} (n^s abck)^{3} + \]
+
+  The printed conversions (p. 7 R2 l0-l1, the four (n^s abck)^3 sums):
+  \[ + \sum_{i=1}^{n-3} i(n-1-i)(n-2-i) h^{n-3-i} b^{n(i-1)} (n^s abck)^3 - \frac{1}{2}\sum_{i=2}^{n-2} i(i-1)(n-1-i) h^{n-2-i} b^{n(i-2)} (n^s abck)^3 - \]
+  \[ - \frac{1}{6}\sum_{i=0}^{n-4}(n-1-i)(n-2-i)(n-3-i) h^{n-4-i} b^{ni} (n^s abck)^3 + \frac{1}{6}\sum_{i=3}^{n-1} i(i-1)(i-2) h^{n-1-i} b^{n(i-3)} (n^s abck)^3 + \]
+
+  (p. 7 R2 l2, the three (n^s abck)^2 sums:)
+  \[ + \frac{1}{2}\sum_{i=2}^{n-1} i(i-1) b^{n(i-2)} h^{n-1-i} (n^s abck)^2 + \frac{1}{2}\sum_{i=0}^{n-3}(n-1-i)(n-2-i) b^{ni} h^{n-3-i} (n^s abck)^2 - \sum_{i=1}^{n-2} i(n-1-i) b^{n(i-1)} h^{n-2-i} (n^s abck)^2 + \]
+
+  (p. 7 R2 l3, the two n^s abck sums and the constant sum:)
+  \[ + \sum_{i=1}^{n-1} i b^{n(i-1)} h^{n-1-i} n^s abck - \sum_{i=0}^{n-2}(n-1-i) b^{ni} h^{n-2-i} n^s abck + \sum_{i=0}^{n-1} h^{n-1-i} b^{ni} \]
+formal_hint: |
+  The leaf is the second half of the p. 7 conversion display: after the five
+  X^4 sums (M1-FRAG-04's S4, landed), the author writes the remaining ten of the
+  fifteen l+j <= 4 boundary sums with their binomial coefficients expanded into
+  factorial form - X^3: four sums, X^2: three, X^1: two, X^0: one - in the
+  printed order given above.
+
+  THE F4 FINDING (2026-09-28). Fourteen of the fifteen conversions are exactly
+  the Nat.choose-to-falling-factorial identity. The FIRST sum of the X^3 group,
+  i.e. the pair (j,l) = (2,1), is printed WITHOUT the denominator 2 that its own
+  binomial form carries:
+
+      p. 6 R3 prints  (+1) C_{n-1-i}^{2} C_{i}^{1} = i(n-1-i)(n-2-i)/2
+      p. 7 R2 l0 and (re-printed) p. 7 R3 l2 print  i(n-1-i)(n-2-i)
+
+  so the printed value of that one sum is exactly 2x the value the earlier line
+  gives it, and the printed display's identity is FALSE as printed. Measured, not
+  inferred: 04-sympy/m1f5_screen.py checks all fifteen pairs separately at
+  n = 13, 17, 19 and reports exactly one mismatch, (2,1), ratio printed/binomial
+  = 2, with the two sides of the whole display unequal (exit 0 iff that is what
+  it finds).
+
+  WHY THIS IS F4 AND NOT F1. Our transcription is not the problem: the signed
+  region record and two independent vision reads of the crops
+  page-007-300dpi-region-02.png and -03.png all agree that no coefficient is
+  printed before that summation sign, and that the companion sum on the same
+  line carries -1/2. The discrepancy is between two lines of the PAPER.
+
+  THE AUTHOR'S OWN LATER PRINT AGREES WITH US: p. 8, where the same identity is
+  restated modulo n^{4s+2}, prints the sum BD{+ \frac{1}{2}\sum_{i=1}^{n-3}
+  i(n-1-i)(n-2-i) h^{n-3-i} b^{n(i-1)} (n^s abck)^3} at P008-R1 line 7 and again
+  at P008-R3 line 1. So the intended coefficient is almost certainly 1/2 and the
+  p. 7 print is a typo - but the project rule is that we do not repair the
+  author's steps ourselves, we ask (AGENTS.md, F4 action).
+
+  STATE OF THE LEAF: BLOCKED at its first author step, before any Lean. No file
+  03-lean/M1F5/Basic.lean exists and none has been started; per the one-step loop
+  nothing is written ahead of the first unsupported step. When the author
+  answers Q-005, the leaf becomes: S0 the ten conversions as ten
+  Nat.choose-to-falling-factorial rewrites (with the corrected 1/2), the same
+  route as M1-FRAG-04's S4 (M1F4_choose_fact_* + the three _shift bridges),
+  which is already compiled and reusable.
+transcription: manual
+author_steps: |
+  Normalized ordered step map. The leaf is BLOCKED at S0 by F4; the later steps
+  are recorded only to fix the boundaries, and no Lean is written ahead.
+
+  S0 [P007-R2 l0-l3] The ten remaining boundary sums in the author's factorial
+     form, in the printed order: the four (n^s abck)^3 sums (pairs (2,1), (1,2),
+     (3,0), (0,3)), the three (n^s abck)^2 sums ((0,2), (2,0), (1,1)), the two
+     n^s abck sums ((0,1), (1,0)) and the constant sum ((0,0)).
+     CLASSIFICATION: F4 - the first sum printed in the X^3 group, the pair
+     (2,1), is printed without its denominator 2, so the printed inference "the
+     (2,1) boundary sum is i(n-1-i)(n-2-i) h^{n-3-i} b^{n(i-1)} X^3" does not
+     hold; the binomial side of the SAME paper (p. 6 R3) says the coefficient is
+     i(n-1-i)(n-2-i)/2. Counterexample: at n = 13, i = 1, C(11,2) = 55 versus the
+     printed 1*11*10 = 110. Reproduction: 04-sympy/m1f5_screen.py (exit 0 =
+     finding reproduced). Author query: 05-feedback/queries/
+     Q-005-p007-x3-sum-missing-half.md (OPEN, blocking).
+     Author's own corrected print one page later: P008-R1 line 7 and P008-R3
+     line 1 both carry \frac{1}{2}.
+                                                            [BLOCKED - no Lean]
+  S1 [P007-R2 l4-l5 / P007-R3 l0-l4] NOT this chunk: the restatement of the
+     right-hand side and the `\Rightarrow` display that rearranges the X^4 sums
+     (one display across the page break). It re-prints the same (2,1) sum with
+     the same missing 1/2 at P007-R3 l2, so `M1-FRAG-06` inherits this blocker.
+  S2+ [P008-R1 l0-l1] NOT this chunk: the first congruence step
+     (mod n^{4s+2}). It prints the corrected 1/2, so it is a downstream chunk
+     that does NOT inherit the blocker.
+
+  evidence: region records p006.yml R3 and p007.yml R1-R3 (both REVIEWED,
+    signed); crops page-007-300dpi-region-02.png and -03.png read twice by
+    vision 2026-09-28, both agreeing with the signed text layer; the numerical
+    screen 04-sympy/m1f5_screen.py (exact integers, n = 13, 17, 19: 14 of 15
+    pairs match, (2,1) is 2x, the totals are unequal).
+lean_file: 03-lean/M1F5/Basic.lean
+sympy_test: 04-sympy/m1f5_screen.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-007-300dpi-region-02.png page-007-300dpi-region-03.png
+lean_decls: ""
+regions: P006-R3, P007-R2, P007-R3
+status: BLOCKED

@@ -5,7 +5,15 @@ one-step verification loop, the F1–F4/S1 outcome classes) and **README.md**
 (runtime commands, container policy, mount table). This file records *where
 things stand* and deliberately does not repeat what those two say.
 
-Last updated: 2026-09-28 (**thirteenth session**): **the main proof (pp. 6–33) is
+Last updated: 2026-09-28 (**fourteenth session**): the main proof lane is at
+**18/19 DONE, 1 BLOCKED** — `M1-FRAG-04` (pp. 6–7) closed, and `M1-FRAG-05`
+(p. 7, the ten remaining binomial-to-factorial conversions) is **BLOCKED (F4)**
+on the OPEN author query **`Q-005`**: the p. 7 display prints the
+`(j,l) = (2,1)` sum of the `(n^s abck)^3` group without the `1/2` its own
+binomial side carries (`printed / binomial = 2`, measured at n = 13, 17, 19),
+while the author's own p. 8 print carries the `1/2`. No Lean was written for it.
+Read the newest lane-state block below first. The rest of this paragraph is the
+previous session's state, kept as history: **the main proof (pp. 6–33) is
 open and moving, and the ledger is 16/16 DONE.** This session closed `B-01`
 (section B, p. 2 — the two sum-transformation rules the main proof cites 11 times
 from p. 9 on), so all three recorded chunks of the main-proof lane are DONE:
@@ -205,6 +213,44 @@ What the earlier window established:
   harness; region `latex` lines exceed 768 chars and need `sed`/`fold`; do not
   hand-type Vietnamese literals into scripts (they do not match the file's
   bytes) — anchor extraction on ASCII fragments.
+
+### Lane state at the fourteenth session (2026-09-28) — 18/19 DONE, `M1-FRAG-05` BLOCKED (F4) on Q-005
+
+- **`M1-FRAG-04` (pp. 6–7, the `l+j` regrouping) is DONE** — round 55: EXIT 0,
+  0 warnings, permitted axioms only, no `sorryAx`, on all 16 declarations. The
+  plan table's pp. 7–8 rows were re-aligned to the **measured** region line
+  counts and the duplicate-print rule recorded (a step count follows the
+  `≡`/`⇒` transitions, not the printed lines).
+- **`M1-FRAG-05` was opened and is now BLOCKED — by the print, not by Lean.** Its
+  first author step (the ten remaining conversions, `P007-R2` l0–l3) prints the
+  pair `(j,l) = (2,1)` of the `(n^s abck)^3` group as
+  `\sum_{i=1}^{n-3} i(n-1-i)(n-2-i)…` with **no coefficient**, while the same
+  paper's binomial side (p. 6 R3) gives `(+1) C_{n-1-i}^{2} C_{i}^{1}`
+  `= i(n-1-i)(n-2-i)/2`. Evidence, all four agreeing: the **signed** region
+  record; **two vision reads** of the crops (both say the coefficient is absent
+  and unambiguous); `04-sympy/m1f5_screen.py` — exact integers, all fifteen
+  printed conversions checked pair by pair at n = 13, 17, 19 — reporting exactly
+  **one** mismatch with `printed / binomial = 2` and unequal display totals; and
+  the author's own corrected print **one page later** (`P008-R1` l7,
+  `P008-R3` l1 both carry `\frac{1}{2}`). Minimal example: n = 13, i = 1 →
+  `C(11,2) = 55` versus printed `1·11·10 = 110`.
+- **Filed as `Q-005` (OPEN, blocking)**; per the F4 action the chunk stops at its
+  first step, so `03-lean/M1F5/Basic.lean` does not exist and nothing is written
+  ahead. `M1-FRAG-06` **inherits** the blocker (its display re-prints the same
+  sum at `P007-R3` l2); the pp. 8+ leaves do **not**, because every p. 8 print
+  carries the correct `1/2`.
+- **So there is no clean next leaf.** Working further downstream would violate
+  "do not continue downstream" from the F4 rule, and repairing the printed
+  coefficient ourselves is exactly what the project forbids. The next action is
+  the author's one-word answer to `Q-005` (or a user decision to accept the p. 8
+  correction as the intended reading — which changes what faithful transcription
+  means for this leaf, so it is the user's call, not the lane's). Everything else
+  standing by: `Q-003` still blocks any leaf from pp. 31–32, and `Q-004`'s four
+  misprint items sit on pp. 14, 22, 24, 25.
+- **Ledger:** `progress.py --check` exit 0 (**18/19 DONE, 1 BLOCKED**);
+  `pipeline/PROGRESS.md` regenerated. Round ledger: 55 rows — 19 S1 / 29 F2 /
+  2 ENV / 2 F1 / 2 PROBE; no compile round this session (source-level screen,
+  query and records only).
 
 ### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-04` DONE: **18/18 (100%)**
 

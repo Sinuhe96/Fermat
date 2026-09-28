@@ -132,8 +132,8 @@ only.
 | `M1-FRAG-02` | 6 | P006-R2 (l1 + the (7′) tail of l4–6) | 2 | 01 | printed (7), (7′) — **needs the equation as hypothesis** (§7). Boundary revised down from 5 steps: (8),(9),(10) are the same computation at higher orders and belong to 03. |
 | `M1-FRAG-03` | 6 | P006-R2 (l7–9) | 3 | 01 | printed (8), (9), (10) — **DONE**, round 28 (R3 l1 moved to `M1-FRAG-04`) |
 | `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l0–l6) | 5 | 03 | the `l+j` regrouping; **DONE** (rounds 34–55, 16 declarations, 5 steps all S1: the expansion, the binomial RHS, the `l+j ≥ 5` split with the `(j,l,i)` re-indexing, the absorbed tail + four explicit terms, the five X⁴ sums in factorial form). Regions MEASURED: `P007-R1` l0–l6 is what this leaf needs (l4–l6 = S3, l6+ = S4's display) |
-| `M1-FRAG-05` | 7 | P007-R2 (l0–l3) | 4–10 | 04 | **the ten remaining binomial→factorial conversions** (X³: 4 sums, X²: 3, X¹: 2, X⁰: 1), the continuation of `M1-FRAG-04`'s S4 display. Regions MEASURED 2026-09-28 — the earlier `R1 l5–7, R2 l1–5` came from estimated line numbers and cut across two displays |
-| `M1-FRAG-06` | 7 | P007-R2 (l4–l5), P007-R3 (l0–l4) | 3 | 05 | the RHS tail restatement + the `⇒` display rearranging the X⁴ sums (`i(i+1)(2+i)(3+i)`, `-n/6 Σ[3i(i+1)(i+2)+3i(i+1)+2i]`, …). R3 l0–l4 continues R2 l6 — ONE display across the page break |
+| `M1-FRAG-05` | 7 | P007-R2 (l0–l3) | 4–10 | 04 | **BLOCKED (F4)** — the ten remaining binomial→factorial conversions (X³: 4 sums, X²: 3, X¹: 2, X⁰: 1). The (2,1) X³ sum is printed without its denominator 2 (`printed/binomial = 2`, measured n = 13, 17, 19 by `04-sympy/m1f5_screen.py`; the author's own p. 8 print carries the `1/2`). Author query **Q-005 OPEN**; no Lean written — the leaf stops at its first step. Regions MEASURED 2026-09-28 |
+| `M1-FRAG-06` | 7 | P007-R2 (l4–l5), P007-R3 (l0–l4) | 3 | 05 | **BLOCKED by inheritance (F4, Q-005)**: its display re-prints the wrong `(2,1)` sum at `P007-R3` l2. The RHS tail restatement + the `⇒` display rearranging the X⁴ sums (`i(i+1)(2+i)(3+i)`, `-n/6 Σ[3i(i+1)(i+2)+3i(i+1)+2i]`, …). R3 l0–l4 continues R2 l6 — ONE display across the page break |
 | `M1-FRAG-07` | 8 | P008-R1 (l0–l1), P008-R2 (l0–l2) | 3 | 06 | the first **congruence** `≡ … (mod n^{4s+2})` (with the printed `vì 5s ≥ 4s+2, s ≥ …`) followed by the `⇒` rearrangement of the X⁴ sums. Congruence steps are where a dropped term needs a divisibility side condition — the F3/F4 risk of this part |
 | `M1-FRAG-08` | 8 | P008-R2 (l3)–P008-R3 (l5) | 4 | 07 | second `≡ (mod n^{4s+2})`, the `⇒` rewrite splitting `Σ[3i(i+1)(i+2)+3i(i+1)+2i]` into three sums, third `≡ (mod n^{4s+2})` |
 | `M1-FRAG-09` | 9 | P009-R1 (l1–7) | 7 | 08 | `M`, display (11) |
@@ -406,6 +406,43 @@ one presentation hazard (p. 12), one label reuse (p. 27), and one region
 needed** — the colour markup in the signed LaTeX answered the question that the
 crop read was going to be asked, which also retires the note that colour is
 absent from the region records.
+
+### Q-005 — a fifth F4, and the first one the lane actually hits (2026-09-28, fourteenth session)
+
+The four candidates above are all on pp. 14–27, i.e. downstream of the current
+edge, and `Q-004` files them as *not blocking*. Opening `M1-FRAG-05` (the p. 7
+conversions) found a **fifth, live** one on the very line the lane needed next:
+
+| region | flag | classification | consequences |
+|---|---|---|---|
+| `P007-R2` l0 (+ its re-print `P007-R3` l2) | the first `(n^s abck)^3` sum, pair `(j,l) = (2,1)`, printed with **no coefficient** where its own binomial side has `1/2` | **F4, BLOCKING** | `M1-FRAG-05` BLOCKED at its first step; `M1-FRAG-06` inherits it (same display). `P008-R1` l7 and `P008-R3` l1 print the corrected `\frac{1}{2}`, so the pp. 8+ leaves do **not** inherit it |
+
+How it was established (four independent checks, all cheap):
+
+1. the **signed** region record prints no coefficient before that summation sign
+   (and `-1/2` before the companion sum on the same line);
+2. **two vision reads** of the crops `page-007-300dpi-region-02.png` and
+   `-03.png` confirm it, and say explicitly that nothing is ambiguous;
+3. `04-sympy/m1f5_screen.py` — exact integers at `n = 13, 17, 19`, all fifteen
+   printed conversions checked **pair by pair** — reports exactly **one**
+   mismatch, `(2,1)`, with `printed / binomial = 2`, and the two sides of the
+   whole display unequal (exit 0 iff that is what it finds);
+4. the paper **corrects itself one page later**: `P008-R1` l7 and `P008-R3` l1
+   carry `+ \frac{1}{2}\sum_{i=1}^{n-3} i(n-1-i)(n-2-i)…`, which is what the
+   binomial form gives.
+
+Minimal example, no sums: at `n = 13`, `i = 1`, the `(2,1)` summand is
+`C(11,2) = 55` on the binomial side and `1·11·10 = 110` on the printed side.
+
+So the reading is "a dropped denominator `2` in one printed line", not a
+mathematical gap — but the project rule (`AGENTS.md`, F4 action) is to stop the
+chunk, mark it BLOCKED and ask, never to repair the author's step ourselves.
+Filed as `05-feedback/queries/Q-005-p007-x3-sum-missing-half.md` (**OPEN**,
+blocking). The leaf stops at its **first** author step, so no Lean was written
+and `03-lean/M1F5/Basic.lean` does not exist. When the author confirms the
+`1/2`, `M1-FRAG-05` becomes ten `Nat.choose`-to-falling-factorial rewrites on the
+route already compiled for `M1-FRAG-04`'s S4 (`M1F4_choose_fact_*` plus the
+three `_shift` bridges).
 
 ### Circularity audit — instrument and result (2026-09-28, user-requested)
 
@@ -997,3 +1034,38 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
   ascription of S4 (round 52). Cost model (measured): a *failing* round costs
   7–24 s because the Mathlib oleans are cached, so iterate freely on compile
   errors; only successful rounds with heavy `ring`/`omega` take minutes.
+
+### Update — fourteenth session (2026-09-28): `M1-FRAG-04` closed, and `M1-FRAG-05` is BLOCKED by a live F4
+
+- **Ledger: 18/19 DONE, 1 BLOCKED** (`M1-FRAG-05`), `progress.py --check` exit 0.
+  `M1-FRAG-04` closed at round 55 (16 declarations, EXIT 0, 0 warnings, permitted
+  axioms only, no `sorryAx`) and the plan table's pp. 7–8 rows were re-aligned to
+  the **measured** region line counts (`P007-R1` 7, R2 8, R3 6; `P008-*` 7 each),
+  with the duplicate-print rule recorded: a step count follows the `≡`/`⇒`
+  transitions, not the printed lines.
+- **`M1-FRAG-05` was opened and immediately blocked** — not by Lean, by the
+  print. Its first author step (the ten remaining conversions of the p. 7
+  display, `P007-R2` l0–l3) prints the `(j,l) = (2,1)` sum of the
+  `(n^s abck)^3` group **without** the `1/2` its own binomial side carries, so
+  the printed identity is false by exactly that term. Four independent checks
+  (signed region record, two crop reads, an exact-integer screen over all fifteen
+  pairs, and the author's own corrected print at `P008-R1` l7 / `P008-R3` l1)
+  agree. Filed as **Q-005 (OPEN, blocking)**; `M1-FRAG-06` inherits the blocker
+  because its display re-prints the same sum at `P007-R3` l2, while the pp. 8+
+  leaves do not.
+- **What is *not* blocked.** The obstruction is one printed coefficient on one
+  line, so everything the author prints with the `1/2` (all of pp. 8 on, and the
+  four other X³/X²/X¹/X⁰ conversions) is verifiable as soon as the lane is
+  allowed past the BLOCKED chunk — which, per `AGENTS.md` ("do not continue
+  downstream"), waits for the author's answer. The lane therefore has no
+  *clean* next leaf; the honest next actions are (a) the author's reply to Q-005,
+  or (b) a decision to treat the p. 7 print as a typo whose correction the author
+  supplies one page later — which is a call for the user/author, not for the
+  lane, since it changes what "faithful transcription" means for this leaf.
+- **Also fixed:** the `M1_LANE.md` plan table carried two stale duplicate rows
+  for `M1-FRAG-07/08` (estimated boundaries from an earlier session) that
+  collided with the re-scoped rows; the table is now 41 rows with no duplicate
+  ids, and `M1-FRAG-04`'s own row is marked DONE.
+- **Round ledger: 55 rows — 19 S1 / 29 F2 / 2 ENV / 2 F1 / 2 PROBE.** No new
+  compile round this session: the work was the source-level screen, the query,
+  and the record-keeping.
