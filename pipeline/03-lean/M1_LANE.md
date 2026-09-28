@@ -927,12 +927,32 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
   and the recommended `Finset.sigma` + `Finset.ext` + `omega` route are in
   `M1-FRAG-04.yml`. Estimated 40–80 lines, several rounds — the leaf's most
   expensive step, and the current edge.
-- **Next, in order:** (1) S2's re-indexing half; (2) S3–S7, the fifteen boundary
-  sums in their printed factorial forms plus the `i ≥ 5` rewrite via
-  `M1F4_absorb`; (3) the `M1-FRAG-04` DONE flip (whole-file compile, axioms,
-  evidence fields, ledger); (4) `M1-FRAG-05`+ (pp. 7–8). `Q-003` must still be
-  resolved before any leaf from pp. 31–32 is written.
-- **Round ledger now 38 rounds: 14 S1 / 20 F2 / 2 ENV / 1 F1 / 1 PROBE.** The F1
+- **S2 landed and certified (rounds 39-41).** `M1F4_reindex` — the `(j,l,i)`
+  re-indexing, i.e. the leaf's hardest step — took two rounds: one genuine F2
+  (`rw [← hR]` where `hR` rewrites the printed nested sum *into* the σ-sum, so the
+  pattern was absent), then EXIT 0, 9 s, zero errors, zero warnings. Route that
+  worked: flatten both sides with `simp only [Finset.sum_sigma']` to one sum over
+  a Finset of nested σ-pairs, keep `l+j ≤ 4` as a `Finset.filter` (`←
+  Finset.sum_filter`), and identify the two filtered index sets with
+  `Finset.sum_nbij'` along `⟨i,⟨j,l⟩⟩ ↦ ⟨j,⟨l,i⟩⟩` — the arithmetic obligations
+  are four linear Nat facts and `omega` closed them directly (even with the
+  truncated `n - i` / `5 - j` forms). The composed author step is
+  `M1F4_step_S2_split` (the complement plus the re-indexing plus the pointwise
+  `¬(5 ≤ j+l) ↔ j+l ≤ 4` bridge); all five declarations carry `propext`,
+  `Classical.choice`, `Quot.sound` only, no `sorryAx`.
+- **Step-map correction (F1-class, ours not the author's): the printed display's
+  real step order differs from this lane's earlier plan.** Verbatim line dump
+  (2026-09-28): `P007-R1` runs to **l12**, and its `l4-l6` is a *separate step*
+  (the RHS tail `Σ_{i=5}^{n} C_n^i a^{(n-1)(n-i)} (n^s bck)^i` plus the four
+  explicit terms) that precedes the factorial forms; the factorial forms printed
+  inside this chunk's regions are only the **five X⁴ sums** (R1 l8-l12), and that
+  display **continues past the page break** into R2/R3. So `M1-FRAG-05/06`'s
+  boundaries — recorded from *estimated* line numbers — must be re-aligned to the
+  real region line counts before those leaves are written. `M1-FRAG-04`'s S3/S4
+  are now specified in `M1-FRAG-04.yml` with that correction, including the
+  ℕ-safety constraint on S3 (any range containing `i = n` must use the absorbed
+  `a^{(n-1)(n-i)}(n^s bck)^i` form).
+- **Round ledger now 42 rows: 16 S1 / 21 F2 / 2 ENV / 1 F1 / 2 PROBE.** The F1
   is the p. 6 R3 `ℕ`-unsafe exponent form (round 31). Cost model (measured): a
   *failing* round costs 7–24 s because the Mathlib oleans are cached, so iterate
   freely on compile errors; only successful rounds with heavy `ring`/`omega` take

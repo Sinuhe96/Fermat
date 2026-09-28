@@ -200,6 +200,107 @@ lemma M1F4_sum_complement (n : ℕ) (f : ℕ → ℕ → ℕ → ℤ) :
   refine Finset.sum_congr rfl fun l _ => ?_
   by_cases hp : 5 ≤ j + l <;> simp [hp]
 
+/-- **S2, second half — the `(j,l,i)` re-indexing of the `l+j ≤ 4` part.**
+
+The printed fifteen boundary sums (author pp. 6-7) are indexed by the pair `(j,l)`
+with `j + l ≤ 4`, with the *natural* range `i ∈ [l, n-1-j]`; the triple sum's
+`l+j ≤ 4` part indexes the same set of triples by `i` first, with the dependent
+ranges `j < n-i`, `l ≤ i`. The two index sets are the **same set in a different
+order**, so this is a pure re-indexing: no algebra, no hypothesis on `n`.
+
+Route: flatten both sides to a single sum over a Finset of nested σ-pairs
+(`Finset.sum_sigma'`), keep the left side's `l+j ≤ 4` as a `Finset.filter`,
+and identify the two filtered index sets by the bijection
+`⟨i, ⟨j, l⟩⟩ ↦ ⟨j, ⟨l, i⟩⟩` (`Finset.sum_nbij'`); the membership obligations are
+the four Nat facts `j+l ≤ 4 ↔ l ≤ 4-j`, `j < n-i ↔ i+j < n`, `l < i+1 ↔ l ≤ i`,
+and `i < n` implied by `i < n-j`. -/
+lemma M1F4_reindex (n : ℕ) (f : ℕ → ℕ → ℕ → ℤ) :
+    (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1),
+        (if j + l ≤ 4 then f i j l else 0))
+      = ∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j),
+          ∑ i ∈ Finset.Ico l (n - j), f i j l := by
+  have hL :
+      (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1),
+          (if j + l ≤ 4 then f i j l else 0))
+        = ∑ y ∈ ((Finset.range n).sigma
+              (fun i => (Finset.range (n - i)).sigma (fun _ => Finset.range (i + 1)))),
+            (if y.2.1 + y.2.2 ≤ 4 then f y.1 y.2.1 y.2.2 else 0) := by
+    simp only [Finset.sum_sigma']
+  have hR :
+      (∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j),
+          ∑ i ∈ Finset.Ico l (n - j), f i j l)
+        = ∑ z ∈ ((Finset.range 5).sigma
+              (fun j => (Finset.range (5 - j)).sigma (fun l => Finset.Ico l (n - j)))),
+            f z.2.2 z.1 z.2.1 := by
+    simp only [Finset.sum_sigma']
+  have hbij :
+      (∑ y ∈ (((Finset.range n).sigma
+              (fun i => (Finset.range (n - i)).sigma (fun _ => Finset.range (i + 1)))).filter
+              (fun y => y.2.1 + y.2.2 ≤ 4)),
+            f y.1 y.2.1 y.2.2)
+        = ∑ z ∈ ((Finset.range 5).sigma
+              (fun j => (Finset.range (5 - j)).sigma (fun l => Finset.Ico l (n - j)))),
+            f z.2.2 z.1 z.2.1 := by
+    refine Finset.sum_nbij'
+      (fun y => ⟨y.2.1, y.2.2, y.1⟩)
+      (fun z => ⟨z.2.2, z.1, z.2.1⟩) ?_ ?_ ?_ ?_ ?_
+    · intro y hy
+      simp only [Finset.mem_filter, Finset.mem_sigma, Finset.mem_range, Finset.mem_Ico] at hy ⊢
+      omega
+    · intro z hz
+      simp only [Finset.mem_filter, Finset.mem_sigma, Finset.mem_range, Finset.mem_Ico] at hz ⊢
+      omega
+    · rintro ⟨i, j, l⟩ hy
+      rfl
+    · rintro ⟨j, l, i⟩ hz
+      rfl
+    · rintro ⟨i, j, l⟩ hy
+      rfl
+  calc (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1),
+          (if j + l ≤ 4 then f i j l else 0))
+      = ∑ y ∈ ((Finset.range n).sigma
+            (fun i => (Finset.range (n - i)).sigma (fun _ => Finset.range (i + 1)))),
+          (if y.2.1 + y.2.2 ≤ 4 then f y.1 y.2.1 y.2.2 else 0) := hL
+    _ = ∑ y ∈ (((Finset.range n).sigma
+            (fun i => (Finset.range (n - i)).sigma (fun _ => Finset.range (i + 1)))).filter
+            (fun y => y.2.1 + y.2.2 ≤ 4)),
+          f y.1 y.2.1 y.2.2 := by
+          rw [← Finset.sum_filter]
+    _ = ∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j),
+          ∑ i ∈ Finset.Ico l (n - j), f i j l := by
+          rw [hR]
+          exact hbij
+
+/-- **S2 — the printed `l+j ≥ 5` split** (author p. 6 `P006-R3` line 2, continued
+on p. 7 `R1` lines 1-2).
+
+The printed display is one sum for each pair `(j,l)` with `j + l ≤ 4` — fifteen of
+them, each with the natural range `i ∈ [l, n-1-j]` and the triple sum's own
+summand. They are stated here in the natural-range form (verified equal to the
+print by `M1-FRAG-04.yml`'s frozen content check, 2026-09-28); the step is the
+complement identity `Σ_all f = Σ_{l+j≥5} f + Σ_{l+j≤4} f` with the second sum
+re-indexed. Composes the two halves: `M1F4_sum_complement` (the pointwise filter
+complement) and `M1F4_reindex` (the `(j,l,i)` re-indexing). -/
+theorem M1F4_step_S2_split (n : ℕ) (f : ℕ → ℕ → ℕ → ℤ) :
+    (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1), f i j l)
+      = (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1),
+          (if 5 ≤ j + l then f i j l else 0))
+        + ∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j),
+            ∑ i ∈ Finset.Ico l (n - j), f i j l := by
+  have hD :
+      (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1),
+          (if ¬(5 ≤ j + l) then f i j l else 0))
+        = ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1),
+            (if j + l ≤ 4 then f i j l else 0) := by
+    refine Finset.sum_congr rfl fun i _ =>
+      Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
+    by_cases hp : 5 ≤ j + l
+    · have h4 : ¬(j + l ≤ 4) := by omega
+      simp [hp, h4]
+    · have h4 : j + l ≤ 4 := by omega
+      simp [hp, h4]
+  rw [M1F4_sum_complement n f, hD, M1F4_reindex n f]
+
 end M1F4
 
 -- Evidence for the leaf's DONE flip (all eight steps must reach this state):
@@ -207,3 +308,5 @@ end M1F4
 #print axioms M1F4.M1F4_step_S0_triple
 #print axioms M1F4.M1F4_step_S1_binomial
 #print axioms M1F4.M1F4_sum_complement
+#print axioms M1F4.M1F4_reindex
+#print axioms M1F4.M1F4_step_S2_split

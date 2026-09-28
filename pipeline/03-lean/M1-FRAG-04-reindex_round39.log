@@ -1,0 +1,29 @@
+M1F4/Basic.lean:271:14: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ z ∈ (Finset.range 5).sigma fun j => (Finset.range (5 - j)).sigma fun l => Finset.Ico l (n - j),
+    f z.snd.snd z.fst z.snd.fst
+in the target expression
+  ∑ y ∈ (Finset.range n).sigma fun i => (Finset.range (n - i)).sigma fun x => Finset.range (i + 1) with
+      y.snd.fst + y.snd.snd ≤ 4, f y.fst y.snd.fst y.snd.snd =
+    ∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j), ∑ i ∈ Finset.Ico l (n - j), f i j l
+
+n : ℕ
+f : ℕ → ℕ → ℕ → ℤ
+hL :
+  (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i), ∑ l ∈ Finset.range (i + 1), if j + l ≤ 4 then f i j l else 0) =
+    ∑ y ∈ (Finset.range n).sigma fun i => (Finset.range (n - i)).sigma fun x => Finset.range (i + 1),
+      if y.snd.fst + y.snd.snd ≤ 4 then f y.fst y.snd.fst y.snd.snd else 0
+hR :
+  ∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j), ∑ i ∈ Finset.Ico l (n - j), f i j l =
+    ∑ z ∈ (Finset.range 5).sigma fun j => (Finset.range (5 - j)).sigma fun l => Finset.Ico l (n - j),
+      f z.snd.snd z.fst z.snd.fst
+hbij :
+  ∑ y ∈ (Finset.range n).sigma fun i => (Finset.range (n - i)).sigma fun x => Finset.range (i + 1) with
+      y.snd.fst + y.snd.snd ≤ 4, f y.fst y.snd.fst y.snd.snd =
+    ∑ z ∈ (Finset.range 5).sigma fun j => (Finset.range (5 - j)).sigma fun l => Finset.Ico l (n - j),
+      f z.snd.snd z.fst z.snd.fst
+⊢ ∑ y ∈ (Finset.range n).sigma fun i => (Finset.range (n - i)).sigma fun x => Finset.range (i + 1) with
+      y.snd.fst + y.snd.snd ≤ 4, f y.fst y.snd.fst y.snd.snd =
+    ∑ j ∈ Finset.range 5, ∑ l ∈ Finset.range (5 - j), ∑ i ∈ Finset.Ico l (n - j), f i j l
+'M1F4.M1F4_step_S0_triple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S1_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_sum_complement' depends on axioms: [propext, Classical.choice, Quot.sound]

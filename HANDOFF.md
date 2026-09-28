@@ -206,9 +206,9 @@ What the earlier window established:
   hand-type Vietnamese literals into scripts (they do not match the file's
   bytes) — anchor extraction on ASCII fragments.
 
-### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` DONE (17/17), `M1-FRAG-04` in flight (S0+S1+S2-first-half of 8)
+### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` DONE (17/18), `M1-FRAG-04` IN_PROGRESS (S0+S1+S2 done of 8)
 
-- **Current edge (round 37)**: `M1-FRAG-04` — pp. 6–7, the `l+j` regrouping that
+- **State at round 37 (superseded by the S2-DONE bullet below)**: `M1-FRAG-04` — pp. 6–7, the `l+j` regrouping that
   follows the printed (8)–(10) — is IN PROGRESS with **S0, S1 and the first half
   of S2 written and certified**: the triple-sum expansion (`M1F4_step_S0_triple`)
   and the printed right-hand side (`M1F4_step_S1_binomial`), on the support
@@ -228,6 +228,29 @@ What the earlier window established:
   `M1-FRAG-04.yml`. Estimated 40–80 lines, several rounds — the leaf's most
   expensive step. Then S3–S7 (the fifteen boundary sums in their printed
   factorial forms and the `i ≥ 5` rewrite via `M1F4_absorb`).
+- **S2 is DONE (rounds 39–41)** — the leaf's hardest step. `M1F4_reindex` (the
+  `(j,l,i)` re-indexing) took two rounds: one genuine F2 (`rw [← hR]`, a
+  rewrite-direction slip of mine), then EXIT 0, 9 s, zero errors/warnings. The
+  route that worked: flatten both sides with `simp only [Finset.sum_sigma']` to a
+  single sum over a Finset of nested σ-pairs, keep `l+j ≤ 4` as a `Finset.filter`
+  (`← Finset.sum_filter`), and identify the two index sets with `Finset.sum_nbij'`
+  along `⟨i,⟨j,l⟩⟩ ↦ ⟨j,⟨l,i⟩⟩`; the four linear Nat obligations fell to plain
+  `omega`. The composed author step is `M1F4_step_S2_split`. All five declarations
+  depend on `propext`/`Classical.choice`/`Quot.sound` only, no `sorryAx`.
+- **Step-map correction (F1-class, ours not the author's).** A verbatim line dump
+  shows the printed display's real structure: `P007-R1` runs to **l12**; its
+  `l4–l6` is a *separate, earlier* step (the RHS tail `Σ_{i=5}^{n} C_n^i
+  a^{(n-1)(n-i)} (n^s bck)^i` plus four explicit terms — where `M1F4_absorb`
+  goes); the factorial forms inside this chunk's regions are only the **five X⁴
+  sums** (l8–l12); and that display **continues past the page break** into R2/R3.
+  So `M1-FRAG-05/06`'s recorded boundaries (estimated line numbers) must be
+  re-aligned to the real region lines before those leaves are written. S3/S4 are
+  now specified in `M1-FRAG-04.yml`, including S3's ℕ-safety constraint (any range
+  containing `i = n` must use the absorbed `a^{(n-1)(n-i)}(n^s bck)^i` form).
+- **Next, in order:** (1) S3 (`P007-R1` l4–l6, the tail + the four explicit
+  terms); (2) S4 (the five X⁴ sums in factorial form); (3) the `M1-FRAG-04` DONE
+  flip (whole-file compile, axioms, evidence fields, ledger); (4) re-align and
+  write `M1-FRAG-05/06`.
 - **The lane's first F1 was caught here** (round 31, 9 s) and it is the single
   most valuable thing to read before touching p. 6 R3: the printed alternate form
   `Σ_i C(n,i) a^{n(n-1-i)} (n^s abck)^i` is **ℕ-unsafe at `i = n`** — `n - 1 - i`
@@ -336,8 +359,8 @@ container rebuild: `check_env.sh --full` → **SMOKE PASS (full)** (Lean 4.35.0-
 Lake project + Mathlib cache OK, `import Mathlib` OK); `progress.py --check`
 exit 0 with **17/18 DONE** (the 18th, `M1-FRAG-04`, is IN_PROGRESS), 0
 obstacles, **2 OPEN author queries** (Q-003, Q-004); watchdog `watch-m1` live
-with `latched=none` and no `M1_inflight` outstanding. Round ledger: `03-lean/M1_rounds.tsv` — 38 rounds so far,
-classified **14 S1 / 20 F2 / 2 ENV / 1 F1 / 1 PROBE** (the F1 is the p. 6 R3
+with `latched=none` and no `M1_inflight` outstanding. Round ledger: `03-lean/M1_rounds.tsv` — 42 rows so far,
+classified **16 S1 / 21 F2 / 2 ENV / 1 F1 / 2 PROBE** (the F1 is the p. 6 R3
 `ℕ`-unsafe exponent form). The measured cost model matters for planning: a
 *failing* round costs 7–24 s (Mathlib oleans are cached), so iterate freely on
 compile errors; only successful rounds with heavy `ring`/`omega` take minutes.

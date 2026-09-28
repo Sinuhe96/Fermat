@@ -121,26 +121,58 @@ author_steps: |
      over `j<5`, `l<5-j`, `Ico l (n-j)`), prove `S = T` by `Finset.ext` + `omega`,
      then `Finset.sum_congr`. That route avoids dependent-range sum surgery.
      Cost estimate: 40-80 lines, several rounds - the leaf's most expensive step.
-                                                               [TODO]
-  S3-S7 [P006-R3 l2-l5, P007-R1 l1-l4] The FIFTEEN boundary sums (one per pair
-     (j,l) with j + l <= 4; see S2) in the printed factorial forms, in the
-     author's order, plus the rewrite of the `i >= 5`
-     part as `Σ_{i=5}^{n} C(n,i) a^{(n-1)(n-i)} (n^s bck)^i` — which is where
-     `M1F4_absorb` (above) is used, moving the `a^i` between the explicit factor
-     and the exponent of `a`. Then S7 identifies the result with the expansion of
-     `(a^(n-1) + n^s bck)^n` truncated at `i >= 5` plus the four printed terms.
-                                                               [TODO]
+     LANDED (rounds 39-41, EXIT 0, 0 warnings, permitted axioms only, no sorryAx):
+     `M1F4_reindex` (the re-indexing, 2 rounds: one F2 `rw` direction) and the
+     composed author step `M1F4_step_S2_split` (= `M1F4_sum_complement` +
+     `M1F4_reindex`, plus the pointwise `¬(5 ≤ j+l) ↔ j+l ≤ 4` bridge).
+                                     [Lean: M1F4_reindex, M1F4_step_S2_split]
+  S3 [P007-R1 l4-l6] The right-hand side exactly as the author prints it after the
+     split: `Σ_{i=5}^{n} C_n^i a^{(n-1)(n-i)} (n^s bck)^i` (the tail, with the
+     `a^i` ABSORBED — `n(n-1-i) = (n-1)(n-i) - i`, so
+     `a^{n(n-1-i)}(n^s abck)^i = a^{(n-1)(n-i)}(n^s bck)^i`) plus the four
+     explicit terms `a^{n(n-1)} + n a^{n(n-2)} n^s abck +
+     [n(n-1)/2] a^{n(n-3)} (n^s abck)^2 + [n(n-1)(n-2)/6] a^{n(n-4)} (n^s abck)^3
+     + [n(n-1)(n-2)(n-3)/24] a^{n(n-5)} (n^s abck)^4`. This is where
+     `M1F4_absorb` is used.
+     ENCODING CONSTRAINT (the leaf's F1, round 31): the tail `Σ_{i=5}^{n}` INCLUDES
+     `i = n`, where `a^{n(n-1-i)}` is ℕ-unsafe (`n-1-n` truncates to `0`, giving
+     `a^0` instead of `a^{-n}`). State every range that contains `i = n` in the
+     ABSORBED form `a^{(n-1)(n-i)}(n^s bck)^i`, which is ℕ-safe and is exactly the
+     author's own printed form on this line. The equality of the two forms holds
+     only over ℤ exponents.                     [TODO]
+  S4 [P007-R1 l8-l12] The first five boundary sums (the pairs (j,l) with j+l = 4,
+     i.e. the five X^4 sums) converted from binomial to the printed FACTORIAL
+     form, in the author's order:
+       1/24 Σ_{i=4}^{n-1} i(i-1)(i-2)(i-3) h^{n-1-i} b^{n(i-4)} (n^s abck)^4
+       1/24 Σ_{i=0}^{n-5} (n-1-i)(n-2-i)(n-3-i)(n-4-i) h^{n-5-i} b^{ni} (n^s abck)^4
+     - 1/6  Σ_{i=1}^{n-4} i(n-1-i)(n-2-i)(n-3-i) h^{n-4-i} b^{n(i-1)} (n^s abck)^4
+     - 1/6  Σ_{i=3}^{n-2} (n-1-i)i(i-1)(i-2) h^{n-2-i} b^{n(i-3)} (n^s abck)^4
+       1/4  Σ_{i=2}^{n-3} (n-1-i)(n-2-i)i(i-1) h^{n-3-i} b^{n(i-2)} (n^s abck)^4
+     Content: `C_i^4 = i(i-1)(i-2)(i-3)/24` and
+     `C_{n-1-i}^4 = (n-1-i)(n-2-i)(n-3-i)(n-4-i)/24` (and the `C_i^k`/`C_{n-1-i}^k`
+     for k = 1,2,3 in the mixed pairs) - pure `Nat.choose`-to-falling-factorial
+     identities, no side condition on `n`. `[TODO]`
+  S5+ THE REMAINING TEN conversions are NOT in this chunk: the display is one
+     continuous re-statement of the identity whose middle (the X^3 and X^2 sums)
+     is printed in P007-R2 and whose last lines (X, X^0 and the X^3/X^2 tail of
+     P007-R3) are printed in P007-R3. Chunk boundaries for `M1-FRAG-05` and
+     `M1-FRAG-06` were recorded from ESTIMATED line numbers and must be
+     re-aligned to the real region line counts before those leaves are written
+     (measured 2026-09-28: P007-R1 runs to l12, the display continues with `+`
+     into P007-R2/P007-R3).                                           [TODO]
 
   evidence: region records p006.yml, p007.yml (REVIEWED, signed); the regrouping
     was screened numerically before this leaf was opened -- 04-sympy/m1_common.py
-    (PASS, EXIT 0) confirms that all ten printed index ranges are the natural
-    [l, n-1-j] ones, i.e. the split is the identity and not a misprint.
+    (PASS, EXIT 0) confirms that all printed index ranges are the natural
+    [l, n-1-j] ones, i.e. the split is the identity and not a misprint. Frozen
+    against the signed LaTeX 2026-09-28: FIFTEEN sums, one per (j,l) with
+    j + l <= 4; all fifteen ranges are exactly the natural [l, n-1-j].
 lean_file: 03-lean/M1F4/Basic.lean
 sympy_test: 04-sympy/m1_common.py
 source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
 extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
 fidelity: PASS_WITH_MANUAL
 renders: page-006-300dpi-region-03.png, page-007-300dpi-region-01.png
-lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_sum_complement, M1F4_step_S0_triple, M1F4_step_S1_binomial
+lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_sum_complement, M1F4_reindex, M1F4_step_S0_triple, M1F4_step_S1_binomial, M1F4_step_S2_split
 regions: P006-R3, P007-R1
 status: IN_PROGRESS
