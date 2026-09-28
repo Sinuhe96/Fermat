@@ -60,7 +60,7 @@ PAGE_POINTS_DEFAULT = (612.0, 792.0)
 TITLE_RE = re.compile(r"^#\s+(.*)$")
 HEADING_RE = re.compile(r"^##\s+(.*?)\s*$")
 STATUS_RE = re.compile(r"\[(OPEN|ANSWERED|RESOLVED)\]\s*$")
-CHUNK_REF_RE = re.compile(r"\b(L\d+-[A-Z0-9][A-Z0-9-]*)\b")
+CHUNK_REF_RE = re.compile(r"\b((?:L\d+|M1)-[A-Z0-9][A-Z0-9-]*)\b")
 IMAGE_REF_RE = re.compile(r"[\w.+-]+(?:/[\w.+-]+)*\.(?:png|jpg|jpeg)")
 PATH_REF_RE = re.compile(
     r"[\w.+-]+(?:/[\w.+-]+)*\.(?:md|py|lean|yml|yaml|png|html|log|txt|tsv)")

@@ -1,4 +1,4 @@
-# Q-002 Two under-printed steps in bổ đề 7's remaining conclusion groups [EDITORIAL]
+# Q-002 Two under-printed steps in bổ đề 7's remaining conclusion groups [OPEN]
 
 > **Status: EDITORIAL, not blocking.** Both items are **F3** under AGENTS.md's
 > classification: the printed *conclusions* are correct and fully derivable

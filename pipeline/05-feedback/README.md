@@ -57,7 +57,10 @@ and writes a self-contained `report/`:
   first (highlighted card), what the print says, **the printed pages with the
   cited regions boxed in red** (rects from `01-extract/regions/pNNN.yml`
   overlaid on the full-page renders — the query's own `P0NNN-RM` mentions pick
-  the regions, otherwise every region of the chunk), the same lines **typeset
+  the regions, otherwise every region of the chunk — chunk ids of **both**
+  families are recognized, `L1-…`–`L7-…` and the main-proof lane's `M1-…`, so an
+  `M1` query boxes its own regions and no longer trips the
+  "BLOCKED but no author query references it" check), the same lines **typeset**
   by KaTeX**, what Lean formalized plus the verified declaration list, the
   F3/F4 classification notes, and a reply box (screen textarea, ruled lines
   when printed);
