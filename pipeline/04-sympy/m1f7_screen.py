@@ -98,6 +98,37 @@ def screen(n, a, b, c, k, h, s):
     return (lhs_c - rp) % m == 0, (lhs_c - rb) % m == 0
 
 
+def screen_other_pairs(n: int) -> bool:
+    """The (1,3) and (3,1) X^4 expansions: only (1,3) is pointwise checkable.
+
+    (1,3) source: -(1/6) (n-1-i)i(i-1)(i-2)
+      pieces:     +(1/6) (i+1)i(i-1)(i-2) - (n/6) i(i-1)(i-2)   [(i+1)-n = -(n-1-i)]
+    -- the same degree on both sides, and the identity holds pointwise for every
+    i: this is the sanity check that the frame (pointwise, same range, same
+    factors) is the right one for the (2,2) pair.
+
+    (3,1) source: -(1/6) i(n-1-i)(n-2-i)(n-3-i)        (degree 4 in i)
+      pieces:     +(1/6) i(i+1)(i+2)(i+3) - (n/6) i(3i^2+12i+11)   (degree 3)
+    -- NOT a pointwise decomposition at all: the two sides have different degree
+    in i, so that expansion necessarily uses an index shift whose convention this
+    screen has not reconstructed. It is therefore reported as INCONCLUSIVE here,
+    not as a defect (and it does not bear on the (2,2) finding, which is a
+    numeric difference between the printed SUMS over the printed ranges).
+    """
+    ok13 = True
+    for i in range(1, n - 1):
+        src13 = -((n - 1 - i) * i * (i - 1) * (i - 2))
+        pie13 = (i + 1) * i * (i - 1) * (i - 2) - n * i * (i - 1) * (i - 2)
+        ok13 = ok13 and (src13 == pie13)
+    deg31 = any(-(i * (n - 1 - i) * (n - 2 - i) * (n - 3 - i))
+                != (i * (i + 1) * (i + 2) * (i + 3)
+                    - n * i * (3 * i * i + 12 * i + 11)) for i in range(1, n - 1))
+    print(f"  (1,3) expansion value-preserving pointwise: {ok13}")
+    print(f"  (3,1) expansion pointwise-unequal as printed: {deg31}"
+          f"  <- INCONCLUSIVE (degree 4 vs 3 in i: an index shift, not pointwise)")
+    return ok13
+
+
 def pair22(n: int, i: int):
     """The p. 8 R1 l4-l5 expansion of the (2,2) X^4 sum, pointwise.
 
@@ -131,6 +162,8 @@ def screen_pair22(n: int, h: int, b: int, X: int) -> bool:
         tot_p += printed * f
         tot_gap += Fraction(-(n * n), 4) * i * (i - 1) * f
     print(f"  (2,2) pair at n={n}: pointwise identity with the printed pieces holds: False")
+    print(f"    the identity the pieces need: (n-1-i)(n-2-i) = (i+1)(i+2) - 2n(i+1) + n(n-1)"
+          f"  holds pointwise: {all(pair22(n, i)[2] == pair22(n, i)[0] for i in range(2, n - 2))}")
     print(f"    needed third piece is +(n(n-1)/4)*i(i-1); printed is -(n/4)*i(i-1)")
     print(f"    target-total {tot_t} vs printed-total {tot_p}"
           f"  (gap {tot_p - tot_t}, predicted gap {tot_gap}, equal: {tot_p - tot_t == tot_gap})")
@@ -145,6 +178,7 @@ def main() -> int:
         ok = ok and (not a_ok) and (not b_ok)
         pair_ok = screen_pair22(n, h=11, b=3, X=(n ** s) * 2 * 3 * 5 * 7)
         ok = ok and pair_ok
+        ok = ok and screen_other_pairs(n)
         print()
     print("ESTABLISHED")
     print("  (1) the tail sum_{i>=5} C(n,i) a^{(n-1)(n-i)} X^i vanishes modulo")

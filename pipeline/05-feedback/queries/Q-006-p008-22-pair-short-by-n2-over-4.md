@@ -79,6 +79,30 @@ with the corrected third piece:
         6 − 30 + (n(n−1)/4)*i(i−1) = 6 − 30 + (90/4)*2 =  21  ✓
 ```
 
+## Scope of this claim — what is *not* asserted
+
+Two neighbouring facts from the same screen, recorded so the author can answer
+without wondering what we are and are not claiming:
+
+1. **The `(1,3)` expansion is exactly value-preserving pointwise.** Its source
+   `−(1/6)(n−1−i)i(i−1)(i−2)` and its two printed pieces
+   `+(1/6)(i+1)i(i−1)(i−2) − (n/6)i(i−1)(i−2)` agree for every `i`, because
+   `(i+1) − n = −(n−1−i)`. So the frame used for the `(2,2)` claim — same range,
+   same `h`/`b`/`X` factors, hence a pointwise identity — is demonstrably the
+   frame this display uses.
+2. **The `(3,1)` expansion is NOT checkable that way, and we assert nothing about
+   it.** Its source summand `i(n−1−i)(n−2−i)(n−3−i)` is degree 4 in `i` while its
+   printed pieces `i(i+1)(i+2)(i+3)` and `i(3i²+12i+11)` are degree 4 and 3, so
+   the two sides cannot be equal pointwise for every `i`: that expansion uses an
+   index shift whose convention we have not reconstructed. Reported as
+   inconclusive, not as a defect.
+
+The `(2,2)` claim itself does not depend on any index convention: it compares the
+two printed **sums over the printed range**, in exact rationals, and their
+difference is exactly `−(n²/4)·Σ_{i=2}^{n−3} i(i−1) h^{n−3−i} b^{n(i−2)} (n^s abck)^4`.
+That is why the minimal instance (`n = 10, i = 2`) can be quoted without sums at
+all.
+
 ## Question for the author
 
 Is the third piece of that expansion

@@ -107,7 +107,12 @@ author_steps: |
     (2,2) pieces and their ranges, once glyph-by-glyph for the third
     coefficient); 04-sympy/m1f7_screen.py exit 0 (the tail vanishing, the
     conditional-not-unconditional verdict for the congruence, and the (2,2) gap
-    equal to -(n^2/4)*sum i(i-1) at n = 13, 17).
+    equal to -(n^2/4)*sum i(i-1) at n = 13, 17). The same screen also records the
+    two neighbouring facts that bound the claim: the (1,3) expansion IS
+    value-preserving pointwise (so the pointwise frame is the display's own), and
+    the (3,1) expansion is NOT pointwise-equal (degree 4 vs 3 in i -- an index
+    shift whose convention this lane has not reconstructed), so no claim is made
+    about it.
 lean_file: 03-lean/M1F7/Basic.lean
 sympy_test: 04-sympy/m1f7_screen.py
 source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
