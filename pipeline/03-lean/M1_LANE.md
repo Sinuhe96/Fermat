@@ -474,6 +474,44 @@ line itself does **not** hold for arbitrary `h` under either reading of its righ
 side, so it is conditional on the substituted equation (3) and must be stated
 with (3) as a hypothesis, exactly as the printed (7)–(10) were.
 
+### The print-defect sweep (2026-09-28) — instrument, candidate set, result
+
+Two defects in the two pages the lane actually checked (Q-005, Q-006) is a rate
+that says "stop walking into walls; scan the rest of the expansion first". So the
+lane now has a candidate generator for exactly this failure mode:
+`01-extract/defect_sweep.py` (host-side, read-only, exit 0, 0.4 s) reads the
+signed region records through the same loader `cite_index.py` uses and emits
+`out/defect_candidates.tsv` from two detectors:
+
+1. **shape-key drift** — lines whose digits are abstracted, grouped, and reported
+   when the group's prints are not all identical (catches page-break/re-print
+   drift);
+2. **summand-signature coefficient drift** — every `h^{HE} b^{n(BI)} (n^s abck)^K`
+   triple on a line is extracted, so two lines carrying the same *summand* are
+   two prints of ONE quantity whatever their coefficients look like; a group
+   whose prints have different coefficient text is reported. This is the Q-005
+   and Q-006 failure mode, and the tool **independently rediscovers both**: the
+   p. 7 group `P006-R3` (binomial side) + `P007-R2`/`P007-R3` (factorial side) +
+   the p. 8 re-prints comes out as 5 prints / 2 distinct coefficient forms.
+
+Measured over all 33 pages: 661 display lines, **13 candidate groups** (10
+summand-coefficient, 2 drift, 1 shown in both lists), and 0 rational constants
+found in non-sum display prose by the tool's own detector (the p. 33 `55/3` item
+is a `\frac` inside an assembly, so it is being swept separately by exact
+arithmetic rather than by that detector). Group 1 (10 prints / 6 distinct forms,
+pp. 23–28) and group 2 (8 prints / 4 distinct forms) are the `T`/`Q` assemblies
+that overlap the open query Q-004 — they are the same failure mode, one class
+wider than Q-004 recorded.
+
+The tool is a **candidate generator, not a judge** (that is why its groups are
+reported with the site list and the differing tokens, and why nothing here is a
+finding until a crop read plus an exact-arithmetic screen backs it — the rule
+that produced Q-005/Q-006). Triage of the 13 groups plus a constants sweep over
+pp. 9–33 is running as four parallel jobs; their verdicts land in §7 as
+`Q-00N` entries or as "cleared" notes, and the lane's leaf order is unaffected
+until then: it is still `M1-FRAG-05`/`06` (Q-005) and `M1-FRAG-07`/`08` (Q-006),
+both BLOCKED.
+
 ### Circularity audit — instrument and result (2026-09-28, user-requested)
 
 Anticipating a circular step in the main proof, I built a detector rather than
