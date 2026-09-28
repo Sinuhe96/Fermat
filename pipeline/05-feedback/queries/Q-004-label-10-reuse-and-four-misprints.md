@@ -14,8 +14,9 @@
 - signed region records: `pipeline/01-extract/regions/p006.yml`,
   `p014.yml`, `p022.yml`, `p023.yml`, `p024.yml`, `p025.yml`, `p026.yml`,
   `p027.yml`
-- 300 dpi crops read: `page-016-…-02.png`, `page-023-…-02.png`,
-  `page-025-…-01.png`, `page-026-…-02.png`
+- 300 dpi crops read: `page-016-300dpi-region-02.png`,
+  `page-023-300dpi-region-02.png`, `page-025-300dpi-region-01.png`,
+  `page-026-300dpi-region-02.png`
 
 ## Item 1 — the number `(10)` is used twice, for different results
 
