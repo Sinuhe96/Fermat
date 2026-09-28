@@ -131,11 +131,11 @@ only.
 | `M1-FRAG-01` | 6 | P006-R1 | 5 | L1-01, L6-01 | bổ đề 6 substituted, WLOG `u,v ≢ 0`, `(3)` rewritten |
 | `M1-FRAG-02` | 6 | P006-R2 (l1 + the (7′) tail of l4–6) | 2 | 01 | printed (7), (7′) — **needs the equation as hypothesis** (§7). Boundary revised down from 5 steps: (8),(9),(10) are the same computation at higher orders and belong to 03. |
 | `M1-FRAG-03` | 6 | P006-R2 (l7–9) | 3 | 01 | printed (8), (9), (10) — **DONE**, round 28 (R3 l1 moved to `M1-FRAG-04`) |
-| `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l1–4) | 8 | 03 | the `l+j` regrouping; **IN PROGRESS** — S0+S1 certified, S2 first half landed (`M1F4_sum_complement`), 6 steps TODO; content frozen and verified (§7, "S2 frozen") |
-| `M1-FRAG-05` | 7 | P007-R1 (l5–7), R2 (l1–5) | 8 | 04 | continuation of the regrouping |
-| `M1-FRAG-06` | 7 | P007-R2 (l6), R3 (l1–5) | 6 | 05 | closes the regrouping |
-| `M1-FRAG-07` | 8 | P008-R1 (l1–2), R2 (l1–7) | 9 | 06 | coefficient extraction |
-| `M1-FRAG-08` | 8 | P008-R3 (l1–6) | 6 | 07 | re-printed closure (see §7 duplicate-print note) |
+| `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l0–l6) | 5 | 03 | the `l+j` regrouping; **DONE** (rounds 34–55, 16 declarations, 5 steps all S1: the expansion, the binomial RHS, the `l+j ≥ 5` split with the `(j,l,i)` re-indexing, the absorbed tail + four explicit terms, the five X⁴ sums in factorial form). Regions MEASURED: `P007-R1` l0–l6 is what this leaf needs (l4–l6 = S3, l6+ = S4's display) |
+| `M1-FRAG-05` | 7 | P007-R2 (l0–l3) | 4–10 | 04 | **the ten remaining binomial→factorial conversions** (X³: 4 sums, X²: 3, X¹: 2, X⁰: 1), the continuation of `M1-FRAG-04`'s S4 display. Regions MEASURED 2026-09-28 — the earlier `R1 l5–7, R2 l1–5` came from estimated line numbers and cut across two displays |
+| `M1-FRAG-06` | 7 | P007-R2 (l4–l5), P007-R3 (l0–l4) | 3 | 05 | the RHS tail restatement + the `⇒` display rearranging the X⁴ sums (`i(i+1)(2+i)(3+i)`, `-n/6 Σ[3i(i+1)(i+2)+3i(i+1)+2i]`, …). R3 l0–l4 continues R2 l6 — ONE display across the page break |
+| `M1-FRAG-07` | 8 | P008-R1 (l0–l1), P008-R2 (l0–l2) | 3 | 06 | the first **congruence** `≡ … (mod n^{4s+2})` (with the printed `vì 5s ≥ 4s+2, s ≥ …`) followed by the `⇒` rearrangement of the X⁴ sums. Congruence steps are where a dropped term needs a divisibility side condition — the F3/F4 risk of this part |
+| `M1-FRAG-08` | 8 | P008-R2 (l3)–P008-R3 (l5) | 4 | 07 | second `≡ (mod n^{4s+2})`, the `⇒` rewrite splitting `Σ[3i(i+1)(i+2)+3i(i+1)+2i]` into three sums, third `≡ (mod n^{4s+2})` |
 | `M1-FRAG-09` | 9 | P009-R1 (l1–7) | 7 | 08 | `M`, display (11) |
 | `M1-FRAG-10` | 9 | P009-R2 (l1–8) | 8 | 09 | `B`, `C`, `D`, `E`, `F` definitions; the **"Quy ước"** on denominators |
 | `M1-FRAG-11` | 9–10 | P009-R3 (l1–5), P010-R1 (l1–3) | 8 | 10, **B-01** | first `mục B.1/B.2` application |
@@ -978,6 +978,19 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
   them; (2) the `M1-ASM-A…E` assemblies, where an undischarged leaf hypothesis
   would be the signature of a circularity; (3) `Q-003` must be resolved before
   any leaf from pp. 31–32.
+- **The pp. 7–8 structure, measured 2026-09-28 (this replaces the estimated
+  boundaries in the plan table).** The display is a *chain*: `=` (the absorbed
+  tail + four explicit terms, S3), `⇔ [filtered sum] + [fifteen sums in factorial
+  form]` (S4 + the ten conversions of `M1-FRAG-05`), then repeated
+  `⇒ [X⁴ sums rearranged]` / `≡ … (mod n^{4s+2})` pairs — the congruence lines
+  carry the author's own `vì 5s ≥ 4s+2` justification and are where every dropped
+  term needs a divisibility side condition (the F3/F4 risk of this part of the
+  proof). Region line counts: `P007-R1` 7 non-empty lines, `P007-R2` 8,
+  `P007-R3` 6 (l0–l4 continue R2 l6 — one display across the page break),
+  `P008-R1` 7, `P008-R2` 7, `P008-R3` 7. **A duplicate print is not a second
+  step**: `P008-R1` l2–l6 and `P008-R3` l0–l4 restate the same X⁴ sums around the
+  intervening lines, so the step count follows the `≡`/`⇒` transitions, not the
+  printed lines.
 - **Round ledger at the leaf's close: 55 rows — 19 S1 / 29 F2 / 2 ENV / 2 F1 /
   2 PROBE.** The two F1s are our own transcription/encoding defects, not the
   author's: the p. 6 R3 `ℕ`-unsafe exponent form (round 31) and the `: ℤ`
