@@ -1,0 +1,324 @@
+2026-09-28T02:58:48Z	WATCHDOG-START	tick=60	report=1800	stall=900	overrun=1500
+2026-09-28T02:58:49Z	HB	1	proc=0	state=-	latched=none	lastlog=32507s
+2026-09-28T02:59:49Z	HB	2	proc=0	state=-	latched=none	lastlog=32568s
+2026-09-28T03:00:50Z	HB	3	proc=0	state=-	latched=none	lastlog=32628s
+2026-09-28T03:01:50Z	HB	4	proc=0	state=-	latched=none	lastlog=32689s
+2026-09-28T03:02:51Z	HB	5	proc=0	state=-	latched=none	lastlog=32749s
+2026-09-28T03:03:51Z	HB	6	proc=0	state=-	latched=none	lastlog=32810s
+2026-09-28T03:04:52Z	HB	7	proc=0	state=-	latched=none	lastlog=32870s
+2026-09-28T03:05:52Z	HB	8	proc=0	state=-	latched=none	lastlog=32931s
+2026-09-28T03:06:53Z	HB	9	proc=0	state=-	latched=none	lastlog=32992s
+2026-09-28T03:07:54Z	HB	10	proc=0	state=-	latched=none	lastlog=33052s
+2026-09-28T03:08:54Z	HB	11	proc=0	state=-	latched=none	lastlog=33113s
+2026-09-28T03:09:55Z	HB	12	proc=0	state=-	latched=none	lastlog=33173s
+2026-09-28T03:10:55Z	HB	13	proc=0	state=-	latched=none	lastlog=33234s
+2026-09-28T03:11:56Z	HB	14	proc=0	state=-	latched=none	lastlog=33294s
+2026-09-28T03:12:56Z	HB	15	proc=0	state=-	latched=none	lastlog=33355s
+2026-09-28T03:13:57Z	HB	16	proc=0	state=-	latched=none	lastlog=33415s
+2026-09-28T03:14:57Z	HB	17	proc=0	state=-	latched=none	lastlog=33476s
+2026-09-28T03:15:58Z	HB	18	proc=0	state=-	latched=none	lastlog=33536s
+2026-09-28T03:16:58Z	HB	19	proc=0	state=-	latched=none	lastlog=33597s
+2026-09-28T03:17:59Z	HB	20	proc=0	state=-	latched=none	lastlog=33657s
+2026-09-28T03:18:59Z	HB	21	proc=0	state=-	latched=none	lastlog=33718s
+2026-09-28T03:20:00Z	HB	22	proc=0	state=-	latched=none	lastlog=33778s
+2026-09-28T03:21:00Z	LATCH	1	CONTENTION	2 lean/lake processes in container (triples round cost)
+2026-09-28T03:21:00Z	HB	23	proc=2	state=-	latched=CONTENTION	lastlog=33839s
+2026-09-28T03:22:01Z	HB	24	proc=2	state=-	latched=CONTENTION	lastlog=33900s
+2026-09-28T03:23:02Z	HB	25	proc=4	state=R1@46s	latched=CONTENTION	lastlog=33960s
+2026-09-28T03:24:02Z	HB	26	proc=4	state=R1@107s	latched=CONTENTION	lastlog=34021s
+2026-09-28T03:24:27Z	WATCHDOG-START	tick=60	report=1800	stall=900	overrun=1500
+2026-09-28T03:24:27Z	LATCH	1	CONTENTION	2 lake processes in container (a second compile round)
+2026-09-28T03:24:28Z	HB	1	proc=2 2	state=R1@132s	latched=CONTENTION	lastlog=34046s
+2026-09-28T03:25:05Z	ACK 1	false positive: a single `lake env lean` shows as lake + lean; counter fixed 03:24Z to count `lake` separately
+2026-09-28T03:25:05Z	ACK 2	true positive: two concurrent compile rounds (bg_82 diagnostic + bg_83 round 1); duplicate killed
+2026-09-28T03:25:28Z	HB	2	proc=1 1	state=R1@193s	latched=none	lastlog=34107s
+2026-09-28T03:26:29Z	HB	3	proc=1 1	state=R1@253s	latched=none	lastlog=34167s
+2026-09-28T03:27:30Z	HB	4	proc=1 1	state=R1@314s	latched=none	lastlog=34228s
+2026-09-28T03:28:30Z	HB	5	proc=0 0	state=-	latched=none	lastlog=34289s
+2026-09-28T03:29:31Z	HB	6	proc=0 0	state=-	latched=none	lastlog=34349s
+2026-09-28T03:30:31Z	HB	7	proc=0 0	state=-	latched=none	lastlog=34410s
+2026-09-28T03:31:32Z	HB	8	proc=0 0	state=-	latched=none	lastlog=34470s
+2026-09-28T03:32:32Z	HB	9	proc=0 0	state=-	latched=none	lastlog=34531s
+2026-09-28T03:33:33Z	HB	10	proc=0 0	state=-	latched=none	lastlog=34591s
+2026-09-28T03:34:33Z	HB	11	proc=0 0	state=-	latched=none	lastlog=34652s
+2026-09-28T03:35:34Z	HB	12	proc=0 0	state=-	latched=none	lastlog=34712s
+2026-09-28T03:36:34Z	HB	13	proc=0 0	state=-	latched=none	lastlog=34773s
+2026-09-28T03:37:35Z	HB	14	proc=0 0	state=-	latched=none	lastlog=34833s
+2026-09-28T03:38:35Z	HB	15	proc=0 0	state=-	latched=none	lastlog=34894s
+2026-09-28T03:39:36Z	HB	16	proc=0 0	state=-	latched=none	lastlog=34954s
+2026-09-28T03:40:36Z	HB	17	proc=0 0	state=-	latched=none	lastlog=35015s
+2026-09-28T03:41:37Z	HB	18	proc=0 0	state=-	latched=none	lastlog=35075s
+2026-09-28T03:42:37Z	HB	19	proc=0 0	state=-	latched=none	lastlog=35136s
+2026-09-28T04:03:20Z	HB	20	proc=0 0	state=-	latched=none	lastlog=36378s
+2026-09-28T04:03:20Z	REPORT	ticks=20	max_inflight_age=314s	latched=none	seq=1
+2026-09-28T04:04:20Z	HB	21	proc=0 0	state=-	latched=none	lastlog=36439s
+2026-09-28T04:05:21Z	HB	22	proc=0 0	state=-	latched=none	lastlog=36499s
+2026-09-28T04:06:21Z	HB	23	proc=0 0	state=-	latched=none	lastlog=36560s
+2026-09-28T04:07:22Z	HB	24	proc=0 0	state=-	latched=none	lastlog=36620s
+2026-09-28T04:08:22Z	HB	25	proc=0 0	state=-	latched=none	lastlog=36681s
+2026-09-28T04:09:23Z	HB	26	proc=0 0	state=-	latched=none	lastlog=36741s
+2026-09-28T04:10:23Z	HB	27	proc=0 0	state=-	latched=none	lastlog=36802s
+2026-09-28T04:11:24Z	HB	28	proc=0 0	state=-	latched=none	lastlog=36862s
+2026-09-28T04:12:24Z	HB	29	proc=1 0	state=R2@5s	latched=none	lastlog=36923s
+2026-09-28T04:13:25Z	HB	30	proc=1 1	state=R2@65s	latched=none	lastlog=36983s
+2026-09-28T04:14:26Z	HB	31	proc=1 1	state=R2@126s	latched=none	lastlog=37044s
+2026-09-28T04:15:27Z	HB	32	proc=1 1	state=R2@187s	latched=none	lastlog=37105s
+2026-09-28T04:16:27Z	HB	33	proc=1 1	state=R2@248s	latched=none	lastlog=37166s
+2026-09-28T04:17:28Z	HB	34	proc=1 1	state=R2@308s	latched=none	lastlog=37226s
+2026-09-28T04:18:28Z	HB	35	proc=0 0	state=-	latched=none	lastlog=37287s
+2026-09-28T04:19:29Z	HB	36	proc=1 1	state=R3@50s	latched=none	lastlog=37347s
+2026-09-28T04:20:30Z	HB	37	proc=1 1	state=R3@111s	latched=none	lastlog=37408s
+2026-09-28T04:21:30Z	HB	38	proc=1 1	state=R3@172s	latched=none	lastlog=37469s
+2026-09-28T04:22:31Z	HB	39	proc=1 1	state=R3@232s	latched=none	lastlog=37529s
+2026-09-28T04:23:32Z	HB	40	proc=1 1	state=R3@293s	latched=none	lastlog=37590s
+2026-09-28T04:24:32Z	HB	41	proc=0 0	state=-	latched=none	lastlog=37651s
+2026-09-28T04:25:33Z	HB	42	proc=1 1	state=R4@45s	latched=none	lastlog=37711s
+2026-09-28T04:26:34Z	HB	43	proc=1 1	state=R4@106s	latched=none	lastlog=37772s
+2026-09-28T04:27:34Z	HB	44	proc=1 1	state=R4@167s	latched=none	lastlog=37833s
+2026-09-28T04:28:35Z	HB	45	proc=1 1	state=R4@227s	latched=none	lastlog=37893s
+2026-09-28T04:29:35Z	HB	46	proc=1 1	state=R4@288s	latched=none	lastlog=37954s
+2026-09-28T04:30:36Z	HB	47	proc=0 0	state=-	latched=none	lastlog=38014s
+2026-09-28T04:31:37Z	HB	48	proc=1 1	state=R5@4s	latched=none	lastlog=38075s
+2026-09-28T04:32:37Z	HB	49	proc=1 1	state=R5@65s	latched=none	lastlog=38136s
+2026-09-28T04:33:38Z	HB	50	proc=1 1	state=R5@125s	latched=none	lastlog=38196s
+2026-09-28T04:33:38Z	REPORT	ticks=50	max_inflight_age=308s	latched=none	seq=1
+2026-09-28T04:34:39Z	HB	51	proc=1 1	state=R5@186s	latched=none	lastlog=38257s
+2026-09-28T04:35:39Z	HB	52	proc=1 1	state=R5@247s	latched=none	lastlog=38318s
+2026-09-28T04:36:40Z	HB	53	proc=1 1	state=R5@307s	latched=none	lastlog=38378s
+2026-09-28T04:37:40Z	HB	54	proc=0 0	state=-	latched=none	lastlog=38439s
+2026-09-28T04:38:41Z	HB	55	proc=1 0	state=R6@3s	latched=none	lastlog=38499s
+2026-09-28T04:39:42Z	HB	56	proc=1 1	state=R6@64s	latched=none	lastlog=38560s
+2026-09-28T04:40:42Z	HB	57	proc=1 1	state=R6@125s	latched=none	lastlog=38621s
+2026-09-28T04:41:43Z	HB	58	proc=1 1	state=R6@185s	latched=none	lastlog=38681s
+2026-09-28T04:42:44Z	HB	59	proc=1 1	state=R6@246s	latched=none	lastlog=38742s
+2026-09-28T04:43:44Z	HB	60	proc=1 1	state=R6@307s	latched=none	lastlog=38803s
+2026-09-28T04:44:45Z	HB	61	proc=0 0	state=-	latched=none	lastlog=38864s
+2026-09-28T04:45:46Z	HB	62	proc=1 1	state=R7@30s	latched=none	lastlog=38924s
+2026-09-28T04:46:46Z	HB	63	proc=1 1	state=R7@91s	latched=none	lastlog=38985s
+2026-09-28T04:47:47Z	HB	64	proc=1 1	state=R7@151s	latched=none	lastlog=39045s
+2026-09-28T04:48:48Z	HB	65	proc=1 1	state=R7@212s	latched=none	lastlog=39106s
+2026-09-28T04:49:48Z	HB	66	proc=1 1	state=R7@273s	latched=none	lastlog=39167s
+2026-09-28T04:50:49Z	HB	67	proc=1 1	state=R7@333s	latched=none	lastlog=39227s
+2026-09-28T04:51:49Z	HB	68	proc=0 0	state=-	latched=none	lastlog=39288s
+2026-09-28T04:52:50Z	HB	69	proc=1 1	state=R8@34s	latched=none	lastlog=39348s
+2026-09-28T04:53:51Z	HB	70	proc=1 1	state=R8@95s	latched=none	lastlog=39409s
+2026-09-28T04:54:51Z	HB	71	proc=1 1	state=R8@156s	latched=none	lastlog=39470s
+2026-09-28T04:55:52Z	HB	72	proc=1 1	state=R8@216s	latched=none	lastlog=39530s
+2026-09-28T04:56:53Z	HB	73	proc=1 1	state=R8@277s	latched=none	lastlog=39591s
+2026-09-28T04:57:53Z	HB	74	proc=1 1	state=R8@338s	latched=none	lastlog=39652s
+2026-09-28T04:58:54Z	HB	75	proc=1 1	state=R9@12s	latched=none	lastlog=39712s
+2026-09-28T04:59:55Z	HB	76	proc=1 1	state=R9@73s	latched=none	lastlog=39773s
+2026-09-28T05:00:55Z	HB	77	proc=1 1	state=R9@134s	latched=none	lastlog=39834s
+2026-09-28T05:01:56Z	HB	78	proc=1 1	state=R9@194s	latched=none	lastlog=39894s
+2026-09-28T05:02:57Z	HB	79	proc=1 1	state=R9@255s	latched=none	lastlog=39955s
+2026-09-28T05:03:57Z	HB	80	proc=1 1	state=R9@316s	latched=none	lastlog=40016s
+2026-09-28T05:03:57Z	REPORT	ticks=80	max_inflight_age=338s	latched=none	seq=1
+2026-09-28T05:04:58Z	HB	81	proc=1 0	state=R10@4s	latched=none	lastlog=40077s
+2026-09-28T05:05:59Z	HB	82	proc=1 1	state=R10@64s	latched=none	lastlog=40137s
+2026-09-28T05:06:59Z	HB	83	proc=1 1	state=R10@125s	latched=none	lastlog=40198s
+2026-09-28T05:08:00Z	HB	84	proc=1 1	state=R10@185s	latched=none	lastlog=40258s
+2026-09-28T05:09:01Z	HB	85	proc=1 1	state=R10@246s	latched=none	lastlog=40319s
+2026-09-28T05:10:01Z	HB	86	proc=1 1	state=R10@307s	latched=none	lastlog=40380s
+2026-09-28T05:11:02Z	HB	87	proc=1 1	state=R10@367s	latched=none	lastlog=40440s
+2026-09-28T05:12:03Z	HB	88	proc=0 0	state=-	latched=none	lastlog=40501s
+2026-09-28T05:13:03Z	HB	89	proc=1 1	state=R11@7s	latched=none	lastlog=40562s
+2026-09-28T05:14:04Z	HB	90	proc=1 1	state=R11@67s	latched=none	lastlog=40622s
+2026-09-28T05:15:05Z	HB	91	proc=1 1	state=R11@128s	latched=none	lastlog=40683s
+2026-09-28T05:16:05Z	HB	92	proc=1 1	state=R11@189s	latched=none	lastlog=40744s
+2026-09-28T05:17:06Z	HB	93	proc=1 1	state=R11@249s	latched=none	lastlog=40804s
+2026-09-28T05:18:07Z	HB	94	proc=1 1	state=R11@310s	latched=none	lastlog=40865s
+2026-09-28T05:19:07Z	HB	95	proc=0 0	state=-	latched=none	lastlog=40926s
+2026-09-28T05:20:08Z	HB	96	proc=1 1	state=R12@41s	latched=none	lastlog=40986s
+2026-09-28T05:21:09Z	HB	97	proc=1 1	state=R12@102s	latched=none	lastlog=41047s
+2026-09-28T05:22:09Z	HB	98	proc=1 1	state=R12@163s	latched=none	lastlog=41108s
+2026-09-28T05:23:10Z	HB	99	proc=1 1	state=R12@223s	latched=none	lastlog=41168s
+2026-09-28T05:24:11Z	HB	100	proc=1 1	state=R12@284s	latched=none	lastlog=41229s
+2026-09-28T05:25:11Z	HB	101	proc=1 1	state=R12@345s	latched=none	lastlog=41290s
+2026-09-28T05:26:12Z	HB	102	proc=0 0	state=-	latched=none	lastlog=41350s
+2026-09-28T05:27:12Z	HB	103	proc=1 1	state=R13@56s	latched=none	lastlog=41411s
+2026-09-28T05:28:13Z	HB	104	proc=1 1	state=R13@116s	latched=none	lastlog=41471s
+2026-09-28T05:29:14Z	HB	105	proc=1 1	state=R13@177s	latched=none	lastlog=41532s
+2026-09-28T05:30:14Z	HB	106	proc=1 1	state=R13@238s	latched=none	lastlog=41593s
+2026-09-28T05:31:15Z	HB	107	proc=1 1	state=R13@298s	latched=none	lastlog=41653s
+2026-09-28T05:32:16Z	HB	108	proc=1 1	state=R13@359s	latched=none	lastlog=41714s
+2026-09-28T05:33:16Z	HB	109	proc=1 1	state=R14@8s	latched=none	lastlog=41775s
+2026-09-28T05:34:17Z	HB	110	proc=1 1	state=R14@68s	latched=none	lastlog=41835s
+2026-09-28T05:34:17Z	REPORT	ticks=110	max_inflight_age=367s	latched=none	seq=1
+2026-09-28T05:35:18Z	HB	111	proc=1 1	state=R14@129s	latched=none	lastlog=41896s
+2026-09-28T05:36:18Z	HB	112	proc=1 1	state=R14@190s	latched=none	lastlog=41957s
+2026-09-28T05:37:19Z	HB	113	proc=1 1	state=R14@250s	latched=none	lastlog=42017s
+2026-09-28T05:38:20Z	HB	114	proc=1 1	state=R14@311s	latched=none	lastlog=42078s
+2026-09-28T05:39:20Z	HB	115	proc=0 0	state=-	latched=none	lastlog=42139s
+2026-09-28T05:40:21Z	HB	116	proc=1 1	state=R15@21s	latched=none	lastlog=42199s
+2026-09-28T05:41:21Z	HB	117	proc=1 1	state=R15@82s	latched=none	lastlog=42260s
+2026-09-28T05:42:22Z	HB	118	proc=1 1	state=R15@142s	latched=none	lastlog=42320s
+2026-09-28T05:43:23Z	HB	119	proc=1 1	state=R15@203s	latched=none	lastlog=42381s
+2026-09-28T05:44:23Z	HB	120	proc=1 1	state=R15@264s	latched=none	lastlog=42442s
+2026-09-28T05:45:24Z	HB	121	proc=1 1	state=R15@325s	latched=none	lastlog=42503s
+2026-09-28T05:46:25Z	HB	122	proc=0 0	state=-	latched=none	lastlog=42563s
+2026-09-28T05:47:25Z	HB	123	proc=0 0	state=-	latched=none	lastlog=42624s
+2026-09-28T05:48:26Z	HB	124	proc=1 1	state=R16@17s	latched=none	lastlog=42684s
+2026-09-28T05:49:26Z	HB	125	proc=1 1	state=R16@78s	latched=none	lastlog=42745s
+2026-09-28T05:50:27Z	HB	126	proc=1 1	state=R16@139s	latched=none	lastlog=42806s
+2026-09-28T05:51:28Z	HB	127	proc=1 1	state=R16@199s	latched=none	lastlog=42866s
+2026-09-28T05:52:28Z	HB	128	proc=1 1	state=R16@260s	latched=none	lastlog=42927s
+2026-09-28T05:53:29Z	HB	129	proc=1 1	state=R16@321s	latched=none	lastlog=42988s
+2026-09-28T05:54:30Z	HB	130	proc=0 0	state=-	latched=none	lastlog=43048s
+2026-09-28T05:55:30Z	HB	131	proc=0 0	state=-	latched=none	lastlog=43109s
+2026-09-28T05:56:31Z	HB	132	proc=0 0	state=-	latched=none	lastlog=43169s
+2026-09-28T05:57:31Z	HB	133	proc=0 0	state=-	latched=none	lastlog=43230s
+2026-09-28T05:58:32Z	HB	134	proc=0 0	state=-	latched=none	lastlog=43290s
+2026-09-28T05:59:32Z	HB	135	proc=0 0	state=-	latched=none	lastlog=43351s
+2026-09-28T06:00:33Z	HB	136	proc=0 0	state=-	latched=none	lastlog=43411s
+2026-09-28T06:01:33Z	HB	137	proc=0 0	state=-	latched=none	lastlog=43472s
+2026-09-28T06:02:34Z	HB	138	proc=0 0	state=-	latched=none	lastlog=43532s
+2026-09-28T06:03:34Z	HB	139	proc=0 0	state=-	latched=none	lastlog=43593s
+2026-09-28T06:04:35Z	HB	140	proc=0 0	state=-	latched=none	lastlog=43653s
+2026-09-28T06:04:35Z	REPORT	ticks=140	max_inflight_age=325s	latched=none	seq=1
+2026-09-28T06:05:35Z	HB	141	proc=0 0	state=-	latched=none	lastlog=43714s
+2026-09-28T06:06:36Z	HB	142	proc=0 0	state=-	latched=none	lastlog=43774s
+2026-09-28T06:07:36Z	HB	143	proc=0 0	state=-	latched=none	lastlog=43835s
+2026-09-28T06:08:37Z	HB	144	proc=0 0	state=-	latched=none	lastlog=43895s
+2026-09-28T06:09:37Z	HB	145	proc=0 0	state=-	latched=none	lastlog=43956s
+2026-09-28T06:10:38Z	HB	146	proc=0 0	state=-	latched=none	lastlog=44016s
+2026-09-28T06:11:38Z	HB	147	proc=0 0	state=-	latched=none	lastlog=44077s
+2026-09-28T06:12:39Z	HB	148	proc=0 0	state=-	latched=none	lastlog=44137s
+2026-09-28T06:13:39Z	HB	149	proc=0 0	state=-	latched=none	lastlog=44198s
+2026-09-28T06:14:40Z	HB	150	proc=0 0	state=-	latched=none	lastlog=44258s
+2026-09-28T06:15:41Z	HB	151	proc=0 0	state=-	latched=none	lastlog=44319s
+2026-09-28T06:16:44Z	HB	152	proc=0 0	state=-	latched=none	lastlog=44380s
+2026-09-28T06:17:45Z	HB	153	proc=0 0	state=-	latched=none	lastlog=44443s
+2026-09-28T06:18:46Z	HB	154	proc=0 0	state=-	latched=none	lastlog=44504s
+2026-09-28T06:19:46Z	HB	155	proc=0 0	state=-	latched=none	lastlog=44565s
+2026-09-28T06:20:47Z	HB	156	proc=0 0	state=-	latched=none	lastlog=44625s
+2026-09-28T06:21:47Z	HB	157	proc=0 0	state=-	latched=none	lastlog=44686s
+2026-09-28T06:22:48Z	HB	158	proc=0 0	state=-	latched=none	lastlog=44746s
+2026-09-28T06:23:48Z	HB	159	proc=0 0	state=-	latched=none	lastlog=44807s
+2026-09-28T06:24:49Z	HB	160	proc=0 0	state=-	latched=none	lastlog=44867s
+2026-09-28T06:25:50Z	HB	161	proc=0 0	state=-	latched=none	lastlog=44928s
+2026-09-28T06:26:50Z	HB	162	proc=0 0	state=-	latched=none	lastlog=44989s
+2026-09-28T06:27:51Z	HB	163	proc=0 0	state=-	latched=none	lastlog=45049s
+2026-09-28T06:28:51Z	HB	164	proc=0 0	state=-	latched=none	lastlog=45110s
+2026-09-28T06:29:52Z	HB	165	proc=0 0	state=-	latched=none	lastlog=45170s
+2026-09-28T06:30:52Z	LATCH	2	CONTENTION	compiler running (1 lake / 0 lean) with no in-flight marker: another lane or session
+2026-09-28T06:30:53Z	HB	166	proc=1 0	state=-	latched=CONTENTION	lastlog=45231s
+2026-09-28T06:31:53Z	HB	167	proc=0 0	state=-	latched=none	lastlog=45292s
+2026-09-28T06:32:54Z	HB	168	proc=0 0	state=-	latched=none	lastlog=45352s
+2026-09-28T06:33:54Z	HB	169	proc=0 0	state=-	latched=none	lastlog=45413s
+2026-09-28T06:34:55Z	HB	170	proc=0 0	state=-	latched=none	lastlog=45473s
+2026-09-28T06:34:55Z	REPORT	ticks=170	max_inflight_age=0s	latched=none	seq=2
+2026-09-28T06:35:55Z	HB	171	proc=0 0	state=-	latched=none	lastlog=45534s
+2026-09-28T06:36:56Z	HB	172	proc=0 0	state=-	latched=none	lastlog=45594s
+2026-09-28T06:37:56Z	HB	173	proc=0 0	state=-	latched=none	lastlog=45655s
+2026-09-28T06:38:57Z	HB	174	proc=0 0	state=-	latched=none	lastlog=45715s
+2026-09-28T06:39:57Z	HB	175	proc=0 0	state=-	latched=none	lastlog=45776s
+2026-09-28T06:40:58Z	HB	176	proc=0 0	state=-	latched=none	lastlog=45836s
+2026-09-28T06:41:58Z	HB	177	proc=0 0	state=-	latched=none	lastlog=45897s
+2026-09-28T06:42:59Z	HB	178	proc=0 0	state=-	latched=none	lastlog=45957s
+2026-09-28T06:43:59Z	HB	179	proc=0 0	state=-	latched=none	lastlog=46018s
+2026-09-28T06:45:00Z	HB	180	proc=1 1	state=R22@32s	latched=none	lastlog=46078s
+2026-09-28T06:46:01Z	HB	181	proc=0 0	state=-	latched=none	lastlog=46139s
+2026-09-28T06:47:01Z	HB	182	proc=0 0	state=-	latched=none	lastlog=46200s
+2026-09-28T06:48:02Z	HB	183	proc=0 0	state=-	latched=none	lastlog=46260s
+2026-09-28T06:49:02Z	HB	184	proc=0 0	state=-	latched=none	lastlog=46321s
+2026-09-28T06:50:03Z	HB	185	proc=0 0	state=-	latched=none	lastlog=46381s
+2026-09-28T06:51:03Z	HB	186	proc=0 0	state=-	latched=none	lastlog=46442s
+2026-09-28T06:52:04Z	HB	187	proc=0 0	state=-	latched=none	lastlog=46502s
+2026-09-28T06:53:04Z	HB	188	proc=0 0	state=-	latched=none	lastlog=46563s
+2026-09-28T06:54:05Z	HB	189	proc=0 0	state=-	latched=none	lastlog=46623s
+2026-09-28T06:55:05Z	HB	190	proc=0 0	state=-	latched=none	lastlog=46684s
+2026-09-28T06:56:06Z	HB	191	proc=0 0	state=-	latched=none	lastlog=46745s
+2026-09-28T06:57:07Z	HB	192	proc=0 0	state=-	latched=none	lastlog=46805s
+2026-09-28T06:58:07Z	HB	193	proc=0 0	state=-	latched=none	lastlog=46866s
+2026-09-28T06:59:08Z	HB	194	proc=0 0	state=-	latched=none	lastlog=46926s
+2026-09-28T07:00:08Z	HB	195	proc=0 0	state=-	latched=none	lastlog=46987s
+2026-09-28T07:01:09Z	HB	196	proc=0 0	state=-	latched=none	lastlog=47047s
+2026-09-28T07:02:09Z	HB	197	proc=0 0	state=-	latched=none	lastlog=47108s
+2026-09-28T07:03:10Z	HB	198	proc=0 0	state=-	latched=none	lastlog=47168s
+2026-09-28T07:04:10Z	HB	199	proc=0 0	state=-	latched=none	lastlog=47229s
+2026-09-28T07:05:11Z	HB	200	proc=0 0	state=-	latched=none	lastlog=47290s
+2026-09-28T07:05:11Z	REPORT	ticks=200	max_inflight_age=32s	latched=none	seq=2
+2026-09-28T07:06:12Z	HB	201	proc=0 0	state=-	latched=none	lastlog=47350s
+2026-09-28T07:07:12Z	HB	202	proc=0 0	state=-	latched=none	lastlog=47411s
+2026-09-28T07:08:13Z	HB	203	proc=0 0	state=-	latched=none	lastlog=47471s
+2026-09-28T07:09:13Z	HB	204	proc=0 0	state=-	latched=none	lastlog=47532s
+2026-09-28T07:10:14Z	HB	205	proc=0 0	state=-	latched=none	lastlog=47592s
+2026-09-28T07:11:14Z	HB	206	proc=0 0	state=-	latched=none	lastlog=47653s
+2026-09-28T07:12:15Z	HB	207	proc=0 0	state=-	latched=none	lastlog=47713s
+2026-09-28T07:13:15Z	HB	208	proc=0 0	state=-	latched=none	lastlog=47774s
+2026-09-28T07:14:16Z	HB	209	proc=0 0	state=-	latched=none	lastlog=47834s
+2026-09-28T07:15:16Z	HB	210	proc=0 0	state=-	latched=none	lastlog=47895s
+2026-09-28T07:16:17Z	HB	211	proc=0 0	state=-	latched=none	lastlog=47955s
+2026-09-28T07:17:17Z	HB	212	proc=0 0	state=-	latched=none	lastlog=48016s
+2026-09-28T07:18:18Z	HB	213	proc=0 0	state=-	latched=none	lastlog=48076s
+2026-09-28T07:19:18Z	HB	214	proc=0 0	state=-	latched=none	lastlog=48137s
+2026-09-28T07:20:19Z	HB	215	proc=0 0	state=-	latched=none	lastlog=48197s
+2026-09-28T07:21:19Z	HB	216	proc=0 0	state=-	latched=none	lastlog=48258s
+2026-09-28T07:22:20Z	HB	217	proc=0 0	state=-	latched=none	lastlog=48318s
+2026-09-28T07:23:20Z	HB	218	proc=0 0	state=-	latched=none	lastlog=48379s
+2026-09-28T07:24:21Z	HB	219	proc=0 0	state=-	latched=none	lastlog=48439s
+2026-09-28T07:25:21Z	HB	220	proc=0 0	state=-	latched=none	lastlog=48500s
+2026-09-28T07:26:22Z	HB	221	proc=0 0	state=-	latched=none	lastlog=48560s
+2026-09-28T07:27:22Z	HB	222	proc=0 0	state=-	latched=none	lastlog=48621s
+2026-09-28T07:28:23Z	HB	223	proc=0 0	state=-	latched=none	lastlog=48681s
+2026-09-28T07:29:23Z	HB	224	proc=0 0	state=-	latched=none	lastlog=48742s
+2026-09-28T07:30:24Z	HB	225	proc=0 0	state=-	latched=none	lastlog=48802s
+2026-09-28T07:31:24Z	HB	226	proc=0 0	state=-	latched=none	lastlog=48863s
+2026-09-28T07:32:25Z	HB	227	proc=0 0	state=-	latched=none	lastlog=48923s
+2026-09-28T07:33:25Z	HB	228	proc=0 0	state=-	latched=none	lastlog=48984s
+2026-09-28T07:34:26Z	HB	229	proc=0 0	state=-	latched=none	lastlog=49044s
+2026-09-28T07:35:26Z	HB	230	proc=0 0	state=-	latched=none	lastlog=49105s
+2026-09-28T07:35:26Z	REPORT	ticks=230	max_inflight_age=0s	latched=none	seq=2
+2026-09-28T07:36:28Z	HB	231	proc=0 0	state=-	latched=none	lastlog=49167s
+2026-09-28T07:37:29Z	HB	232	proc=0 0	state=-	latched=none	lastlog=49227s
+2026-09-28T07:38:29Z	HB	233	proc=0 0	state=-	latched=none	lastlog=49288s
+2026-09-28T07:39:30Z	HB	234	proc=0 0	state=-	latched=none	lastlog=49348s
+2026-09-28T07:40:30Z	HB	235	proc=0 0	state=-	latched=none	lastlog=49409s
+2026-09-28T07:41:31Z	HB	236	proc=0 0	state=-	latched=none	lastlog=49469s
+2026-09-28T07:42:31Z	HB	237	proc=0 0	state=-	latched=none	lastlog=49530s
+2026-09-28T07:43:32Z	HB	238	proc=0 0	state=-	latched=none	lastlog=49590s
+2026-09-28T07:44:32Z	HB	239	proc=0 0	state=-	latched=none	lastlog=49651s
+2026-09-28T07:45:33Z	HB	240	proc=0 0	state=-	latched=none	lastlog=49711s
+2026-09-28T07:46:33Z	HB	241	proc=0 0	state=-	latched=none	lastlog=49772s
+2026-09-28T07:47:34Z	HB	242	proc=0 0	state=-	latched=none	lastlog=49832s
+2026-09-28T07:48:34Z	HB	243	proc=0 0	state=-	latched=none	lastlog=49893s
+2026-09-28T07:49:35Z	HB	244	proc=0 0	state=-	latched=none	lastlog=49953s
+2026-09-28T07:50:35Z	HB	245	proc=0 0	state=-	latched=none	lastlog=50014s
+2026-09-28T07:51:36Z	HB	246	proc=0 0	state=-	latched=none	lastlog=50074s
+2026-09-28T07:52:36Z	HB	247	proc=0 0	state=-	latched=none	lastlog=50135s
+2026-09-28T07:53:37Z	HB	248	proc=0 0	state=-	latched=none	lastlog=50195s
+2026-09-28T07:54:37Z	HB	249	proc=0 0	state=-	latched=none	lastlog=50256s
+2026-09-28T07:55:38Z	HB	250	proc=0 0	state=-	latched=none	lastlog=50316s
+2026-09-28T07:56:38Z	HB	251	proc=0 0	state=-	latched=none	lastlog=50377s
+2026-09-28T07:57:39Z	HB	252	proc=0 0	state=-	latched=none	lastlog=50437s
+2026-09-28T07:58:39Z	HB	253	proc=0 0	state=-	latched=none	lastlog=50498s
+2026-09-28T07:59:40Z	HB	254	proc=0 0	state=-	latched=none	lastlog=50558s
+2026-09-28T08:00:40Z	HB	255	proc=0 0	state=-	latched=none	lastlog=50619s
+2026-09-28T08:01:41Z	HB	256	proc=0 0	state=-	latched=none	lastlog=50679s
+2026-09-28T08:02:41Z	HB	257	proc=0 0	state=-	latched=none	lastlog=50740s
+2026-09-28T08:03:42Z	HB	258	proc=0 0	state=-	latched=none	lastlog=50800s
+2026-09-28T08:04:42Z	HB	259	proc=0 0	state=-	latched=none	lastlog=50861s
+2026-09-28T08:05:43Z	HB	260	proc=0 0	state=-	latched=none	lastlog=50921s
+2026-09-28T08:05:43Z	REPORT	ticks=260	max_inflight_age=0s	latched=none	seq=2
+2026-09-28T08:06:43Z	HB	261	proc=0 0	state=-	latched=none	lastlog=50982s
+2026-09-28T08:07:44Z	HB	262	proc=0 0	state=-	latched=none	lastlog=51042s
+2026-09-28T08:08:44Z	HB	263	proc=0 0	state=-	latched=none	lastlog=51103s
+2026-09-28T08:09:45Z	HB	264	proc=0 0	state=-	latched=none	lastlog=51163s
+2026-09-28T08:10:45Z	HB	265	proc=0 0	state=-	latched=none	lastlog=51224s
+2026-09-28T08:11:46Z	HB	266	proc=0 0	state=-	latched=none	lastlog=51284s
+2026-09-28T08:12:46Z	HB	267	proc=0 0	state=-	latched=none	lastlog=51345s
+2026-09-28T08:13:46Z	HB	268	proc=0 0	state=-	latched=none	lastlog=51405s
+2026-09-28T08:14:47Z	HB	269	proc=0 0	state=-	latched=none	lastlog=51466s
+2026-09-28T08:15:47Z	HB	270	proc=0 0	state=-	latched=none	lastlog=51526s
+2026-09-28T08:16:48Z	LATCH	3	CONTENTION	compiler running (1 lake / 1 lean) with no in-flight marker: another lane or session
+2026-09-28T08:16:48Z	HB	271	proc=1 1	state=-	latched=CONTENTION	lastlog=51587s
+2026-09-28T08:17:49Z	HB	272	proc=0 0	state=-	latched=none	lastlog=51647s
+2026-09-28T08:19:04Z	WATCHDOG-START	tick=60	report=1800	stall=900	overrun=1500
+2026-09-28T08:19:05Z	HB	1	proc=0 0	state=-	latched=none	lastlog=78s
+2026-09-28T08:20:06Z	HB	2	proc=1 1	state=R25@8s	latched=none	lastlog=8s
+2026-09-28T08:21:06Z	HB	3	proc=0 0	state=-	latched=none	lastlog=59s
+2026-09-28T08:22:07Z	HB	4	proc=0 0	state=-	latched=none	lastlog=31s
+2026-09-28T08:23:07Z	HB	5	proc=0 0	state=-	latched=none	lastlog=12s
+2026-09-28T08:24:08Z	HB	6	proc=0 0	state=-	latched=none	lastlog=1s
+2026-09-28T08:25:08Z	HB	7	proc=0 0	state=-	latched=none	lastlog=62s
+2026-09-28T08:26:09Z	HB	8	proc=0 0	state=-	latched=none	lastlog=122s
