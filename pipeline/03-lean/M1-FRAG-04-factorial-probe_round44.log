@@ -1,0 +1,24 @@
+Nat.choose_eq_descFactorial_div_factorial : ∀ (n k : ℕ), n.choose k = n.descFactorial k / k.factorial
+@Nat.choose_eq_factorial_div_factorial : ∀ {n k : ℕ},
+  k ≤ n → n.choose k = n.factorial / (k.factorial * (n - k).factorial)
+probes/M1F4-factorial.probe.lean:10:8: error(lean.unknownIdentifier): Unknown constant `Nat.descFactorial_eq_choose_mul_factorial`
+Nat.descFactorial_eq_factorial_mul_choose : ∀ (n k : ℕ), n.descFactorial k = k.factorial * n.choose k
+Nat.descFactorial_succ : ∀ (n k : ℕ), n.descFactorial (k + 1) = (n - k) * n.descFactorial k
+Nat.descFactorial_eq_prod_range : ∀ (n k : ℕ), n.descFactorial k = ∏ i ∈ Finset.range k, (n - i)
+Nat.factorial_succ : ∀ (n : ℕ), (n + 1).factorial = (n + 1) * n.factorial
+Nat.factorial : ℕ → ℕ
+Nat.choose_one_right : ∀ (n : ℕ), n.choose 1 = n
+Nat.choose_two_right : ∀ (n : ℕ), n.choose 2 = n * (n - 1) / 2
+Nat.choose_self : ∀ (n : ℕ), n.choose n = 1
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+@Nat.choose_mul_factorial_mul_factorial : ∀ {n k : ℕ},
+  k ≤ n → n.choose k * k.factorial * (n - k).factorial = n.factorial
+probes/M1F4-factorial.probe.lean:21:8: error(lean.unknownIdentifier): Unknown constant `Nat.succ_mul_choose_eq`
+probes/M1F4-factorial.probe.lean:22:8: error(lean.unknownIdentifier): Unknown constant `Nat.mul_choose_eq`
+Nat.choose_succ_succ : ∀ (n k : ℕ), n.succ.choose k.succ = n.choose k + n.choose k.succ
+@Nat.cast_div : ∀ {K : Type u_1} [inst : DivisionSemiring K] {m n : ℕ}, n ∣ m → ↑n ≠ 0 → ↑(m / n) = ↑m / ↑n
+@Nat.div_mul_cancel : ∀ {n m : ℕ}, n ∣ m → m / n * n = m
+Nat.mul_div_right : ∀ (n : ℕ) {m : ℕ}, 0 < m → m * n / m = n
+@Nat.div_eq_of_lt : ∀ {a b : ℕ}, a < b → a / b = 0
+@Nat.cast_mul : ∀ {α : Type u_1} [inst : NonAssocSemiring α] (m n : ℕ), ↑(m * n) = ↑m * ↑n
+@Nat.descFactorial_eq_zero_iff_lt : ∀ {n k : ℕ}, n.descFactorial k = 0 ↔ n < k

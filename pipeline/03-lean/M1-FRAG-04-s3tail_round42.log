@@ -1,0 +1,22 @@
+M1F4/Basic.lean:341:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i
+in the target expression
+  ↑(n.choose i) * (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i =
+    ↑(n.choose i) * a ^ (n * (n - 1 - i)) * (↑n ^ s * (a * b * c * k)) ^ i
+
+n : ℕ
+hn : 5 ≤ n
+s : ℕ
+a b c k : ℤ
+i : ℕ
+hi : i ∈ Finset.range 5
+hi5 : i < 5
+hin : i + 1 ≤ n
+⊢ ↑(n.choose i) * (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i =
+    ↑(n.choose i) * a ^ (n * (n - 1 - i)) * (↑n ^ s * (a * b * c * k)) ^ i
+'M1F4.M1F4_step_S0_triple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S1_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_sum_complement' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_reindex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S2_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S3_tail' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

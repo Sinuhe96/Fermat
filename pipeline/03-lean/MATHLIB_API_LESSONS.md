@@ -989,3 +989,37 @@ Each item below cost one round to learn; all are cheap to avoid now.
    (`rw [show … from (pow_mul a (n-1) (n-i)).symm]`), or `nth_rewrite`
    (`M1-FRAG-04`, round 33). The same applies to `mul_pow` when both sides carry
    a bracket power.
+
+13. **A `: ℤ` ascription on a subtraction switches it from ℕ-truncated to ℤ
+   subtraction, and the difference is invisible in the source text.**
+   `((n - 1 - i) : ℤ)` elaborates as `(↑n - 1 - ↑i)` — an *untruncated* ℤ
+   subtraction — whereas `((n - 1 - i : ℕ) : ℤ)` is the ℕ-truncated cast that a
+   `Nat.choose` bridge produces when instantiated at `n - 1 - i`. For `i > n - 1`
+   the two differ (exactly where the paper's ranges end), so a per-term `ring`
+   comparing them fails *and its normal form looks like a mystery three-term
+   sum*. Cost: 6 rounds in `M1-FRAG-04`'s S4 (rounds 46-53). **If `ring`/
+   `ring_nf` fails on a cast-bearing goal, DELETE the tactic and recompile to read
+   the pristine goal** — the two sides were then visibly `↑(n-1-i)` vs
+   `(↑n - 1 - ↑i)`. Also write the ℕ ascription explicitly in every statement
+   whose factors come from a `Nat` bridge.
+
+14. **A shifted `Nat.choose` bridge needs a second lemma stated in the paper's
+   own shape.** Instantiating `C_k^4 = k(k-1)(k-2)(k-3)/24` at `k = n - 1 - i`
+   yields `(n-1-i) * ((n-1-i)-1) * ((n-1-i)-2) * ((n-1-i)-3) / 24`, while the
+   author prints `(n-1-i)(n-2-i)(n-3-i)(n-4-i)/24`. The two are ℕ-equal but the
+   subterm equalities (`(n-1-i)-1 = n-2-i`, …) are *linear truncation* facts, so
+   `omega` closes them one by one and `congr 1` puts them under the cast; `ring`
+   can never see them. Add one `_shift` lemma per `k` (`M1-FRAG-04` S4).
+
+15. **A declaration must be defined before use, including across a bulk
+   replace.** The three `_shift` bridges above were appended after the step that
+   used them — "unknown identifier"; and a bulk `replace` had handed `hA1` the
+   `_shift` form where it needed the unshifted `i.choose 4`, because the two
+   `rw` lines were textually identical. Prefer per-block (sliced) edits over
+   whole-file replaces when two proofs share a tactic line.
+
+16. **A step whose proof is a rename can be a genuine verification step, but only
+   if the two sides are different expressions.** S4 (`M1F4_step_S4_factorial`)
+   relates the binomial form to the author's factorial form; each of its five
+   `Finset.sum_congr` obligations is closed by a `Nat.choose` bridge, and one of
+   them is closed by the `rw` alone (`rfl` — lesson 10).

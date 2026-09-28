@@ -151,7 +151,7 @@ author_steps: |
      Content: `C_i^4 = i(i-1)(i-2)(i-3)/24` and
      `C_{n-1-i}^4 = (n-1-i)(n-2-i)(n-3-i)(n-4-i)/24` (and the `C_i^k`/`C_{n-1-i}^k`
      for k = 1,2,3 in the mixed pairs) - pure `Nat.choose`-to-falling-factorial
-     identities, no side condition on `n`. `[TODO]`
+     identities, no side condition on `n`. `[Lean: M1F4_step_S4_factorial; support M1F4_choose_fact_one/two/three/four + the three _shift forms]`
   S5+ THE REMAINING TEN conversions are NOT in this chunk: the display is one
      continuous re-statement of the identity whose middle (the X^3 and X^2 sums)
      is printed in P007-R2 and whose last lines (X, X^0 and the X^3/X^2 tail of
@@ -172,7 +172,7 @@ sympy_test: 04-sympy/m1_common.py
 source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
 extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
 fidelity: PASS_WITH_MANUAL
-renders: page-006-300dpi-region-03.png, page-007-300dpi-region-01.png
-lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_sum_complement, M1F4_reindex, M1F4_step_S0_triple, M1F4_step_S1_binomial, M1F4_step_S2_split
+renders: page-006-300dpi-region-03.png page-007-300dpi-region-01.png
+lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_sum_complement, M1F4_reindex, M1F4_choose_fact_one, M1F4_choose_fact_two, M1F4_choose_fact_three, M1F4_choose_fact_four, M1F4_choose_fact_four_shift, M1F4_choose_fact_three_shift, M1F4_choose_fact_two_shift, M1F4_step_S0_triple, M1F4_step_S1_binomial, M1F4_step_S2_split, M1F4_step_S3_tail, M1F4_step_S4_factorial
 regions: P006-R3, P007-R1
-status: IN_PROGRESS
+status: DONE

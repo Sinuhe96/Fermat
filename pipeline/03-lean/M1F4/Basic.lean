@@ -107,7 +107,7 @@ lemma M1F4_absorb (n s i : ℕ) (a b c k : ℤ) (hi : i + 1 ≤ n) :
     have e2 : i + 1 + m - i = m + 1 := by omega
     have e3 : i + 1 + m - 1 = i + m := by omega
     rw [e1, e2, e3]
-    ring
+    ring_nf
   have h_pow : a ^ (n * (n - 1 - i)) * a ^ i = a ^ ((n - 1) * (n - i)) := by
     rw [← pow_add, h_exp]
   -- Rewritten right-to-left with an explicit equation for the first step: a plain
@@ -161,7 +161,7 @@ theorem M1F4_step_S1_binomial {n s : ℕ} {a b c k h : ℤ} (hn : 1 ≤ n) (ha :
     have h1 : a ^ n = a * a ^ (n - 1) := by
       rw [← pow_succ', Nat.sub_add_cancel hn]
     rw [h1]
-    ring
+    ring_nf
   have hcancel : (∑ i ∈ Finset.range n,
         (h - (n : ℤ) ^ s * (a * b * c * k)) ^ (n - 1 - i)
           * (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ i)
@@ -301,6 +301,219 @@ theorem M1F4_step_S2_split (n : ℕ) (f : ℕ → ℕ → ℕ → ℤ) :
       simp [hp, h4]
   rw [M1F4_sum_complement n f, hD, M1F4_reindex n f]
 
+/-- **S3 — the right-hand side as the author prints it** (`P007-R1` lines 4-6).
+
+After the split, the author rewrites the identity's *right-hand side*: the
+`i ≥ 5` part is printed with the `a^i` ABSORBED,
+`Σ_{i=5}^{n} C_n^i a^{(n-1)(n-i)} (n^s bck)^i`, and the `i ≤ 4` terms are printed
+unabsorbed, `a^{n(n-1)} + n a^{n(n-2)} n^s abck + [n(n-1)/2] a^{n(n-3)} (n^s abck)^2
++ [n(n-1)(n-2)/6] a^{n(n-4)} (n^s abck)^3 + [n(n-1)(n-2)(n-3)/24] a^{n(n-5)}
+(n^s abck)^4`.
+
+This is the step: split the range at `5` (`Finset.sum_range_add_sum_Ico`) and
+absorb per term. The per-term step is exactly `M1F4_absorb`, whose side condition
+`i + 1 ≤ n` holds for the five explicit terms because `5 ≤ n` — the author's
+`n > 11`, which is why `hn` is a hypothesis here (F3: a side condition the paper
+treats implicitly).
+
+The five coefficients are stated as `(n.choose i : ℤ)`, their exact value; the
+printed `n(n-1)/2`, `n(n-1)(n-2)/6`, `n(n-1)(n-2)(n-3)/24` are the author's
+evaluations of `C_n^2`, `C_n^3`, `C_n^4` (the `Nat.choose`-to-factorial bridge is
+a separate identity, needed again for the factorial display of S4).
+
+ℕ-safety: every range here is ℕ-safe — the `i = n` term of the absorbed sum is
+`(a^(n-1))^0 (n^s bck)^n = (n^s bck)^n`, the same value the unabsorbed print has
+over ℤ exponents, whereas `a^{n(n-1-i)}` *at* `i = n` would truncate to `a^0`. -/
+theorem M1F4_step_S3_tail (n : ℕ) (hn : 5 ≤ n) (s : ℕ) (a b c k : ℤ) :
+    (∑ i ∈ Finset.range (n + 1),
+        (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+      = (∑ i ∈ Finset.Ico 5 (n + 1),
+          (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+        + ∑ i ∈ Finset.range 5,
+            (n.choose i : ℤ) * a ^ (n * (n - 1 - i)) * ((n : ℤ) ^ s * (a * b * c * k)) ^ i := by
+  have h5 : (∑ i ∈ Finset.range 5,
+        (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+      = ∑ i ∈ Finset.range 5,
+          (n.choose i : ℤ) * a ^ (n * (n - 1 - i)) * ((n : ℤ) ^ s * (a * b * c * k)) ^ i := by
+    refine Finset.sum_congr rfl fun i hi => ?_
+    have hi5 : i < 5 := Finset.mem_range.mp hi
+    have hin : i + 1 ≤ n := by omega
+    calc (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i
+        = (n.choose i : ℤ)
+            * ((a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i) := by ring
+      _ = (n.choose i : ℤ)
+            * (a ^ (n * (n - 1 - i)) * ((n : ℤ) ^ s * (a * b * c * k)) ^ i) := by
+            rw [M1F4_absorb n s i a b c k hin]
+      _ = (n.choose i : ℤ) * a ^ (n * (n - 1 - i))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ i := by ring
+  have hsplit :
+      (∑ i ∈ Finset.range 5,
+            (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+          + ∑ i ∈ Finset.Ico 5 (n + 1),
+            (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i
+        = ∑ i ∈ Finset.range (n + 1),
+            (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i :=
+    Finset.sum_range_add_sum_Ico
+      (fun i => (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+      (m := 5) (by omega)
+  calc (∑ i ∈ Finset.range (n + 1),
+          (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+      = (∑ i ∈ Finset.range 5,
+            (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+          + ∑ i ∈ Finset.Ico 5 (n + 1),
+            (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i := by
+        rw [← hsplit]
+    _ = (∑ i ∈ Finset.Ico 5 (n + 1),
+            (n.choose i : ℤ) * (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i)
+          + ∑ i ∈ Finset.range 5,
+            (n.choose i : ℤ) * a ^ (n * (n - 1 - i)) * ((n : ℤ) ^ s * (a * b * c * k)) ^ i := by
+        rw [h5, add_comm]
+
+/-! ### Support for S4 — `C_i^k` in the paper's factorial form
+
+The author prints the five `X^4` boundary sums (p. 7, `P007-R1` lines 8-12) with
+the binomial coefficients *evaluated*: `1/24 Σ i(i-1)(i-2)(i-3) …`,
+`1/24 Σ (n-1-i)(n-2-i)(n-3-i)(n-4-i) …`, `-1/6 Σ i(n-1-i)(n-2-i)(n-3-i) …`, ….
+These four lemmas are that evaluation (`Nat.choose_eq_descFactorial_div_factorial`
+plus `Nat.descFactorial_eq_prod_range`), per term and with ℕ division, which is
+the ℤ-safe reading: `24 ∣ i(i-1)(i-2)(i-3)` term by term, so the author's factor
+`1/24` in front of the sum is the same as dividing each term. -/
+
+lemma M1F4_choose_fact_one (i : ℕ) : (i.choose 1 : ℤ) = (i : ℤ) := by
+  rw [Nat.choose_one_right]
+
+lemma M1F4_choose_fact_two (i : ℕ) :
+    (i.choose 2 : ℤ) = ((i * (i - 1) / 2 : ℕ) : ℤ) := by
+  rw [Nat.choose_two_right]
+
+lemma M1F4_choose_fact_three (i : ℕ) :
+    (i.choose 3 : ℤ) = ((i * (i - 1) * (i - 2) / 6 : ℕ) : ℤ) := by
+  rw [Nat.choose_eq_descFactorial_div_factorial, Nat.descFactorial_eq_prod_range]
+  norm_num [Finset.prod_range_succ, Nat.factorial]
+
+lemma M1F4_choose_fact_four (i : ℕ) :
+    (i.choose 4 : ℤ) = ((i * (i - 1) * (i - 2) * (i - 3) / 24 : ℕ) : ℤ) := by
+  rw [Nat.choose_eq_descFactorial_div_factorial, Nat.descFactorial_eq_prod_range]
+  norm_num [Finset.prod_range_succ, Nat.factorial]
+
+/-- The shifted form, exactly as the author prints the `C_{n-1-i}^k` factors:
+`(n-2-i)` rather than `((n-1-i) - 1)`, which is what instantiating
+`M1F4_choose_fact_*` at `n - 1 - i` produces. The three ℕ-truncation facts are
+linear, so `omega` closes them. -/
+lemma M1F4_choose_fact_four_shift (n i : ℕ) :
+    ((n - 1 - i).choose 4 : ℤ)
+      = (((n - 1 - i) * (n - 2 - i) * (n - 3 - i) * (n - 4 - i) / 24 : ℕ) : ℤ) := by
+  rw [M1F4_choose_fact_four]
+  congr 1
+  have h1 : (n - 1 - i) - 1 = n - 2 - i := by omega
+  have h2 : (n - 1 - i) - 2 = n - 3 - i := by omega
+  have h3 : (n - 1 - i) - 3 = n - 4 - i := by omega
+  rw [h1, h2, h3]
+
+lemma M1F4_choose_fact_three_shift (n i : ℕ) :
+    ((n - 1 - i).choose 3 : ℤ)
+      = (((n - 1 - i) * (n - 2 - i) * (n - 3 - i) / 6 : ℕ) : ℤ) := by
+  rw [M1F4_choose_fact_three]
+  congr 1
+  have h1 : (n - 1 - i) - 1 = n - 2 - i := by omega
+  have h2 : (n - 1 - i) - 2 = n - 3 - i := by omega
+  rw [h1, h2]
+
+lemma M1F4_choose_fact_two_shift (n i : ℕ) :
+    ((n - 1 - i).choose 2 : ℤ) = (((n - 1 - i) * (n - 2 - i) / 2 : ℕ) : ℤ) := by
+  rw [M1F4_choose_fact_two]
+  congr 1
+  have h1 : (n - 1 - i) - 1 = n - 2 - i := by omega
+  rw [h1]
+
+/-- **S4 — the five `X^4` boundary sums in the author's factorial form**
+(`P007-R1` lines 8-12).
+
+The fifteen boundary sums printed in binomial form are re-stated by the author
+with the binomial coefficients *evaluated*: the factor `1/24`, `-1/6`, `1/4`
+taken outside the sum. This step is the part of that rewrite whose display falls
+in this chunk's regions — the five sums of the pairs `(j,l)` with `j + l = 4`
+(the `X^4` group) — stated as an equality of the two aggregates, in the author's
+order:
+
+`1/24 Σ_{i=4}^{n-1} i(i-1)(i-2)(i-3) …`, `1/24 Σ_{i=0}^{n-5}
+(n-1-i)(n-2-i)(n-3-i)(n-4-i) …`, `-1/6 Σ_{i=1}^{n-4} i(n-1-i)(n-2-i)(n-3-i) …`,
+`-1/6 Σ_{i=3}^{n-2} (n-1-i)i(i-1)(i-2) …`, `1/4 Σ_{i=2}^{n-3}
+(n-1-i)(n-2-i)i(i-1) …`.
+
+The factored `1/24` etc. is encoded per term (ℕ division, cast), which is the
+ℤ-safe reading of the author's factor: `M1F4_choose_fact_*` certify that each
+division is exact. Every exponent here is ℕ-safe on its range (the lowest is
+`n-5-i` on `i ≤ n-5`). The ten remaining sums of the other four `X`-groups are
+printed past this chunk's regions (R2/R3). -/
+theorem M1F4_step_S4_factorial (n : ℕ) (s : ℕ) (h b a c k : ℤ) :
+    ( (∑ i ∈ Finset.Ico 4 n, (-1) ^ 0 * ((n - 1 - i).choose 0 : ℤ) * (i.choose 4 : ℤ)
+          * h ^ (n - 1 - i) * b ^ (n * (i - 4)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 0 (n - 4), (-1) ^ 4 * ((n - 1 - i).choose 4 : ℤ) * (i.choose 0 : ℤ)
+          * h ^ (n - 5 - i) * b ^ (n * i) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 1 (n - 3), (-1) ^ 3 * ((n - 1 - i).choose 3 : ℤ) * (i.choose 1 : ℤ)
+          * h ^ (n - 4 - i) * b ^ (n * (i - 1)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 3 (n - 1), (-1) ^ 1 * ((n - 1 - i).choose 1 : ℤ) * (i.choose 3 : ℤ)
+          * h ^ (n - 2 - i) * b ^ (n * (i - 3)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 2 (n - 2), (-1) ^ 2 * ((n - 1 - i).choose 2 : ℤ) * (i.choose 2 : ℤ)
+          * h ^ (n - 3 - i) * b ^ (n * (i - 2)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4) )
+      = ( (∑ i ∈ Finset.Ico 4 n, ((i * (i - 1) * (i - 2) * (i - 3) / 24 : ℕ) : ℤ)
+          * h ^ (n - 1 - i) * b ^ (n * (i - 4)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 0 (n - 4),
+          (((n - 1 - i) * (n - 2 - i) * (n - 3 - i) * (n - 4 - i) / 24 : ℕ) : ℤ)
+          * h ^ (n - 5 - i) * b ^ (n * i) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 1 (n - 3),
+          -(((n - 1 - i) * (n - 2 - i) * (n - 3 - i) / 6 : ℕ) : ℤ) * (i : ℤ)
+          * h ^ (n - 4 - i) * b ^ (n * (i - 1)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 3 (n - 1),
+          (-1) ^ 1 * ((n - 1 - i : ℕ) : ℤ) * (((i * (i - 1) * (i - 2) / 6 : ℕ)) : ℤ)
+          * h ^ (n - 2 - i) * b ^ (n * (i - 3)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      + (∑ i ∈ Finset.Ico 2 (n - 2),
+          (((n - 1 - i) * (n - 2 - i) / 2 : ℕ) : ℤ) * ((i * (i - 1) / 2 : ℕ) : ℤ)
+          * h ^ (n - 3 - i) * b ^ (n * (i - 2)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4) ) := by
+  have hA1 : (∑ i ∈ Finset.Ico 4 n, (-1) ^ 0 * ((n - 1 - i).choose 0 : ℤ) * (i.choose 4 : ℤ)
+        * h ^ (n - 1 - i) * b ^ (n * (i - 4)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      = ∑ i ∈ Finset.Ico 4 n, ((i * (i - 1) * (i - 2) * (i - 3) / 24 : ℕ) : ℤ)
+        * h ^ (n - 1 - i) * b ^ (n * (i - 4)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4 := by
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Nat.choose_zero_right, M1F4_choose_fact_four]
+    ring_nf
+  have hA2 : (∑ i ∈ Finset.Ico 0 (n - 4), (-1) ^ 4 * ((n - 1 - i).choose 4 : ℤ)
+        * (i.choose 0 : ℤ) * h ^ (n - 5 - i) * b ^ (n * i)
+        * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      = ∑ i ∈ Finset.Ico 0 (n - 4),
+          (((n - 1 - i) * (n - 2 - i) * (n - 3 - i) * (n - 4 - i) / 24 : ℕ) : ℤ)
+          * h ^ (n - 5 - i) * b ^ (n * i) * ((n : ℤ) ^ s * a * b * c * k) ^ 4 := by
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Nat.choose_zero_right, M1F4_choose_fact_four_shift]
+    ring_nf
+  have hA3 : (∑ i ∈ Finset.Ico 1 (n - 3), (-1) ^ 3 * ((n - 1 - i).choose 3 : ℤ)
+        * (i.choose 1 : ℤ) * h ^ (n - 4 - i) * b ^ (n * (i - 1))
+        * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      = ∑ i ∈ Finset.Ico 1 (n - 3),
+          -(((n - 1 - i) * (n - 2 - i) * (n - 3 - i) / 6 : ℕ) : ℤ) * (i : ℤ)
+          * h ^ (n - 4 - i) * b ^ (n * (i - 1)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4 := by
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [M1F4_choose_fact_three_shift, M1F4_choose_fact_one]
+    ring_nf
+  have hA4 : (∑ i ∈ Finset.Ico 3 (n - 1), (-1) ^ 1 * ((n - 1 - i).choose 1 : ℤ)
+        * (i.choose 3 : ℤ) * h ^ (n - 2 - i) * b ^ (n * (i - 3))
+        * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      = ∑ i ∈ Finset.Ico 3 (n - 1), (-1) ^ 1 * ((n - 1 - i : ℕ) : ℤ) * (((i * (i - 1) * (i - 2) / 6 : ℕ)) : ℤ)
+          * h ^ (n - 2 - i) * b ^ (n * (i - 3)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4 := by
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [M1F4_choose_fact_one, M1F4_choose_fact_three]
+  have hA5 : (∑ i ∈ Finset.Ico 2 (n - 2), (-1) ^ 2 * ((n - 1 - i).choose 2 : ℤ)
+        * (i.choose 2 : ℤ) * h ^ (n - 3 - i) * b ^ (n * (i - 2))
+        * ((n : ℤ) ^ s * a * b * c * k) ^ 4)
+      = ∑ i ∈ Finset.Ico 2 (n - 2),
+          (((n - 1 - i) * (n - 2 - i) / 2 : ℕ) : ℤ) * ((i * (i - 1) / 2 : ℕ) : ℤ)
+          * h ^ (n - 3 - i) * b ^ (n * (i - 2)) * ((n : ℤ) ^ s * a * b * c * k) ^ 4 := by
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [M1F4_choose_fact_two_shift, M1F4_choose_fact_two]
+    ring_nf
+  rw [hA1, hA2, hA3, hA4, hA5]
+
 end M1F4
 
 -- Evidence for the leaf's DONE flip (all eight steps must reach this state):
@@ -310,3 +523,12 @@ end M1F4
 #print axioms M1F4.M1F4_sum_complement
 #print axioms M1F4.M1F4_reindex
 #print axioms M1F4.M1F4_step_S2_split
+#print axioms M1F4.M1F4_step_S3_tail
+#print axioms M1F4.M1F4_step_S4_factorial
+#print axioms M1F4.M1F4_choose_fact_one
+#print axioms M1F4.M1F4_choose_fact_two
+#print axioms M1F4.M1F4_choose_fact_three
+#print axioms M1F4.M1F4_choose_fact_four
+#print axioms M1F4.M1F4_choose_fact_four_shift
+#print axioms M1F4.M1F4_choose_fact_three_shift
+#print axioms M1F4.M1F4_choose_fact_two_shift

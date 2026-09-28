@@ -952,8 +952,35 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
   are now specified in `M1-FRAG-04.yml` with that correction, including the
   ℕ-safety constraint on S3 (any range containing `i = n` must use the absorbed
   `a^{(n-1)(n-i)}(n^s bck)^i` form).
-- **Round ledger now 42 rows: 16 S1 / 21 F2 / 2 ENV / 1 F1 / 2 PROBE.** The F1
-  is the p. 6 R3 `ℕ`-unsafe exponent form (round 31). Cost model (measured): a
-  *failing* round costs 7–24 s because the Mathlib oleans are cached, so iterate
-  freely on compile errors; only successful rounds with heavy `ring`/`omega` take
-  minutes.
+- **`M1-FRAG-04` is DONE — the ledger is 18/18 (100%)** (round 55 certificate:
+  EXIT 0, 0 warnings, permitted axioms only on all 16 declarations, no `sorryAx`).
+  S3 (`M1F4_step_S3_tail`) is the author's RHS rewrite — the split of `Σ_{i=0}^{n}`
+  at 5 plus per-term absorption (`Finset.sum_range_add_sum_Ico` + `M1F4_absorb`),
+  with `hn : 5 ≤ n` as the F3 side condition the paper leaves implicit. S4
+  (`M1F4_step_S4_factorial`) is the five `X^4` boundary sums in the printed
+  factorial form, via four `Nat.choose`-to-falling-factorial bridges plus three
+  `_shift` forms stated in the author's own `(n-2-i)` shape.
+- **What S4 cost, and why it is in the lessons file.** S3 took 2 rounds (one
+  beta-redex matching failure, one association mismatch). S4 took 10 rounds, of
+  which the *last six* were one defect: `((n - 1 - i) : ℤ)` — a `: ℤ` ascription
+  makes the subtraction *untruncated* ℤ subtraction, so it differs from the
+  ℕ-truncated cast a `Nat.choose` bridge produces, and `ring`/`ring_nf` reported
+  it as an opaque three-term sum. The fix came only from *deleting* the failing
+  tactic and recompiling to read the pristine goal. Lessons 13–16 in
+  `MATHLIB_API_LESSONS.md` record this, the `_shift`-lemma pattern, the
+  definition-before-use trap, and the "read the pristine goal" habit.
+- **The DONE gate caught two record bugs, not the mathematics**: a chunk file
+  without a `status.tsv` row, and a comma-separated `renders` field where the
+  schema wants space-separated. Both are exactly the kind of thing that only a
+  machine check finds.
+- **Next, in order:** (1) re-align `M1-FRAG-05/06`'s boundaries to the real region
+  lines (the factorial display continues past `P007-R1` l12 into R2/R3) and write
+  them; (2) the `M1-ASM-A…E` assemblies, where an undischarged leaf hypothesis
+  would be the signature of a circularity; (3) `Q-003` must be resolved before
+  any leaf from pp. 31–32.
+- **Round ledger at the leaf's close: 55 rows — 19 S1 / 29 F2 / 2 ENV / 2 F1 /
+  2 PROBE.** The two F1s are our own transcription/encoding defects, not the
+  author's: the p. 6 R3 `ℕ`-unsafe exponent form (round 31) and the `: ℤ`
+  ascription of S4 (round 52). Cost model (measured): a *failing* round costs
+  7–24 s because the Mathlib oleans are cached, so iterate freely on compile
+  errors; only successful rounds with heavy `ring`/`omega` take minutes.

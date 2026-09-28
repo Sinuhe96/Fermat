@@ -1,0 +1,6 @@
+'M1F4.M1F4_step_S0_triple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S1_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_sum_complement' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_reindex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S2_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S3_tail' depends on axioms: [propext, Classical.choice, Quot.sound]

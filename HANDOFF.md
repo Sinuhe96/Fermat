@@ -206,7 +206,33 @@ What the earlier window established:
   hand-type Vietnamese literals into scripts (they do not match the file's
   bytes) — anchor extraction on ASCII fragments.
 
-### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` DONE (17/18), `M1-FRAG-04` IN_PROGRESS (S0+S1+S2 done of 8)
+### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-04` DONE: **18/18 (100%)**
+
+- **`M1-FRAG-04` is DONE** (pp. 6–7, the `l+j` regrouping, 5 steps = 16 declarations,
+  rounds 34–55): S0 the triple-sum expansion, S1 the printed binomial right-hand
+  side, **S2** the `l+j ≥ 5` split (pointwise complement + the `(j,l,i)`
+  re-indexing by `Finset.sum_nbij'`), **S3** the absorbed tail `Σ_{i=5}^{n} C_n^i
+  a^{(n-1)(n-i)} (n^s bck)^i` + the four explicit terms, **S4** the five `X^4`
+  boundary sums in the author's factorial form (`Nat.choose`-to-falling-factorial
+  bridges). Round 55 certificate: EXIT 0, 0 warnings, **permitted axioms only on
+  all 16 declarations, no `sorryAx`**. `progress.py --check` exits 0 with
+  **18/18 DONE**; the DONE gate itself caught two record bugs (a missing
+  `status.tsv` row earlier, and a comma-separated `renders` field — the schema
+  wants space-separated).
+- **Two findings worth carrying forward.** (a) S4's only *real* defect was
+  `((n - 1 - i) : ℤ)`: a `: ℤ` ascription turns the subtraction into *untruncated*
+  ℤ subtraction, so it differed from the ℕ-truncated cast a `Nat.choose` bridge
+  produces — invisible in the source text, 6 rounds to see (lessons 13–15 in
+  `MATHLIB_API_LESSONS.md`, including "delete the failing `ring` and read the
+  pristine goal"). (b) The five `X^4` sums are the only factorial forms printed
+  inside this leaf's regions; the ten remaining conversions are printed past the
+  page break into R2/R3, so `M1-FRAG-05/06`'s recorded boundaries (from estimated
+  line numbers) must be re-aligned to the real region lines before those leaves
+  are written (measured: `P007-R1` runs to l12).
+- **Cost model confirmed again:** failing rounds cost 9–16 s (Mathlib oleans
+  cached), so iterating on compile errors is nearly free in wall time; the
+  expensive thing is *reasoning* about a wrong encoding, which is why the
+  probe-first habit (rounds 38, 44: 7 s and 7 s, 58 of 59 names pinned) matters.
 
 - **State at round 37 (superseded by the S2-DONE bullet below)**: `M1-FRAG-04` — pp. 6–7, the `l+j` regrouping that
   follows the printed (8)–(10) — is IN PROGRESS with **S0, S1 and the first half
