@@ -5,6 +5,8 @@
 -- to the pinned toolchain; a `#check` list is trustworthy only if it ran.
 import Mathlib
 import Common.Basic
+import B.Basic
+import M1F1.Basic
 import L1.Basic
 import L2.Basic
 import L3.Basic
@@ -18,6 +20,12 @@ import L7F4.Basic
 import L7F5.Basic
 import L7F6.Basic
 import L7ASM.Basic
+#check @B.B_step_S0_index_shift
+#check @B.B_step_S1_reindex
+#check @M1F1.M1F1_step_S0_reduce
+#check @M1F1.M1F1_step_S1_symmetry
+#check @M1F1.M1F1_step_S3_bo_de_6
+#check @M1F1.M1F1_step_S4_substitute
 #check @L1.L1_reduce_coprime
 #check @L1.L1_step_S2_S3
 #check @L1.L1_step_S4

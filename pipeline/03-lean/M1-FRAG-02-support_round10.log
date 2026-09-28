@@ -1,0 +1,39 @@
+M1F2/Basic.lean:34:30: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  j - (2 * s + 1) + (2 * s + 1)
+in the target expression
+  ↑n ^ j * Q = ↑n ^ (2 * s + 1 + (j - (2 * s + 1))) * Q
+
+n s j : ℕ
+Q : ℤ
+h : 2 * s + 1 ≤ j
+⊢ ↑n ^ j * Q = ↑n ^ (2 * s + 1 + (j - (2 * s + 1))) * Q
+M1F2/Basic.lean:48:79: error(lean.unknownIdentifier): Unknown identifier `n`
+M1F2/Basic.lean:56:6: error: No goals to be solved
+M1F2/Basic.lean:91:4: error: Type mismatch
+  dvd_mul_of_dvd_right (M1F2_choose_mul_pow_dvd hn hn3 hs Q hi2 hin) ?m.256
+has type
+  ↑n ^ (2 * s + 1) ∣ ?m.256 * (↑(n.choose (n - m)) * (↑n ^ s * Q) ^ (n - m))
+but is expected to have type
+  ↑n ^ (2 * s + 1) ∣ ↑(n.choose (n - m)) * (↑n ^ s * Q) ^ (n - m) * y ^ m
+M1F2/Basic.lean:98:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑(n.choose (n - 1))
+in the target expression
+  ∑ x ∈ Finset.range (n - 1), y ^ x * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - x) * ↑((n - 1 + 1).choose x) +
+        y ^ (n - 1) * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - (n - 1)) * ↑((n - 1 + 1).choose (n - 1)) +
+      y ^ (n - 1 + 1) * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - (n - 1 + 1)) * ↑((n - 1 + 1).choose (n - 1 + 1)) =
+    y ^ (n - 1 + 1) + ↑(n - 1 + 1) * y ^ (n - 1 + 1 - 1) * (↑(n - 1 + 1) ^ s * Q) +
+      ∑ m ∈ Finset.range (n - 1 + 1 - 1), y ^ m * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - m) * ↑((n - 1 + 1).choose m)
+
+case refine_2
+n s : ℕ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+y Q : ℤ
+hch : ↑(n.choose (n - 1)) = ↑n
+h1 : n - (n - 1) = 1
+⊢ ∑ x ∈ Finset.range (n - 1), y ^ x * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - x) * ↑((n - 1 + 1).choose x) +
+        y ^ (n - 1) * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - (n - 1)) * ↑((n - 1 + 1).choose (n - 1)) +
+      y ^ (n - 1 + 1) * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - (n - 1 + 1)) * ↑((n - 1 + 1).choose (n - 1 + 1)) =
+    y ^ (n - 1 + 1) + ↑(n - 1 + 1) * y ^ (n - 1 + 1 - 1) * (↑(n - 1 + 1) ^ s * Q) +
+      ∑ m ∈ Finset.range (n - 1 + 1 - 1), y ^ m * (↑(n - 1 + 1) ^ s * Q) ^ (n - 1 + 1 - m) * ↑((n - 1 + 1).choose m)

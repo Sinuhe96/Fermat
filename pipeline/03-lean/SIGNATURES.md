@@ -52,6 +52,87 @@ The full per-module list follows. Non-entry declarations are support: reuse them
 Source: `pipeline/03-lean/Common/Basic.lean`
 
 
+## `B` — một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation  (chunk B-01, 2 declarations)
+
+Source: `pipeline/03-lean/B/Basic.lean`
+
+### `B.B_step_S0_index_shift`  — `B/Basic.lean:48`
+***B.1** (author p. 2, `P002-R1`, rule 1).*
+```lean
+theorem B_step_S0_index_shift (a : ℕ → ℤ) (k m n : ℕ) :
+    (∑ i in Finset.Ico k (n + 1), a i)
+      = ∑ i in Finset.Ico m (n + m - k + 1), a (i - m + k)
+```
+
+### `B.B_step_S1_reindex`  — `B/Basic.lean:69`
+***B.2**, first equality (author p. 2, `P002-R1`, rule 2).*
+```lean
+theorem B_step_S1_reindex (m k : ℕ) (hk : 1 ≤ k) (hkm : k ≤ m - 1) (x h : ℤ) :
+    (∑ i in Finset.Ico k m,
+        ((i.descFactorial k : ℕ) : ℤ) * h ^ (m - 1 - i) * x ^ (i - k))
+      = ∑ i in Finset.range (m - k),
+          (((m - 1 - i).descFactorial k : ℕ) : ℤ) * h ^ i * x ^ (m - 1 - k - i)
+```
+
+
+## `M1F1` — main proof §1, p. 6 — the bổ đề 6 substitution (P006-R1)  (chunk M1-FRAG-01, 4 declarations)
+
+Source: `pipeline/03-lean/M1F1/Basic.lean`
+
+### `M1F1.M1F1_step_S0_reduce`  — `M1F1/Basic.lean:39`
+***S0** (author p. 6, region `P006-R1`).*
+```lean
+theorem M1F1_step_S0_reduce {n : ℕ} (hn : Nat.Prime n) (hn12 : 12 ≤ n)
+    {u₀ v₀ t₀ : ℤ} (hu₀ : u₀ ≠ 0) (hv₀ : v₀ ≠ 0) (ht₀ : t₀ ≠ 0)
+    (hsol : u₀ ^ n + v₀ ^ n = t₀ ^ n) :
+    ∃ u v t : ℤ, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧ u ^ n + v ^ n = t ^ n ∧
+      Int.gcd u v = 1 ∧ Int.gcd u t = 1 ∧ Int.gcd v t = 1
+```
+
+### `M1F1.M1F1_step_S1_symmetry`  — `M1F1/Basic.lean:58`
+***S1** (author p. 6, region `P006-R1`).*
+```lean
+theorem M1F1_step_S1_symmetry {n : ℕ} (hodd : Odd n) (u v t : ℤ) :
+    (u ^ n + v ^ n = t ^ n ↔ v ^ n + u ^ n = t ^ n) ∧
+      (u ^ n + v ^ n = t ^ n ↔ (-t) ^ n + v ^ n = (-u) ^ n) ∧
+      (u ^ n + v ^ n = t ^ n ↔ u ^ n + (-t) ^ n = (-v) ^ n)
+```
+
+### `M1F1.M1F1_step_S3_bo_de_6`  — `M1F1/Basic.lean:91`
+***S3** (author p. 6, region `P006-R1`).*
+```lean
+theorem M1F1_step_S3_bo_de_6 {n : ℕ} (hn : Nat.Prime n) (hn12 : 12 ≤ n)
+    {u v t : ℤ} (hu : u ≠ 0) (hv : v ≠ 0) (ht : t ≠ 0)
+    (hsol : u ^ n + v ^ n = t ^ n)
+    (huv : Int.gcd u v = 1) (hut : Int.gcd u t = 1) (hvt : Int.gcd v t = 1)
+    (hnu : ¬ (n : ℤ) ∣ u) (hnv : ¬ (n : ℤ) ∣ v) :
+    ∃ a b c k h : ℤ, ∃ s : ℕ, a ≠ 0 ∧ b ≠ 0 ∧ c ≠ 0 ∧ k ≠ 0 ∧
+      Int.gcd a b = 1 ∧ Int.gcd a c = 1 ∧ Int.gcd c b = 1 ∧
+      Int.gcd a k = 1 ∧ Int.gcd b k = 1 ∧ Int.gcd c k = 1 ∧
+      ¬ (n : ℤ) ∣ a ∧ ¬ (n : ℤ) ∣ b ∧ ¬ (n : ℤ) ∣ c ∧ ¬ (n : ℤ) ∣ k ∧
+      2 ≤ s ∧
+      v = a ^ n + (n : ℤ) ^ s * (a * b * c * k) ∧
+      u = b ^ n + (n : ℤ) ^ s * (a * b * c * k) ∧
+      t = h - (n : ℤ) ^ s * (a * b * c * k) ∧
+      a ^ n + b ^ n = h - 2 * ((n : ℤ) ^ s * (a * b * c * k)) ∧
+      (¬ (n : ℤ) ∣ t → h = c ^ n) ∧
+      ((n : ℤ) ∣ t → h = (n : ℤ) ^ (n * s - 1) * c ^ n)
+```
+
+### `M1F1.M1F1_step_S4_substitute`  — `M1F1/Basic.lean:123`
+***S4** (author p. 6, region `P006-R1`, last display).*
+```lean
+theorem M1F1_step_S4_substitute {n s : ℕ} {a b c k h u v t : ℤ}
+    (hv : v = a ^ n + (n : ℤ) ^ s * (a * b * c * k))
+    (hu : u = b ^ n + (n : ℤ) ^ s * (a * b * c * k))
+    (ht : t = h - (n : ℤ) ^ s * (a * b * c * k))
+    (hsol : u ^ n + v ^ n = t ^ n) :
+    (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+        + (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+      = (h - (n : ℤ) ^ s * (a * b * c * k)) ^ n
+```
+
+
 ## `L1` — bổ đề 1  (chunk L1-01, 6 declarations)
 
 Source: `pipeline/03-lean/L1/Basic.lean`
@@ -1253,6 +1334,8 @@ theorem L7_bo_de_7 {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
 | module | lane | declarations |
 |---|---|---|
 | `Common` | shared helpers | 0 |
+| `B` | một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation | 2 |
+| `M1F1` | main proof §1, p. 6 — the bổ đề 6 substitution (P006-R1) | 4 |
 | `L1` | bổ đề 1 | 6 |
 | `L2` | bổ đề 2 | 2 |
 | `L3` | bổ đề 3 | 8 |

@@ -1,0 +1,9 @@
+M1F2/Basic.lean:34:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a ^ ?m * ?a ^ ?n
+in the target expression
+  ↑n ^ j * Q = ↑n ^ (2 * s + 1) * (↑n ^ (j - (2 * s + 1)) * Q)
+
+n s j : ℕ
+Q : ℤ
+h : 2 * s + 1 ≤ j
+⊢ ↑n ^ j * Q = ↑n ^ (2 * s + 1) * (↑n ^ (j - (2 * s + 1)) * Q)

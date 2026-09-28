@@ -1,0 +1,51 @@
+add_pow	confirmed	Mathlib/Data/Nat/Choose/Sum.lean:76 (CommSemiring form; Commute.add_pow at :34)
+Nat.choose_succ_succ	confirmed	Mathlib/Data/Nat/Choose/Basic.lean:63
+Nat.choose_self	confirmed	Mathlib/Data/Nat/Choose/Basic.lean:94
+Nat.choose_eq_zero_of_lt	confirmed	Mathlib/Data/Nat/Choose/Basic.lean:85
+Nat.choose_mul	confirmed	Mathlib/Data/Nat/Choose/Basic.lean:159
+Nat.choose_mul_succ_eq	confirmed	Mathlib/Data/Nat/Choose/Basic.lean:220
+Nat.cast_choose	confirmed	Mathlib/Data/Nat/Choose/Cast.lean:31
+Finset.sum_range_succ	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:536 (@[to_additive] prod_range_succ)
+Finset.sum_range_succ'	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:541 (@[to_additive] prod_range_succ')
+Finset.sum_range_sub	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:904 (@[to_additive] prod_range_div; use site Algebra/ContinuedFractions/Euler.lean:227)
+Finset.sum_range_sub'	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:911 (@[to_additive] prod_range_div'; use site Analysis/SpecialFunctions/Stirling.lean:158)
+Finset.sum_congr	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:104 (@[to_additive (attr := congr)] prod_congr)
+Finset.sum_add_distrib	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:310 (@[to_additive] prod_mul_distrib)
+Finset.sum_sub_distrib	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean:679 (@[to_additive] prod_div_distrib)
+Finset.mul_sum	confirmed	Mathlib/Algebra/BigOperators/Ring/Finset.lean:59
+Finset.sum_mul	confirmed	Mathlib/Algebra/BigOperators/Ring/Finset.lean:56
+Finset.sum_mul_sum	confirmed	Mathlib/Algebra/BigOperators/Ring/Finset.lean:62
+Finset.sum_comm	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean:121 (@[to_additive] prod_comm)
+pow_dvd_pow_of_dvd	confirmed	Mathlib/Algebra/Divisibility/Basic.lean:269
+dvd_pow_self	confirmed	Mathlib/Algebra/Divisibility/Basic.lean:195
+pow_add	confirmed	Mathlib/Algebra/Group/Monoid.lean:450
+pow_mul	confirmed	Mathlib/Algebra/Group/Monoid.lean:457
+pow_succ	confirmed	Mathlib/Algebra/Group/Monoid.lean:413
+pow_succ'	confirmed	Mathlib/Algebra/Group/Monoid.lean:419
+Nat.pow_dvd_pow_iff_le_right	unverified	no declaration site under proof_verify/.lake/packages/mathlib/Mathlib at rev 0653561 (git grep -n over Mathlib yields only 4 use sites: Data/Nat/Prime/Basic.lean:245, Data/Nat/Factorization/Basic.lean:174 and :308, Data/Nat/Factorization/Defs.lean:344) — the name comes from the toolchain's Std/Batteries, which is not on the host; a green `#check @Nat.pow_dvd_pow_iff_le_right : 1 < x → (x^k ∣ x^l ↔ k ≤ l)` at this pin is recorded in pipeline/03-lean/L4-01_compile_20260926.log:37 (and it is already used by DONE L4/Basic.lean:119 and L6/Basic.lean:571), so the probe round is expected to resolve it
+Int.ModEq.of_dvd	confirmed	Mathlib/Data/Int/ModEq.lean:127
+Int.ModEq.mul	confirmed	Mathlib/Data/Int/ModEq.lean:189
+Int.ModEq.pow	confirmed	Mathlib/Data/Int/ModEq.lean:192
+Int.ModEq.add	confirmed	Mathlib/Data/Int/ModEq.lean:141
+Int.ModEq.neg	confirmed	Mathlib/Data/Int/ModEq.lean:168
+Int.ModEq.dvd	confirmed	Mathlib/Data/Int/ModEq.lean:113 (alias of modEq_iff_dvd at :105)
+Int.modEq_iff_dvd	confirmed	Mathlib/Data/Int/ModEq.lean:105
+Int.modEq_zero_iff_dvd	confirmed	Mathlib/Data/Int/ModEq.lean:96
+Nat.Prime.two_le	confirmed	Mathlib/Data/Nat/Prime/Defs.lean:72
+Nat.Prime.odd_of_ne_two	confirmed	Mathlib/Data/Nat/Prime/Basic.lean:103
+Nat.Prime.eq_two_or_odd'	confirmed	Mathlib/Data/Nat/Prime/Basic.lean:45
+Nat.Prime.dvd_choose_self	confirmed	Mathlib/Data/Nat/Choose/Dvd.lean:35 (namespace Nat.Prime)
+Int.Prime.dvd_pow'	confirmed	Mathlib/RingTheory/Int/Basic.lean:85
+Int.ModEq.pow_prime_eq_self	confirmed	Mathlib/FieldTheory/Finite/Basic.lean:652
+Odd.neg_pow	confirmed	Mathlib/Algebra/Ring/Parity.lean:188
+Odd.mul	confirmed	Mathlib/Algebra/Ring/Parity.lean:140
+Polynomial.eval_finsetSum	confirmed	Mathlib/Algebra/Polynomial/Eval/Defs.lean:348
+Polynomial.X_add_C_ne_zero	confirmed	Mathlib/Algebra/Polynomial/Degree/Operations.lean:630
+geom_sum_mul	confirmed	Mathlib/Algebra/Ring/GeomSum.lean:232
+mul_geom_sum	confirmed	Mathlib/Algebra/Ring/GeomSum.lean:237
+geom_sum_eq	confirmed	Mathlib/Algebra/Field/GeomSum.lean:43 (root name; the requested spelling `Finset.geom_sum_eq` has 0 hits in the pinned tree — Algebra/Field/GeomSum.lean has no `namespace Finset`)
+Finset.sum_sigma'	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean:46 (@[to_additive] prod_sigma')
+Finset.sum_finset_product	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean:51 (@[to_additive] prod_finset_product)
+Finset.sum_range_add	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean:556 (@[to_additive] prod_range_add)
+Finset.sum_sigma	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean:38 (@[to_additive] prod_sigma)
+Finset.sum_product	confirmed	Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean:80 (@[to_additive] prod_product)

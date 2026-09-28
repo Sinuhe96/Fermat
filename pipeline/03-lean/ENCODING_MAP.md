@@ -1184,6 +1184,67 @@ S16's substitution on instances of (19)/(20) with `n ≡ 5 (mod 6)`.
 
 ---
 
+## §B. Chunks B-01 + M1-FRAG-01 … M1-FRAG-03 — the main proof's opening (DONE)
+
+Section B (p. 2) and the first three leaves of §D.1 (p. 6, "n là số nguyên tố
+lớn hơn 11"). Read this before writing any leaf from p. 7 on: the shapes below
+are what compiled, and two of them cost a round each to find.
+
+**Files / modules** (repo-tracked under `pipeline/03-lean/`, each with a
+`[[lean_lib]]` block in `lakefile.toml`):
+
+| chunk | file | namespace | declarations |
+|---|---|---|---|
+| `B-01` | `B/Basic.lean` | `B` | `Bf`, `B_step_S0_index_shift`, `B_step_S1_reindex`, `B_step_S2_deriv` |
+| `M1-FRAG-01` | `M1F1/Basic.lean` | `M1F1` | `M1F1_step_S0_reduce`, `_S1_symmetry`, `_S3_bo_de_6`, `_S4_substitute` |
+| `M1-FRAG-02` | `M1F2/Basic.lean` | `M1F2` | `M1F2_zmod_intCast_eq_zero_iff`, `M1F2_pow_dvd_mul`, `M1F2_choose_mul_pow_dvd`, `M1F2_expand_trunc`, `M1F2_step_S0_seven`, `M1F2_step_S1_seven_prime` |
+| `M1-FRAG-03` | `M1F3/Basic.lean` | `M1F3` | `M1F3_add_pow_index`, `M1F3_tail_dvd`, `M1F3_expand_trunc`, `M1F3_step_S0_eight`, `M1F3_step_S1_nine`, `M1F3_step_S2_ten` |
+
+**The one carry-over fact**: every claim (7)–(10) is a *congruence of the
+expansion*, conditional on (3) under the author's substitution — so the
+substituted equation is a **hypothesis** of every step
+(`hsol : (a^n + X)^n + (b^n + X)^n = (h - X)^n`, `X := n^s abck`), never an axiom.
+That is the F1 finding in `M1_LANE.md` §7.
+
+**Compiled patterns, in the order you will need them**
+
+- *The substituted equation is one `rw` away from a power identity*:
+  `h - n^s Q = h + n^s (-Q)` by `ring` (`hsign`), then expand with the
+  truncation lemmas at `y = a^n`, `y = b^n`, `y = h` and `linarith` the three.
+  The `i`-th combined term comes out as
+  `C(n,i) · [a^{n(n-i)} + b^{n(n-i)} + (-1)^{i+1} h^{n-i}] · X^i` — the alternating
+  sign on `h` is why the printed brackets read `+h^{n-1}`, `-h^{n-2}`, `+h^{n-3}`, ….
+- *Truncation*: `M1F2_expand_trunc` keeps two terms (`n^(2s+1) | T`);
+  `M1F3_expand_trunc` is the `r`-parameter version. Its support is
+  `M1F3_add_pow_index` (the `X`-indexed `add_pow`, via `Finset.sum_range_reflect`
+  + `Nat.choose_symm`) and `M1F3_tail_dvd` (`n^((r+1)s+1) | C(n,j)·X^j` for
+  `j ≥ r+1`, by the two cases `j = n` and `j < n`).
+- *The split of `range (n+1)`*: `rw [show n + 1 = (r+1) + (n-r) by omega]` then
+  `rw [Finset.sum_range_add]` — and stop there: the two sides are then identical
+  and the `rw` closes the goal by itself (adding `simp [add_left_inj]; rfl` after
+  it errors with `No goals to be solved`; round 26).
+- *`Finset.sum_subset`* puts the **smaller** set's sum on the left
+  (`s₁ ⊆ s₂ → (∀ x ∈ s₂, x ∉ s₁ → f x = 0) → ∑_{s₁} = ∑_{s₂}`), so a goal written
+  with the big range on the left needs `(...).symm`. It is a `to_additive` image
+  of `prod_subset`, so `rg "theorem sum_subset"` finds nothing — the lemma exists.
+- *B.1*: state it in the range form both sides share; the literal `Icc` form needs
+  the range equality `(n+1)-k = (n+m-k+1)-m`, which `omega` rejects.
+- *B.2*: `Polynomial.iterate_derivative_sum` / `_C_mul` /
+  `_X_pow_eq_smul` (`derivative^[k] (X^n) = (Nat.descFactorial n k) • X^(n-k)`) +
+  `Polynomial.smul_eq_C_mul` + `Polynomial.eval_finsetSum`; re-index with
+  `Finset.sum_range_reflect`.
+
+**Two arithmetic traps that each cost a round** (both in
+`MATHLIB_API_LESSONS.md` items 5–10): `omega` cannot prove
+truncated-subtraction *monotonicity* (`y ≥ m-k ⊢ m-1-y < k` — it abstracts
+`↑(m-k)` as an atom); convert to an addition first (`Nat.sub_sub`,
+`Nat.add_comm`, `tsub_lt_iff_right`) and then call `omega`. And `omega` cannot
+see through a product of two variables (`(r+1)*s` vs `2*s`): supply the
+monotone multiplier with `Nat.mul_le_mul_right` yourself.
+
+**Cost model**: a round that *fails* costs 7–24 s here (Mathlib's oleans are
+cached); only successful rounds with heavy `ring`/`omega` work take minutes.
+
 ## §C. Extending this file for the next chunk
 
 1. Add a `## §B. Chunk Lk-01 — …` section with the same four parts: step

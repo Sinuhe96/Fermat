@@ -1,0 +1,55 @@
+@Finset.sum_Ico_eq_sum_range : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (m n : ℕ),
+  ∑ k ∈ Finset.Ico m n, f k = ∑ k ∈ Finset.range (n - m), f (m + k)
+@Finset.sum_range_reflect : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ j ∈ Finset.range n, f (n - 1 - j) = ∑ j ∈ Finset.range n, f j
+@Finset.sum_congr : ∀ {ι : Type u_1} {M : Type u_2} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M] {f g : ι → M},
+  s₁ = s₂ → (∀ x ∈ s₂, f x = g x) → s₁.sum f = s₂.sum g
+@Finset.mem_Ico : ∀ {α : Type u_1} [inst : Preorder α] [inst_1 : LocallyFiniteOrder α] {a b x : α},
+  x ∈ Finset.Ico a b ↔ a ≤ x ∧ x < b
+@Finset.mem_range : ∀ {n m : ℕ}, m ∈ Finset.range n ↔ m < n
+Nat.descFactorial : ℕ → ℕ → ℕ
+Nat.descFactorial_succ : ∀ (n k : ℕ), n.descFactorial (k + 1) = (n - k) * n.descFactorial k
+@Polynomial.derivative : {R : Type u_1} → [inst : Semiring R] → Polynomial R →ₗ[R] Polynomial R
+B/Basic.lean:131:6: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≥ 1
+  b ≥ 0
+  b - c ≥ 0
+  a ≥ 1
+  a - b ≥ 1
+  a - c ≥ 1
+where
+ a := ↑m
+ b := ↑y
+ c := ↑(m - k)
+B/Basic.lean:138:48: error: Application type mismatch: The argument
+  hynot
+has type
+  ¬y < m
+but is expected to have type
+  ¬y < m - k
+in the application
+  Nat.le_of_not_lt hynot
+B/Basic.lean:143:50: error: Application type mismatch: The argument
+  hy
+has type
+  y < m - k
+but is expected to have type
+  y < m
+in the application
+  Nat.succ_le_iff.mpr hy
+B/Basic.lean:154:44: error: unsolved goals
+m k : ℕ
+_hk : 1 ≤ k
+hkm : k ≤ m - 1
+x h : ℤ
+hterm :
+  ∀ t ∈ Finset.range m,
+    Polynomial.eval x ((⇑Polynomial.derivative)^[k] (Polynomial.C (h ^ t) * Polynomial.X ^ (m - 1 - t))) =
+      h ^ t * ↑((m - 1 - t).descFactorial k) * x ^ (m - 1 - t - k)
+htail :
+  ∑ t ∈ Finset.range m, h ^ t * ↑((m - 1 - t).descFactorial k) * x ^ (m - 1 - t - k) =
+    ∑ t ∈ Finset.range (m - k), h ^ t * ↑((m - 1 - t).descFactorial k) * x ^ (m - 1 - t - k)
+i : ℕ
+a✝ : i ∈ Finset.range (m - k)
+⊢ m - (1 + (i + k)) = m - 1 - i - k

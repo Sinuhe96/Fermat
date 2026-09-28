@@ -1,0 +1,9 @@
+M1F3/Basic.lean:81:52: warning: Variable name `hn3` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn3
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'M1F3.M1F3_step_S0_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S1_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S2_ten' depends on axioms: [propext, Classical.choice, Quot.sound]

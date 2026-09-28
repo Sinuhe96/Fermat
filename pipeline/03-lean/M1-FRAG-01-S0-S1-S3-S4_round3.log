@@ -1,0 +1,58 @@
+@Nat.Prime.odd_of_ne_two : ∀ {p : ℕ}, Nat.Prime p → p ≠ 2 → Odd p
+@Nat.Prime.two_le : ∀ {p : ℕ}, Nat.Prime p → 2 ≤ p
+@Nat.Prime.eq_two_or_odd : ∀ {p : ℕ}, Nat.Prime p → p = 2 ∨ p % 2 = 1
+@Nat.Prime.prime : ∀ {p : ℕ}, Nat.Prime p → Prime p
+M1F1/Basic.lean:24:8: error(lean.unknownIdentifier): Unknown constant `Nat.Prime.prime_int`
+@Int.prime_iff_natAbs_prime : ∀ {k : ℤ}, Prime k ↔ Nat.Prime k.natAbs
+@Prime.dvd_mul : ∀ {M : Type u_1} [inst : CommMonoidWithZero M] {p : M},
+  Prime p → ∀ {a b : M}, p ∣ a * b ↔ p ∣ a ∨ p ∣ b
+@Odd.neg_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ},
+  Odd n → ∀ (a : α), (-a) ^ n = -a ^ n
+@L1.L1_bo_de_1 : ∀ {n : ℕ},
+  3 ≤ n →
+    ∀ {u₀ v₀ t₀ : ℤ},
+      u₀ ≠ 0 →
+        v₀ ≠ 0 →
+          t₀ ≠ 0 →
+            u₀ ^ n + v₀ ^ n = t₀ ^ n →
+              ∃ u v t, u ≠ 0 ∧ v ≠ 0 ∧ t ≠ 0 ∧ u ^ n + v ^ n = t ^ n ∧ u.gcd v = 1 ∧ u.gcd t = 1 ∧ v.gcd t = 1
+@L6.L6_bo_de_6 : ∀ {n : ℕ},
+  Nat.Prime n →
+    Odd n →
+      ∀ {u v t : ℤ},
+        u ≠ 0 →
+          v ≠ 0 →
+            t ≠ 0 →
+              u ^ n + v ^ n = t ^ n →
+                u.gcd v = 1 →
+                  u.gcd t = 1 →
+                    v.gcd t = 1 →
+                      ¬↑n ∣ u * v →
+                        ∃ a b c k h s,
+                          a ≠ 0 ∧
+                            b ≠ 0 ∧
+                              c ≠ 0 ∧
+                                k ≠ 0 ∧
+                                  a.gcd b = 1 ∧
+                                    a.gcd c = 1 ∧
+                                      c.gcd b = 1 ∧
+                                        a.gcd k = 1 ∧
+                                          b.gcd k = 1 ∧
+                                            c.gcd k = 1 ∧
+                                              ¬↑n ∣ a ∧
+                                                ¬↑n ∣ b ∧
+                                                  ¬↑n ∣ c ∧
+                                                    ¬↑n ∣ k ∧
+                                                      2 ≤ s ∧
+                                                        v = a ^ n + ↑n ^ s * (a * b * c * k) ∧
+                                                          u = b ^ n + ↑n ^ s * (a * b * c * k) ∧
+                                                            t = h - ↑n ^ s * (a * b * c * k) ∧
+                                                              a ^ n + b ^ n = h - 2 * (↑n ^ s * (a * b * c * k)) ∧
+                                                                (¬↑n ∣ t → h = c ^ n) ∧
+                                                                  (↑n ∣ t → h = ↑n ^ (n * s - 1) * c ^ n)
+M1F1/Basic.lean:39:37: warning: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

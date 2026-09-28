@@ -1,0 +1,270 @@
+M1F3/Basic.lean:86:64: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  e ≥ 0
+  d ≥ 0
+  c ≥ 0
+  c - d ≥ 1
+  b ≥ 1
+  b + d ≥ 1
+  b + c ≥ 3
+  a ≥ 1
+  2*a - e ≥ 1
+where
+ a := ↑s
+ b := ↑r
+ c := ↑(n - r)
+ d := ↑i
+ e := ↑(r + 1) * ↑s
+M1F3/Basic.lean:93:4: error: No goals to be solved
+M1F3/Basic.lean:132:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (a ^ n) ^ n
+in the target expression
+  (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+        ↑(n.choose 2) * (b ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+      Tb
+
+n s : ℕ
+a b c k h : ℤ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+hsol :
+  (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n + (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (h + ↑n ^ s * -(a * b * c * k)) ^ n
+Ta : ℤ
+hTa : ↑n ^ ((2 + 1) * s + 1) ∣ Ta
+Tb : ℤ
+hTb : ↑n ^ ((2 + 1) * s + 1) ∣ Tb
+Th : ℤ
+hTh : ↑n ^ ((2 + 1) * s + 1) ∣ Th
+hA :
+  (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * a ^ n ^ 2 + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+        ↑(n.choose 2) * (a ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+      Ta
+hB :
+  (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+        ↑(n.choose 2) * (b ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+      Tb
+hH :
+  (h + ↑n ^ s * -(a * b * c * k)) ^ n =
+    1 * h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) +
+        ↑(n.choose 2) * h ^ (n - 2) * (↑n ^ s * -(a * b * c * k)) ^ 2 +
+      Th
+hsign : h - ↑n ^ s * (a * b * c * k) = h + ↑n ^ s * -(a * b * c * k)
+hpa : (a ^ n) ^ n = a ^ n ^ 2
+hpb : (b ^ n) ^ n = b ^ n ^ 2
+hpa' : (a ^ n) ^ (n - 1) = a ^ (n * (n - 1))
+hpb' : (b ^ n) ^ (n - 1) = b ^ (n * (n - 1))
+hpa'' : (a ^ n) ^ (n - 2) = a ^ (n * (n - 2))
+hpb'' : (b ^ n) ^ (n - 2) = b ^ (n * (n - 2))
+⊢ h ^ n - a ^ n ^ 2 - b ^ n ^ 2 ≡
+    ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (↑n ^ s * (a * b * c * k)) +
+      ↑(n.choose 2) * (b ^ (n * (n - 2)) + a ^ (n * (n - 2)) - h ^ (n - 2)) * (↑n ^ s * (a * b * c * k)) ^ 2 [ZMOD
+    ↑n ^ (3 * s + 1)]
+M1F3/Basic.lean:120:59: warning: This simp argument is unused:
+  Finset.sum_range_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Nat.choose_zero_right, Nat.choose_one_right,
+    Nat.cast_one, Nat.cast_zero, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add, add_zero] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:121:63: warning: This simp argument is unused:
+  Nat.cast_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_range_one, Nat.choose_zero_right,
+    Nat.choose_one_right, Nat.cast_one, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add, add_zero] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:122:56: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_range_one, Nat.choose_zero_right,
+    Nat.choose_one_right, Nat.cast_one, Nat.cast_zero, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:188:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (a ^ n) ^ n
+in the target expression
+  (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+          ↑(n.choose 2) * (b ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+        ↑(n.choose 3) * (b ^ n) ^ (n - 3) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+      Tb
+
+n s : ℕ
+a b c k h : ℤ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+hsol :
+  (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n + (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (h + ↑n ^ s * -(a * b * c * k)) ^ n
+Ta : ℤ
+hTa : ↑n ^ ((3 + 1) * s + 1) ∣ Ta
+Tb : ℤ
+hTb : ↑n ^ ((3 + 1) * s + 1) ∣ Tb
+Th : ℤ
+hTh : ↑n ^ ((3 + 1) * s + 1) ∣ Th
+hA :
+  (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * a ^ n ^ 2 + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+          ↑(n.choose 2) * (a ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+        ↑(n.choose 3) * (a ^ n) ^ (n - 3) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+      Ta
+hB :
+  (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+          ↑(n.choose 2) * (b ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+        ↑(n.choose 3) * (b ^ n) ^ (n - 3) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+      Tb
+hH :
+  (h + ↑n ^ s * -(a * b * c * k)) ^ n =
+    1 * h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) +
+          ↑(n.choose 2) * h ^ (n - 2) * (↑n ^ s * -(a * b * c * k)) ^ 2 +
+        ↑(n.choose 3) * h ^ (n - 3) * (↑n ^ s * -(a * b * c * k)) ^ 3 +
+      Th
+hsign : h - ↑n ^ s * (a * b * c * k) = h + ↑n ^ s * -(a * b * c * k)
+hpa : (a ^ n) ^ n = a ^ n ^ 2
+hpb : (b ^ n) ^ n = b ^ n ^ 2
+hpa1 : (a ^ n) ^ (n - 1) = a ^ (n * (n - 1))
+hpb1 : (b ^ n) ^ (n - 1) = b ^ (n * (n - 1))
+hpa2 : (a ^ n) ^ (n - 2) = a ^ (n * (n - 2))
+hpb2 : (b ^ n) ^ (n - 2) = b ^ (n * (n - 2))
+hpa3 : (a ^ n) ^ (n - 3) = a ^ (n * (n - 3))
+hpb3 : (b ^ n) ^ (n - 3) = b ^ (n * (n - 3))
+⊢ h ^ n - a ^ n ^ 2 - b ^ n ^ 2 ≡
+    ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (↑n ^ s * (a * b * c * k)) +
+        ↑(n.choose 2) * (b ^ (n * (n - 2)) + a ^ (n * (n - 2)) - h ^ (n - 2)) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+      ↑(n.choose 3) * (b ^ (n * (n - 3)) + a ^ (n * (n - 3)) + h ^ (n - 3)) * (↑n ^ s * (a * b * c * k)) ^ 3 [ZMOD
+    ↑n ^ (4 * s + 1)]
+M1F3/Basic.lean:174:59: warning: This simp argument is unused:
+  Finset.sum_range_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Nat.choose_zero_right, Nat.choose_one_right,
+    Nat.cast_one, Nat.cast_zero, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add, add_zero] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:175:63: warning: This simp argument is unused:
+  Nat.cast_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_range_one, Nat.choose_zero_right,
+    Nat.choose_one_right, Nat.cast_one, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add, add_zero] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:176:56: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_range_one, Nat.choose_zero_right,
+    Nat.choose_one_right, Nat.cast_one, Nat.cast_zero, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:235:56: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 1
+where
+ d := ↑s
+M1F3/Basic.lean:237:56: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 1
+where
+ d := ↑s
+M1F3/Basic.lean:239:56: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 1
+where
+ d := ↑s
+M1F3/Basic.lean:256:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (a ^ n) ^ n
+in the target expression
+  (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+            ↑(n.choose 2) * (b ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+          ↑(n.choose 3) * (b ^ n) ^ (n - 3) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+        ↑(n.choose 4) * (b ^ n) ^ (n - 4) * (↑n ^ s * (a * b * c * k)) ^ 4 +
+      Tb
+
+n s : ℕ
+a b c k h : ℤ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+hsol :
+  (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n + (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (h + ↑n ^ s * -(a * b * c * k)) ^ n
+Ta : ℤ
+hTa : ↑n ^ ((4 + 1) * s + 1) ∣ Ta
+Tb : ℤ
+hTb : ↑n ^ ((4 + 1) * s + 1) ∣ Tb
+Th : ℤ
+hTh : ↑n ^ ((4 + 1) * s + 1) ∣ Th
+hA :
+  (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * a ^ n ^ 2 + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+            ↑(n.choose 2) * (a ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+          ↑(n.choose 3) * (a ^ n) ^ (n - 3) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+        ↑(n.choose 4) * (a ^ n) ^ (n - 4) * (↑n ^ s * (a * b * c * k)) ^ 4 +
+      Ta
+hB :
+  (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n =
+    1 * (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) +
+            ↑(n.choose 2) * (b ^ n) ^ (n - 2) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+          ↑(n.choose 3) * (b ^ n) ^ (n - 3) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+        ↑(n.choose 4) * (b ^ n) ^ (n - 4) * (↑n ^ s * (a * b * c * k)) ^ 4 +
+      Tb
+hH :
+  (h + ↑n ^ s * -(a * b * c * k)) ^ n =
+    1 * h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) +
+            ↑(n.choose 2) * h ^ (n - 2) * (↑n ^ s * -(a * b * c * k)) ^ 2 +
+          ↑(n.choose 3) * h ^ (n - 3) * (↑n ^ s * -(a * b * c * k)) ^ 3 +
+        ↑(n.choose 4) * h ^ (n - 4) * (↑n ^ s * -(a * b * c * k)) ^ 4 +
+      Th
+hsign : h - ↑n ^ s * (a * b * c * k) = h + ↑n ^ s * -(a * b * c * k)
+hpa : (a ^ n) ^ n = a ^ n ^ 2
+hpb : (b ^ n) ^ n = b ^ n ^ 2
+hpa1 : (a ^ n) ^ (n - 1) = a ^ (n * (n - 1))
+hpb1 : (b ^ n) ^ (n - 1) = b ^ (n * (n - 1))
+hpa2 : (a ^ n) ^ (n - 2) = a ^ (n * (n - 2))
+hpb2 : (b ^ n) ^ (n - 2) = b ^ (n * (n - 2))
+hpa3 : (a ^ n) ^ (n - 3) = a ^ (n * (n - 3))
+hpb3 : (b ^ n) ^ (n - 3) = b ^ (n * (n - 3))
+hpa4 : (a ^ n) ^ (n - 4) = a ^ (n * (n - 4))
+hpb4 : (b ^ n) ^ (n - 4) = b ^ (n * (n - 4))
+⊢ h ^ n - a ^ n ^ 2 - b ^ n ^ 2 -
+      ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (↑n ^ s * (a * b * c * k)) ≡
+    ↑(n.choose 2) * (b ^ (n * (n - 2)) + a ^ (n * (n - 2)) - h ^ (n - 2)) * (↑n ^ s * (a * b * c * k)) ^ 2 +
+        ↑(n.choose 3) * (b ^ (n * (n - 3)) + a ^ (n * (n - 3)) + h ^ (n - 3)) * (↑n ^ s * (a * b * c * k)) ^ 3 +
+      ↑(n.choose 4) * (b ^ (n * (n - 4)) + a ^ (n * (n - 4)) - h ^ (n - 4)) * (↑n ^ s * (a * b * c * k)) ^ 4 [ZMOD
+    ↑n ^ (5 * s + 1)]
+M1F3/Basic.lean:240:59: warning: This simp argument is unused:
+  Finset.sum_range_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Nat.choose_zero_right, Nat.choose_one_right,
+    Nat.cast_one, Nat.cast_zero, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add, add_zero] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:241:63: warning: This simp argument is unused:
+  Nat.cast_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_range_one, Nat.choose_zero_right,
+    Nat.choose_one_right, Nat.cast_one, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add, add_zero] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+M1F3/Basic.lean:242:56: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_range_one, Nat.choose_zero_right,
+    Nat.choose_one_right, Nat.cast_one, Nat.cast_zero, Nat.sub_zero, pow_zero, pow_one, mul_one, zero_add] at hA hB hH
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'M1F3.M1F3_step_S0_eight' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S1_nine' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S2_ten' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

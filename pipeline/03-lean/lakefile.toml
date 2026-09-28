@@ -86,3 +86,32 @@ roots = ["L7F6.Basic"]
 [[lean_lib]]
 name = "L7ASM"
 roots = ["L7ASM.Basic"]
+
+# Section B of the print (p. 2, `P002-R1`): the two sum-transformation rules the
+# main proof cites as "áp dụng mục B.1 / B.2, trang 2" (pp. 9, 10, 11, 13, 14).
+# Not covered by the L-ledger, which verifies section C (the proofs of lemmas
+# 1-7); it is a prerequisite of every main-proof leaf from p. 9 on.
+[[lean_lib]]
+name = "B"
+roots = ["B.Basic"]
+
+# The main proof, §D.1 ("n là số nguyên tố lớn hơn 11"), leaf by leaf. M1F1 is
+# `M1-FRAG-01` (p. 6, `P006-R1`): the bổ đề 6 substitution and the sign symmetry.
+# Later leaves get their own `M1Fn` module as they are opened.
+[[lean_lib]]
+name = "M1F1"
+roots = ["M1F1.Basic"]
+
+# M1F2 is `M1-FRAG-02` (p. 6, `P006-R2`): the printed (7) mod n^(2s+1) and its
+# companion (7') mod n^(s+1), both read off the expansion of the substituted
+# equation that M1F1's S4 produces.
+[[lean_lib]]
+name = "M1F2"
+roots = ["M1F2.Basic"]
+
+# M1F3 is `M1-FRAG-03` (p. 6, `P006-R2`): the printed (8), (9) and (10) — the
+# same expansion at orders 2, 3 and 4, sharing M1F2's `C(n,i)` divisibility
+# lemma and generalizing M1F2's two-term truncation to any order.
+[[lean_lib]]
+name = "M1F3"
+roots = ["M1F3.Basic"]

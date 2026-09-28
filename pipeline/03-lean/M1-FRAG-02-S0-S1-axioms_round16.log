@@ -1,0 +1,2 @@
+'M1F2.M1F2_step_S0_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F2.M1F2_step_S1_seven_prime' depends on axioms: [propext, Quot.sound]

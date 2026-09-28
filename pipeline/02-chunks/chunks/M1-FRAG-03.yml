@@ -1,0 +1,101 @@
+id: M1-FRAG-03
+title: "Main proof / 1, p. 6 / P006-R2 - the printed (8) mod n^(3s+1), (9) mod n^(4s+1) and (10) mod n^(5s+1)"
+pdf_pages: [6]
+kind: lemma-proof-step
+depends_on: [M1-FRAG-01, M1-FRAG-02]
+source_text: |
+  [PDF p6, region P006-R2, byte-copied from the signed region record
+  pipeline/01-extract/regions/p006.yml (status REVIEWED). Quoted here: the three
+  displayed claims this leaf states, spanning five printed lines (the blank lines
+  between displays are kept). The (7)/(7') displays of the same region belong to
+  M1-FRAG-02; note that the print's (9) shares its line with (7') — the print
+  places (7') at the end of display (9)'s line, which is why M1-FRAG-02 already
+  quotes that line. Displays (8) and (10) each span two printed lines.]
+  \[ \text{*}\; h^n - a^{n^2} - b^{n^2} \equiv n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck + \frac{n(n-1)}{2}\Big[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}\Big](n^s abck)^2 \pmod{n^{3s+1}}\ (8) \]
+  
+  \[ \text{*}\; h^n - a^{n^2} - b^{n^2} \equiv n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck + \frac{n(n-1)}{2}\Big[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}\Big](n^s abck)^2 + \]
+  
+  \[ + \frac{n(n-1)(n-2)}{6}\Big[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}\Big](n^s abck)^3 \pmod{n^{4s+1}}\ (9),\ h^n \equiv a^{n^2} + b^{n^2} \pmod{n^{s+1}}\ (7') \]
+  
+  \[ \text{*}\; h^n - a^{n^2} - b^{n^2} - n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck \equiv \frac{n(n-1)}{2}\Big[b^{n(n-2)} + a^{n(n-2)} - h^{n-2}\Big](n^s abck)^2 + \]
+  
+  \[ + \frac{n(n-1)(n-2)}{6}\Big[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}\Big](n^s abck)^3 + \frac{n(n-1)(n-2)(n-3)}{24}\Big[b^{n(n-4)} + a^{n(n-4)} - h^{n-4}\Big](n^s abck)^4 \pmod{n^{5s+1}}\ (10) \]
+formal_hint: |
+  The same expansion as the printed (7) at higher orders. Each claim is
+  conditional on the substituted equation `(a^n + X)^n + (b^n + X)^n = (h - X)^n`
+  with `X := n^s abck` - i.e. on (3) read through the author's substitution - so
+  the equation is a HYPOTHESIS of every step here, never an axiom. That is the F1
+  finding recorded in M1_LANE.md 7, identical to M1-FRAG-02.
+
+  The i-th combined term of the expansion of
+  `(a^n + X)^n + (b^n + X)^n - (h - X)^n = 0` is
+      C(n,i) * [a^(n(n-i)) + b^(n(n-i)) + (-1)^(i+1) h^(n-i)] * X^i
+  which is why the printed brackets alternate the sign on the `h` term
+  (`+h^(n-1)`, `-h^(n-2)`, `+h^(n-3)`, `-h^(n-4)`), and why the printed
+  coefficients `n(n-1)/2`, `n(n-1)(n-2)/6`, `n(n-1)(n-2)(n-3)/24` are
+  `n.choose 2`, `n.choose 3`, `n.choose 4` - the form used in Lean (no division,
+  and faithful: those printed fractions are exactly the binomial coefficients).
+
+  Why the moduli are what they are: a term carrying `X^j` is divisible by
+  `n^(js+1)`, because a prime `n` divides `C(n,j)` for `1 <= j <= n-1` (and at
+  `j = n` the factor `n^(sn)` is already large enough, using `n >= r+2` and
+  `s >= 1`). So terms from `j = 3` on vanish mod `n^(3s+1)`, from `j = 4` mod
+  `n^(4s+1)`, from `j = 5` mod `n^(5s+1)` - exactly the three printed moduli.
+  This is the content of `M1F3_tail_dvd`.
+
+  Relation to M1-FRAG-02: `M1F2_expand_trunc` keeps two terms and concludes
+  `n^(2s+1) | T`; `M1F3_expand_trunc` is its `r`-parameter version (M1F2's is the
+  case `r = 1`). The leaf is deliberately SELF-CONTAINED (`M1F3/Basic.lean`
+  imports only Mathlib): the higher moduli need `n^((r+1)s+1) | C(n,j) X^j` for
+  `j >= r+1`, and that is NOT recoverable from `M1F2_choose_mul_pow_dvd`, which
+  extracts only `n^(2s+1)` and does not track the leftover `n^((j-2)s)`. So the
+  file proves `M1F3_tail_dvd` itself; M1-FRAG-02 remains the pattern cited in
+  prose, not an import.
+transcription: manual
+author_steps: |
+  Normalized ordered step map, in the author's printed order. One leaf carries
+  all three because they are the same computation at orders 2, 3 and 4.
+
+  S0 [P006-R2, display (8)]
+     Input:  the substituted equation, n prime > 11, 1 <= s, X = n^s abck.
+     Output: h^n - a^(n^2) - b^(n^2)
+               = n[a^(n(n-1)) + b^(n(n-1)) + h^(n-1)] X
+                 + (n(n-1)/2)[b^(n(n-2)) + a^(n(n-2)) - h^(n-2)] X^2
+                 (mod n^(3s+1)).
+     Lean:   M1F3_step_S0_eight
+
+  S1 [P006-R2, display (9)]
+     Input:  the same.
+     Output: the same congruence with the C(n,3) term added, mod n^(4s+1).
+     Lean:   M1F3_step_S1_nine
+
+  S2 [P006-R2, display (10)]
+     Input:  the same.
+     Output: h^n - a^(n^2) - b^(n^2) - n[a^(n(n-1)) + b^(n(n-1)) + h^(n-1)] X
+               = (n(n-1)/2)[...] X^2 + (n(n-1)(n-2)/6)[...] X^3
+                 + (n(n-1)(n-2)(n-3)/24)[...] X^4   (mod n^(5s+1)),
+             i.e. the X-linear term moved to the left, exactly as printed.
+     Lean:   M1F3_step_S2_ten
+
+  Note on the printed bracket order: the order-1 bracket is
+  `[a^... + b^... + h^...]` while the order-2, 3 and 4 brackets are
+  `[b^... + a^... +/- h^...]`. Both orders are carried as printed; the order is
+  mathematically irrelevant and nothing depends on it.
+
+  Support declarations (not author steps; they are what the three steps need):
+    M1F3_add_pow_index  - the binomial expansion indexed by the power of X
+    M1F3_tail_dvd       - n^((r+1)s+1) | C(n,j) X^j for j >= r+1
+    M1F3_expand_trunc   - the r-parameter truncation (M1F2's lemma is r = 1)
+
+  evidence: region record p006.yml (REVIEWED, signed); sympy
+    m1_common.screen_tail checks the tail divisibility behind (7)-(10) for orders
+    0-4 at n in {5,7,11,13,17,19,23} with the printed moduli sharp (PASS, EXIT 0).
+lean_file: 03-lean/M1F3/Basic.lean
+sympy_test: 04-sympy/m1_common.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-006-300dpi-region-02.png
+lean_decls: M1F3_add_pow_index, M1F3_tail_dvd, M1F3_expand_trunc, M1F3_step_S0_eight, M1F3_step_S1_nine, M1F3_step_S2_ten
+regions: P006-R2
+status: DONE

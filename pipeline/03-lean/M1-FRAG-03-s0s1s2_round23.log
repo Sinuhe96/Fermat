@@ -1,0 +1,23 @@
+M1F3/Basic.lean:92:8: error: Application type mismatch: The argument
+  M1F2.M1F2_choose_mul_pow_dvd hn hn3 hs Q hi2 hin
+has type
+  ↑n ^ (2 * s + 1) ∣ ↑(n.choose (r + 1 + i)) * (↑n ^ s * Q) ^ (r + 1 + i)
+but is expected to have type
+  ↑n ^ ((r + 1) * s + 1) ∣ ?m.308
+in the application
+  Dvd.dvd.trans (pow_dvd_pow (↑n) hexp) (M1F2.M1F2_choose_mul_pow_dvd hn hn3 hs Q hi2 hin)
+M1F3/Basic.lean:77:75: error: unsolved goals
+case refine_2
+n s r : ℕ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+hr : 1 ≤ r
+hrn : r ≤ n
+y Q : ℤ
+⊢ (y + ↑n ^ s * Q) ^ n =
+    ∑ i ∈ Finset.range (r + 1), ↑(n.choose i) * y ^ (n - i) * (↑n ^ s * Q) ^ i +
+      ∑ i ∈ Finset.range (n - r), ↑(n.choose (r + 1 + i)) * y ^ (n - (r + 1 + i)) * (↑n ^ s * Q) ^ (r + 1 + i)
+'M1F3.M1F3_step_S0_eight' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S1_nine' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S2_ten' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

@@ -39,6 +39,10 @@ HERE = pathlib.Path(__file__).resolve().parent
 # module root -> (chunk, human gloss); the ledger order, not alphabetical
 MODULES = [
     ("Common", "shared helpers", "—"),
+    ("B", "một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation", "B-01"),
+    ("M1F1", "main proof §1, p. 6 — the bổ đề 6 substitution (P006-R1)", "M1-FRAG-01"),
+    ("M1F2", "main proof §1, p. 6 — the printed (7) and (7') (P006-R2)", "M1-FRAG-02"),
+    ("M1F3", "main proof §1, p. 6 — the printed (8), (9) and (10) (P006-R2)", "M1-FRAG-03"),
     ("L1", "bổ đề 1", "L1-01"),
     ("L2", "bổ đề 2", "L2-01"),
     ("L3", "bổ đề 3", "L3-01"),
@@ -57,7 +61,9 @@ MODULES = [
 DECL_START = re.compile(r"^(theorem|lemma|def|abbrev|structure|noncomputable def)\s+([\w'.]+)")
 NS = re.compile(r"^namespace\s+([\w'.]+)")
 DOC = re.compile(r"^/--\s*(.*)$")
-ENTRY = re.compile(r"^(L\d_bo_de_\d|L7_bo_de_7)$")
+# entry point = the assembly theorem a downstream chunk should cite; `B_rules`
+# is section B's two printed rules folded into one reusable declaration.
+ENTRY = re.compile(r"^(L\d_bo_de_\d|L7_bo_de_7|B_rules)$")
 
 
 def declarations(path: pathlib.Path):
@@ -175,12 +181,17 @@ ones, e.g. `(X := b) (Y := a)`).
 
 | module | assembly theorem | proves |
 |---|---|---|"""]
+    # `MODULES` may name a chunk whose source does not exist yet (a planned
+    # module); the body and the inventory already skip those, and so must the
+    # imports — an unconditional `import B.Basic` for an unwritten module makes
+    # the whole probe fail to elaborate, taking every other name with it.
     probe = ["-- Batched `#check` for every declaration in SIGNATURES.md.",
              "-- Regenerate with: python pipeline/03-lean/gen_signatures.py",
              "-- Compile:  sh /workspace/proof/compile_lean.sh probes/SIGNATURES.probe.lean",
              "-- The log (probes/SIGNATURES.probe.log) is what binds these names/types",
              "-- to the pinned toolchain; a `#check` list is trustworthy only if it ran.",
-             "import Mathlib"] + [f"import {mod}.Basic" for mod, _, _ in MODULES]
+             "import Mathlib"] + [f"import {mod}.Basic" for mod, _, _ in MODULES
+                                  if (HERE / mod / "Basic.lean").exists()]
     body: list[str] = []
     counts: list[tuple[str, str, int]] = []
     for mod, gloss, chunk in MODULES:

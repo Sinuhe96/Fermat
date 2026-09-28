@@ -1,0 +1,82 @@
+id: M1-FRAG-02
+title: "Main proof §1, p. 6 / P006-R2 - the printed (7) mod n^(2s+1) and its companion (7') mod n^(s+1)"
+pdf_pages: [6]
+kind: lemma-proof-step
+depends_on: [M1-FRAG-01]
+source_text: |
+  [PDF p6, region P006-R2. Byte-copied from the signed region record
+  pipeline/01-extract/regions/p006.yml (status REVIEWED). Only the two displays
+  this leaf states are quoted; the remaining displays of the region belong to
+  M1-FRAG-03.
+
+  Step-boundary note (transcription fact, not an author error): the print places
+  (7') at the END of the same display line that carries (9) — the line
+  `... + (n(n-1)(n-2)/6)[b^{n(n-3)}+a^{n(n-3)}+h^{n-3}](n^s abck)^3 \pmod{n^{4s+1}}\ (9),\ h^n \equiv a^{n^2}+b^{n^2} \pmod{n^{s+1}}\ (7')`.
+  That line is therefore quoted here in full even though its first half is (9),
+  which this leaf does not state. The printed (7') is a distinct labelled claim,
+  and it is the last display of the region that belongs to this leaf.]
+      \[ \text{*}\; h^n - a^{n^2} - b^{n^2} \equiv n\Big[a^{n(n-1)} + b^{n(n-1)} + h^{n-1}\Big]n^s abck \pmod{n^{2s+1}}\ (7) \]
+      \[ + \frac{n(n-1)(n-2)}{6}\Big[b^{n(n-3)} + a^{n(n-3)} + h^{n-3}\Big](n^s abck)^3 \pmod{n^{4s+1}}\ (9),\ h^n \equiv a^{n^2} + b^{n^2} \pmod{n^{s+1}}\ (7') \]
+formal_hint: |
+  Both displays are *congruences of the expansion*, not identities: they hold
+  only under (3) `u^n + v^n = t^n`, i.e. under the substituted equation
+  `(a^n + X)^n + (b^n + X)^n = (h - X)^n` with `X := n^s abck` that M1-FRAG-01's
+  S4 produces. This is the F1 finding recorded in M1_LANE.md §7 and it fixes the
+  encoding: the equation is a HYPOTHESIS of every step here, never an axiom.
+
+  S0 (7): expanding the equation and moving `a^{n^2} + b^{n^2}` to the right,
+    `h^n - a^{n^2} - b^{n^2} = n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}]X + (higher terms)`,
+    and every higher term is `≡ 0 (mod n^{2s+1})`: the `i`-th term of the
+    binomial sums carries `C_n^i X^i = C_n^i n^{is}(abck)^i`, and for `1 <= i <= n-1`
+    a prime `n` divides `C_n^i` (Nat.Prime.dvd_choose_self), so the term is
+    divisible by `n^{is+1}`, which is divisible by `n^{2s+1}` as soon as `i >= 2`.
+    The `i = 1` and `j = 1` terms both survive at `n^{s+1}` and combine into the
+    printed bracket with a PLUS on `h^{n-1}`: from
+    `(a^n+X)^n+(b^n+X)^n-(h-X)^n = 0` the coefficient of `X` is
+    `n(a^{n(n-1)}+b^{n(n-1)}) + n h^{n-1}` — the sign is `+` because
+    `(h-X)^n` contributes `-(-1)^1 C_n^1 h^{n-1}X = +n h^{n-1}X`. This bracket is
+    the printed one, and it is what `m1_common.screen_tail` verified numerically
+    for orders 0-4.
+
+  S1 (7') is immediate from (7) and is NOT independent: (7)'s right-hand side is
+    `n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}] · n^s abck`, i.e. `n^{s+1}` times an integer,
+    so it is `≡ 0 (mod n^{s+1})`, and (7) mod `n^{s+1}` (which follows from (7)
+    mod `n^{2s+1}` because `s+1 <= 2s+1` for `s >= 0`) gives exactly
+    `h^n ≡ a^{n^2} + b^{n^2} (mod n^{s+1})`. The print states (7') as a separate
+    labelled claim, so it is a separate step here, but its content is a one-line
+    consequence of (7) — that is worth recording rather than re-deriving.
+transcription: manual
+author_steps: |
+  Normalized ordered step map. Leaf boundary revised from M1_LANE.md §5: that
+  table pencilled 5 steps here for "P006-R2 (l1-6)"; on the printed page the
+  claims that belong to this leaf are exactly two, (7) and (7'), because (8),
+  (9) and (10) are the same computation at higher orders and are stated by
+  M1-FRAG-03. The leaf cap is a ceiling, so the smaller leaf is taken (and this
+  revision is recorded in the lane report).
+
+  S0 [P006-R2, display (7)]
+     Input:  the substituted equation (M1-FRAG-01 S4), n prime > 11, s >= 2,
+             X = n^s abck.
+     Output: h^n - a^(n^2) - b^(n^2) ≡ n[a^{n(n-1)}+b^{n(n-1)}+h^{n-1}]X
+             (mod n^{2s+1}).
+     Lean:   M1F2_step_S0_seven  [PENDING]
+
+  S1 [P006-R2, display (7'), printed at the end of (9)'s line]
+     Input:  S0.
+     Output: h^n ≡ a^(n^2) + b^(n^2) (mod n^{s+1}).
+     Lean:   M1F2_step_S1_seven_prime  [PENDING]
+
+  evidence: region record p006.yml (REVIEWED, signed); sympy
+    m1_common.screen_tail checks exactly S0's tail-divisibility for orders 0-4
+    at n in {5,7,11,13,17,19,23}, printed moduli sharp (PASS, EXIT 0); the
+    boundary note at order = n-1 (n = 5) is recorded there and does not affect
+    n > 11.
+lean_file: 03-lean/M1F2/Basic.lean
+sympy_test: 04-sympy/m1_common.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-006-300dpi-region-02.png
+lean_decls: M1F2_step_S0_seven, M1F2_step_S1_seven_prime
+regions: P006-R2
+status: DONE

@@ -810,6 +810,53 @@ names/signatures — checked against the pinned tree, not guessed:
     afterwards; the per-round cost is dominated by re-loading Mathlib, not by
     the declarations.
 
+## Session 2026-09-28 — M1 lane (main proof §D.1, pp. 6–33): M1-FRAG-01 DONE
+
+Each item below cost one round to learn; all are cheap to avoid now.
+
+1. **Big-operator binder: write `∑ i ∈ s,`. The ASCII `∑ i in s,` form does not
+   parse at this pin.** `B/Basic.lean` round 5 died with
+   `B/Basic.lean:49:8: error: unexpected token 'in'; expected ','` on
+   `(∑ i in Finset.Ico k (n + 1), a i)`. `L5/Basic.lean` and `L6/Basic.lean`
+   (both DONE) use `∑ i ∈ Finset.range n,` with nothing but `import Mathlib` —
+   there is no `open scoped BigOperators` anywhere in this repo. Cost: one round.
+2. **`Finset.sum_Icc_eq_sum_range` does NOT exist.** `rg` the pinned tree under
+   `/workspace/work/testproj/.lake/packages/mathlib/Mathlib` *before* writing a
+   proof (≈1 s versus a 250–400 s round). What exists and is useful:
+   `Finset.sum_Ico_eq_sum_range` and `Finset.sum_range_reflect`. The printed
+   `Σ_{i=k}^{n}` translates with no side condition as `Finset.Ico k (n + 1)`,
+   and the printed `Σ_{i=k}^{m-1}` is exactly `Finset.Ico k m`.
+3. **`async: true` does not extend the harness's command deadline.** A round
+   launched with the default deadline was killed at 300 s mid-compile (it needed
+   ~320 s): the log file came back 0 bytes and no ledger row was written, and the
+   side effect was a stale `M1_inflight` handshake to clear. Always pass an
+   explicit generous `timeout` (≥ 1200 s) to a `sh proof/run_round.sh` call.
+4. **`Nat.Prime.prime_int` does not exist** (caught by a probe line, round 3).
+   The nat→ℤ prime bridge that works is
+   `Int.prime_iff_natAbs_prime.mpr (by simpa using hn)`, then
+   `hprime.dvd_mul.mp` for the `p ∣ a * b` split.
+5. **`Odd.neg_pow : Odd n → ∀ a, (-a) ^ n = -a ^ n`.** A four-way sign symmetry
+   over ℤ needs nothing else: `rw [hodd.neg_pow, hodd.neg_pow]` then `linarith`.
+   `Nat.Prime.odd_of_ne_two` (with `omega` on a numeric lower bound) supplies the
+   `Odd n`; `Nat.Prime.two_le` is what `omega` needs otherwise, since it cannot
+   read `Nat.Prime` itself.
+6. **Batching the probe with the first proof attempt works.** Put the `#check`
+   pin block at the top of the *same* file as the step. Round 3 returned exactly
+   one error — a bad probe name — and zero proof errors for four declarations, so
+   the single re-round was only to delete the name. This is the cheap version of
+   "probe in bulk, then one step per compile".
+7. **`#print axioms` costs nothing inside the same round.** Append
+   `#print axioms <decl>` lines after `end <Namespace>`; the round log then
+   carries the DONE-flip evidence directly (`propext, Classical.choice,
+   Quot.sound` only).
+8. **New modules need a `[[lean_lib]]` block in `pipeline/03-lean/lakefile.toml`**
+   (`roots = ["M1F1.Basic"]`) or a consumer's `import M1F1.Basic` will not
+   resolve; `proof/compile_lean.sh` syncs that tracked file into the work volume.
+   `gen_signatures.py`'s `MODULES` list must also name the module, and its
+   *body* and *imports* both skip a module whose `Basic.lean` does not exist yet
+   (the import list originally did not — an unconditional `import B.Basic` for an
+   unwritten module makes the whole 119-line probe fail to elaborate).
+
 ## General advice
 
 1. **Don't fight ZMod.** If the proof needs heavy algebra in `ZMod n`,
@@ -832,3 +879,83 @@ names/signatures — checked against the pinned tree, not guessed:
    (288–387 s across this session), so a wrong guess is expensive: grep the
    local Mathlib tree first (free, pin-exact) and spend the round-trip on
    the step itself.
+
+5. **Correction to item 4's cost model, measured 2026-09-28 (pp. 9–10 lane).**
+   A round that *fails* costs **7–24 s**, not 250–400 s: Mathlib's oleans are
+   cached in the work volume, so `import Mathlib` is cheap and the multi-minute
+   rounds are the ones where heavy tactics (`ring`, `omega`) elaborate
+   successfully over large terms. Consequences, both used to good effect:
+   (a) iterate freely on compile errors inside one session — a wrong guess is
+   8 s, not 6 min; (b) the round-trip is only expensive when the goal is big, so
+   keep each round to one author step (item 4) and do not pre-emptively fear the
+   compile. Measured on `B/Basic.lean`: rounds 17 and 18 failed in 24 s and 8 s,
+   round 19 (a 13-name `#check` probe) in 7 s, and rounds 20 and 21 — one
+   accepting the proof, one printing the axiom sets — in 8 s each, EXIT 0.
+
+6. **`omega` and truncated subtraction, the second failure of this kind.**
+   `omega` CAN do equalities of truncated chains
+   (`m - 1 - k - i = m - 1 - i - k` ✓, used in `B_step_S2_deriv` and in
+   `B_step_S1_reindex`'s `e1/e2/e3`) and the *easy* comparison
+   (`y < m - k ⊢ y < m` ✓). It CANNOT do monotonicity in the subtrahend:
+   `y ≥ m - k ⊢ m - 1 - y < k` fails, and the counterexample it prints reveals
+   why — it abstracts `↑(m - k)` as an atom, so the two facts are unrelated in
+   its model. Working recipe (2 lines of core lemmas + one `omega`):
+   ```lean
+   have hyk : m ≤ y + k := by
+     calc m = m - k + k := (tsub_add_cancel_of_le hk_le).symm
+       _ ≤ y + k := Nat.add_le_add_right hyge k
+   rw [Nat.sub_sub, Nat.add_comm 1 y, tsub_lt_iff_right hy1]   -- hy1 : y + 1 ≤ m
+   omega                                                        -- now purely linear
+   ```
+   The same weakness forced B.1's range-form encoding (see `B-01.yml`), so the
+   general rule is: **when a goal compares two different truncated subtractions,
+   convert to an addition (`tsub_lt_iff_right`, `Nat.sub_sub`) before calling
+   `omega`.**
+
+7. **`Finset.sum_subset` exists but is invisible to `rg`, and its set order is
+   the opposite of the natural reading.** It is the `to_additive` image of
+   `Finset.prod_subset`, generated at elaboration time, so
+   `rg "theorem sum_subset"` over the pinned tree finds nothing — do not
+   conclude the lemma is absent. Probe statement (round 19):
+   ```lean
+   Finset.sum_subset : s₁ ⊆ s₂ → (∀ x ∈ s₂, x ∉ s₁ → f x = 0) → ∑ x ∈ s₁, f x = ∑ x ∈ s₂, f x
+   ```
+   The **smaller** set is on the LEFT and the vanishing condition is stated on
+   the *bigger* set's elements. So a goal written
+   `∑ over range m = ∑ over range (m-k)` needs `(Finset.sum_subset h hf).symm`;
+   without the `.symm` Lean still elaborates it (unifying `s₁ := range m`), and
+   the two subgoals come back swapped, which reads as an arithmetic error rather
+   than a direction error. Two rounds were spent on this.
+
+8. **One `#check`/`#print` probe round pins a dozen shapes at once, for 7 s.**
+   Round 19 resolved 12 of 13 names in a single round (`Finset.sum_range_eq_add_sum_Ico`
+   is the one that does not exist). Pinned there and reused immediately:
+   `tsub_lt_iff_right (hbc : b ≤ a) : a - b < c ↔ a < c + b`;
+   `tsub_add_cancel_of_le (h : a ≤ b) : b - a + a = b` (the ℕ-generic spellings —
+   note these are the *unbundled* names, not `Nat.sub_lt_iff_lt_add`, which does
+   not exist under that name); `Nat.sub_sub n m k : n - m - k = n - (m + k)`;
+   `Nat.succ_le_iff : m.succ ≤ n ↔ m < n`; `Nat.sub_le n m : n - m ≤ n`;
+   `Nat.le_of_not_lt : ¬a < b → b ≤ a`; `Finset.sum_range_add`,
+   `Finset.sum_union`, `Finset.sum_eq_zero`.
+
+9. **A text edit that swallows a `·` bullet marker silently merges two goals** —
+   the failure mode to recognise, because its two symptoms point opposite ways.
+   Rewriting the first line of a bullet (`  · rw [...]`) with replacement text
+   that starts at the tactic (`    rw [...]`) loses the `·`; the following lines
+   then belong to the *previous* bullet, which had already closed — so Lean
+   reports **`No goals to be solved`** at the merged tactic *and* **`unsolved
+   goals`** at the `refine`/`constructor` site that introduced the real second
+   goal. Reading only the first symptom looks like a type error; reading only
+   the second looks like a missing proof. It is neither. Cost: rounds 25 and 26
+   on `M1-FRAG-03` (12 s and 10 s, one error each, no mathematics involved).
+   Prevention: when a replacement's `old_string` begins mid-line, keep the line's
+   leading marker (`·`, `case …`), or anchor the edit one line earlier.
+
+10. **`rw` closes a goal that becomes `rfl`.** After
+   `rw [h, Finset.sum_range_add]` over the split of a sum, the goal is
+   `∑ … + ∑ … = ∑ … + ∑ …` with syntactically identical sides, and the `rw`
+   already finishes it — so a follow-up `simp only [add_left_inj]; rfl` errors
+   with `No goals to be solved` (`M1-FRAG-03`, round 26). When a `rw` chain is
+   expected to leave only bookkeeping, try ending at the last `rw` first; the
+   binding lemma here was `Finset.sum_range_add` plus the range equality
+   `n + 1 = (r + 1) + (n - r)`.

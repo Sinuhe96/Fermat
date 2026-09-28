@@ -1,0 +1,74 @@
+@add_pow : ∀ {R : Type u_1} [inst : CommSemiring R] (x y : R) (n : ℕ),
+  (x + y) ^ n = ∑ m ∈ Finset.range (n + 1), x ^ m * y ^ (n - m) * ↑(n.choose m)
+Nat.choose_succ_succ : ∀ (n k : ℕ), n.succ.choose k.succ = n.choose k + n.choose k.succ
+Nat.choose_self : ∀ (n : ℕ), n.choose n = 1
+@Nat.choose_eq_zero_of_lt : ∀ {n k : ℕ}, n < k → n.choose k = 0
+@Nat.choose_mul : ∀ {n k s : ℕ}, s ≤ k → n.choose k * k.choose s = n.choose s * (n - s).choose (k - s)
+Nat.choose_mul_succ_eq : ∀ (n k : ℕ), n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)
+Nat.cast_choose : ∀ (K : Type u_1) [inst : DivisionSemiring K] [CharZero K] {a b : ℕ},
+  a ≤ b → ↑(b.choose a) = ↑b.factorial / (↑a.factorial * ↑(b - a).factorial)
+@Finset.sum_range_succ : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ x ∈ Finset.range (n + 1), f x = ∑ x ∈ Finset.range n, f x + f n
+@Finset.sum_range_succ' : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ k ∈ Finset.range (n + 1), f k = ∑ k ∈ Finset.range n, f (k + 1) + f 0
+@Finset.sum_range_sub : ∀ {G : Type u_1} [inst : AddCommGroup G] (f : ℕ → G) (n : ℕ),
+  ∑ i ∈ Finset.range n, (f (i + 1) - f i) = f n - f 0
+@Finset.sum_range_sub' : ∀ {G : Type u_1} [inst : AddCommGroup G] (f : ℕ → G) (n : ℕ),
+  ∑ i ∈ Finset.range n, (f i - f (i + 1)) = f 0 - f n
+@Finset.sum_congr : ∀ {ι : Type u_1} {M : Type u_2} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M] {f g : ι → M},
+  s₁ = s₂ → (∀ x ∈ s₂, f x = g x) → s₁.sum f = s₂.sum g
+@Finset.sum_add_distrib : ∀ {ι : Type u_1} {M : Type u_2} {s : Finset ι} [inst : AddCommMonoid M] {f g : ι → M},
+  ∑ x ∈ s, (f x + g x) = ∑ x ∈ s, f x + ∑ x ∈ s, g x
+@Finset.sum_sub_distrib : ∀ {ι : Type u_1} {G : Type u_2} {s : Finset ι} [inst : SubtractionCommMonoid G] (f g : ι → G),
+  ∑ x ∈ s, (f x - g x) = ∑ x ∈ s, f x - ∑ x ∈ s, g x
+@Finset.mul_sum : ∀ {ι : Type u_1} {R : Type u_2} [inst : NonUnitalNonAssocSemiring R] (s : Finset ι) (f : ι → R)
+  (a : R), a * ∑ i ∈ s, f i = ∑ i ∈ s, a * f i
+@Finset.sum_mul : ∀ {ι : Type u_1} {R : Type u_2} [inst : NonUnitalNonAssocSemiring R] (s : Finset ι) (f : ι → R)
+  (a : R), (∑ i ∈ s, f i) * a = ∑ i ∈ s, f i * a
+@Finset.sum_mul_sum : ∀ {ι : Type u_1} {κ : Type u_2} {R : Type u_3} [inst : NonUnitalNonAssocSemiring R] (s : Finset ι)
+  (t : Finset κ) (f : ι → R) (g : κ → R), (∑ i ∈ s, f i) * ∑ j ∈ t, g j = ∑ i ∈ s, ∑ j ∈ t, f i * g j
+@Finset.sum_comm : ∀ {α : Type u_1} {β : Type u_2} {γ : Type u_3} [inst : AddCommMonoid β] {s : Finset γ} {t : Finset α}
+  {f : γ → α → β}, ∑ x ∈ s, ∑ y ∈ t, f x y = ∑ y ∈ t, ∑ x ∈ s, f x y
+@pow_dvd_pow_of_dvd : ∀ {α : Type u_1} [inst : CommMonoid α] {a b : α}, a ∣ b → ∀ (n : ℕ), a ^ n ∣ b ^ n
+@dvd_pow_self : ∀ {α : Type u_1} [inst : Monoid α] (a : α) {n : ℕ}, n ≠ 0 → a ∣ a ^ n
+@pow_add : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (m n : ℕ), a ^ (m + n) = a ^ m * a ^ n
+@pow_mul : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (m n : ℕ), a ^ (m * n) = (a ^ m) ^ n
+@pow_succ : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (n : ℕ), a ^ (n + 1) = a ^ n * a
+@pow_succ' : ∀ {M : Type u_1} [inst : Monoid M] (a : M) (n : ℕ), a ^ (n + 1) = a * a ^ n
+@Nat.pow_dvd_pow_iff_le_right : ∀ {x k l : ℕ}, 1 < x → (x ^ k ∣ x ^ l ↔ k ≤ l)
+@Int.ModEq.of_dvd : ∀ {m n a b : ℤ}, m ∣ n → a ≡ b [ZMOD n] → a ≡ b [ZMOD m]
+@Int.ModEq.mul : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a * c ≡ b * d [ZMOD n]
+@Int.ModEq.pow : ∀ {n a b : ℤ} (m : ℕ), a ≡ b [ZMOD n] → a ^ m ≡ b ^ m [ZMOD n]
+@Int.ModEq.add : ∀ {n a b c d : ℤ}, a ≡ b [ZMOD n] → c ≡ d [ZMOD n] → a + c ≡ b + d [ZMOD n]
+@Int.ModEq.neg : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] → -a ≡ -b [ZMOD n]
+@Int.ModEq.dvd : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] → n ∣ b - a
+@Int.modEq_iff_dvd : ∀ {n a b : ℤ}, a ≡ b [ZMOD n] ↔ n ∣ b - a
+@Int.modEq_zero_iff_dvd : ∀ {n a : ℤ}, a ≡ 0 [ZMOD n] ↔ n ∣ a
+@Nat.Prime.two_le : ∀ {p : ℕ}, Nat.Prime p → 2 ≤ p
+@Nat.Prime.odd_of_ne_two : ∀ {p : ℕ}, Nat.Prime p → p ≠ 2 → Odd p
+@Nat.Prime.eq_two_or_odd' : ∀ {p : ℕ}, Nat.Prime p → p = 2 ∨ Odd p
+@Nat.Prime.dvd_choose_self : ∀ {p k : ℕ}, Nat.Prime p → k ≠ 0 → k < p → p ∣ p.choose k
+@Int.Prime.dvd_pow' : ∀ {n : ℤ} {k p : ℕ}, Nat.Prime p → ↑p ∣ n ^ k → ↑p ∣ n
+@Int.ModEq.pow_prime_eq_self : ∀ {p : ℕ}, Nat.Prime p → ∀ (n : ℤ), n ^ p ≡ n [ZMOD ↑p]
+@Odd.neg_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ},
+  Odd n → ∀ (a : α), (-a) ^ n = -a ^ n
+@Odd.mul : ∀ {α : Type u_1} [inst : Semiring α] {a b : α}, Odd a → Odd b → Odd (a * b)
+@Polynomial.eval_finsetSum : ∀ {R : Type u_1} {ι : Type u_2} [inst : Semiring R] (s : Finset ι) (g : ι → Polynomial R)
+  (x : R), Polynomial.eval x (∑ i ∈ s, g i) = ∑ i ∈ s, Polynomial.eval x (g i)
+@Polynomial.X_add_C_ne_zero : ∀ {R : Type u_1} [Nontrivial R] [inst : Semiring R] (r : R),
+  Polynomial.X + Polynomial.C r ≠ 0
+@geom_sum_mul : ∀ {R : Type u_1} [inst : Ring R] (x : R) (n : ℕ), (∑ i ∈ Finset.range n, x ^ i) * (x - 1) = x ^ n - 1
+@mul_geom_sum : ∀ {R : Type u_1} [inst : Ring R] (x : R) (n : ℕ), (x - 1) * ∑ i ∈ Finset.range n, x ^ i = x ^ n - 1
+@geom_sum_eq : ∀ {K : Type u_1} [inst : DivisionRing K] {x : K},
+  x ≠ 1 → ∀ (n : ℕ), ∑ i ∈ Finset.range n, x ^ i = (x ^ n - 1) / (x - 1)
+@Finset.sum_sigma' : ∀ {α : Type u_1} {β : Type u_2} [inst : AddCommMonoid β] {σ : α → Type u_3} (s : Finset α)
+  (t : (a : α) → Finset (σ a)) (f : (a : α) → σ a → β), ∑ a ∈ s, ∑ s ∈ t a, f a s = ∑ x ∈ s.sigma t, f x.fst x.snd
+@Finset.sum_finset_product : ∀ {α : Type u_1} {β : Type u_2} {γ : Type u_3} [inst : AddCommMonoid β]
+  (r : Finset (γ × α)) (s : Finset γ) (t : γ → Finset α),
+  (∀ (p : γ × α), p ∈ r ↔ p.1 ∈ s ∧ p.2 ∈ t p.1) → ∀ {f : γ × α → β}, ∑ p ∈ r, f p = ∑ c ∈ s, ∑ a ∈ t c, f (c, a)
+@Finset.sum_range_add : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n m : ℕ),
+  ∑ x ∈ Finset.range (n + m), f x = ∑ x ∈ Finset.range n, f x + ∑ x ∈ Finset.range m, f (n + x)
+@Finset.sum_sigma : ∀ {α : Type u_1} {β : Type u_2} [inst : AddCommMonoid β] {σ : α → Type u_3} (s : Finset α)
+  (t : (a : α) → Finset (σ a)) (f : Sigma σ → β), ∑ x ∈ s.sigma t, f x = ∑ a ∈ s, ∑ s ∈ t a, f ⟨a, s⟩
+@Finset.sum_product : ∀ {α : Type u_1} {β : Type u_2} {γ : Type u_3} [inst : AddCommMonoid β] (s : Finset γ)
+  (t : Finset α) (f : γ × α → β), ∑ x ∈ s ×ˢ t, f x = ∑ x ∈ s, ∑ y ∈ t, f (x, y)

@@ -342,6 +342,15 @@ fast compile-free check; `--full` additionally validates `import Mathlib`.
   `sh -c` string: write the script to a file (pipe it in and strip CR with
   `tr -d '\r'`) and/or redirect the command's output to a container-side
   file and read that back.
+- **MSYS/Git-bash rewrites a leading-slash ARGUMENT to a Windows path before
+  `docker` sees it.** The documented compile invocation
+  `docker compose exec -T lean sh /workspace/proof/compile_lean.sh X.lean`
+  fails in 0 s with exit 2 and
+  `sh: 0: cannot open C:/Program Files/Git/workspace/proof/compile_lean.sh:
+  No such file` — the container path was converted on the way out. Export
+  `MSYS_NO_PATHCONV=1` for the call (or pass the path inside a `sh -c '…'`
+  string). Cost one round attempt in the 2026-09-28 main-proof lane;
+  `proof/run_round.sh` exports it, so drive rounds through that harness.
 - **`docker compose exec -d` is NOT a safe way to run a long build.** The
   in-container process dies when the client detaches; three `lake build`
   runs were killed this way. Use a tracked background task (the harness

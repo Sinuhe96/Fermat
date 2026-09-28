@@ -1,0 +1,3 @@
+'M1F3.M1F3_step_S0_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S1_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S2_ten' depends on axioms: [propext, Classical.choice, Quot.sound]

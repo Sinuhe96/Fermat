@@ -1,0 +1,32 @@
+M1F3/Basic.lean:86:4: error: Type mismatch
+  dvd_mul_of_dvd_right (pow_dvd_pow ↑n ?m.117) ?m.118
+has type
+  ↑n ^ ?m.115 ∣ ?m.118 * ↑n ^ ?m.116
+but is expected to have type
+  ↑n ^ ((r + 1) * s + 1) ∣ ↑n ^ (n * s) * Q ^ n
+M1F3/Basic.lean:99:4: error: Type mismatch
+  dvd_mul_of_dvd_right (pow_dvd_pow ↑n ?m.230) ?m.231
+has type
+  ↑n ^ ?m.228 ∣ ?m.231 * ↑n ^ ?m.229
+but is expected to have type
+  ↑n ^ ((r + 1) * s + 1) ∣ ↑n ^ (s * j + 1) * (↑t * Q ^ j)
+M1F3/Basic.lean:132:4: error: Type mismatch
+  dvd_mul_of_dvd_right hd ?m.345
+has type
+  ↑n ^ ((r + 1) * s + 1) ∣ ?m.345 * (↑(n.choose (r + 1 + i)) * (↑n ^ s * Q) ^ (r + 1 + i))
+but is expected to have type
+  ↑n ^ ((r + 1) * s + 1) ∣ ↑(n.choose (r + 1 + i)) * (↑n ^ s * Q) ^ (r + 1 + i) * y ^ (n - (r + 1 + i))
+M1F3/Basic.lean:119:75: error: unsolved goals
+case refine_2
+n s r : ℕ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+hrn : r + 2 ≤ n
+y Q : ℤ
+⊢ (y + ↑n ^ s * Q) ^ n =
+    ∑ i ∈ Finset.range (r + 1), ↑(n.choose i) * y ^ (n - i) * (↑n ^ s * Q) ^ i +
+      ∑ i ∈ Finset.range (n - r), ↑(n.choose (r + 1 + i)) * y ^ (n - (r + 1 + i)) * (↑n ^ s * Q) ^ (r + 1 + i)
+'M1F3.M1F3_step_S0_eight' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S1_nine' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F3.M1F3_step_S2_ten' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

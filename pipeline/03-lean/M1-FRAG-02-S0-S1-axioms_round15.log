@@ -1,0 +1,53 @@
+M1F2/Basic.lean:132:49: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a ^ (?m * ?n)
+in the target expression
+  (a ^ n) ^ n = a ^ n ^ 2
+
+n s : ℕ
+a b c k h : ℤ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+Ta : ℤ
+hTa : ↑n ^ (2 * s + 1) ∣ Ta
+hA : (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (a ^ n) ^ n + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Ta
+Tb : ℤ
+hTb : ↑n ^ (2 * s + 1) ∣ Tb
+hB : (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Tb
+Th : ℤ
+hsol :
+  (a ^ n) ^ n + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Ta +
+      ((b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Tb) =
+    h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) + Th
+hTh : ↑n ^ (2 * s + 1) ∣ Th
+hH : (h + ↑n ^ s * -(a * b * c * k)) ^ n = h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) + Th
+hsign : h - ↑n ^ s * (a * b * c * k) = h + ↑n ^ s * -(a * b * c * k)
+⊢ (a ^ n) ^ n = a ^ n ^ 2
+M1F2/Basic.lean:133:49: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a ^ (?m * ?n)
+in the target expression
+  (b ^ n) ^ n = b ^ n ^ 2
+
+n s : ℕ
+a b c k h : ℤ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+Ta : ℤ
+hTa : ↑n ^ (2 * s + 1) ∣ Ta
+hA : (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (a ^ n) ^ n + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Ta
+Tb : ℤ
+hTb : ↑n ^ (2 * s + 1) ∣ Tb
+hB : (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Tb
+Th : ℤ
+hsol :
+  (a ^ n) ^ n + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Ta +
+      ((b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Tb) =
+    h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) + Th
+hTh : ↑n ^ (2 * s + 1) ∣ Th
+hH : (h + ↑n ^ s * -(a * b * c * k)) ^ n = h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) + Th
+hsign : h - ↑n ^ s * (a * b * c * k) = h + ↑n ^ s * -(a * b * c * k)
+hpa : (a ^ n) ^ n = a ^ n ^ 2
+⊢ (b ^ n) ^ n = b ^ n ^ 2
+'M1F2.M1F2_step_S0_seven' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F2.M1F2_step_S1_seven_prime' depends on axioms: [propext, Quot.sound]

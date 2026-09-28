@@ -1,0 +1,44 @@
+M1F2/Basic.lean:135:4: error: linarith failed to find a contradiction
+case h1
+n s : ℕ
+a b c k h : ℤ
+hn : Nat.Prime n
+hn3 : 3 ≤ n
+hs : 1 ≤ s
+Ta : ℤ
+hTa : ↑n ^ (2 * s + 1) ∣ Ta
+hA : (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (a ^ n) ^ n + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Ta
+Tb : ℤ
+hTb : ↑n ^ (2 * s + 1) ∣ Tb
+hB : (b ^ n + ↑n ^ s * (a * b * c * k)) ^ n = (b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Tb
+Th : ℤ
+hsol :
+  (a ^ n) ^ n + ↑n * (a ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Ta +
+      ((b ^ n) ^ n + ↑n * (b ^ n) ^ (n - 1) * (↑n ^ s * (a * b * c * k)) + Tb) =
+    h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) + Th
+hTh : ↑n ^ (2 * s + 1) ∣ Th
+hH : (h + ↑n ^ s * -(a * b * c * k)) ^ n = h ^ n + ↑n * h ^ (n - 1) * (↑n ^ s * -(a * b * c * k)) + Th
+hsign : h - ↑n ^ s * (a * b * c * k) = h + ↑n ^ s * -(a * b * c * k)
+a✝ :
+  h ^ n - a ^ n ^ 2 - b ^ n ^ 2 <
+    ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (↑n ^ s * (a * b * c * k)) + (Ta + Tb - Th)
+⊢ False
+failed
+M1F2/Basic.lean:164:21: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a ^ ?m * ?a ^ ?n
+in the target expression
+  ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * ↑n ^ s * (a * b * c * k) =
+    ↑n ^ (s + 1) * ((a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (a * b * c * k))
+
+n s : ℕ
+a b c k h : ℤ
+hs : 0 ≤ s
+h7 :
+  h ^ n - a ^ n ^ 2 - b ^ n ^ 2 ≡
+    ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (↑n ^ s * (a * b * c * k)) [ZMOD ↑n ^ (2 * s + 1)]
+⊢ ↑n * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * ↑n ^ s * (a * b * c * k) =
+    ↑n ^ (s + 1) * ((a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1)) * (a * b * c * k))
+M1F2/Basic.lean:170:28: error(lean.unknownIdentifier): Unknown constant `Int.ModEq.zero_iff_dvd.mpr`
+M1F2/Basic.lean:174:21: error(lean.unknownIdentifier): Unknown constant `Int.ModEq.zero_iff_dvd.mp`
+'M1F2.M1F2_step_S0_seven' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'M1F2.M1F2_step_S1_seven_prime' depends on axioms: [propext, sorryAx, Quot.sound]

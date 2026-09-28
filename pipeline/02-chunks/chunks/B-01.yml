@@ -1,0 +1,129 @@
+id: B-01
+title: "Section B - the two sum-transformation rules of Sigma_3 (B.1 index shift, B.2 falling-factorial sum = f^(k)(x))"
+pdf_pages: [2]
+kind: lemma-statement
+depends_on: []
+source_text: |
+  [PDF p2, region P002-R1: the printed section-B heading and its two rules. The text below is byte-copied from the signed region record p002.yml.]
+  
+  \[ \textcolor{blue}{\textbf{B. MỘT CÁCH BIỂN ĐỔI TỔNG }} \sum_{3} \textcolor{blue}{\textbf{ VÀ MỘT DẠNG TÍNH ĐƯỢC CỦA TỔNG }} \sum_{3} \textcolor{blue}{\textbf{.}} \]
+  \[ 1)\ \sum_{i=k}^{n} a_i = \sum_{i=m}^{n+m-k} a_{i-m+k}\,, k, m \in \mathbb{N} \]
+  \[ 2)\ \sum_{i=k}^{m-1} i(i-1)(i-2)\ldots(i-k+1)h^{m-1-i}x^{i-k} = \sum_{i=0}^{m-1-k} (m-1-i)(m-2-i)\ldots(m-k-i)h^i x^{m-1-k-i} = f^{(k)}(x), k \in \mathbb{N}^{*} \]
+  \[ \text{,với } f(x) = x^{m-1} + hx^{m-2} + \ldots + h^{m-2}x + h^{m-1} = \frac{x^m - h^m}{x - h}, x \neq h\ ;\ f^{(k)}(x) \text{ là đạo hàm cấp } k \text{ của hàm số } f(x),\ m \in \mathbb{N}, m \ge 2. \]
+formal_hint: |
+  Two named rules, quantified exactly as printed.
+
+  B.1 (index shift), for k, m in N and any sequence a:
+      sum_{i=k}^{n} a_i  =  sum_{i=m}^{n+m-k} a_{i-m+k}
+    ENCODING (decided in round 8, for a measured reason): B.1 is stated in the
+    range form both sides share, i.e. with N the common cardinality,
+      sum_{i<N} a (k+i) = sum_{i<N} a (m+i-m+k).
+    The same rule, since the two printed ranges have the same cardinality; and
+    it is the form the main proof consumes (it cites B.1 to re-index sums in
+    pp. 12-14, all of which are range sums). The literal Icc form needs the range
+    equality (n+1)-k = (n+m-k+1)-m, which is TRUE in N but which `omega` rejects
+    with a spurious counterexample (truncated subtraction is not linear over the
+    integers), so that form would have forced a hand-rolled case split whose
+    entire content is N bookkeeping rather than the author's rule.
+
+  B.2 (falling-factorial sum = k-th derivative), for m >= 2, k in N*:
+      sum_{i=k}^{m-1} i(i-1)...(i-k+1) h^{m-1-i} x^{i-k}
+        = sum_{i=0}^{m-1-k} (m-1-i)(m-2-i)...(m-k-i) h^i x^{m-1-k-i}
+        = f^{(k)}(x),
+    with f(x) = x^{m-1} + h x^{m-2} + ... + h^{m-2} x + h^{m-1}
+               = (x^m - h^m)/(x - h)   for x != h,
+    f^{(k)} the k-th derivative of f.
+
+  Candidate Lean spelling (confirm with one batched #check round first):
+    falling factorial -> `Nat.descFactorial` (i.descFactorial k), or an explicit
+    Finset product of the k factors; derivative -> `Polynomial.derivative^[k]`
+    applied to `Polynomial.X^(m-1) + C h * ... + C h^(m-1)`, then
+    `Polynomial.eval` (the ENCODING_MAP P14 device, which already compiled for
+    L5). B.1 is `Finset.sum_range` re-indexing plus `Nat.add_sub_cancel`.
+transcription: manual
+author_steps: |
+  Normalized ordered step map. Section B states two rules; it proves nothing.
+
+  S0 [p2 R1, rule 1)] Index shift: sum_{i=k}^{n} a_i = sum_{i=m}^{n+m-k} a_{i-m+k}
+    for k, m in N. No hypothesis; a pure re-indexing.
+  S1 [p2 R1, rule 2), first equality] The falling-factorial sum equals its own
+    reversal: sum_{i=k}^{m-1} (i)_k h^{m-1-i} x^{i-k}
+      = sum_{i=0}^{m-1-k} (m-1-i)_k h^i x^{m-1-k-i},  (i)_k := i(i-1)...(i-k+1).
+  S2 [p2 R1, rule 2), second equality with the "voi f(x)" line] That sum is the
+    k-th derivative of f(x) = sum_{t=0}^{m-1} x^{m-1-t} h^t = (x^m - h^m)/(x-h).
+    RECIPE (all lemma names verified against the pinned Mathlib source and then
+    against the compiler; S1 in round 20, 8 s, exit 0):
+      * define `Bf (m : N) (h : Z) : Polynomial Z :=
+          sum_{t in range m} C (h^t) * X^(m-1-t)`;
+      * `Polynomial.iterate_derivative_sum (k) (range m) f` moves the iterate
+        inside the sum;
+      * `Polynomial.iterate_derivative_C_mul a p k : derivative^[k] (C a * p)
+        = C a * derivative^[k] p`;
+      * `Polynomial.iterate_derivative_X_pow_eq_smul (n) (k) :
+        derivative^[k] (X ^ n : R[X]) = (Nat.descFactorial n k : R) • X ^ (n - k)`;
+      * `Polynomial.eval_finsetSum` pushes `eval x` inside.
+    Then the right-hand sum is sum_t h^t * (m-1-t)_k * x^(m-1-t-k); the terms with
+    t > m-1-k vanish because `(m-1-t)_k = 0` there (`Nat.descFactorial_eq_zero_iff_lt`),
+    and the substitution `i = m-1-t` turns the rest into exactly the printed
+    left-hand sum. Expect one re-indexing round; no new mathematics.
+
+    RESOLVED (2026-09-28) — what the two open questions actually were, and the
+    measured answers, since both cost a round:
+      * `Finset.sum_subset` DOES exist; it is the `to_additive` image of
+        `Finset.prod_subset`, which is why `rg "theorem sum_subset"` finds
+        nothing in the tree. Probe statement (round 19):
+        `s₁ ⊆ s₂ → (∀ x ∈ s₂, x ∉ s₁ → f x = 0) → ∑ x ∈ s₁, f x = ∑ x ∈ s₂, f x`
+        — note the SMALLER set is on the LEFT, so a goal stating
+        `∑ over range m = ∑ over range (m-k)` must use `(...).symm`. Assuming
+        the binders' order wrongly is what killed round 18.
+      * `sum_Ico_reflect` was never needed and its status is left as found
+        (used at `Data/Nat/Choose/Sum.lean:109`, declaration not located by rg;
+        not on this step's path after all — `Finset.sum_subset` was).
+      * The tail comparison `y ≥ m - k ⊢ m - 1 - y < k` is NOT provable by
+        `omega` (truncated-subtraction monotonicity; this is the second time
+        this weakness has cost a round in this lane). Working recipe, now in
+        `MATHLIB_API_LESSONS.md`: `Nat.sub_sub`, `Nat.add_comm 1 y`,
+        `tsub_lt_iff_right (hy1 : y + 1 ≤ m)`, then `omega` on the linear part.
+  assembly: none. The two rules are consumed separately at every citation site
+    ("ap dung muc B.1" / "ap dung muc B.2"), so no conjunction declaration is
+    written; `lean_decls` lists exactly what the file proves plus the polynomial
+    `Bf` the two rules share.
+
+  Lean mapping (`03-lean/B/Basic.lean`, all in namespace `B`):
+    S0 -> B_step_S0_index_shift
+    S1 -> B_step_S1_reindex
+    S2 -> B_step_S2_deriv
+    all -> B_rules (assembly)
+
+  Classification (AGENTS.md F1-F4/S1): the printed text was checked against the
+  300 dpi crop `page-002-300dpi-region-01.png` by an independent visual read and
+  the signed LaTeX agrees on every limit, factorial factor, exponent, the
+  condition k in N*, and m in N, m >= 2. B.1 and B.2 screen TRUE numerically
+  (04-sympy/test_b_01.py -> m1_common.screen_section_B: B.1 on 50 random
+  instances; B.2's middle form is the same sum read backwards; its last form was
+  confirmed by exact symbolic differentiation for m <= 7, k <= 4). All three
+  steps are S1: round 9 accepted S0 and S1, round 20 accepted S2 (both EXIT 0,
+  zero errors, zero warnings, no `sorry`), and round 21 printed the axiom sets —
+  `[propext, Classical.choice, Quot.sound]` for each of the three declarations.
+  No F3/F4 item arises: every hypothesis the encoding needs traces either to the
+  print (`1 <= k` is the printed k in N*) or to paper convention (`k <= m-1` is
+  the implicit condition under which B.2's printed right range is non-empty, and
+  is recorded in the header).
+
+  Why this chunk belongs to the main-proof lane: it sits in P002-R1 and the main
+  proof cites it as "muc B.1 / B.2, trang 2" at p009 (2x), p010 (1x), p011 (4x),
+  p013 (1x), p014 (3x). No DONE chunk covers it - L1-01..L7-ASM verify section C
+  (the proofs of lemmas 1-7) on the same page and after. It is therefore a
+  prerequisite of every main-proof leaf from p.9 on, and is scheduled first in
+  source order.
+  Evidence: 04-sympy/test_b_01.py (PASS), region record p002.yml (REVIEWED,
+  signed), crop page-002-300dpi-region-01.png.
+lean_file: 03-lean/B/Basic.lean
+sympy_test: 04-sympy/test_b_01.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-002-300dpi-region-01.png
+lean_decls: Bf, B_step_S0_index_shift, B_step_S1_reindex, B_step_S2_deriv
+regions: P002-R1
+status: DONE

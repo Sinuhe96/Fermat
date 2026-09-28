@@ -1,0 +1,12 @@
+@Finset.sum_Ico_eq_sum_range : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (m n : ℕ),
+  ∑ k ∈ Finset.Ico m n, f k = ∑ k ∈ Finset.range (n - m), f (m + k)
+@Finset.sum_range_reflect : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n : ℕ),
+  ∑ j ∈ Finset.range n, f (n - 1 - j) = ∑ j ∈ Finset.range n, f j
+@Finset.sum_congr : ∀ {ι : Type u_1} {M : Type u_2} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M] {f g : ι → M},
+  s₁ = s₂ → (∀ x ∈ s₂, f x = g x) → s₁.sum f = s₂.sum g
+@Finset.mem_Ico : ∀ {α : Type u_1} [inst : Preorder α] [inst_1 : LocallyFiniteOrder α] {a b x : α},
+  x ∈ Finset.Ico a b ↔ a ≤ x ∧ x < b
+@Finset.mem_range : ∀ {n m : ℕ}, m ∈ Finset.range n ↔ m < n
+Nat.descFactorial : ℕ → ℕ → ℕ
+Nat.descFactorial_succ : ∀ (n k : ℕ), n.descFactorial (k + 1) = (n - k) * n.descFactorial k
+@Polynomial.derivative : {R : Type u_1} → [inst : Semiring R] → Polynomial R →ₗ[R] Polynomial R

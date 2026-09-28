@@ -1,0 +1,28 @@
+theorem Finset.sum_subset.{u_1, u_4} : ∀ {ι : Type u_1} {M : Type u_4} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M]
+  {f : ι → M}, s₁ ⊆ s₂ → (∀ x ∈ s₂, x ∉ s₁ → f x = 0) → ∑ x ∈ s₁, f x = ∑ x ∈ s₂, f x :=
+fun {ι} {M} {s₁ s₂} [AddCommMonoid M] {f} h hf =>
+  Finset.sum_subset_zero_on_sdiff h
+    (Eq.mpr
+      (id
+        (forall_congr fun x =>
+          Eq.trans (implies_congr (propext Finset.mem_sdiff) (Eq.refl (f x = 0))) (propext and_imp)))
+      hf)
+    fun x x_1 => rfl
+@Finset.sum_subset : ∀ {ι : Type u_1} {M : Type u_2} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M] {f : ι → M},
+  s₁ ⊆ s₂ → (∀ x ∈ s₂, x ∉ s₁ → f x = 0) → ∑ x ∈ s₁, f x = ∑ x ∈ s₂, f x
+@Finset.sum_range_add : ∀ {M : Type u_1} [inst : AddCommMonoid M] (f : ℕ → M) (n m : ℕ),
+  ∑ x ∈ Finset.range (n + m), f x = ∑ x ∈ Finset.range n, f x + ∑ x ∈ Finset.range m, f (n + x)
+@Finset.sum_union : ∀ {ι : Type u_1} {M : Type u_2} {s₁ s₂ : Finset ι} [inst : AddCommMonoid M] {f : ι → M}
+  [inst_1 : DecidableEq ι], Disjoint s₁ s₂ → ∑ x ∈ s₁ ∪ s₂, f x = ∑ x ∈ s₁, f x + ∑ x ∈ s₂, f x
+@Finset.sum_eq_zero : ∀ {ι : Type u_1} {M : Type u_2} {s : Finset ι} [inst : AddCommMonoid M] {f : ι → M},
+  (∀ x ∈ s, f x = 0) → ∑ x ∈ s, f x = 0
+probes/B-01b.probe.lean:19:8: error(lean.unknownIdentifier): Unknown constant `Finset.sum_range_eq_add_sum_Ico`
+@tsub_lt_iff_right : ∀ {α : Type u_1} [inst : AddCommSemigroup α] [inst_1 : PartialOrder α] [ExistsAddOfLE α]
+  [AddLeftMono α] [inst_4 : Sub α] [OrderedSub α] {a b c : α} [AddLeftReflectLE α], b ≤ a → (a - b < c ↔ a < c + b)
+@tsub_add_cancel_of_le : ∀ {α : Type u_1} [inst : AddCommSemigroup α] [inst_1 : PartialOrder α] [ExistsAddOfLE α]
+  [AddLeftMono α] [inst_4 : Sub α] [OrderedSub α] {a b : α}, a ≤ b → b - a + a = b
+Nat.sub_sub : ∀ (n m k : ℕ), n - m - k = n - (m + k)
+@Nat.succ_le_iff : ∀ {m n : ℕ}, m.succ ≤ n ↔ m < n
+Nat.sub_le : ∀ (n m : ℕ), n - m ≤ n
+@Nat.le_of_not_lt : ∀ {a b : ℕ}, ¬a < b → b ≤ a
+@Nat.add_le_add_right : ∀ {n m : ℕ}, n ≤ m → ∀ (k : ℕ), n + k ≤ m + k
