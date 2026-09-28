@@ -143,4 +143,4 @@ fidelity: PASS_WITH_MANUAL
 renders: page-006-300dpi-region-03.png, page-007-300dpi-region-01.png
 lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_sum_complement, M1F4_step_S0_triple, M1F4_step_S1_binomial
 regions: P006-R3, P007-R1
-status: TODO
+status: IN_PROGRESS

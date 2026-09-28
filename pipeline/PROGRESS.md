@@ -1,17 +1,17 @@
 # Progress — FLT formalization
 
-Overall: [####################] 17/17 DONE (100%)
+Overall: [##################--] 17/18 DONE (94%)
 
 | Status | Count | Chunks |
 |---|---|---|
 | TODO | 0 | — |
-| IN_PROGRESS | 0 | — |
+| IN_PROGRESS | 1 | M1-FRAG-04 |
 | BLOCKED | 0 | — |
 | DONE | 17 | B-01, L1-01, L2-01, L3-01, L4-01, L5-01, L6-01, L7-ASM, L7-FRAG-01, L7-FRAG-02, L7-FRAG-03, L7-FRAG-04, L7-FRAG-05, L7-FRAG-06, M1-FRAG-01, M1-FRAG-02, M1-FRAG-03 |
 
 ## Ready to start (deps satisfied, not DONE)
 
-— none —
+M1-FRAG-04
 
 ## Waiting on dependencies
 

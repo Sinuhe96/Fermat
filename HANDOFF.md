@@ -334,9 +334,9 @@ the 300 dpi crops; the extracted text layer is navigation only.
 Gate status at the thirteenth session (2026-09-28), all re-run after the
 container rebuild: `check_env.sh --full` → **SMOKE PASS (full)** (Lean 4.35.0-rc2,
 Lake project + Mathlib cache OK, `import Mathlib` OK); `progress.py --check`
-exit 0 with **17/17 DONE**, 0 obstacles, **2 OPEN author queries** (Q-003,
-Q-004); watchdog `watch-m1` live with `latched=none` and no `M1_inflight`
-outstanding. Round ledger: `03-lean/M1_rounds.tsv` — 38 rounds so far,
+exit 0 with **17/18 DONE** (the 18th, `M1-FRAG-04`, is IN_PROGRESS), 0
+obstacles, **2 OPEN author queries** (Q-003, Q-004); watchdog `watch-m1` live
+with `latched=none` and no `M1_inflight` outstanding. Round ledger: `03-lean/M1_rounds.tsv` — 38 rounds so far,
 classified **14 S1 / 20 F2 / 2 ENV / 1 F1 / 1 PROBE** (the F1 is the p. 6 R3
 `ℕ`-unsafe exponent form). The measured cost model matters for planning: a
 *failing* round costs 7–24 s (Mathlib oleans are cached), so iterate freely on
