@@ -131,7 +131,7 @@ only.
 | `M1-FRAG-01` | 6 | P006-R1 | 5 | L1-01, L6-01 | bổ đề 6 substituted, WLOG `u,v ≢ 0`, `(3)` rewritten |
 | `M1-FRAG-02` | 6 | P006-R2 (l1 + the (7′) tail of l4–6) | 2 | 01 | printed (7), (7′) — **needs the equation as hypothesis** (§7). Boundary revised down from 5 steps: (8),(9),(10) are the same computation at higher orders and belong to 03. |
 | `M1-FRAG-03` | 6 | P006-R2 (l7–9) | 3 | 01 | printed (8), (9), (10) — **DONE**, round 28 (R3 l1 moved to `M1-FRAG-04`) |
-| `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l1–4) | 8 | 03 | the `l+j` regrouping; **IN PROGRESS** — S0 written (the triple-sum expansion), 7 steps TODO; verified numerically (§7) |
+| `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l1–4) | 8 | 03 | the `l+j` regrouping; **IN PROGRESS** — S0+S1 certified, S2 first half landed (`M1F4_sum_complement`), 6 steps TODO; content frozen and verified (§7, "S2 frozen") |
 | `M1-FRAG-05` | 7 | P007-R1 (l5–7), R2 (l1–5) | 8 | 04 | continuation of the regrouping |
 | `M1-FRAG-06` | 7 | P007-R2 (l6), R3 (l1–5) | 6 | 05 | closes the regrouping |
 | `M1-FRAG-07` | 8 | P008-R1 (l1–2), R2 (l1–7) | 9 | 06 | coefficient extraction |
@@ -900,3 +900,40 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
    screen-verified, then 04–06.
 4. Keep §3's breakers binding: at ≥3 failed rounds on one step, hand the
    evidence packet to the observer before another attempt.
+
+### Update — thirteenth session (2026-09-28, later): `M1-FRAG-03` DONE (17/17→17/18), `M1-FRAG-04` in flight
+
+- **Ledger:** `M1-FRAG-03` is DONE (rounds 27 + 28, EXIT 0, no warnings,
+  `propext`/`Classical.choice`/`Quot.sound` only, no `sorryAx`). `M1-FRAG-04`
+  (pp. 6–7) now has its **own `status.tsv` row (IN_PROGRESS)** — the chunk file
+  had existed without one, which `progress.py --check` reports as an
+  inconsistency; the dashboard had been quoted without its exit code, so it went
+  unnoticed. `progress.py --check` now exits 0 with **17/18 DONE, M1-FRAG-04
+  IN_PROGRESS**; the watchdog is live (`latched=none`).
+- **`M1-FRAG-04` state (rounds 34–37):** S0 (`M1F4_step_S0_triple`) and S1
+  (`M1F4_step_S1_binomial`) certified, on `M1F4_add_pow_neg` and `M1F4_absorb`.
+  Round 36 landed the first half of S2 as `M1F4_sum_complement` — the pointwise
+  filter complement behind the printed `l+j ≥ 5` split, stated for an arbitrary
+  summand so it is about the index structure only; round 37 certificated all
+  three (EXIT 0, 0 warnings, permitted axioms only).
+- **S2 frozen — and a correction to this report's own earlier count.** The
+  printed boundary display is **one sum for each pair `(j,l)` with `j+l ≤ 4`:
+  FIFTEEN** (`C(6,2) = 15`), not the ten §7's numeric screen note guessed; and
+  **every printed range is exactly the natural `i ∈ [l, n-1-j]`** with the triple
+  sum's own summand. So that display carries **no misprint** — a positive result,
+  and it confirms the screen's "partition exact" at representation level. The
+  remaining half of S2 is the **`(j,l,i)` re-indexing** (the two index sets are
+  the same set in a different order); its statement, its bijection obligations
+  and the recommended `Finset.sigma` + `Finset.ext` + `omega` route are in
+  `M1-FRAG-04.yml`. Estimated 40–80 lines, several rounds — the leaf's most
+  expensive step, and the current edge.
+- **Next, in order:** (1) S2's re-indexing half; (2) S3–S7, the fifteen boundary
+  sums in their printed factorial forms plus the `i ≥ 5` rewrite via
+  `M1F4_absorb`; (3) the `M1-FRAG-04` DONE flip (whole-file compile, axioms,
+  evidence fields, ledger); (4) `M1-FRAG-05`+ (pp. 7–8). `Q-003` must still be
+  resolved before any leaf from pp. 31–32 is written.
+- **Round ledger now 38 rounds: 14 S1 / 20 F2 / 2 ENV / 1 F1 / 1 PROBE.** The F1
+  is the p. 6 R3 `ℕ`-unsafe exponent form (round 31). Cost model (measured): a
+  *failing* round costs 7–24 s because the Mathlib oleans are cached, so iterate
+  freely on compile errors; only successful rounds with heavy `ring`/`omega` take
+  minutes.
