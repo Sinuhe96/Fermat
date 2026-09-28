@@ -1,0 +1,50 @@
+M1F4/Basic.lean:57:49: warning: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+M1F4/Basic.lean:98:61: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  g ≥ 0
+  f ≥ 0
+  e ≥ 0
+  e - f + g ≤ -1
+  d ≥ 0
+  d - e ≥ 0
+where
+ d := ↑n
+ e := ↑i
+ f := ↑(n - 1) * ↑(n - i)
+ g := ↑n * ↑(n - 1 - i)
+M1F4/Basic.lean:102:7: error: invalid 'calc' step, left-hand side is
+  a ^ (n * (n - 1 - i)) * (↑n ^ s) ^ i * (a ^ i * (b * c * k) ^ i) : ℤ
+but is expected to be
+  a ^ (n * (n - 1 - i)) * (↑n ^ (s * i) * ((a * b) ^ i * c ^ i * k ^ i)) : ℤ
+M1F4/Basic.lean:106:4: error: invalid 'calc' step, right-hand side is
+  (a ^ (n - 1)) ^ (n - i) * ((↑n ^ s) ^ i * (b * c * k) ^ i) : ℤ
+but is expected to be
+  (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i : ℤ
+M1F4/Basic.lean:153:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i
+in the target expression
+  ↑(n.choose i) * (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i =
+    ↑(n.choose i) * a ^ (n * (n - 1 - i)) * (↑n ^ s * (a * b * c * k)) ^ i
+
+n s : ℕ
+a b c k h : ℤ
+hn : 1 ≤ n
+ha : a ≠ 0
+hmain :
+  a ^ n * ∑ i ∈ Finset.range n, (h - ↑n ^ s * (a * b * c * k)) ^ (n - 1 - i) * (b ^ n + ↑n ^ s * (a * b * c * k)) ^ i =
+    (a ^ n + ↑n ^ s * (a * b * c * k)) ^ n
+hfac : a ^ n + ↑n ^ s * (a * b * c * k) = a * (a ^ (n - 1) + ↑n ^ s * (b * c * k))
+hcancel :
+  ∑ i ∈ Finset.range n, (h - ↑n ^ s * (a * b * c * k)) ^ (n - 1 - i) * (b ^ n + ↑n ^ s * (a * b * c * k)) ^ i =
+    (a ^ (n - 1) + ↑n ^ s * (b * c * k)) ^ n
+i : ℕ
+hi : i < n + 1
+⊢ ↑(n.choose i) * (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i =
+    ↑(n.choose i) * a ^ (n * (n - 1 - i)) * (↑n ^ s * (a * b * c * k)) ^ i
+'M1F4.M1F4_step_S0_triple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S1_binomial' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

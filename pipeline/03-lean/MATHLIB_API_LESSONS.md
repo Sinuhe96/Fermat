@@ -959,3 +959,33 @@ Each item below cost one round to learn; all are cheap to avoid now.
    expected to leave only bookkeeping, try ending at the last `rw` first; the
    binding lemma here was `Finset.sum_range_add` plus the range equality
    `n + 1 = (r + 1) + (n - r)`.
+
+11. **A printed exponent split that is valid over ℤ can be FALSE when the
+   exponent is encoded in ℕ — check the boundary index.** This one is an F1
+   waiting to happen, and it produced the lane's first F1 (`M1-FRAG-04`,
+   round 31, 9 s). The author writes the same sum two ways:
+
+   `R2: Σ_{i=0}^{n} C(n,i) a^{(n-1)(n-i)} (n^s bck)^i`
+   `R3: Σ_{i=0}^{n} C(n,i) a^{n(n-1-i)} (n^s abck)^i`
+
+   They are equal, because `n(n-1-i) = (n-1)(n-i) - i` — at `i = n` R3's
+   exponent is `-n`, which cancels the bracket's `a^n`. **But in ℕ, `n - 1 - i`
+   at `i = n` truncates to `0`, so the R3 form is off by a factor `a^n` and the
+   split identity `a^{n(n-1-i)} (n^s abck)^i = (a^{n-1})^{n-i} (n^s bck)^i` is
+   simply false there.** `omega` refusing the arithmetic was the compiler telling
+   us the statement was wrong, not that the proof was hard. Rules that follow:
+   * encode the form whose exponents are ℕ-safe (here R2, which is also the
+     `add_pow` form), and *say so* in the docstring;
+   * if a lemma needs the split, restrict it to the low-order indices where the
+     subtraction is exact (`i + 1 ≤ n`) — `M1F4_absorb` carries exactly that;
+   * before believing a "different" printed form, check whether the difference is
+     confined to the final index (run it: the difference was 0 for every `i ≤ n-1`
+     and `a^n` at `i = n`).
+
+12. **`rw [pow_mul]` can hit the wrong side.** In
+   `a ^ (n * (n - 1 - i)) * X = (a ^ (n - 1)) ^ (n - i) * Y` both sides match the
+   lemma's pattern `a ^ (m * n)`, and `rw` takes the first occurrence — the left
+   one. Use an explicit equation for the side you mean
+   (`rw [show … from (pow_mul a (n-1) (n-i)).symm]`), or `nth_rewrite`
+   (`M1-FRAG-04`, round 33). The same applies to `mul_pow` when both sides carry
+   a bracket power.

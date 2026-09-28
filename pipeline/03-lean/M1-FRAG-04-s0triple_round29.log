@@ -1,0 +1,24 @@
+M1F4/Basic.lean:77:26: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 0
+  c ≥ 0
+  c - d ≤ -1
+  a ≥ 1
+  a - c ≥ 1
+where
+ a := ↑n
+ c := ↑i
+ d := ↑l
+M1F4/Basic.lean:78:34: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 0
+  d ≥ 0
+  c ≥ 0
+  c - d ≥ 1
+  c - d ≥ 1
+  a ≥ 1
+  a - d ≥ 1
+where
+ a := ↑n
+ c := ↑l
+ d := ↑(i - (i - l))

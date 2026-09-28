@@ -206,7 +206,23 @@ What the earlier window established:
   hand-type Vietnamese literals into scripts (they do not match the file's
   bytes) — anchor extraction on ASCII fragments.
 
-### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` in flight
+### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` DONE (17/17), `M1-FRAG-04` in flight (S0+S1 of 8)
+
+- **Current edge (round 35)**: `M1-FRAG-04` — pp. 6–7, the `l+j` regrouping that
+  follows the printed (8)–(10) — is IN PROGRESS with **S0 and S1 written and
+  certified**: the triple-sum expansion (`M1F4_step_S0_triple`) and the printed
+  right-hand side (`M1F4_step_S1_binomial`), on two support lemmas
+  (`M1F4_add_pow_neg`, `M1F4_absorb`). Six steps remain; the expensive one is S2,
+  the `l+j ≥ 5` partition into the ten printed boundary sums — its design (a pure
+  Finset partition, no algebra) is written into `M1-FRAG-04.yml`, and the sympy
+  screen already certifies the partition numerically at n = 7, 11, 13.
+- **The lane's first F1 was caught here** (round 31, 9 s) and it is the single
+  most valuable thing to read before touching p. 6 R3: the printed alternate form
+  `Σ_i C(n,i) a^{n(n-1-i)} (n^s abck)^i` is **ℕ-unsafe at `i = n`** — `n - 1 - i`
+  truncates to `0`, losing a factor `a^n`, so the natural split identity is simply
+  false there. The two printed forms are equal only as ℤ-exponent expressions
+  (measured: difference 0 at n = 5, 7). Encode the `p. 6 R2` form. See the
+  corrected §7 note and `MATHLIB_API_LESSONS.md` item 11.
 
 Read `pipeline/03-lean/M1_LANE.md` §1 (round protocol), §3 (breakers), §7
 (findings, including the circularity audit) and §8 (the per-round table) for the
@@ -218,7 +234,7 @@ live detail. Summary of the current edge of the lane:
   second equality is `M1F3`'s shape in miniature: `Polynomial.iterate_derivative_*`
   with the falling-factorial sum over `range (m-k)` (see `B-01.yml` for the
   resolved name check and `ENCODING_MAP` for the pattern).
-- **In flight**: `M1-FRAG-03` = the printed (8) mod `n^{3s+1}`, (9) mod
+- **Done (round 28)**: `M1-FRAG-03` = the printed (8) mod `n^{3s+1}`, (9) mod
   `n^{4s+1}`, (10) mod `n^{5s+1}` — one leaf, three steps, since they are the
   same expansion at orders 2, 3, 4. Lean file `03-lean/M1F3/Basic.lean`
   (`lean_lib M1F3` added, `gen_signatures.py` `MODULES` updated). Its own support

@@ -43,6 +43,7 @@ MODULES = [
     ("M1F1", "main proof §1, p. 6 — the bổ đề 6 substitution (P006-R1)", "M1-FRAG-01"),
     ("M1F2", "main proof §1, p. 6 — the printed (7) and (7') (P006-R2)", "M1-FRAG-02"),
     ("M1F3", "main proof §1, p. 6 — the printed (8), (9) and (10) (P006-R2)", "M1-FRAG-03"),
+    ("M1F4", "main proof §1, p. 6 R3 + p. 7 R1 — the l+j regrouping (IN PROGRESS, S0+S1 done)", "M1-FRAG-04"),
     ("L1", "bổ đề 1", "L1-01"),
     ("L2", "bổ đề 2", "L2-01"),
     ("L3", "bổ đề 3", "L3-01"),

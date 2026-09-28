@@ -1,0 +1,105 @@
+id: M1-FRAG-04
+title: "Main proof / 1, p. 6 R3 + p. 7 R1 - the l+j regrouping: the triple sum, the l+j>=5 split and the ten printed boundary sums"
+pdf_pages: [6, 7]
+kind: lemma-proof-step
+depends_on: [M1-FRAG-02, M1-FRAG-03]
+source_text: |
+  [PDF p6 R3 (all five printed lines) and p7 R1 (its first four lines),
+  byte-copied from the signed region records pipeline/01-extract/regions/p006.yml
+  and p007.yml (both REVIEWED). Step-boundary note (transcription fact, not an
+  author error): M1_LANE.md 5 pencilled P006-R3 l1 into M1-FRAG-03, but
+  M1-FRAG-02's boundary revision had already moved (8),(9),(10) out, so R3 l1 --
+  the triple-sum expansion that the whole regrouping starts from -- is stated
+  here instead, as this leaf's first step.]
+  \[ \Leftrightarrow \sum_{i=0}^{n-1} \sum_{j=0}^{n-1-i} \sum_{l=0}^{i} (-1)^j C_{n-1-i}^{j} C_{i}^{l} h^{n-1-i-j} b^{n(i-l)} (n^s abck)^{l+j} = \sum_{i=0}^{n} C_{n}^{i} a^{n(n-1-i)} (n^s abck)^{i} \]
+  \[ \Leftrightarrow \sum_{i=0}^{n-1} \sum_{\substack{j=0 \\ (l+j \geq 5)}}^{n-1-i} \sum_{l=0}^{i} (-1)^j C_{n-1-i}^{j} C_{i}^{l} h^{n-1-i-j} b^{n(i-l)} (n^s abck)^{l+j} + \sum_{i=4}^{n-1} (-1)^0 C_{n-1-i}^{0} C_{i}^{4} h^{n-1-i} b^{n(i-4)} (n^s abck)^{4} + \sum_{i=0}^{n-5} (-1)^4 C_{n-1-i}^{4} C_{i}^{0} h^{n-5-i} b^{ni} (n^s abck)^{4} + \]
+  \[ + \sum_{i=1}^{n-4} (-1)^3 C_{n-1-i}^{3} C_{i}^{1} h^{n-4-i} b^{n(i-1)} (n^s abck)^{4} + \sum_{i=3}^{n-2} (-1)^1 C_{n-1-i}^{1} C_{i}^{3} h^{n-2-i} b^{n(i-3)} (n^s abck)^{4} + \sum_{i=2}^{n-3} (-1)^2 C_{n-1-i}^{2} C_{i}^{2} h^{n-3-i} b^{n(i-2)} (n^s abck)^{4} + \]
+  \[ + \sum_{i=1}^{n-3} (-1)^2 C_{n-1-i}^{2} C_{i}^{1} h^{n-3-i} b^{n(i-1)} (n^s abck)^{3} + \sum_{i=2}^{n-2} (-1)^1 C_{n-1-i}^{1} C_{i}^{2} h^{n-2-i} b^{n(i-2)} (n^s abck)^{3} + \]
+  \[ + \sum_{i=0}^{n-4} (-1)^3 C_{n-1-i}^{3} C_{i}^{0} h^{n-4-i} b^{ni} (n^s abck)^{2} + \sum_{i=3}^{n-1} (-1)^0 C_{n-1-i}^{0} C_{i}^{3} h^{n-1-i} b^{n(i-3)} (n^s abck)^{3} + \sum_{i=2}^{n-1} (-1)^0 C_{n-1-i}^{0} C_{i}^{2} b^{n(i-2)} h^{n-1-i} (n^s abck)^{2} + \]
+  
+  \[ + \sum_{i=0}^{n-3}(-1)^2 C_{n-1-i}^{2} C_i^{0} b^{ni} h^{n-3-i} (n^s abck)^2 + \sum_{i=1}^{n-2}(-1)^1 C_{n-1-i}^{1} C_i^{1} b^{n(i-1)} h^{n-2-i} (n^s abck)^2 + \sum_{i=1}^{n-1}(-1)^0 C_{n-1-i}^{0} C_i^{1} b^{n(i-1)} h^{n-1-i} n^s abck + \]
+  \[ + \sum_{i=0}^{n-2}(-1)^1 C_{n-1-i}^{1} C_i^{0} b^{ni} h^{n-2-i} n^s abck + \sum_{i=0}^{n-1}(-1)^0 C_{n-1-i}^{0} C_i^{0} h^{n-1-i} b^{ni} \]
+  \[ = \sum_{i=5}^{n} C_n^{i} a^{(n-1)(n-i)} (n^s bck)^i + a^{n(n-1)} + n a^{n(n-2)} n^s abck + \frac{n(n-1)}{2} a^{n(n-3)} (n^s abck)^2 + \frac{n(n-1)(n-2)}{6} a^{n(n-4)} (n^s abck)^3 + \]
+  \[ + \frac{n(n-1)(n-2)(n-3)}{24} a^{n(n-5)} (n^s abck)^4 \]
+formal_hint: |
+  The leaf is the regrouping that follows the printed (8)-(10). Its two printed
+  lines per stage are the SAME quantity written two ways, which is what the steps
+  establish:
+
+  1. the double sum of the substituted difference equation
+       Σ_{i=0}^{n-1} (h - X)^(n-1-i) (b^n + X)^i
+     equals the triple sum got by expanding both binomials
+       Σ_i Σ_j Σ_l (-1)^j C(n-1-i,j) C(i,l) h^(n-1-i-j) b^(n(i-l)) X^(l+j)
+     (ranges: i in [0, n-1], j in [0, n-1-i], l in [0, i]);
+  2. that triple sum equals Σ_{{i=0}}^n C(n,i) a^((n-1)(n-i)) (n^s bck)^i -- the
+     binomial expansion of (a^(n-1) + n^s bck)^n, which is what p. 6 R2's last
+     line prints. ENCODE THIS FORM, not R3's alternate a^(n(n-1-i)) (n^s abck)^i:
+     the two are equal as Z-exponent expressions (measured: difference 0 at
+     n = 5 and n = 7) but the R3 form is FALSE in Nat-encoded exponents at
+     i = n, where n - 1 - i truncates to 0 and a factor a^n is lost. Lean caught
+     this in one round; see M1_LANE.md 7 and the docstring of M1F4_absorb;
+  3. the l+j >= 5 split: the part of the triple sum with l+j >= 5 equals the
+     whole triple sum minus the terms with l+j <= 4, and those terms are the ten
+     printed boundary sums (four with X^4, three with X^3, two with X^2, one with
+     X, one with X^0) whose binomial coefficients the author writes out in
+     factorial form (e.g. (1/24)i(i-1)(i-2)(i-3)).
+
+  TWO PRINTED FORMS OF THE SAME RIGHT-HAND SIDE - equal only as Z-exponent
+  expressions, and that distinction is load-bearing:
+      R2 prints  Σ_{{i=0}}^n C(n,i) a^((n-1)(n-i)) (n^s bck)^i    <- ENCODE THIS
+      R3 prints  Σ_{{i=0}}^n C(n,i) a^(n(n-1-i)) (n^s abck)^i
+  They agree because n(n-1-i) = (n-1)(n-i) - i, so R3's summand is
+  a^((n-1)(n-i)) a^(-i) (n^s abck)^i = a^((n-1)(n-i)) (n^s bck)^i, and at i = n
+  the exponent -n cancels the bracket's a^n. Measured: the two sums differ by 0
+  at n = 5 and n = 7. But with Nat-encoded exponents, n - 1 - i at i = n
+  truncates to 0 and the R3 form is off by a factor a^n; the split identity is
+  then false at i = n, which is exactly why M1F4_absorb carries i + 1 <= n and
+  why S1 is stated in the R2 form. Related: the p. 16 "exponent turnover" flag is
+  this same convention, not a misprint (M1_LANE.md 7).
+transcription: manual
+author_steps: |
+  Normalized ordered step map (8 steps; the plan's count). Steps marked TODO are
+  not yet written; this leaf is IN PROGRESS and enters the ledger only when all
+  of them are S1.
+
+  S0 [P006-R3 l1] The double sum over i of (h - X)^(n-1-i)(b^n + X)^i equals the
+     triple sum of the expansion (claim 1 above).              [Lean: M1F4_step_S0_triple]
+  S1 [P006-R3 l1, right-hand side] That triple sum equals the binomial form
+     Σ_i C(n,i) a^(n(n-1-i)) X^i (claim 2). From the printed a^n Σ = (a^n+X)^n by
+     cancelling a^n — which needs a ≠ 0, an F3 side condition carried as an
+     explicit hypothesis (see the docstring of M1F4_step_S1_binomial).
+                                              [Lean: M1F4_step_S1_binomial]
+  S2 [P006-R3 l2] The l+j >= 5 split described in claim 3: the filtered triple
+     sum plus the boundary sums re-assemble the whole.         [TODO]
+     DESIGN (from reading the print while S0/S1 were written): this step is a
+     pure Finset partition, no algebra. The printed left side is
+       `Σ_i Σ_{j: l+j>=5} Σ_l f(i,j,l)  +  [ten explicit sums with l+j in 0..4]`
+     and it must equal the whole triple sum `Σ_i Σ_j Σ_l f(i,j,l)` of S0. So the
+     content is: `Finset.filter` over the (j,l) index set, the ten ranges are the
+     natural `[l, n-1-j]` ones, and the complements are the ten printed sums.
+     The sympy screen already confirms exactly this (`m1_common.py`: "10 printed
+     ranges natural, partition exact, residual carries the l+j>=5 summands", at
+     n = 7, 11, 13), so the mathematics is checked; only Finset bookkeeping
+     remains. Expect this to be the leaf's most expensive step: a filtered sum
+     over a nested range is not a bounded `rw` chain.
+  S3-S7 [P006-R3 l2-l5, P007-R1 l1-l4] The ten boundary sums in the printed
+     factorial forms, in the author's order, plus the rewrite of the `i >= 5`
+     part as `Σ_{i=5}^{n} C(n,i) a^{(n-1)(n-i)} (n^s bck)^i` — which is where
+     `M1F4_absorb` (above) is used, moving the `a^i` between the explicit factor
+     and the exponent of `a`. Then S7 identifies the result with the expansion of
+     `(a^(n-1) + n^s bck)^n` truncated at `i >= 5` plus the four printed terms.
+                                                               [TODO]
+
+  evidence: region records p006.yml, p007.yml (REVIEWED, signed); the regrouping
+    was screened numerically before this leaf was opened -- 04-sympy/m1_common.py
+    (PASS, EXIT 0) confirms that all ten printed index ranges are the natural
+    [l, n-1-j] ones, i.e. the split is the identity and not a misprint.
+lean_file: 03-lean/M1F4/Basic.lean
+sympy_test: 04-sympy/m1_common.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-006-300dpi-region-03.png, page-007-300dpi-region-01.png
+lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_step_S0_triple, M1F4_step_S1_binomial
+regions: P006-R3, P007-R1
+status: TODO

@@ -130,8 +130,8 @@ only.
 |---|---|---|---|---|---|
 | `M1-FRAG-01` | 6 | P006-R1 | 5 | L1-01, L6-01 | bổ đề 6 substituted, WLOG `u,v ≢ 0`, `(3)` rewritten |
 | `M1-FRAG-02` | 6 | P006-R2 (l1 + the (7′) tail of l4–6) | 2 | 01 | printed (7), (7′) — **needs the equation as hypothesis** (§7). Boundary revised down from 5 steps: (8),(9),(10) are the same computation at higher orders and belong to 03. |
-| `M1-FRAG-03` | 6 | P006-R2 (l7–9), R3 (l1) | 4 | 01 | printed (8), (9), (10) |
-| `M1-FRAG-04` | 6–7 | P006-R3 (l2–5), P007-R1 (l1–4) | 8 | 03 | the `l+j` regrouping; verified numerically (§7) |
+| `M1-FRAG-03` | 6 | P006-R2 (l7–9) | 3 | 01 | printed (8), (9), (10) — **DONE**, round 28 (R3 l1 moved to `M1-FRAG-04`) |
+| `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l1–4) | 8 | 03 | the `l+j` regrouping; **IN PROGRESS** — S0 written (the triple-sum expansion), 7 steps TODO; verified numerically (§7) |
 | `M1-FRAG-05` | 7 | P007-R1 (l5–7), R2 (l1–5) | 8 | 04 | continuation of the regrouping |
 | `M1-FRAG-06` | 7 | P007-R2 (l6), R3 (l1–5) | 6 | 05 | closes the regrouping |
 | `M1-FRAG-07` | 8 | P008-R1 (l1–2), R2 (l1–7) | 9 | 06 | coefficient extraction |
@@ -470,6 +470,40 @@ unwritten assemblies: a leaf may legitimately take the author's equation
 must discharge it, and any hypothesis that no chunk discharges is where a
 circularity would have to hide. `M1-ASM-A..E`/`M1-THM` are audited for exactly
 that when written.
+
+**Transcription-critical: the `=` line is printed in two forms that agree only as
+ℤ-exponent expressions, and the ℕ encoding of one of them is FALSE.** p. 6 R2 and
+p. 6 R3 both close their regrouping with the same right-hand side, written
+differently:
+
+```
+p. 6 R2:  = Σ_{i=0}^{n} C_n^i a^{(n-1)(n-i)} (n^s bck)^i
+p. 6 R3:  = Σ_{i=0}^{n} C_n^i a^{n(n-1-i)} (n^s abck)^i
+```
+
+The two sums are **equal — measured, not assumed**: with symbolic
+`a,b,c,k,n^s = n^s`, the difference `f_R2 − f_R3 = 0` at `n = 5` and `n = 7`.
+The reason is that the exponents are ℤ-valued: `n(n-1-i) = (n-1)(n-i) − i`, so
+R3's summand is `a^{(n-1)(n-i)} a^{−i} (n^s abck)^i = a^{(n-1)(n-i)} (n^s bck)^i`,
+and at `i = n` the exponent `−n` cancels the bracket's `a^n`.
+
+**The trap — Lean caught it in one round (11 s), and it is OUR error, not the
+author's.** Encoding R3's form with ℕ subtraction makes the last term
+`a^{n·0}(n^s abck)^n = (n^s abck)^n`, wrong by a factor `a^n`; the identity
+`a^{n(n-1-i)} (n^s abck)^i = (a^{n-1})^{n-i} (n^s bck)^i` is then false at
+`i = n`, and `omega`'s counterexample was exactly that case. So:
+
+* state sums that include `i = n` in the **R2 form** — it is the plain `add_pow`
+  form. `M1F4_step_S1_binomial` does, so its proof needs no exponent reshaping;
+* use the R3-style split only for low-order terms (`i ≤ 4`), where the print
+  itself uses it and `n - 1 - i` is exact: `M1F4_absorb` carries `i + 1 ≤ n` for
+  exactly this reason and its docstring records the whole story.
+
+The `P016-R2` vs `P016-R3`/`P017-R1` flag ("exponent turnover `n(n−3)`→`n(n−2)`
+with `(a^n + 2n^s abck)`"), previously a *candidate F4*, is the same convention:
+re-check it under this identity before calling it a misprint, and check `i = n`
+against the R2 form. It was never filed in `Q-004`, so no author time is at
+stake.
 
 **Scout findings for pp. 18–28 (crop-verify BEFORE any encoding).** Four
 independent scout reports agree on one pattern: the pp. 12–28 stretch is a

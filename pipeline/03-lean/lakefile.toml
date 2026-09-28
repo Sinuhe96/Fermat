@@ -115,3 +115,11 @@ roots = ["M1F2.Basic"]
 [[lean_lib]]
 name = "M1F3"
 roots = ["M1F3.Basic"]
+
+# M1F4 is `M1-FRAG-04` (p. 6 `R3` + p. 7 `R1`): the `l+j` regrouping. IN PROGRESS
+# — S0 (the triple-sum expansion) and S1 (the printed right-hand side) are written
+# and compile; the remaining six steps are listed in the chunk record. It imports
+# M1F3 for the `X`-indexed binomial expansion.
+[[lean_lib]]
+name = "M1F4"
+roots = ["M1F4.Basic"]

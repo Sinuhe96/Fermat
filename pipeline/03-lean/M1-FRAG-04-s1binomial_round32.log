@@ -1,0 +1,21 @@
+M1F4/Basic.lean:57:49: warning: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+M1F4/Basic.lean:114:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  a ^ (n * (n - 1 - i)) * (↑n ^ s) ^ i * (a ^ i * (b * c * k) ^ i)
+in the target expression
+  a ^ (n * (n - 1 - i)) * (↑n ^ (s * i) * ((a * b) ^ i * c ^ i * k ^ i)) =
+    (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i
+
+n s i : ℕ
+a b c k : ℤ
+hi : i + 1 ≤ n
+h_exp : n * (n - 1 - i) + i = (n - 1) * (n - i)
+h_pow : a ^ (n * (n - 1 - i)) * a ^ i = a ^ ((n - 1) * (n - i))
+⊢ a ^ (n * (n - 1 - i)) * (↑n ^ (s * i) * ((a * b) ^ i * c ^ i * k ^ i)) =
+    (a ^ (n - 1)) ^ (n - i) * (↑n ^ s * (b * c * k)) ^ i
+'M1F4.M1F4_step_S0_triple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'M1F4.M1F4_step_S1_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]

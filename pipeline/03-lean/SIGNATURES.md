@@ -52,26 +52,41 @@ The full per-module list follows. Non-entry declarations are support: reuse them
 Source: `pipeline/03-lean/Common/Basic.lean`
 
 
-## `B` — một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation  (chunk B-01, 2 declarations)
+## `B` — một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation  (chunk B-01, 4 declarations)
 
 Source: `pipeline/03-lean/B/Basic.lean`
 
-### `B.B_step_S0_index_shift`  — `B/Basic.lean:48`
+### `B.B_step_S0_index_shift`  — `B/Basic.lean:58`
 ***B.1** (author p. 2, `P002-R1`, rule 1).*
 ```lean
-theorem B_step_S0_index_shift (a : ℕ → ℤ) (k m n : ℕ) :
-    (∑ i in Finset.Ico k (n + 1), a i)
-      = ∑ i in Finset.Ico m (n + m - k + 1), a (i - m + k)
+theorem B_step_S0_index_shift (a : ℕ → ℤ) (k m N : ℕ) :
+    (∑ i ∈ Finset.range N, a (k + i))
+      = ∑ i ∈ Finset.range N, a (m + i - m + k)
 ```
 
-### `B.B_step_S1_reindex`  — `B/Basic.lean:69`
+### `B.B_step_S1_reindex`  — `B/Basic.lean:77`
 ***B.2**, first equality (author p. 2, `P002-R1`, rule 2).*
 ```lean
-theorem B_step_S1_reindex (m k : ℕ) (hk : 1 ≤ k) (hkm : k ≤ m - 1) (x h : ℤ) :
-    (∑ i in Finset.Ico k m,
+theorem B_step_S1_reindex (m k : ℕ) (hk : 1 ≤ k) (_hkm : k ≤ m - 1) (x h : ℤ) :
+    (∑ i ∈ Finset.Ico k m,
         ((i.descFactorial k : ℕ) : ℤ) * h ^ (m - 1 - i) * x ^ (i - k))
-      = ∑ i in Finset.range (m - k),
+      = ∑ i ∈ Finset.range (m - k),
           (((m - 1 - i).descFactorial k : ℕ) : ℤ) * h ^ i * x ^ (m - 1 - k - i)
+```
+
+### `B.Bf`  — `B/Basic.lean:96`
+*The paper's `f` (author p. 2, `P002-R1`, rule 2): `f(x) = x^{m-1} + h x^{m-2} + ... + h^{m-1}`, encoded as the sum whose*
+```lean
+noncomputable def Bf (m : ℕ) (h : ℤ) : Polynomial ℤ
+```
+
+### `B.B_step_S2_deriv`  — `B/Basic.lean:110`
+***B.2**, second equality (author p. 2, `P002-R1`, rule 2): `Σ_{i=0}^{m-1-k} (m-1-i)(m-2-i)...(m-k-i) h^i x^{m-1-k-i}…*
+```lean
+theorem B_step_S2_deriv (m k : ℕ) (_hk : 1 ≤ k) (hkm : k ≤ m - 1) (x h : ℤ) :
+    (∑ i ∈ Finset.range (m - k),
+        (((m - 1 - i).descFactorial k : ℕ) : ℤ) * h ^ i * x ^ (m - 1 - k - i))
+      = (Polynomial.derivative^[k] (Bf m h)).eval x
 ```
 
 
@@ -130,6 +145,203 @@ theorem M1F1_step_S4_substitute {n s : ℕ} {a b c k h u v t : ℤ}
     (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
         + (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
       = (h - (n : ℤ) ^ s * (a * b * c * k)) ^ n
+```
+
+
+## `M1F2` — main proof §1, p. 6 — the printed (7) and (7') (P006-R2)  (chunk M1-FRAG-02, 6 declarations)
+
+Source: `pipeline/03-lean/M1F2/Basic.lean`
+
+### `M1F2.M1F2_zmod_intCast_eq_zero_iff`  — `M1F2/Basic.lean:25`
+*`((x : ZMod M) = 0) ↔ (M : ℤ) ∣ x` — the bridge L5 proves the same way (`L5.L5_zmod_intCast_eq_zero_iff`).*
+```lean
+theorem M1F2_zmod_intCast_eq_zero_iff {M : ℕ} [NeZero M] (x : ℤ) :
+    ((x : ZMod M) = 0) ↔ (M : ℤ) ∣ x
+```
+
+### `M1F2.M1F2_pow_dvd_mul`  — `M1F2/Basic.lean:31`
+*`n^(2s+1) ∣ n^j * Q` whenever `2s+1 ≤ j`: the "the exponent is already big enough" half of the tail argument.*
+```lean
+lemma M1F2_pow_dvd_mul {n s j : ℕ} (Q : ℤ) (h : 2 * s + 1 ≤ j) :
+    (n : ℤ) ^ (2 * s + 1) ∣ (n : ℤ) ^ j * Q
+```
+
+### `M1F2.M1F2_choose_mul_pow_dvd`  — `M1F2/Basic.lean:44`
+***The vanishing of the tail**, one term: for a prime `n > 11` and `1 ≤ s`, `n^(2s+1) ∣ C(n,i) * (n^s Q)^i` for every…*
+```lean
+lemma M1F2_choose_mul_pow_dvd {n s : ℕ} (hn : Nat.Prime n) (hn3 : 3 ≤ n) (hs : 1 ≤ s)
+    (Q : ℤ) {i : ℕ} (hi2 : 2 ≤ i) (hin : i ≤ n) :
+    (n : ℤ) ^ (2 * s + 1) ∣ (n.choose i : ℤ) * ((n : ℤ) ^ s * Q) ^ i
+```
+
+### `M1F2.M1F2_expand_trunc`  — `M1F2/Basic.lean:77`
+***The truncated expansion** behind the printed (7).*
+```lean
+lemma M1F2_expand_trunc {n s : ℕ} (hn : Nat.Prime n) (hn3 : 3 ≤ n) (hs : 1 ≤ s)
+    (y Q : ℤ) :
+    ∃ T : ℤ, (n : ℤ) ^ (2 * s + 1) ∣ T ∧
+      (y + (n : ℤ) ^ s * Q) ^ n
+        = y ^ n + (n : ℤ) * y ^ (n - 1) * ((n : ℤ) ^ s * Q) + T
+```
+
+### `M1F2.M1F2_step_S0_seven`  — `M1F2/Basic.lean:118`
+***S0** — the printed (7) (author p. 6, region `P006-R2`).*
+```lean
+theorem M1F2_step_S0_seven {n s : ℕ} {a b c k h : ℤ}
+    (hn : Nat.Prime n) (hn3 : 3 ≤ n) (hs : 1 ≤ s)
+    (hsol : (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+        + (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+      = (h - (n : ℤ) ^ s * (a * b * c * k)) ^ n) :
+    h ^ n - a ^ (n ^ 2) - b ^ (n ^ 2)
+      ≡ (n : ℤ) * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1))
+          * ((n : ℤ) ^ s * (a * b * c * k)) [ZMOD (n : ℤ) ^ (2 * s + 1)]
+```
+
+### `M1F2.M1F2_step_S1_seven_prime`  — `M1F2/Basic.lean:160`
+***S1** — the printed (7′) (author p. 6, region `P006-R2`), which the print places at the end of display (9)'s line.*
+```lean
+theorem M1F2_step_S1_seven_prime {n s : ℕ} {a b c k h : ℤ} (hs : 0 ≤ s)
+    (h7 : h ^ n - a ^ (n ^ 2) - b ^ (n ^ 2)
+      ≡ (n : ℤ) * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1))
+          * ((n : ℤ) ^ s * (a * b * c * k)) [ZMOD (n : ℤ) ^ (2 * s + 1)]) :
+    h ^ n ≡ a ^ (n ^ 2) + b ^ (n ^ 2) [ZMOD (n : ℤ) ^ (s + 1)]
+```
+
+
+## `M1F3` — main proof §1, p. 6 — the printed (8), (9) and (10) (P006-R2)  (chunk M1-FRAG-03, 6 declarations)
+
+Source: `pipeline/03-lean/M1F3/Basic.lean`
+
+### `M1F3.M1F3_add_pow_index`  — `M1F3/Basic.lean:51`
+*The binomial expansion indexed by the **power of `X`** rather than by the power of `y`: `(y + X)^n = Σ_i C(n,i) y^{n-…*
+```lean
+lemma M1F3_add_pow_index (y X : ℤ) (n : ℕ) :
+    (y + X) ^ n
+      = ∑ i ∈ Finset.range (n + 1), (n.choose i : ℤ) * y ^ (n - i) * X ^ i
+```
+
+### `M1F3.M1F3_tail_dvd`  — `M1F3/Basic.lean:81`
+***The tail's divisibility at order `r`** — the reason the printed moduli are `n^{(r+1)s+1}`.*
+```lean
+lemma M1F3_tail_dvd {n s r : ℕ} (hn : Nat.Prime n) (_hn3 : 3 ≤ n) (hs : 1 ≤ s)
+    (hrn : r + 2 ≤ n) (Q : ℤ) {j : ℕ} (hrj : r + 1 ≤ j) (hjn : j ≤ n) :
+    (n : ℤ) ^ ((r + 1) * s + 1) ∣ (n.choose j : ℤ) * ((n : ℤ) ^ s * Q) ^ j
+```
+
+### `M1F3.M1F3_expand_trunc`  — `M1F3/Basic.lean:114`
+***The r-th order truncation** the printed (8), (9), (10) all rest on.*
+```lean
+lemma M1F3_expand_trunc {n s r : ℕ} (hn : Nat.Prime n) (hn3 : 3 ≤ n) (hs : 1 ≤ s)
+    (hrn : r + 2 ≤ n) (y Q : ℤ) :
+    ∃ T : ℤ, (n : ℤ) ^ ((r + 1) * s + 1) ∣ T ∧
+      (y + (n : ℤ) ^ s * Q) ^ n
+        = (∑ i ∈ Finset.range (r + 1),
+            (n.choose i : ℤ) * y ^ (n - i) * ((n : ℤ) ^ s * Q) ^ i) + T
+```
+
+### `M1F3.M1F3_step_S0_eight`  — `M1F3/Basic.lean:145`
+***S0** — the printed (8) (author p. 6, region `P006-R2`):*
+```lean
+theorem M1F3_step_S0_eight {n s : ℕ} {a b c k h : ℤ}
+    (hn : Nat.Prime n) (hn11 : 11 < n) (hs : 1 ≤ s)
+    (hsol : (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+        + (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+      = (h - (n : ℤ) ^ s * (a * b * c * k)) ^ n) :
+    h ^ n - a ^ (n ^ 2) - b ^ (n ^ 2)
+      ≡ (n : ℤ) * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1))
+            * ((n : ℤ) ^ s * (a * b * c * k))
+        + (n.choose 2 : ℤ) * (b ^ (n * (n - 2)) + a ^ (n * (n - 2)) - h ^ (n - 2))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ 2
+        [ZMOD (n : ℤ) ^ (3 * s + 1)]
+```
+
+### `M1F3.M1F3_step_S1_nine`  — `M1F3/Basic.lean:198`
+***S1** — the printed (9) (author p. 6, region `P006-R2`): the same congruence one order higher, `(mod n^{4s+1})`, add…*
+```lean
+theorem M1F3_step_S1_nine {n s : ℕ} {a b c k h : ℤ}
+    (hn : Nat.Prime n) (hn11 : 11 < n) (hs : 1 ≤ s)
+    (hsol : (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+        + (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+      = (h - (n : ℤ) ^ s * (a * b * c * k)) ^ n) :
+    h ^ n - a ^ (n ^ 2) - b ^ (n ^ 2)
+      ≡ (n : ℤ) * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1))
+            * ((n : ℤ) ^ s * (a * b * c * k))
+        + (n.choose 2 : ℤ) * (b ^ (n * (n - 2)) + a ^ (n * (n - 2)) - h ^ (n - 2))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ 2
+        + (n.choose 3 : ℤ) * (b ^ (n * (n - 3)) + a ^ (n * (n - 3)) + h ^ (n - 3))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ 3
+        [ZMOD (n : ℤ) ^ (4 * s + 1)]
+```
+
+### `M1F3.M1F3_step_S2_ten`  — `M1F3/Basic.lean:263`
+***S2** — the printed (10) (author p. 6, region `P006-R2`): the same identity at `r = 4`, with the `X`-linear term mov…*
+```lean
+theorem M1F3_step_S2_ten {n s : ℕ} {a b c k h : ℤ}
+    (hn : Nat.Prime n) (hn11 : 11 < n) (hs : 1 ≤ s)
+    (hsol : (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+        + (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n
+      = (h - (n : ℤ) ^ s * (a * b * c * k)) ^ n) :
+    h ^ n - a ^ (n ^ 2) - b ^ (n ^ 2)
+        - (n : ℤ) * (a ^ (n * (n - 1)) + b ^ (n * (n - 1)) + h ^ (n - 1))
+            * ((n : ℤ) ^ s * (a * b * c * k))
+      ≡ (n.choose 2 : ℤ) * (b ^ (n * (n - 2)) + a ^ (n * (n - 2)) - h ^ (n - 2))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ 2
+        + (n.choose 3 : ℤ) * (b ^ (n * (n - 3)) + a ^ (n * (n - 3)) + h ^ (n - 3))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ 3
+        + (n.choose 4 : ℤ) * (b ^ (n * (n - 4)) + a ^ (n * (n - 4)) - h ^ (n - 4))
+            * ((n : ℤ) ^ s * (a * b * c * k)) ^ 4
+        [ZMOD (n : ℤ) ^ (5 * s + 1)]
+```
+
+
+## `M1F4` — main proof §1, p. 6 R3 + p. 7 R1 — the l+j regrouping (IN PROGRESS, S0+S1 done)  (chunk M1-FRAG-04, 4 declarations)
+
+Source: `pipeline/03-lean/M1F4/Basic.lean`
+
+### `M1F4.M1F4_add_pow_neg`  — `M1F4/Basic.lean:31`
+*The `X`-indexed binomial expansion with a sign, in the shape the print uses:*
+```lean
+lemma M1F4_add_pow_neg (h X : ℤ) (k : ℕ) :
+    (h + -X) ^ k
+      = ∑ j ∈ Finset.range (k + 1),
+          (-1) ^ j * (k.choose j : ℤ) * h ^ (k - j) * X ^ j
+```
+
+### `M1F4.M1F4_step_S0_triple`  — `M1F4/Basic.lean:57`
+***S0** — the triple-sum expansion (author p. 6, region `P006-R3`, line 1).*
+```lean
+theorem M1F4_step_S0_triple (n : ℕ) (h b X : ℤ) (_hn : 1 ≤ n) :
+    (∑ i ∈ Finset.range n, (h - X) ^ (n - 1 - i) * (b ^ n + X) ^ i)
+      = ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i),
+          ∑ l ∈ Finset.range (i + 1),
+            (-1) ^ j * ((n - 1 - i).choose j : ℤ) * (i.choose l : ℤ)
+              * h ^ (n - 1 - i - j) * b ^ (n * (i - l)) * X ^ (l + j)
+```
+
+### `M1F4.M1F4_absorb`  — `M1F4/Basic.lean:100`
+***The printed exponent split, as a ℕ-valid identity.***
+```lean
+lemma M1F4_absorb (n s i : ℕ) (a b c k : ℤ) (hi : i + 1 ≤ n) :
+    a ^ (n * (n - 1 - i)) * ((n : ℤ) ^ s * (a * b * c * k)) ^ i
+      = (a ^ (n - 1)) ^ (n - i) * ((n : ℤ) ^ s * (b * c * k)) ^ i
+```
+
+### `M1F4.M1F4_step_S1_binomial`  — `M1F4/Basic.lean:145`
+***S1** — the printed right-hand side (author p. 6, `P006-R3` line 1, second half; the same line as p. 6 R2's last dis…*
+```lean
+theorem M1F4_step_S1_binomial {n s : ℕ} {a b c k h : ℤ} (hn : 1 ≤ n) (ha : a ≠ 0)
+    (hmain : a ^ n
+        * (∑ i ∈ Finset.range n,
+            (h - (n : ℤ) ^ s * (a * b * c * k)) ^ (n - 1 - i)
+              * (b ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ i)
+      = (a ^ n + (n : ℤ) ^ s * (a * b * c * k)) ^ n) :
+    (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i),
+        ∑ l ∈ Finset.range (i + 1),
+          (-1) ^ j * ((n - 1 - i).choose j : ℤ) * (i.choose l : ℤ) * h ^ (n - 1 - i - j)
+            * b ^ (n * (i - l)) * ((n : ℤ) ^ s * (a * b * c * k)) ^ (l + j))
+      = ∑ i ∈ Finset.range (n + 1),
+          (n.choose i : ℤ) * a ^ ((n - 1) * (n - i))
+            * ((n : ℤ) ^ s * (b * c * k)) ^ i
 ```
 
 
@@ -1334,8 +1546,11 @@ theorem L7_bo_de_7 {n : ℕ} (hn : Nat.Prime n) (h3 : 3 < n) {a b c : ℤ}
 | module | lane | declarations |
 |---|---|---|
 | `Common` | shared helpers | 0 |
-| `B` | một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation | 2 |
+| `B` | một cách biến đổi tổng Σ₃ (p. 2) — the main proof's transformation | 4 |
 | `M1F1` | main proof §1, p. 6 — the bổ đề 6 substitution (P006-R1) | 4 |
+| `M1F2` | main proof §1, p. 6 — the printed (7) and (7') (P006-R2) | 6 |
+| `M1F3` | main proof §1, p. 6 — the printed (8), (9) and (10) (P006-R2) | 6 |
+| `M1F4` | main proof §1, p. 6 R3 + p. 7 R1 — the l+j regrouping (IN PROGRESS, S0+S1 done) | 4 |
 | `L1` | bổ đề 1 | 6 |
 | `L2` | bổ đề 2 | 2 |
 | `L3` | bổ đề 3 | 8 |
