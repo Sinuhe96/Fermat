@@ -39,10 +39,11 @@ formal_hint: |
      i = n, where n - 1 - i truncates to 0 and a factor a^n is lost. Lean caught
      this in one round; see M1_LANE.md 7 and the docstring of M1F4_absorb;
   3. the l+j >= 5 split: the part of the triple sum with l+j >= 5 equals the
-     whole triple sum minus the terms with l+j <= 4, and those terms are the ten
-     printed boundary sums (four with X^4, three with X^3, two with X^2, one with
-     X, one with X^0) whose binomial coefficients the author writes out in
-     factorial form (e.g. (1/24)i(i-1)(i-2)(i-3)).
+     whole triple sum minus the terms with l+j <= 4, and those terms are the
+     FIFTEEN printed boundary sums (one for each pair (j,l) with j + l <= 4,
+     C(6,2) = 15; an earlier note in this file said ten - corrected 2026-09-28
+     after freezing the display verbatim), whose binomial coefficients the author
+     writes out in factorial form (e.g. (1/24)i(i-1)(i-2)(i-3)).
 
   TWO PRINTED FORMS OF THE SAME RIGHT-HAND SIDE - equal only as Z-exponent
   expressions, and that distinction is load-bearing:
@@ -69,21 +70,34 @@ author_steps: |
      cancelling a^n — which needs a ≠ 0, an F3 side condition carried as an
      explicit hypothesis (see the docstring of M1F4_step_S1_binomial).
                                               [Lean: M1F4_step_S1_binomial]
-  S2 [P006-R3 l2] The l+j >= 5 split described in claim 3: the filtered triple
-     sum plus the boundary sums re-assemble the whole.         [TODO]
-     DESIGN (from reading the print while S0/S1 were written): this step is a
-     pure Finset partition, no algebra. The printed left side is
-       `Σ_i Σ_{j: l+j>=5} Σ_l f(i,j,l)  +  [ten explicit sums with l+j in 0..4]`
-     and it must equal the whole triple sum `Σ_i Σ_j Σ_l f(i,j,l)` of S0. So the
-     content is: `Finset.filter` over the (j,l) index set, the ten ranges are the
-     natural `[l, n-1-j]` ones, and the complements are the ten printed sums.
-     The sympy screen already confirms exactly this (`m1_common.py`: "10 printed
-     ranges natural, partition exact, residual carries the l+j>=5 summands", at
-     n = 7, 11, 13), so the mathematics is checked; only Finset bookkeeping
-     remains. Expect this to be the leaf's most expensive step: a filtered sum
-     over a nested range is not a bounded `rw` chain.
-  S3-S7 [P006-R3 l2-l5, P007-R1 l1-l4] The ten boundary sums in the printed
-     factorial forms, in the author's order, plus the rewrite of the `i >= 5`
+  S2 [P006-R3 l2-l5 + P007-R1 l1-l2] The l+j >= 5 split.
+     CONTENTS FROZEN AND VERIFIED against the signed LaTeX (2026-09-28): the
+     printed boundary display is exactly one sum for EACH pair (j,l) with
+     j + l <= 4 - there are FIFTEEN, not ten (C(6,2) = 15) - and for each pair
+     the printed range is exactly i in [l, n-1-j], with the summand
+     (-1)^j C(n-1-i,j) C(i,l) h^(n-1-i-j) b^(n(i-l)) X^(l+j), the same term as in
+     the triple sum. Checked pair by pair against the region record:
+       (0,4) i=4..n-1   (4,0) i=0..n-5   (3,1) i=1..n-4   (1,3) i=3..n-2
+       (2,2) i=2..n-3   (2,1) i=1..n-3   (1,2) i=2..n-2   (3,0) i=0..n-4
+       (0,3) i=3..n-1   (0,2) i=2..n-1   (2,0) i=0..n-3   (1,1) i=1..n-2
+       (0,1) i=1..n-1   (1,0) i=0..n-2   (0,0) i=0..n-1
+     ALL FIFTEEN are the natural [l, n-1-j], so the display carries NO misprint -
+     a positive verification result that also confirms the sympy screen's
+     "partition exact" at representation level.
+     LEAN FORM (designed, not yet written): the fifteen sums are one filtered
+     expression, `sum_{j<5} sum_{l<5-j} sum_{i in Ico l (n-j)} f i j l`, and the
+     step states
+       sum_i sum_j sum_l f  =  sum_i sum_j sum_l (if 5 <= j+l then f i j l else 0)
+                               + sum_{j<5} sum_{l<5-j} sum_{i in Ico l (n-j)} f i j l
+     with `5 <= n` (every range non-empty; the paper has n > 11). Proof content:
+     the pointwise filter complement at fixed (i,j,l), then the reindexing that
+     moves the j+l <= 4 part into natural-range order - a `Finset.sum_comm` /
+     `Ico` computation with no algebra. Expect this to be the leaf's most
+     expensive step; it is the one item of this leaf that is NOT started.
+                                                               [TODO]
+  S3-S7 [P006-R3 l2-l5, P007-R1 l1-l4] The FIFTEEN boundary sums (one per pair
+     (j,l) with j + l <= 4; see S2) in the printed factorial forms, in the
+     author's order, plus the rewrite of the `i >= 5`
      part as `Σ_{i=5}^{n} C(n,i) a^{(n-1)(n-i)} (n^s bck)^i` — which is where
      `M1F4_absorb` (above) is used, moving the `a^i` between the explicit factor
      and the exponent of `a`. Then S7 identifies the result with the expansion of
