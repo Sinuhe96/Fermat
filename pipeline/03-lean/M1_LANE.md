@@ -134,8 +134,8 @@ only.
 | `M1-FRAG-04` | 6–7 | P006-R3 (l1–5), P007-R1 (l0–l6) | 5 | 03 | the `l+j` regrouping; **DONE** (rounds 34–55, 16 declarations, 5 steps all S1: the expansion, the binomial RHS, the `l+j ≥ 5` split with the `(j,l,i)` re-indexing, the absorbed tail + four explicit terms, the five X⁴ sums in factorial form). Regions MEASURED: `P007-R1` l0–l6 is what this leaf needs (l4–l6 = S3, l6+ = S4's display) |
 | `M1-FRAG-05` | 7 | P007-R2 (l0–l3) | 4–10 | 04 | **BLOCKED (F4)** — the ten remaining binomial→factorial conversions (X³: 4 sums, X²: 3, X¹: 2, X⁰: 1). The (2,1) X³ sum is printed without its denominator 2 (`printed/binomial = 2`, measured n = 13, 17, 19 by `04-sympy/m1f5_screen.py`; the author's own p. 8 print carries the `1/2`). Author query **Q-005 OPEN**; no Lean written — the leaf stops at its first step. Regions MEASURED 2026-09-28 |
 | `M1-FRAG-06` | 7 | P007-R2 (l4–l5), P007-R3 (l0–l4) | 3 | 05 | **BLOCKED by inheritance (F4, Q-005)**: its display re-prints the wrong `(2,1)` sum at `P007-R3` l2. The RHS tail restatement + the `⇒` display rearranging the X⁴ sums (`i(i+1)(2+i)(3+i)`, `-n/6 Σ[3i(i+1)(i+2)+3i(i+1)+2i]`, …). R3 l0–l4 continues R2 l6 — ONE display across the page break |
-| `M1-FRAG-07` | 8 | P008-R1 (l0–l1), P008-R2 (l0–l2) | 3 | 06 | the first **congruence** `≡ … (mod n^{4s+2})` (with the printed `vì 5s ≥ 4s+2, s ≥ …`) followed by the `⇒` rearrangement of the X⁴ sums. Congruence steps are where a dropped term needs a divisibility side condition — the F3/F4 risk of this part |
-| `M1-FRAG-08` | 8 | P008-R2 (l3)–P008-R3 (l5) | 4 | 07 | second `≡ (mod n^{4s+2})`, the `⇒` rewrite splitting `Σ[3i(i+1)(i+2)+3i(i+1)+2i]` into three sums, third `≡ (mod n^{4s+2})` |
+| `M1-FRAG-07` | 8 | P008-R1 (l0–l6) | 2 | **04** (05/06 BLOCKED) | **BLOCKED (F4, Q-006)** — S0 is the first congruence `≡ … (mod n^{4s+2})` with the printed `vì 5s ≥ 4s+2, s ≥ 2` justification (the tail vanishing is unconditional and measured; the congruence itself is conditional on the substituted (3), so it must be stated that way — S0 is writable); S1 is the `⇒` expansion of the X⁴ group, where the `(2,2)` pair's third piece is printed `−(n/4)Σ i(i−1)` instead of `+(n(n−1)/4)Σ i(i−1)` (measured: the printed pieces are short by exactly `(n²/4)Σ i(i−1)h^{n−3−i}b^{n(i−2)}X⁴`; minimal instance n = 10, i = 2: 21 vs −29). **Started 2026-09-28 out of source order by user decision** (its own print carries the `1/2` that p. 7 drops) and it stops at S1 |
+| `M1-FRAG-08` | 8 | P008-R2 (l3)–P008-R3 (l5) | 4 | 07 | **BLOCKED by inheritance (F4, Q-006)**: it consumes the same `⇒` display. second `≡ (mod n^{4s+2})`, the `⇒` rewrite splitting `Σ[3i(i+1)(i+2)+3i(i+1)+2i]` into three sums, third `≡ (mod n^{4s+2})` |
 | `M1-FRAG-09` | 9 | P009-R1 (l1–7) | 7 | 08 | `M`, display (11) |
 | `M1-FRAG-10` | 9 | P009-R2 (l1–8) | 8 | 09 | `B`, `C`, `D`, `E`, `F` definitions; the **"Quy ước"** on denominators |
 | `M1-FRAG-11` | 9–10 | P009-R3 (l1–5), P010-R1 (l1–3) | 8 | 10, **B-01** | first `mục B.1/B.2` application |
@@ -443,6 +443,36 @@ and `03-lean/M1F5/Basic.lean` does not exist. When the author confirms the
 `1/2`, `M1-FRAG-05` becomes ten `Nat.choose`-to-falling-factorial rewrites on the
 route already compiled for `M1-FRAG-04`'s S4 (`M1F4_choose_fact_*` plus the
 three `_shift` bridges).
+
+### Q-006 — the same page's `⇒` expansion is short by `(n²/4)·Σ i(i−1)…` (2026-09-28)
+
+The p. 8 restart (user decision: skip the pp. 7 leaves, verify pp. 8 on) found a
+**second, independent** defect on the very page that was supposed to be clean:
+
+| region | flag | classification | consequence |
+|---|---|---|---|
+| `P008-R1` l4 tail + l5 | the `(j,l) = (2,2)` X⁴ expansion's third piece prints `− (n/4) Σ i(i−1)…` where the pointwise identity needs `+ (n(n−1)/4) Σ i(i−1)…` | **F4, BLOCKING** | `M1-FRAG-07` stops at S1; `M1-FRAG-08` and every later consumer of the display inherits it |
+
+Why it is a *pointwise* defect and not a reading problem: the three printed
+pieces carry the **same range `[2, n−3]`** and the **same**
+`h^{n−3−i} b^{n(i−2)} (n^s abck)^4` factor (vision confirmed both, twice), so the
+decomposition is an identity in `n` and `i` alone. The identity it needs is
+`(n−1−i)(n−2−i) = (i+1)(i+2) − 2n(i+1) + n(n−1)`, which fixes the third piece as
+`+ (n(n−1)/4)·i(i−1)`. Measured: the printed pieces are short by **exactly**
+`(n²/4)·Σ_{i=2}^{n−3} i(i−1) h^{n−3−i} b^{n(i−2)} (n^s abck)^4` — the screen
+checks the measured gap *equals* that predicted value as exact rationals
+(n = 13, 17). Minimal instance, no sums: `n = 10, i = 2` → target `21`, printed
+`−29`, gap `−50 = −(n²/4)·i(i−1)`. The coefficient was re-read glyph by glyph
+from the crop: numerator is a single `n`, sign is a minus.
+
+Filed as `05-feedback/queries/Q-006-p008-22-pair-short-by-n2-over-4.md`
+(**OPEN**, blocking). What the same screen *also* settled, and what makes S0
+still writable: the tail `Σ_{i≥5} C(n,i) a^{(n−1)(n−i)} X^i` vanishes modulo
+`n^{4s+2}` **unconditionally** (termwise: `X^i` carries `n^{i s}`, and
+`i s ≥ 5s ≥ 4s+2` for `s ≥ 2` — the printed justification), while the congruence
+line itself does **not** hold for arbitrary `h` under either reading of its right
+side, so it is conditional on the substituted equation (3) and must be stated
+with (3) as a hypothesis, exactly as the printed (7)–(10) were.
 
 ### Circularity audit — instrument and result (2026-09-28, user-requested)
 
@@ -1037,7 +1067,7 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
 
 ### Update — fourteenth session (2026-09-28): `M1-FRAG-04` closed, and `M1-FRAG-05` is BLOCKED by a live F4
 
-- **Ledger: 18/19 DONE, 1 BLOCKED** (`M1-FRAG-05`), `progress.py --check` exit 0.
+- **Ledger: 18/20 DONE, 2 BLOCKED** (`M1-FRAG-05`), `progress.py --check` exit 0.
   `M1-FRAG-04` closed at round 55 (16 declarations, EXIT 0, 0 warnings, permitted
   axioms only, no `sorryAx`) and the plan table's pp. 7–8 rows were re-aligned to
   the **measured** region line counts (`P007-R1` 7, R2 8, R3 6; `P008-*` 7 each),
@@ -1066,6 +1096,37 @@ fixed (its `import` list did not skip unwritten modules, unlike its body).
   for `M1-FRAG-07/08` (estimated boundaries from an earlier session) that
   collided with the re-scoped rows; the table is now 41 rows with no duplicate
   ids, and `M1-FRAG-04`'s own row is marked DONE.
+- **User decision (2026-09-28): skip the pp. 7 leaves, verify pp. 8 on.**
+  `M1-FRAG-07` is therefore the lane's edge, with `depends_on: [M1-FRAG-04]`
+  instead of `06` — justified because p. 8 prints the corrected `1/2` at
+  `P008-R1` l7 and `P008-R3` l1, so the leaf is self-contained. This is a
+  recorded departure from strict source order; `M1-FRAG-05`/`06` remain BLOCKED
+  on Q-005.
+- **First `M1-FRAG-07` screen (`04-sympy/m1f7_screen.py`, exit 0).** It settled
+  the *shape* of the step before any Lean, which is what the screen is for:
+  (a) the tail `sum_{i>=5} C(n,i) a^{(n-1)(n-i)} X^i` vanishes modulo `n^{4s+2}`
+  **unconditionally** (termwise: `X^i` carries `n^{i s}` and `i s >= 5s >= 4s+2`
+  for `s >= 2`; this is the printed `5s >= 4s+2, s >= 2`), and (b) the printed
+  congruence does **not** hold for arbitrary `h` under either reading of its
+  right side (measured at n = 13, 17 with s = 2, 3) — so the step is a
+  congruence **conditional on the substituted equation (3)**, exactly like the
+  printed (7)–(10) (M1-FRAG-02/03), and the earlier screen's expectation of an
+  unconditional identity was wrong (recorded in the script).
+- **Open item inside `M1-FRAG-07` before Lean: the `⇒` rearrangement pieces.**
+  The X⁴ group's five sums become nine sums. Three of the pairs are pointwise
+  index identities: `(i+1) - n = -(n-1-i)` closes the (1,3) pair exactly, and
+  the (3,1) pair's `i(n-1-i)(n-2-i)(n-3-i) = i(i+1)(i+2)(i+3) - n[3i(i+1)(i+2) +
+  3i(i+1) + 2i]` is checkable the same way. But the (2,2) pair does **not**
+  match pointwise: `(1/4)Σ(2+i)(1+i)i(i-1) - (n/2)Σ(1+i)i(i-1)` over the printed
+  range `[2, n-3]` is not `(1/4)Σ(n-1-i)(n-2-i)i(i-1)` over that range (checked
+  at n = 10, i = 2: `-48` versus `42`), so the two printed pieces must carry
+  ranges or polynomials other than the ones this reading of the region line
+  suggests, or the print has a second defect. **Resolved the same session**: the
+  crop read (three times, the last glyph by glyph — numerator a single `n`, sign
+  a minus) confirms the printed pieces and their common range `[2, n−3]`, and the
+  exact-rational screen pins the gap to exactly `(n²/4)Σ i(i−1)h^{n−3−i}b^{n(i−2)}X⁴`
+  — so it IS a print defect. Filed as **Q-006**; `M1-FRAG-07` is BLOCKED at S1
+  (§7), and `M1-FRAG-08` inherits it.
 - **Round ledger: 55 rows — 19 S1 / 29 F2 / 2 ENV / 2 F1 / 2 PROBE.** No new
   compile round this session: the work was the source-level screen, the query,
   and the record-keeping.

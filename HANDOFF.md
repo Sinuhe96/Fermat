@@ -6,7 +6,7 @@ one-step verification loop, the F1–F4/S1 outcome classes) and **README.md**
 things stand* and deliberately does not repeat what those two say.
 
 Last updated: 2026-09-28 (**fourteenth session**): the main proof lane is at
-**18/19 DONE, 1 BLOCKED** — `M1-FRAG-04` (pp. 6–7) closed, and `M1-FRAG-05`
+**18/20 DONE, 2 BLOCKED** — `M1-FRAG-04` (pp. 6–7) closed, and `M1-FRAG-05`
 (p. 7, the ten remaining binomial-to-factorial conversions) is **BLOCKED (F4)**
 on the OPEN author query **`Q-005`**: the p. 7 display prints the
 `(j,l) = (2,1)` sum of the `(n^s abck)^3` group without the `1/2` its own
@@ -214,7 +214,7 @@ What the earlier window established:
   hand-type Vietnamese literals into scripts (they do not match the file's
   bytes) — anchor extraction on ASCII fragments.
 
-### Lane state at the fourteenth session (2026-09-28) — 18/19 DONE, `M1-FRAG-05` BLOCKED (F4) on Q-005
+### Lane state at the fourteenth session (2026-09-28) — 18/20 DONE, `M1-FRAG-05` BLOCKED (F4) on Q-005
 
 - **`M1-FRAG-04` (pp. 6–7, the `l+j` regrouping) is DONE** — round 55: EXIT 0,
   0 warnings, permitted axioms only, no `sorryAx`, on all 16 declarations. The
@@ -247,7 +247,30 @@ What the earlier window established:
   means for this leaf, so it is the user's call, not the lane's). Everything else
   standing by: `Q-003` still blocks any leaf from pp. 31–32, and `Q-004`'s four
   misprint items sit on pp. 14, 22, 24, 25.
-- **Ledger:** `progress.py --check` exit 0 (**18/19 DONE, 1 BLOCKED**);
+- **Decision taken (user, 2026-09-28): skip the pp. 7 leaves and verify pp. 8 on.**
+  `M1-FRAG-05`/`06` stay BLOCKED on `Q-005` while the lane continues at
+  `M1-FRAG-07` (p. 8), whose own print carries the corrected `1/2` (`P008-R1`
+  l7, `P008-R3` l1) and is therefore self-contained. A deliberate departure from
+  strict source order, recorded in `M1_LANE.md` §5: `M1-FRAG-07` now depends on
+  `M1-FRAG-04`, not on `06`.
+- **`M1-FRAG-07` opened, and its first screen (`04-sympy/m1f7_screen.py`, exit 0)
+  settled how the step must be stated.** The tail
+  `sum_{i>=5} C(n,i) a^{(n-1)(n-i)} X^i` vanishes modulo `n^{4s+2}`
+  **unconditionally** — termwise, because `X^i` carries `n^(i*s)` and
+  `i*s >= 5s >= 4s+2` when `s >= 2` (the printed `5s >= 4s+2, s >= 2`
+  justification is exactly that) — while the printed congruence itself does
+  **not** hold for arbitrary `h` under either reading of its right side
+  (measured at n = 13, 17 with s = 2, 3). So, like the printed (7)–(10) of p. 6,
+  it is a congruence **conditional on the substituted equation (3)** and must be
+  stated that way in Lean. **The `⇒` rearrangement on the same page carries a
+  second, now-measured defect (Q-006, OPEN, blocking):** the `(2,2)` X⁴
+  expansion's third piece prints `− (n/4) Σ i(i−1)…` where the pointwise
+  identity needs `+ (n(n−1)/4) Σ i(i−1)…`, so the printed pieces are short by
+  exactly `(n²/4) Σ i(i−1) h^{n−3−i} b^{n(i−2)} (n^s abck)^4` (exact rationals
+  at n = 13, 17; minimal instance n = 10, i = 2 → target 21, printed −29).
+  `M1-FRAG-07` therefore stops at S1 (S0, the congruence, remains writable) and
+  `M1-FRAG-08` inherits the blocker.
+- **Ledger:** `progress.py --check` exit 0 (**18/20 DONE, 2 BLOCKED**);
   `pipeline/PROGRESS.md` regenerated. Round ledger: 55 rows — 19 S1 / 29 F2 /
   2 ENV / 2 F1 / 2 PROBE; no compile round this session (source-level screen,
   query and records only).

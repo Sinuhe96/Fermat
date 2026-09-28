@@ -1,0 +1,119 @@
+id: M1-FRAG-07
+title: "Main proof / 1, p. 8 R1 - the first congruence modulo n^(4s+2) and the X^4 expansion - BLOCKED (F4) on the (2,2) piece, short by (n^2/4)*i(i-1)"
+pdf_pages: [8]
+kind: lemma-proof-step
+depends_on: [M1-FRAG-04]
+source_text: |
+  [PDF p8 R1, all seven printed lines, byte-copied from the signed region record
+  pipeline/01-extract/regions/p008.yml (REVIEWED, signed 2026-09-26). This leaf is
+  the first OUT-OF-ORDER leaf of the lane: M1-FRAG-05/06 (the p. 7 conversions)
+  are BLOCKED on the author query Q-005, and the reason this leaf can still be
+  attempted is that its own print carries the corrected 1/2 at R1 l7 - i.e. p. 8
+  states the same sums correctly. Region line counts measured 2026-09-28: R1 7,
+  R2 7, R3 7; the `=>` display started at R1 l2 continues into R2/R3 (a second
+  defect found there makes the display stop this leaf - see formal_hint).]
+
+  \[ + \sum_{i=1}^{n-1} i b^{n(i-1)}h^{n-1-i}n^s abck - \sum_{i=0}^{n-2}(n-1-i)b^{ni}h^{n-2-i}n^s abck + \sum_{i=0}^{n-1} h^{n-1-i}b^{ni} \]
+
+  \[ \equiv a^{n(n-1)} + n a^{n(n-2)}n^s abck + \frac{n(n-1)}{2}a^{n(n-3)}(n^s abck)^2 + \frac{n(n-1)(n-2)}{6}a^{n(n-4)}(n^s abck)^3 - \frac{n}{4}a^{n(n-5)}(n^s abck)^4 \ (\mathrm{mod}\ n^{4s+2}) \quad (\text{vì } 5s \ge 4s+2,\ s \ge 2) \]
+
+  \[ \Rightarrow \frac{1}{24}\sum_{i=4}^{n-1} i(i-1)(i-2)(i-3)h^{n-1-i}b^{n(i-4)}(n^s abck)^4 + \frac{1}{24}\sum_{i=0}^{n-5}(n-1-i)(n-2-i)(n-3-i)(n-4-i)h^{n-5-i}b^{ni}(n^s abck)^4 + \]
+
+  \[ + \frac{1}{6}\sum_{i=1}^{n-4} i(i+1)(2+i)(3+i)h^{n-4-i}b^{n(i-1)}(n^s abck)^4 - \frac{n}{6}\sum_{i=1}^{n-4}\left[3i(i+1)(i+2)+3i(i+1)+2i\right]h^{n-4-i}b^{n(i-1)}(n^s abck)^4 - \]
+
+  \[ - \frac{n}{6}\sum_{i=3}^{n-2} i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}(n^s abck)^4 + \frac{1}{6}\sum_{i=3}^{n-2}(1+i)i(i-1)(i-2)h^{n-2-i}b^{n(i-3)}(n^s abck)^4 - \frac{n}{4}\sum_{i=2}^{n-3} i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 + \]
+
+  \[ + \frac{1}{4}\sum_{i=2}^{n-3}(2+i)(1+i)i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 - \frac{n}{2}\sum_{i=2}^{n-3}(1+i)i(i-1)h^{n-3-i}b^{n(i-2)}(n^s abck)^4 + \]
+
+  \[ + \frac{1}{2}\sum_{i=1}^{n-3} i(n-1-i)(n-2-i)h^{n-3-i}b^{n(i-1)}(n^s abck)^3 - \frac{1}{2}\sum_{i=2}^{n-2} i(i-1)(n-1-i)h^{n-2-i}b^{n(i-2)}(n^s abck)^3 - \]
+formal_hint: |
+  The leaf is the first page of the author's `mod n^{4s+2}` reduction. p. 8 opens
+  by finishing the left-hand side listing (the X^1 sums and the X^0 sum, i.e. the
+  tail of the fifteen printed boundary sums) and asserts the congruence
+
+      [the fifteen sums] = a^{n(n-1)} + n a^{n(n-2)} X + (n(n-1)/2) a^{n(n-3)} X^2
+                           + (n(n-1)(n-2)/6) a^{n(n-4)} X^3 - (n/4) a^{n(n-5)} X^4
+                           (mod n^{4s+2}),   X = n^s abck,
+
+  with the printed justification `vi 5s >= 4s+2, s >= 2`. What the screen
+  (04-sympy/m1f7_screen.py, exit 0) established about that line:
+
+  1. The tail `sum_{i=5}^{n} C(n,i) a^{(n-1)(n-i)} X^i` vanishes modulo
+     `n^{4s+2}` UNCONDITIONALLY - termwise, because `X^i` carries `n^{i*s}` and
+     `i*s >= 5s >= 4s+2` for `s >= 2`. So the printed `5s >= 4s+2, s >= 2` is a
+     termwise divisibility fact and needs no hypothesis.
+  2. The congruence is nevertheless CONDITIONAL on the substituted equation (3):
+     it does NOT hold for arbitrary h under either reading of its right side
+     (measured at n = 13, 17 with s = 2, 3). Its left side carries `h`-powers and
+     its right side carries only `a`/`b`-powers, so the `h`-powers have to be
+     eliminated with (3), exactly as the printed (7)-(10) of p. 6 do
+     (M1-FRAG-02/03). In Lean this step is a congruence conditional on (3).
+     This is expected and screenable-adjacent, not a defect.
+
+  THE F4 DEFECT (Q-006, 2026-09-28). The `=>` display that follows rewrites the
+  X^4 group's five sums into nine sums. One of them is the pair `(j,l) = (2,2)`:
+
+      source (p. 7 R1 l6): (1/4) sum_{i=2}^{n-3} (n-1-i)(n-2-i) i(i-1) h^{n-3-i} b^{n(i-2)} X^4
+      printed pieces p. 8 R1 l4 tail + l5, ALL of range [2, n-3] and ALL with the
+      same h^{n-3-i} b^{n(i-2)} X^4 factor:
+          - (n/4)   sum i(i-1)
+          + (1/4)   sum (2+i)(1+i)i(i-1)
+          - (n/2)   sum (1+i)i(i-1)
+
+  Because range and factors are identical, this is a POINTWISE identity in n and
+  i, and the identity needed is
+  `(n-1-i)(n-2-i) = (i+1)(i+2) - 2n(i+1) + n(n-1)`, so the third printed piece
+  must read `+ (n(n-1)/4) i(i-1)`, not `- (n/4) i(i-1)`. Measured: the printed
+  pieces are short by exactly `(n^2/4) sum_{i=2}^{n-3} i(i-1) h^{n-3-i} b^{n(i-2)} X^4`
+  (the screen checks the gap equals that predicted value, as exact rationals, at
+  n = 13 and n = 17). Minimal instance: n = 10, i = 2 -> target 21, printed -29,
+  gap -50 = -(n^2/4)*i(i-1). The coefficient was re-read glyph by glyph from the
+  crop: the numerator is a single `n`, the sign a minus.
+
+  So this leaf runs S0 (the congruence) and stops at S1 (the X^4 expansion), by
+  the F4 action. `M1-FRAG-08` and every later leaf that consumes this display
+  inherits the blocker.
+transcription: manual
+author_steps: |
+  Normalized ordered step map. The leaf is BLOCKED at S1 by F4 (Q-006); S0 is
+  designed and verifiable, and no Lean is written ahead of the blocked step.
+
+  S0 [P008-R1 l0-l1] The first congruence: the fifteen boundary sums of p. 7
+     satisfy
+       = a^{n(n-1)} + n a^{n(n-2)} X + (n(n-1)/2) a^{n(n-3)} X^2
+         + (n(n-1)(n-2)/6) a^{n(n-4)} X^3 - (n/4) a^{n(n-5)} X^4  (mod n^{4s+2})
+     for X = n^s abck, with the printed justification `vi 5s >= 4s+2, s >= 2`.
+     CONTENT: the tail `sum_{i=5}^{n}` and the split's `l+j >= 5` part both vanish
+     modulo n^{4s+2} unconditionally (measured, see the screen), and the remaining
+     terms are replaced with their a/b-forms using the substituted equation (3) -
+     so in Lean the step carries (3) as an explicit hypothesis, as (7)-(10) did.
+     CLASSIFICATION: S1-pending (not the blocker).              [Lean: TODO]
+  S1 [P008-R1 l2-l6] The `=>` expansion of the X^4 group into nine sums.
+     CLASSIFICATION: **F4** - the `(j,l) = (2,2)` expansion's third piece is
+     printed `- (n/4) sum i(i-1) ...` where the pointwise identity needs
+     `+ (n(n-1)/4) sum i(i-1) ...`; the printed pieces are short by exactly
+     `(n^2/4) sum i(i-1) h^{n-3-i} b^{n(i-2)} (n^s abck)^4`. Counterexample:
+     n = 10, i = 2 (target 21 vs printed -29). Reproduction:
+     `04-sympy/m1f7_screen.py` (exit 0 = finding reproduced, exact rationals).
+     Author query: `05-feedback/queries/Q-006-p008-22-pair-short-by-n2-over-4.md`
+     (OPEN, blocking).                                   [BLOCKED - no Lean]
+  S2 [P008-R2 l0-R3 l4] NOT this chunk: the rest of the `=>` display (the X^3 and
+     X^2 rearrangements, and the re-print of the X^1/X^0 sums), then the second
+     and third `= (mod n^{4s+2})` lines at R2 l3 and R3 l5. It consumes S1's
+     display, so it inherits the blocker.
+
+  evidence: the signed region record p008.yml R1-R3 (REVIEWED); the crop
+    page-008-300dpi-region-01.png read three times on 2026-09-28 (twice for the
+    (2,2) pieces and their ranges, once glyph-by-glyph for the third
+    coefficient); 04-sympy/m1f7_screen.py exit 0 (the tail vanishing, the
+    conditional-not-unconditional verdict for the congruence, and the (2,2) gap
+    equal to -(n^2/4)*sum i(i-1) at n = 13, 17).
+lean_file: 03-lean/M1F7/Basic.lean
+sympy_test: 04-sympy/m1f7_screen.py
+source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
+extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
+fidelity: PASS_WITH_MANUAL
+renders: page-008-300dpi-region-01.png
+lean_decls: ""
+regions: P008-R1
+status: BLOCKED
