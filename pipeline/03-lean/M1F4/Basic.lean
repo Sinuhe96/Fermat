@@ -174,9 +174,36 @@ theorem M1F4_step_S1_binomial {n s : ℕ} {a b c k h : ℤ} (hn : 1 ≤ n) (ha :
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← pow_mul]
 
+/-- **Support for S2 — the pointwise filter complement behind the printed
+`l+j ≥ 5` split.**
+
+At fixed `(i,j)` the `l`-sum splits into the `5 ≤ j+l` part and its complement,
+and this lifts unchanged through the two outer sums. Stated for an arbitrary
+summand `f`, so it is a statement about the *index structure* only.
+
+This is the first half of the printed split (author p. 6, `P006-R3` line 2): the
+second half — re-indexing the `j+l ≤ 4` part into the fifteen printed natural
+ranges `i ∈ [l, n-1-j]` — is designed in `M1-FRAG-04.yml` (step S2) and is not
+written yet. -/
+lemma M1F4_sum_complement (n : ℕ) (f : ℕ → ℕ → ℕ → ℤ) :
+    (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i),
+        ∑ l ∈ Finset.range (i + 1), f i j l)
+      = (∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i),
+          ∑ l ∈ Finset.range (i + 1), (if 5 ≤ j + l then f i j l else 0))
+        + ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range (n - i),
+            ∑ l ∈ Finset.range (i + 1), (if ¬(5 ≤ j + l) then f i j l else 0) := by
+  rw [← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun l _ => ?_
+  by_cases hp : 5 ≤ j + l <;> simp [hp]
+
 end M1F4
 
 -- Evidence for the leaf's DONE flip (all eight steps must reach this state):
 -- permitted axioms only, and no `sorryAx`.
 #print axioms M1F4.M1F4_step_S0_triple
 #print axioms M1F4.M1F4_step_S1_binomial
+#print axioms M1F4.M1F4_sum_complement

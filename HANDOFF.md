@@ -206,16 +206,28 @@ What the earlier window established:
   hand-type Vietnamese literals into scripts (they do not match the file's
   bytes) — anchor extraction on ASCII fragments.
 
-### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` DONE (17/17), `M1-FRAG-04` in flight (S0+S1 of 8)
+### Lane state at the thirteenth session (2026-09-28) — `M1-FRAG-03` DONE (17/17), `M1-FRAG-04` in flight (S0+S1+S2-first-half of 8)
 
-- **Current edge (round 35)**: `M1-FRAG-04` — pp. 6–7, the `l+j` regrouping that
-  follows the printed (8)–(10) — is IN PROGRESS with **S0 and S1 written and
-  certified**: the triple-sum expansion (`M1F4_step_S0_triple`) and the printed
-  right-hand side (`M1F4_step_S1_binomial`), on two support lemmas
-  (`M1F4_add_pow_neg`, `M1F4_absorb`). Six steps remain; the expensive one is S2,
-  the `l+j ≥ 5` partition into the ten printed boundary sums — its design (a pure
-  Finset partition, no algebra) is written into `M1-FRAG-04.yml`, and the sympy
-  screen already certifies the partition numerically at n = 7, 11, 13.
+- **Current edge (round 37)**: `M1-FRAG-04` — pp. 6–7, the `l+j` regrouping that
+  follows the printed (8)–(10) — is IN PROGRESS with **S0, S1 and the first half
+  of S2 written and certified**: the triple-sum expansion (`M1F4_step_S0_triple`)
+  and the printed right-hand side (`M1F4_step_S1_binomial`), on the support
+  lemmas `M1F4_add_pow_neg`, `M1F4_absorb`, and now `M1F4_sum_complement` (the
+  pointwise filter complement behind the `l+j ≥ 5` split, proved generically in
+  the summand). Round 37 certificated all three: EXIT 0, 0 warnings, permitted
+  axioms only (`propext`/`Classical.choice`/`Quot.sound`), no `sorryAx`.
+- **S2's content is frozen and verified** (2026-09-28): the printed boundary
+  display is **one sum for each pair `(j,l)` with `j + l ≤ 4` — fifteen of them**
+  (`C(6,2) = 15`), not the ten an earlier note guessed, and **each printed range
+  is exactly the natural `i ∈ [l, n-1-j]`** with the triple sum's own summand. So
+  that display carries **no misprint** — a positive result that also confirms the
+  sympy screen's "partition exact" at representation level. The remaining work of
+  S2 is the **re-indexing half** (the two index sets are the same set in a
+  different order); its statement, the bijection proof obligations, and the
+  recommended `Finset.sigma` + `Finset.ext` + `omega` route are written into
+  `M1-FRAG-04.yml`. Estimated 40–80 lines, several rounds — the leaf's most
+  expensive step. Then S3–S7 (the fifteen boundary sums in their printed
+  factorial forms and the `i ≥ 5` rewrite via `M1F4_absorb`).
 - **The lane's first F1 was caught here** (round 31, 9 s) and it is the single
   most valuable thing to read before touching p. 6 R3: the printed alternate form
   `Σ_i C(n,i) a^{n(n-1-i)} (n^s abck)^i` is **ℕ-unsafe at `i = n`** — `n - 1 - i`
@@ -322,10 +334,13 @@ the 300 dpi crops; the extracted text layer is navigation only.
 Gate status at the thirteenth session (2026-09-28), all re-run after the
 container rebuild: `check_env.sh --full` → **SMOKE PASS (full)** (Lean 4.35.0-rc2,
 Lake project + Mathlib cache OK, `import Mathlib` OK); `progress.py --check`
-exit 0 with **16/16 DONE**, 0 obstacles, **2 OPEN author queries** (Q-003,
+exit 0 with **17/17 DONE**, 0 obstacles, **2 OPEN author queries** (Q-003,
 Q-004); watchdog `watch-m1` live with `latched=none` and no `M1_inflight`
-outstanding. Round ledger: `03-lean/M1_rounds.tsv` — 25 rounds so far,
-classified 7 S1 / 2 ENV / 12 F2 / 1 PROBE (+ this session's M1-FRAG-03 rounds).
+outstanding. Round ledger: `03-lean/M1_rounds.tsv` — 38 rounds so far,
+classified **14 S1 / 20 F2 / 2 ENV / 1 F1 / 1 PROBE** (the F1 is the p. 6 R3
+`ℕ`-unsafe exponent form). The measured cost model matters for planning: a
+*failing* round costs 7–24 s (Mathlib oleans are cached), so iterate freely on
+compile errors; only successful rounds with heavy `ring`/`omega` take minutes.
 
 ## Where the durable facts live
 

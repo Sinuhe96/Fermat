@@ -94,6 +94,33 @@ author_steps: |
      moves the j+l <= 4 part into natural-range order - a `Finset.sum_comm` /
      `Ico` computation with no algebra. Expect this to be the leaf's most
      expensive step; it is the one item of this leaf that is NOT started.
+     FIRST HALF LANDED (round 36, EXIT 0, 22 s, 0 warnings): the pointwise
+     filter complement, as the generic support lemma `M1F4_sum_complement`
+     (`Σ f = Σ (if 5 ≤ j+l then f else 0) + Σ (if ¬(5 ≤ j+l) then f else 0)`,
+     lifted through the three nested ranges, stated for an arbitrary summand so
+     it is about the index structure only).
+     SECOND HALF - THE REINDEXING (designed; the only remaining work of S2).
+     Statement, for `5 ≤ n`:
+       sum_{i<n} sum_{j<n-i} sum_{l≤i} (if j+l ≤ 4 then f i j l else 0)
+         = sum_{j<5} sum_{l<5-j} sum_{i ∈ Ico l (n-j)} f i j l
+     THE TWO INDEX SETS ARE THE SAME SET in a different order: the conditions
+     `i < n`, `j < n-i`, `l ≤ i`, `j+l ≤ 4` are equivalent to
+     `j ≤ 4`, `l ≤ 4-j`, `l ≤ i`, `i ≤ n-1-j`
+     (j+l ≤ 4 iff l ≤ 4-j; j < n-i iff i ≤ n-1-j; and i ≤ n-1-j gives i < n since
+     j ≥ 0; conversely i < n with j+l ≤ 4 and n ≥ 5 gives j ≤ 4 ≤ n-1, hence
+     i ≤ n-1-j). The summand is identical on both sides, so this is a pure
+     index-set reindexing: no algebra, and no side condition beyond `5 ≤ n`.
+     Proof obligations, in order:
+       (1) `¬(5 ≤ j+l) ↔ j+l ≤ 4` (`Nat.not_le` / `Nat.lt_succ_iff`);
+       (2) the bijection above, as an index-set equality plus `Finset.sum_congr`;
+       (3) the range forms `range (i+1) = Ico 0 (i+1)` so the three nested sums
+           flatten to one sum over triples (`Finset.sum_sigma`).
+     RECOMMENDED ROUTE for the next session: flatten BOTH sides to
+     `sum_{p ∈ S} f p.1 p.2 p.3` with `S` a Finset of triples (LHS via
+     `Finset.sigma` over the three nested ranges, RHS the analogous construction
+     over `j<5`, `l<5-j`, `Ico l (n-j)`), prove `S = T` by `Finset.ext` + `omega`,
+     then `Finset.sum_congr`. That route avoids dependent-range sum surgery.
+     Cost estimate: 40-80 lines, several rounds - the leaf's most expensive step.
                                                                [TODO]
   S3-S7 [P006-R3 l2-l5, P007-R1 l1-l4] The FIFTEEN boundary sums (one per pair
      (j,l) with j + l <= 4; see S2) in the printed factorial forms, in the
@@ -114,6 +141,6 @@ source_pdf_sha: 721c25390d164787b1f645cdc7eeb19e7a39444879811ebe761b982823a88761
 extract_run_sha: f25efc62f3487b998b82a1936c858650030304dc57ec5d845a7193f8beabe4e1
 fidelity: PASS_WITH_MANUAL
 renders: page-006-300dpi-region-03.png, page-007-300dpi-region-01.png
-lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_step_S0_triple, M1F4_step_S1_binomial
+lean_decls: M1F4_add_pow_neg, M1F4_absorb, M1F4_sum_complement, M1F4_step_S0_triple, M1F4_step_S1_binomial
 regions: P006-R3, P007-R1
 status: TODO
