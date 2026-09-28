@@ -10,6 +10,13 @@ where a printed constant differs from its own printed local computation.
 
 Run:  MSYS_NO_PATHCONV=1 docker compose exec -T lean \
         python /workspace/pipeline/04-sympy/sweep_constants.py
+BLIND SPOT verified 2026-09-28 (parent, by hand): check C3's `P030-R1 l4 vs l6`
+comparison is a FALSE POSITIVE. l4 is the reduction of the `1/(6(h-b^n)^2)*n^2`
+bracket of line 0 with `(h-b^n) -> a^n + 2n^s abck` and mod n^(s+1); l6's bracket
+comes from line 1 (`n{...}/(2(h-b^n)^2) + a^n[...]/(h-b^n)^3`). They share a
+denominator but are different quantities. Rule for this checker: compare a line
+only with the line it actually reduces, never with a bracket that merely has the
+same denominator.
 """
 from fractions import Fraction as F
 

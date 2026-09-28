@@ -286,10 +286,11 @@ What the earlier window established:
   pp. 23–28 carry it. `Q-006` was **extended**: the same `⇒` display is short in a
   second class, `(3,1)`, by `(1/6)Σ i(n³−3n²(i+2))h^{n−4−i}b^{n(i−1)}X⁴` — two
   classes, one systematic defect (expansions dropping the `n²`-term), both
-  reproduced in `04-sympy/m1f7_screen.py` with three positive controls. One
-  candidate is deliberately **left unverified and unfiled**: the constants screen
-  also flags `P030-R1` l4 vs l6 (`−2` vs `−4` on one monomial) — verify before
-  filing. The generator's precision was ~25% before the brace-aware rewrite, so
+  reproduced in `04-sympy/m1f7_screen.py` with three positive controls. The
+  constants screen's one remaining candidate (`P030-R1` l4 vs l6) was checked by
+  hand and is **CLEAN** — l4 is the exact `mod n^{s+1}` reduction of l0 (with
+  `(h−b^n) → a^n + 2n^s abck`), the screen had compared two different brackets —
+  so no query was filed for it. The generator's precision was ~25% before the brace-aware rewrite, so
   the parser now walks each `\sum …` summand unit; the pp. 21–28 artifact groups
   vanish and Q-005's stays.
 - **Ledger:** `progress.py --check` exit 0 (**18/20 DONE, 2 BLOCKED**);

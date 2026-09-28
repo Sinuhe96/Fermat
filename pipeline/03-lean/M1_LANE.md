@@ -541,10 +541,19 @@ it):**
   positive controls reproduce the `(2,2)` deficit, the `(3,1)` deficit and the
   `(1,3)` zero-gap). Two classes, one systematic defect: expansions that drop
   the `n²`-dependent term.
-- **Left open, unverified**: the constants sweep also flags `P030-R1` l4 against
-  its own l6 (`−2` vs `−4` on one monomial). Its own screen reports it, but the
-  collection logic there has not been re-derived by hand, so it is **not** filed
-  yet — next session verifies it before it becomes a query.
+- **`P030-R1` l4 vs l6: verified CLEAN, not a defect (the sweep's last open
+  candidate).** Its own screen compared two *different* brackets: l4 is the
+  `1/(6(h−b^n)²)·n²` bracket of l0, l6's is the `n{…}/(2(h−b^n)²)+a^n[…]/(h−b^n)^3`
+  bracket of l1. Checked by hand against the print: l4 is exactly l0 with
+  `(h−b^n) → a^n + 2n^s abck` substituted and reduced mod `n^{s+1}`, which is why
+  the print shows the cancelling pairs `+h^{n-3}a^n − h^{n-3}a^n` and
+  `+b^{n(n-3)}a^n − b^{n(n-3)}a^n` (each pair is one original term minus its
+  reduced image) and leaves `a^{n(n-2)} − a^{n(n-4)}a^{2n}`; l1 → l3 is correct
+  the same way (`−b^{n(n-3)}(b^n+2n^sabck) ≡ −b^{n(n-2)}`,
+  `−h^{n-3}(h−2n^sabck) ≡ −h^{n-2}`). No defect, nothing filed. The generator's
+  constants screen has this one blind spot: it must compare a line only with the
+  line it actually reduces, never with a bracket that merely has the same
+  denominator.
 
 The lane's leaf order is unaffected: `M1-FRAG-05`/`06` (Q-005) and
 `M1-FRAG-07`/`08` (Q-006) remain BLOCKED, and the new items sit on pages
