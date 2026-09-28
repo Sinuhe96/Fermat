@@ -125,8 +125,47 @@ def screen_other_pairs(n: int) -> bool:
                     - n * i * (3 * i * i + 12 * i + 11)) for i in range(1, n - 1))
     print(f"  (1,3) expansion value-preserving pointwise: {ok13}")
     print(f"  (3,1) expansion pointwise-unequal as printed: {deg31}"
-          f"  <- INCONCLUSIVE (degree 4 vs 3 in i: an index shift, not pointwise)")
+          f"  <- measured below: same range and factors, short by a dropped term")
     return ok13
+
+
+def screen_pair31(n: int, h: int, b: int, X: int) -> bool:
+    """The (3,1) X^4 class: source (p. 7 R1 l5) vs its printed pieces (p. 7 R2 l7
+    = p. 8 R1 l3) -- over the SAME range [1, n-4] with the SAME factors, so the
+    two sides must agree pointwise, and the class totals must agree.
+
+    source : -(1/6) sum_{i=1}^{n-4} i(n-1-i)(n-2-i)(n-3-i) h^{n-4-i} b^{n(i-1)} X^4
+    pieces : +(1/6) sum i(i+1)(i+2)(i+3) - (n/6) sum i(3i^2+12i+11)  [same factors]
+    Identity behind the pieces:
+        (n-1-i)(n-2-i)(n-3-i) = n(3i^2+12i+11) - (i+1)(i+2)(i+3)
+                                 + (n^3 - 3n^2(i+2))
+    -- the printed pieces realise it WITHOUT the last term, so they are short by
+        (1/6) sum i(n^3 - 3n^2(i+2)) h^{n-4-i} b^{n(i-1)} X^4
+    per class, i.e. n^2 i (n - 3i - 6)/6 per term. Second class of the display
+    defect filed as Q-006.
+    """
+    tot_s = tot_p = tot_gap = Fraction(0)
+    ident_ok = True
+    for i in range(1, n - 3):
+        f = h ** (n - 4 - i) * b ** (n * (i - 1)) * X ** 4
+        src = Fraction(-i * (n - 1 - i) * (n - 2 - i) * (n - 3 - i), 6)
+        pie = (Fraction(i * (i + 1) * (i + 2) * (i + 3), 6)
+               - Fraction(n * i * (3 * i * i + 12 * i + 11), 6))
+        ident_ok = ident_ok and (
+            (n - 1 - i) * (n - 2 - i) * (n - 3 - i)
+            == n * (3 * i * i + 12 * i + 11) - (i + 1) * (i + 2) * (i + 3)
+            + (n ** 3 - 3 * n * n * (i + 2)))
+        tot_s += src * f
+        tot_p += pie * f
+        tot_gap += Fraction(i * (n ** 3 - 3 * n * n * (i + 2)), 6) * f
+    print(f"  (3,1) class at n={n}: pieces - source == (1/6)sum i(n^3-3n^2(i+2))f:"
+          f" {tot_p - tot_s == tot_gap}")
+    print(f"    the expansion identity behind the pieces holds pointwise: {ident_ok}")
+    print(f"    source total {tot_s} vs pieces total {tot_p}")
+    print(f"    restoring the missing piece gives the source back:"
+          f" {tot_p - tot_gap == tot_s}")
+    return ident_ok and (tot_p - tot_s == tot_gap) and (tot_p != tot_s) \
+        and (tot_p - tot_gap == tot_s)
 
 
 def pair22(n: int, i: int):
@@ -179,6 +218,7 @@ def main() -> int:
         pair_ok = screen_pair22(n, h=11, b=3, X=(n ** s) * 2 * 3 * 5 * 7)
         ok = ok and pair_ok
         ok = ok and screen_other_pairs(n)
+        ok = ok and screen_pair31(n, h=11, b=3, X=(n ** s) * 2 * 3 * 5 * 7)
         print()
     print("ESTABLISHED")
     print("  (1) the tail sum_{i>=5} C(n,i) a^{(n-1)(n-i)} X^i vanishes modulo")
@@ -191,7 +231,12 @@ def main() -> int:
     print("      piece reads -(n/4)*i(i-1) where the identity needs +(n(n-1)/4)*i(i-1),")
     print("      so the printed pieces are short by exactly (n^2/4)*i(i-1) -- the same")
     print("      h/b/X factors and the same range on all three pieces, so this is a")
-    print("      pointwise coefficient defect. Filed as Q-006.")
+    print("      pointwise coefficient defect. Filed as Q-006;")
+    print("  (4) the SAME display is short in a second class: the (3,1) X^4 pair's")
+    print("      pieces drop the expansion's n^3/n^2 term, so they are short by exactly")
+    print("      (1/6)*sum i(n^3-3n^2(i+2))*h^(n-4-i)*b^(n(i-1))*X^4 over the printed")
+    print("      range, and restoring that one term gives the source back exactly.")
+    print("      Two classes, one systematic defect: Q-006.")
     return 0 if ok else 1
 
 

@@ -507,10 +507,50 @@ The tool is a **candidate generator, not a judge** (that is why its groups are
 reported with the site list and the differing tokens, and why nothing here is a
 finding until a crop read plus an exact-arithmetic screen backs it — the rule
 that produced Q-005/Q-006). Triage of the 13 groups plus a constants sweep over
-pp. 9–33 is running as four parallel jobs; their verdicts land in §7 as
-`Q-00N` entries or as "cleared" notes, and the lane's leaf order is unaffected
-until then: it is still `M1-FRAG-05`/`06` (Q-005) and `M1-FRAG-07`/`08` (Q-006),
-both BLOCKED.
+pp. 9–33 ran as four parallel jobs. **Outcome (recorded here as the §7 entry for
+it):**
+
+- **Cleared**: 8 of the 13 groups were generator artifacts or legitimate
+  re-prints — groups 5/6/7/9/10/13 differ only by a line prefix (`Với R =`), a
+  relation symbol (`⇒`), colour markup, `\left/\right`, or two spaces across a
+  page break, and their members are token-identical otherwise (verified
+  independently twice, with crop reads); group 8 is the `(3,0)`/`(0,3)` pair,
+  whose exact screen reproduces its binomial values at n = 13, 17 (and, as a
+  control on the same run, Q-005's `(2,1)` ratio of 2); group 11 is one
+  polynomial written factored on p. 7 and bracketed on p. 8
+  (`i(3i²+12i+11) = 3i(i+1)(i+2)+3i(i+1)+2i`); group 12 is Q-006's own site
+  (p. 7 prints the merged form `−(n/4)(3+2i)` of p. 8's two pieces); the two
+  p. 32 drift rows are two instances of one template at `k = n−3` and `k = n−5`
+  (algebras verified exactly, and explicitly **not** Q-003's missing labels).
+  The generator's own precision was ~25% before the fix, so the parser was
+  rewritten brace-aware (`signatures`/`coefficients` now walk each `\sum … `
+  summand unit instead of running flat regexes over brace-stripped text); the
+  pp. 21–28 artifact groups vanish and Q-005's group survives.
+- **New findings filed**: p. 33's final coefficient `55/3` where its own
+  fourteen-term assembly sums to `55/4` (**Q-007**, exact rationals by two
+  independent reductions, crop-confirmed); p. 31's collected line is not the
+  collection of its own seventeen-term list — `−2/3` vs `−4/3` on
+  `b^{n(n−3)}a^{2n}` and two monomials absent altogether (**Q-008**); and the
+  `5[…]` bracket on `P023-R2` l4 missing an `n` (`6b^{n(n−2)}` where eleven
+  other prints on pp. 23–28, including the `M_1` definition one region earlier,
+  carry `6nb^{n(n−2)}`) — **Q-004 item 2.5**, same class as 2.1–2.4.
+- **Q-006 extended**: the same `⇒` display is short in a **second** class — the
+  `(3,1)` pair drops the expansion's `n³/n²` term, short by
+  `(1/6)Σ i(n³−3n²(i+2))h^{n−4−i}b^{n(i−1)}X⁴`, and restoring that one term
+  returns the source exactly (my own screen `m1f7_screen.py`, whose three
+  positive controls reproduce the `(2,2)` deficit, the `(3,1)` deficit and the
+  `(1,3)` zero-gap). Two classes, one systematic defect: expansions that drop
+  the `n²`-dependent term.
+- **Left open, unverified**: the constants sweep also flags `P030-R1` l4 against
+  its own l6 (`−2` vs `−4` on one monomial). Its own screen reports it, but the
+  collection logic there has not been re-derived by hand, so it is **not** filed
+  yet — next session verifies it before it becomes a query.
+
+The lane's leaf order is unaffected: `M1-FRAG-05`/`06` (Q-005) and
+`M1-FRAG-07`/`08` (Q-006) remain BLOCKED, and the new items sit on pages
+(23, 30, 31, 33) whose leaves are far downstream — except that Q-007/Q-008's
+sites are exactly the pages the walkthrough predicted as the deep risks
+(`(27)`'s cancellation on p. 32 and the p. 31 collection feeding it).
 
 ### Circularity audit — instrument and result (2026-09-28, user-requested)
 

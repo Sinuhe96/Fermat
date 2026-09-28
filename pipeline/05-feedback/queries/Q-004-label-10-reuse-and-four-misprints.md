@@ -92,6 +92,28 @@ The outer `n(…)` in the first line reaches only the first two summands: the
 inside = ÷3·(n^s abck)^4). This is the same failure mode as 2.1–2.3, one line
 apart, which is what makes the class look systematic rather than random.
 
+### 2.5 — a dropped `n` inside the `5[…]` bracket, p. 23 R2 *[added 2026-09-28 by the defect sweep]*
+
+The same failure mode as 2.1–2.4, on a term none of them covers. The bracket
+
+```
+5[ 3n b^{n(n−4)}(b^n−h)^2 − 4n b^{n(n−3)}(h−b^n) + 6n b^{n(n−2)} ] / (4(h−b^n)^3) · (n^s abck)^4
+```
+
+is printed **eleven** times on pp. 23–28 (it is part of the `M_1` assembly), and
+its third summand carries the factor `n` in every one of them — including the
+`M_1` definition on `P023-R1` l0, one region earlier. `P023-R2` l4 prints
+`+6b^{n(n−2)}` instead, i.e. the `n` reaches the first two summands and not the
+third. Measured: the printed bracket is short by exactly
+`30(n−1)·b^{n(n−2)}/(4(h−b^n)^3)·(n^s abck)^4` (verified with exact integers at
+`n = 13, 17, 19`). Two crop reads give the two readings — `page-023-300dpi-region-02.png`
+shows `6b^{n(n−2)}` with no `n` ("the first two summands read `3n…` and `4n…`
+and the third visibly lacks that `n`"), `page-024-300dpi-region-01.png` shows
+`6n b^{n(n−2)}` with the `n` legible — so the print itself differs between the
+two pages, exactly as the records say. (A twelfth, genuinely `n`-less spelling of
+the bracket on pp. 28–29 has the `n` factored *outside* the bracket and is a
+different form, not part of this count.)
+
 ## Reproduction (no Lean)
 
     python pipeline/04-sympy/triage_c3.py        # items 2.1 and 2.2, exit 0

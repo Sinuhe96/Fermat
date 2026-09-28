@@ -270,6 +270,28 @@ What the earlier window established:
   at n = 13, 17; minimal instance n = 10, i = 2 → target 21, printed −29).
   `M1-FRAG-07` therefore stops at S1 (S0, the congruence, remains writable) and
   `M1-FRAG-08` inherits the blocker.
+- **The pp. 9–33 print-defect sweep (user decision) is done, and it paid.**
+  Instrument: `01-extract/defect_sweep.py` (661 display lines, two detectors:
+  digit-abstracted drift and *summand-signature* coefficient drift — the latter
+  independently rediscovers Q-005). Four parallel triage jobs cleared 8 of its 13
+  group candidates as artifacts or legitimate re-prints (line prefixes, `⇒`,
+  colour, `\left/\right`, page-break spacing, two instances of one template at
+  `k = n−3`/`k = n−5`) and produced **three new findings, all filed**:
+  `Q-007` p. 33's final coefficient `55/3` where its own fourteen-term assembly
+  sums to `55/4` (no downstream effect: `n | 55` gives `n ∈ {5, 11}` either way);
+  `Q-008` p. 31's collected line is not the collection of its own seventeen-term
+  list (`−2/3` vs `−4/3` on `b^{n(n−3)}a^{2n}`, two monomials missing — this is
+  the line that feeds `(27)`'s cancellation on p. 32); and `Q-004` **item 2.5**,
+  the `5[…]` bracket on `P023-R2` l4 missing an `n` where eleven other prints on
+  pp. 23–28 carry it. `Q-006` was **extended**: the same `⇒` display is short in a
+  second class, `(3,1)`, by `(1/6)Σ i(n³−3n²(i+2))h^{n−4−i}b^{n(i−1)}X⁴` — two
+  classes, one systematic defect (expansions dropping the `n²`-term), both
+  reproduced in `04-sympy/m1f7_screen.py` with three positive controls. One
+  candidate is deliberately **left unverified and unfiled**: the constants screen
+  also flags `P030-R1` l4 vs l6 (`−2` vs `−4` on one monomial) — verify before
+  filing. The generator's precision was ~25% before the brace-aware rewrite, so
+  the parser now walks each `\sum …` summand unit; the pp. 21–28 artifact groups
+  vanish and Q-005's stays.
 - **Ledger:** `progress.py --check` exit 0 (**18/20 DONE, 2 BLOCKED**);
   `pipeline/PROGRESS.md` regenerated. Round ledger: 55 rows — 19 S1 / 29 F2 /
   2 ENV / 2 F1 / 2 PROBE; no compile round this session (source-level screen,

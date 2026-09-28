@@ -112,39 +112,80 @@ def prose_rationals(s: str):
 # independently of how its coefficient is written -- so two lines carrying the
 # same triple are two prints of ONE quantity, and any coefficient difference is
 # the Q-005/Q-006 failure mode.
-SUMMAND = re.compile(
-    r"h\^\{?([^{}]*?)\}?\s*b\^\{?n\(?([^{})]*?)\)?\}?\s*\(n\^s\s*a?b?c?k?\)?\^\{?(\d+)\}?")
-SUMMAND2 = re.compile(
-    r"b\^\{?n\(?([^{})]*?)\)?\}?\s*h\^\{?([^{}]*?)\}?\s*\(n\^s\s*a?b?c?k?\)?\^\{?(\d+)\}?")
-COEFF = re.compile(r"(?:\\frac\{[^{}]*\}\{[^{}]*\}|[-\d]+|\{[^{}]*\})")
+#
+# Brace-aware on purpose: the first version used flat regexes, and on lines whose
+# coefficients are FRACTIONS it "found" triples inside the denominators
+# (`16(h^n-b^{n^2})(n^s abck)^4` parsed as h^{n-} b^{n(^2)} (n^s abck)^4) and it
+# let a following denominator digit join the exponent (`(n^s abck)^{3}2(h-b^n)`).
+# Triage of those groups (2026-09-28) confirmed they were regex artifacts, so the
+# parser now walks the line and reads each command's brace argument exactly, and
+# only inside a `\sum ... ` summand unit.
+def _brace(s: str, i: int):
+    """s[i] must be '{'; return (inner, index just past the closing brace)."""
+    assert s[i] == "{", s[i:i + 20]
+    depth, j = 0, i
+    while j < len(s):
+        if s[j] == "{":
+            depth += 1
+        elif s[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return s[i + 1:j], j + 1
+        j += 1
+    return None, len(s)
+
+
+def _arg_of(s: str, cmd: str, start: int):
+    """The argument of `cmd` at or after `start`: a `{...}` group, or a bare
+    single token (`^3` as well as `^{3}` -- the paper prints both, sometimes on
+    two prints of the same sum).  Returns (arg, end) or (None, start)."""
+    k = s.find(cmd, start)
+    if k < 0:
+        return None, start
+    k += len(cmd)
+    if k < len(s) and s[k] == "{":
+        inner, end = _brace(s, k)
+        return inner, end
+    m = re.match(r"[^\s+\-)]+", s[k:])
+    return (m.group(0), k + m.end()) if m else (None, k)
+
+
+def units(line: str):
+    """Split a normalised line into summand units at each `\\sum`."""
+    n = normalize(line)
+    idx = [m.start() for m in re.finditer(r"\\sum", n)]
+    return [n[a:b] for a, b in zip(idx, idx[1:] + [len(n)])]
 
 
 def signatures(line: str):
-    """The list of summand triples (h-exp, b-index, power-of-X) on one line."""
-    n = normalize(line)
+    """The summand triples (h-exp, b-index, power-of-X) of one line."""
     out = []
-    for m in SUMMAND.finditer(n):
-        out.append((m.group(1).strip(), m.group(2).strip(), m.group(3)))
-    for m in SUMMAND2.finditer(n):
-        out.append((m.group(2).strip(), m.group(1).strip(), m.group(3)))
+    for u in units(line):
+        he, _ = _arg_of(u, "h^", 0)
+        bi, _ = _arg_of(u, "b^{n(", 0)
+        if bi is None:
+            bi, _ = _arg_of(u, "b^", 0)
+        xk, _ = _arg_of(u, "(n^s abck)^", 0)
+        if he is not None and bi is not None and xk is not None:
+            out.append((he.strip(), bi.strip(), xk.strip()))
     return sorted(out)
 
 
 def coefficients(line: str):
-    """The text printed in front of each summand on one line: the summation
-    range plus the coefficient, in printed order.  Two lines carrying the same
-    summand triple can then be compared token by token."""
-    n = normalize(line)
-    spans = [(m.start(), m.end()) for m in SUMMAND.finditer(n)]
-    spans += [(m.start(), m.end()) for m in SUMMAND2.finditer(n)]
-    spans.sort()
-    out, prev_end = [], 0
-    for (s, e) in spans:
-        head = n[prev_end:s]
-        sums = list(re.finditer(r"\\sum", head))
-        chunk = head[sums[-1].start():] if sums else head
-        out.append(re.sub(r"\s+", " ", chunk).strip(" +-"))
-        prev_end = e
+    """What is printed in front of each summand of one line: the summation range
+    plus the coefficient, in printed order (brace-aware, same units as
+    `signatures`)."""
+    out = []
+    for u in units(line):
+        pos = min([p for p in (u.find("h^"), u.find("b^"), u.find("(n^s"))
+                   if p >= 0] or [len(u)])
+        head = u[:pos]
+        body = head[len("\\sum"):] if head.startswith("\\sum") else head
+        cleaned = re.sub(r"^_[{][^{}]*[}]", "", body)
+        cleaned = re.sub(r"^[_^]\S", "", cleaned)
+        cleaned = re.sub(r"\s+", " ", cleaned).strip(" +-")
+        if cleaned:
+            out.append(cleaned)
     return out
 
 
