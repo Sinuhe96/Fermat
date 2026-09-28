@@ -88,17 +88,23 @@ def is_math(s: str) -> bool:
 
 
 def prose_rationals(s: str):
-    """Rational constants printed in PROSE (the p. 33 `55/3` class).  Looked for
-    in the raw line, since the prose is inside \\text{...} which normalize()
-    removes."""
+    """Printed rational constants that are NOT one of the small binomial
+    fractions of the expansions -- the p. 33 `\\frac{55}{3}` class (there the
+    assembled coefficients sum to `55/4`).  Captures `\\frac{a}{b}` literally
+    (the previous version deleted the \\frac itself and so saw nothing), plus
+    bare `a/b` in prose, and keeps a hit only when a numerator or denominator is
+    at least two digits or the fraction is not in the small-fraction whitelist."""
     if "\\sum" in s:
         return []
+    hits = []
+    for m in re.finditer(r"\\frac\{(\d{1,4})\}\{(\d{1,4})\}", s):
+        hits.append(f"{m.group(1)}/{m.group(2)}")
     body = TEXT.sub(lambda m: " " + m.group(0)[6:-1] + " ", s)
-    body = re.sub(r"\\(?:frac|sum|left|right|quad|qquad)", " ", body)
-    found = [f"{a}/{b}" for a, b in RATIONAL.findall(body)]
-    return [f for f in found if f not in {"1/2", "1/3", "1/4", "1/6", "2/3",
-                                         "3/4", "2/4", "3/6", "2/6", "1/24",
-                                         "1/12", "9/4", "1/5", "1/8"}]
+    body = re.sub(r"\\frac\{\d{1,4}\}\{\d{1,4}\}", " ", body)
+    hits += [f"{a}/{b}" for a, b in RATIONAL.findall(body)]
+    small = {"1/2", "1/3", "1/4", "1/6", "2/3", "3/4", "2/4", "3/6", "2/6",
+             "1/24", "1/12", "9/4", "1/5", "1/8", "1/7", "1/9", "1/10"}
+    return [h for h in hits if h not in small]
 
 
 # A summand of the expansion displays: `... h^{HE} b^{n(BI)} (n^s abck)^{K}`.
