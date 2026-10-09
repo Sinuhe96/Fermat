@@ -33,10 +33,12 @@ Lệnh này cài một file duy nhất.
 
 ### 2. Cho omp một mô hình AI (để AI có não)
 
-omp cần một mô hình AI phía sau. Có hai cách thường dùng, bạn chỉ cần một:
+Lần đầu bạn gõ `omp`, nó tự hiện menu hỏi: đăng ký gói (subscription) hay nhập API key — cứ làm theo menu, không cần nhớ lệnh nào.
 
-- **Bạn đã trả tiền gói Google AI.** Gõ `omp` để mở trợ lý, rồi gõ `/login`, chọn Google, làm theo hướng dẫn trên màn hình.
-- **Bạn mua credit OpenRouter.** Tạo tài khoản tại `openrouter.ai`, nạp một ít credit, tạo một API key. Rồi trong omp gõ `/login openrouter` và dán key vào.
+- **Bạn đã trả tiền gói Google AI.** Chọn Google trong menu, làm theo hướng dẫn trên màn hình.
+- **Bạn mua credit OpenRouter.** Tạo tài khoản tại `openrouter.ai`, nạp một ít credit, tạo một API key, rồi dán vào khi menu hỏi.
+
+Muốn đổi tài khoản về sau mới cần lệnh: gõ `/login` (chọn Google) hoặc `/login openrouter` (dán key mới).
 
 Khi omp hỏi dùng mô hình nào, chọn một trong hai (rẻ, đủ khỏe):
 
