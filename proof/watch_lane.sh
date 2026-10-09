@@ -13,11 +13,17 @@
 #                                  deletes it once the round's log is saved.
 #   pipeline/03-lean/M1_watch.log  append-only: HB / LATCH / REPORT lines.
 #
-# Latch kinds: ENV-DOWN | CONTENTION | STALL | OVERRUN | DISK
+# Latch kinds: ENV-DOWN | CONTENTION | STALL | OVERRUN | DISK | OVERBUDGET
 #   One latch per episode (fired on entry into the bad state, never repeated
 #   while it persists). The orchestrator records "ACK <seq>" after acting.
+#   OVERBUDGET fires once the lane has run >= BUDGET seconds since THIS script
+#   launch: the orchestrator must stop before the next round and report. A
+#   resumed session relaunches this script, so the budget is re-based to a
+#   fresh window from that launch.
 #
-# Env overrides: ROOT TICK REPORT_EVERY STALL_AFTER OVERRUN_AFTER
+# Env overrides: ROOT TICK REPORT_EVERY STALL_AFTER OVERRUN_AFTER BUDGET
+#   REPORT_EVERY defaults to 1800 (30 min) — the progress-report cadence.
+#   BUDGET defaults to 7200 (2 h wall clock); 0 disables the time budget.
 # =====================================================================
 set -u
 
@@ -30,6 +36,7 @@ TICK="${TICK:-60}"
 REPORT_EVERY="${REPORT_EVERY:-1800}"
 STALL_AFTER="${STALL_AFTER:-900}"
 OVERRUN_AFTER="${OVERRUN_AFTER:-1500}"
+BUDGET="${BUDGET:-7200}"   # wall-clock budget for one run (default 2 h); 0 disables
 
 mkdir -p "$LEAN_DIR"
 
@@ -44,15 +51,16 @@ count_procs() {
 
 iso() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
-printf 'WATCHDOG-READY lane=M1 tick=%ss report=%ss stall=%ss overrun=%ss root=%s\n' \
-  "$TICK" "$REPORT_EVERY" "$STALL_AFTER" "$OVERRUN_AFTER" "$ROOT"
-log "WATCHDOG-START	tick=$TICK	report=$REPORT_EVERY	stall=$STALL_AFTER	overrun=$OVERRUN_AFTER"
+printf 'WATCHDOG-READY lane=M1 tick=%ss report=%ss stall=%ss overrun=%ss budget=%ss root=%s\n' \
+  "$TICK" "$REPORT_EVERY" "$STALL_AFTER" "$OVERRUN_AFTER" "$BUDGET" "$ROOT"
+log "WATCHDOG-START	tick=$TICK	report=$REPORT_EVERY	stall=$STALL_AFTER	overrun=$OVERRUN_AFTER	budget=$BUDGET"
 
 prev=""
 seq=0
 ticks=0
 maxage=0
-report_at=$(( $(date +%s) + REPORT_EVERY ))
+START_EPOCH=$(date +%s)
+report_at=$(( START_EPOCH + REPORT_EVERY ))
 
 while :; do
   now=$(date +%s)
@@ -60,7 +68,20 @@ while :; do
   raw=$(count_procs)
   cond=""
   detail=""
+  elapsed=$((now - START_EPOCH))
+  if [ "$BUDGET" -gt 0 ]; then
+    budget_left=$(( BUDGET - elapsed ))
+    [ "$budget_left" -lt 0 ] && budget_left=0
+  else
+    budget_left=-
+  fi
 
+  # OVERBUDGET outranks every other condition: once the window is spent, stop
+  # before the next round regardless of contention/stall/disk state.
+  if [ "$BUDGET" -gt 0 ] && [ "$elapsed" -ge "$BUDGET" ]; then
+    cond=OVERBUDGET
+    detail="lane budget ${BUDGET}s elapsed (${elapsed}s) — hard stop: start no new round"
+  else
   case "$raw" in
     [0-9]*" "[0-9]*)
       lakes=${raw%% *}
@@ -94,6 +115,7 @@ while :; do
       detail="container exec failed (docker/engine/container)"
       ;;
   esac
+  fi
 
   if [ -z "$cond" ] && [ $((ticks % 10)) -eq 0 ]; then
     free=$(df -Pk "$LEAN_DIR" 2>/dev/null | tail -n 1 | awk '{gsub(/%/,"",$5); print $5}')
@@ -125,13 +147,13 @@ while :; do
   else
     la=-1
   fi
-  log "HB	$ticks	proc=$raw	state=$st	latched=${cond:-none}	lastlog=${la}s"
-  printf 'HB %s proc=%s state=%s latch=%s lastlog=%ss\n' "$ticks" "$raw" "$st" "${cond:-none}" "$la"
+  log "HB	$ticks	proc=$raw	state=$st	left=${budget_left}s	latched=${cond:-none}	lastlog=${la}s"
+  printf 'HB %s proc=%s state=%s left=%ss latch=%s lastlog=%ss\n' "$ticks" "$raw" "$st" "$budget_left" "${cond:-none}" "$la"
 
   if [ "$now" -ge "$report_at" ]; then
-    log "REPORT	ticks=$ticks	max_inflight_age=${maxage}s	latched=${cond:-none}	seq=$seq"
-    printf 'REPORT ticks=%s max_inflight_age=%ss latch=%s seq=%s at=%s\n' \
-      "$ticks" "$maxage" "${cond:-none}" "$seq" "$(iso)"
+    log "REPORT	ticks=$ticks	max_inflight_age=${maxage}s	budget_left=${budget_left}s	latched=${cond:-none}	seq=$seq"
+    printf 'REPORT ticks=%s max_inflight_age=%ss budget_left=%ss latch=%s seq=%s at=%s\n' \
+      "$ticks" "$maxage" "$budget_left" "${cond:-none}" "$seq" "$(iso)"
     maxage=0
     report_at=$(( now + REPORT_EVERY ))
   fi

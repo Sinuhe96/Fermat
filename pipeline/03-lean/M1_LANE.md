@@ -13,9 +13,16 @@ L7-FRAG-01…06, L7-ASM), 0 OPEN obstacles, 0 OPEN author queries.
 
 ## 0. Time box and evidence constants
 
-Time box (user-set): lane open 2026-09-28T02:58:47Z (epoch 1790564327), hard
-stop 2026-09-28T04:58:47Z (epoch 1790571527). At the stop: keep every file,
-write the progress/problems report into §7 below and into `HANDOFF.md`.
+Time box: the wall-clock budget for one lane session is **mechanically enforced
+by the watchdog**, not a hand-maintained clock. `proof/watch_lane.sh` latches
+`OVERBUDGET` once the lane has run ≥ `BUDGET` seconds since its own launch
+(default **7200 s = 2 h**, `BUDGET=0` disables). A resumed session **must
+relaunch the watchdog** — the timer does not survive a session restart — which
+re-bases the budget to a fresh 2 h window from that launch; every `HB`/`REPORT`
+line carries the remaining budget (`left=`; default report cadence
+`REPORT_EVERY` = 1800 s = 30 min). At the stop (an `OVERBUDGET` latch, or any
+latch the orchestrator cannot clear): keep every file, write the
+progress/problems report into §7 below and into `HANDOFF.md`.
 
 Evidence constants — every M1 chunk's evidence block is bound to these:
 
@@ -63,11 +70,16 @@ author step.
 
 ## 2. Wall-clock reporting
 
-The watchdog emits a `REPORT` line every 1800 s; rounds are 5–7 min, so a
-round boundary lands inside every 30-minute window. At that boundary the
-orchestrator emits a status block: elapsed, rounds used, S1 steps accepted,
-consecutive failed rounds, current chunk/step, latch state. Numbers come from
-`M1_watch.log` + `M1_rounds.tsv`, never from recollection.
+**At the start of every daily/lane work session the agent must state the time
+budget and the reporting interval** (defaults: budget 7200 s = 2 h, report
+every 1800 s = 30 min; both are watchdog env overrides `BUDGET` /
+`REPORT_EVERY`). The watchdog emits a heartbeat every `TICK` s and a `REPORT`
+line every `REPORT_EVERY` s, both carrying the remaining budget (`left=`); a
+round is 5–7 min, so a round boundary lands inside every 30-minute window. At
+that boundary the orchestrator emits a status block: elapsed, budget left,
+rounds used, S1 steps accepted, consecutive failed rounds, current chunk/step,
+latch state. Numbers come from `M1_watch.log` + `M1_rounds.tsv`, never from
+recollection.
 
 ## 3. Circuit breakers — stop the lane, never retry around them
 

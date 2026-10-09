@@ -55,7 +55,14 @@ Environment note: the `lean` container was **rebuilt** (10 GB RAM cap, new
 `latched=none`); its informational `lastlog` metric was fixed this session (it
 globbed only `*compile*.log`, so this lane's `*_round*.log` files were invisible
 to it — the latch logic never read that value, but a stale metric is worse than
-none).
+none). **2026-10-09:** the watchdog now also enforces the wall-clock time
+budget — an `OVERBUDGET` latch fires at ≥ `BUDGET` s since launch (default
+**7200 s = 2 h**, `BUDGET=0` disables) and every `HB`/`REPORT` line carries the
+remaining budget (`left=`). A **resumed session must relaunch the watchdog**
+(service `watch-m1`): the timer does not survive a session restart, and
+relaunching re-bases the budget to a fresh window. At the start of daily work
+the agent must state the time budget and the reporting interval (defaults
+2 h / 30 min).
 
 ---
 
