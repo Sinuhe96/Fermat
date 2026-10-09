@@ -5,10 +5,10 @@ Repo này dùng máy tính để kiểm tra chứng minh toán học. Bạn khô
 ## Repo này làm được hai việc
 
 **1. Kiểm tra một chứng minh có sẵn.**
-Ví dụ: file `PROOF_of_FERMAT.pdf` trong repo là một chứng minh Định lý Fermat (33 trang). Bạn đưa chứng minh, máy tính (Lean) kiểm tra từng bước suy luận đúng hay sai.
+Ví dụ: file `PROOF_of_FERMAT.pdf` trong repo là một chứng minh Định lý Fermat lớn (33 trang). Bạn đưa chứng minh, máy tính (Lean) kiểm tra từng bước suy luận đúng hay sai.
 
 **2. Tìm chứng minh hoặc phản ví dụ cho một giả thuyết.**
-Ví dụ: "với số nguyên tố n = 6l + 1, phương trình v_n(P(a,b)) ≥ 3 có nghiệm không?" Máy tính thử hàng nghìn trường hợp để tìm phản ví dụ, rồi ghi lại lập luận.
+Ví dụ: file `NEW_CONJECTURE.md` trong repo nêu một mệnh đề về giá trị n-adic của đa thức. Máy tính thử hàng nghìn trường hợp để tìm phản ví dụ, rồi ghi lại lập luận.
 
 Bạn chỉ cần nói cho AI biết mình muốn việc nào.
 
@@ -21,7 +21,7 @@ Bạn chỉ cần nói cho AI biết mình muốn việc nào.
 
 ## Bắt đầu (ba bước)
 
-Mở **PowerShell** (không phải Command Prompt — khung đen chữ trắng có dòng chữ `PS`). Gõ từng lệnh dưới đây.
+Mở **PowerShell** (không phải Command Prompt — khung có dòng chữ `PS`). Gõ từng lệnh dưới đây.
 
 ### 1. Cài omp (trợ lý AI)
 
@@ -31,14 +31,14 @@ irm https://omp.sh/install.ps1 | iex
 
 Lệnh này cài một file duy nhất.
 
-### 2. Cho omp một model AI (để AI có não)
+### 2. Cho omp một mô hình AI (để AI có não)
 
-omp cần một model AI phía sau. Có hai cách thường dùng, bạn chỉ cần một:
+omp cần một mô hình AI phía sau. Có hai cách thường dùng, bạn chỉ cần một:
 
 - **Bạn đã trả tiền gói Google AI.** Gõ `omp` để mở trợ lý, rồi gõ `/login`, chọn Google, làm theo hướng dẫn trên màn hình.
 - **Bạn mua credit OpenRouter.** Tạo tài khoản tại `openrouter.ai`, nạp một ít credit, tạo một API key. Rồi trong omp gõ `/login openrouter` và dán key vào.
 
-Khi omp hỏi dùng model nào, chọn một trong hai (rẻ, đủ khỏe):
+Khi omp hỏi dùng mô hình nào, chọn một trong hai (rẻ, đủ khỏe):
 
 - `xiaomi/mimo-v2.6-flash`
 - `deepseek/deepseek-v4.1-flash`
@@ -47,11 +47,11 @@ Kẹt ở bước này? Mở omp lên và bảo AI: "giúp tôi đăng nhập". 
 
 ### 3. Bảo AI dựng mọi thứ còn lại
 
-Gõ `omp` để mở trợ lý (làm trong thư mục người dùng của bạn là được), rồi bảo:
+Gõ `omp` để mở trợ lý (làm trong thư mục người dùng của bạn là được, không cần vào đâu xa), rồi bảo:
 
-> Lấy repo Fermat về máy giúp tôi: `git clone https://github.com/Sinuhe96/Fermat.git Documents\Fermat`. Rồi đọc file `AI_GUIDE.md` trong đó và bắt đầu giúp tôi.
+> Lấy repo Fermat về máy giúp tôi: `git clone https://github.com/Sinuhe96/Fermat.git` vào `Documents\Fermat` trong thư mục người dùng của tôi. Rồi đọc file `AI_GUIDE.md` trong đó và bắt đầu giúp tôi.
 
-AI sẽ tự: cài Docker Desktop nếu thiếu, bật WSL, tải bộ công cụ (khoảng 600 MB), nạp thư viện toán học (khoảng 11 GB, lần đầu có thể hơn một giờ), kiểm tra máy. Trước mỗi bước lâu, AI báo trước làm gì, tại sao, mất bao lâu, và chờ bạn đồng ý. Muốn cài thêm phần mềm nào, AI cũng hỏi trước.
+AI sẽ tự: cài Git mặc định, kiểm tra WSL2 và tính năng máy ảo (có thể phải khởi động lại máy một lần — AI sẽ dặn bạn gõ `/q` rồi mở lại bằng `omp -c`), cài Docker Desktop nếu thiếu (đến màn hình tạo tài khoản thì cứ bỏ qua, tạo sau), ghi file giới hạn RAM, tải bộ công cụ (khoảng 600 MB), nạp thư viện toán học (khoảng 11 GB, lần đầu có thể hơn một giờ), kiểm tra máy. Trước mỗi bước lâu, AI báo trước làm gì, tại sao, mất bao lâu, và chờ bạn đồng ý. Muốn cài thêm phần mềm nào, AI cũng hỏi trước. Từ lúc AI mở trình cài đặt hay Docker Desktop, AI không nhìn thấy màn hình của bạn — thấy thông báo hay lỗi nào thì copy nguyên văn về cho AI.
 
 ## Làm việc hằng ngày
 
@@ -64,10 +64,18 @@ omp
 
 Thứ tự này quan trọng. omp phải chạy từ trong thư mục repo thì mới thấy file và nhớ việc đang dở.
 
+Lần đầu sau khi dựng máy xong, AI sẽ bảo bạn thoát (`/q`), làm đúng ba dòng trên, rồi nói:
+
+> tiếp tục với chứng minh cho mệnh đề NEW_CONJECTURE.md
+
+Đó là phép thử cuối: giả lập một ngày làm việc bình thường, để chắc mọi thứ chạy được từ trong thư mục repo. Từ đó về sau, mỗi lần mở omp trong thư mục này, bạn chỉ cần nói mình muốn việc nào.
+
 Chuẩn bị sẵn một trong hai thứ:
 
 - File PDF của chứng minh cần kiểm tra (nếu làm việc 1).
 - Phát biểu giả thuyết của bạn, viết rõ giả thiết và kết luận (nếu làm việc 2).
+
+Đang chạy mà muốn dừng: bấm **ESC** bất cứ lúc nào.
 
 ## Khi có lỗi
 
