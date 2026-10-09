@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # =====================================================================
-# watch_lane.sh — mechanical watchdog for the Fermat main-proof (M1) lane
+# watch_lane.sh — mechanical watchdog for one verification lane
+#
+# One script, one function, any lane: `LANE` (default M1) selects the lane's
+# handshake paths (`<LANE>_inflight`, `<LANE>_watch.log`), the newest-log glob
+# and the READY/START tags, so concurrent lanes never share latch state or
+# in-flight markers without a second copy of this file. M1 runs it as service
+# `watch-m1`; the CJ conjecture lane runs it as `LANE=CJ`, service `watch-cj`.
 #
 # It judges NOTHING about mathematics. It samples the environment and
 # latches stall / contention / host failures that the orchestrator must
@@ -8,10 +14,10 @@
 # machine, not the math").
 #
 # Handshake (paths relative to the repo root):
-#   pipeline/03-lean/M1_inflight   orchestrator writes "<round>\t<epoch>\t<file>"
-#                                  immediately before a compile round and
-#                                  deletes it once the round's log is saved.
-#   pipeline/03-lean/M1_watch.log  append-only: HB / LATCH / REPORT lines.
+#   pipeline/03-lean/<LANE>_inflight  orchestrator writes "<round>\t<epoch>\t<file>"
+#                                     immediately before a compile round and
+#                                     deletes it once the round's log is saved.
+#   pipeline/03-lean/<LANE>_watch.log append-only: HB / LATCH / REPORT lines.
 #
 # Latch kinds: ENV-DOWN | CONTENTION | STALL | OVERRUN | DISK | OVERBUDGET
 #   One latch per episode (fired on entry into the bad state, never repeated
@@ -21,7 +27,7 @@
 #   resumed session relaunches this script, so the budget is re-based to a
 #   fresh window from that launch.
 #
-# Env overrides: ROOT TICK REPORT_EVERY STALL_AFTER OVERRUN_AFTER BUDGET
+# Env overrides: ROOT LANE TICK REPORT_EVERY STALL_AFTER OVERRUN_AFTER BUDGET
 #   REPORT_EVERY defaults to 1800 (30 min) — the progress-report cadence.
 #   BUDGET defaults to 7200 (2 h wall clock); 0 disables the time budget.
 # =====================================================================
@@ -30,8 +36,12 @@ set -u
 ROOT="${ROOT:-$(pwd)}"
 cd "$ROOT" || exit 1
 LEAN_DIR="$ROOT/pipeline/03-lean"
-WATCHLOG="$LEAN_DIR/M1_watch.log"
-INFLIGHT="$LEAN_DIR/M1_inflight"
+LANE="${LANE:-M1}"
+case "$LANE" in
+  *[!A-Za-z0-9_-]*) echo "watch_lane.sh: LANE must be [A-Za-z0-9_-]+, got '$LANE'" >&2; exit 1 ;;
+esac
+WATCHLOG="$LEAN_DIR/${LANE}_watch.log"
+INFLIGHT="$LEAN_DIR/${LANE}_inflight"
 TICK="${TICK:-60}"
 REPORT_EVERY="${REPORT_EVERY:-1800}"
 STALL_AFTER="${STALL_AFTER:-900}"
@@ -51,9 +61,9 @@ count_procs() {
 
 iso() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
-printf 'WATCHDOG-READY lane=M1 tick=%ss report=%ss stall=%ss overrun=%ss budget=%ss root=%s\n' \
-  "$TICK" "$REPORT_EVERY" "$STALL_AFTER" "$OVERRUN_AFTER" "$BUDGET" "$ROOT"
-log "WATCHDOG-START	tick=$TICK	report=$REPORT_EVERY	stall=$STALL_AFTER	overrun=$OVERRUN_AFTER	budget=$BUDGET"
+printf 'WATCHDOG-READY lane=%s tick=%ss report=%ss stall=%ss overrun=%ss budget=%ss root=%s\n' \
+  "$LANE" "$TICK" "$REPORT_EVERY" "$STALL_AFTER" "$OVERRUN_AFTER" "$BUDGET" "$ROOT"
+log "WATCHDOG-START	lane=$LANE	tick=$TICK	report=$REPORT_EVERY	stall=$STALL_AFTER	overrun=$OVERRUN_AFTER	budget=$BUDGET"
 
 prev=""
 seq=0
@@ -91,7 +101,7 @@ while :; do
         detail="$lakes lake processes in container (a second compile round)"
       elif [ ! -f "$INFLIGHT" ] && [ $((lakes + leans)) -gt 0 ]; then
         cond=CONTENTION
-        detail="compiler running ($lakes lake / $leans lean) with no in-flight marker: another lane or session"
+        detail="compiler running ($lakes lake / $leans lean) with no ${LANE} in-flight marker: another lane or session"
       fi
       if [ -f "$INFLIGHT" ]; then
         rnd=$(cut -f1 "$INFLIGHT" 2>/dev/null)
@@ -137,11 +147,15 @@ while :; do
   else
     st="-"
   fi
-  # This lane's round logs are `<chunk>-<step>_round<N>.log` (`run_round.sh`), and
-  # the older lanes' are `*_compile_*.log`.  Globbing only the latter reported a
-  # ~14 h-old age while rounds were running minutes ago (the latch logic does not
-  # read this value, but a stale metric is worse than none).
-  newest=$(ls -t "$LEAN_DIR"/*compile*.log "$LEAN_DIR"/*_round*.log 2>/dev/null | head -n 1)
+  # Newest-log metric is informational (the latch logic never reads it), so the
+  # glob is per-lane to match that lane's round-log naming: M1 and the older
+  # lanes use `*_compile_*.log` + `*_round*.log` (`run_round.sh`), CJ uses
+  # `CJ_*.log` (probe/round logs; M1 logs ignored on purpose).
+  case "$LANE" in
+    CJ) LOG_GLOB="$LEAN_DIR/CJ_*.log" ;;
+    *)  LOG_GLOB="$LEAN_DIR/*compile*.log $LEAN_DIR/*_round*.log" ;;
+  esac
+  newest=$(ls -t $LOG_GLOB 2>/dev/null | head -n 1)
   if [ -n "$newest" ]; then
     la=$(( now - $(date -r "$newest" +%s) ))
   else

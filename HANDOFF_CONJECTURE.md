@@ -81,7 +81,7 @@ Equivalent finite form (the screen's basis): with
   as a tracked background job (never foreground — the 10-min cap kills
   `lake`), then delete `CJ_inflight` when the job reports.
 - Read `CJ_watch.log` LATCH lines before every round (watchdog
-  `proof/watch_cj.sh`, service `watch-cj`).
+  `LANE=CJ proof/watch_lane.sh`, service `watch-cj`).
 - Batch every `#check` into ONE file (import Mathlib floor ≈150–350 s/round).
 - Ladder: local grep on `proof_verify/.lake/packages/mathlib/Mathlib/`
   first (free), Loogle JSON via curl, in-file tactics last. NEVER
@@ -159,7 +159,7 @@ Equivalent finite form (the screen's basis): with
   `CJ_fprime`/`CJ_fiber` (R34), all S1; **Block 4a `CJ_witness_iff` +
   `fInt`/`fInt_eq` DONE** (R38); Block 4 remainder (mirror lemma,
   `f ↔ E₂` bridge, kernel verifier + `native_decide` anchor) not started.
-- Watchdog: service `watch-cj` (`proof/watch_cj.sh` →
+- Watchdog: service `watch-cj` (`LANE=CJ proof/watch_lane.sh` →
   `pipeline/03-lean/CJ_watch.log`) still running — reuse it next
   session; it latches CONTENTION if the PDF lane compiles without a
   `CJ_inflight` marker (by design).
