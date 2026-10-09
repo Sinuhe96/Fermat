@@ -1,6 +1,11 @@
 services:
   lean:
-    image: fermat-lean:latest
+    # Default: pull the published image (no local build).
+    #   docker compose pull lean && docker compose up -d lean
+    # To rebuild locally instead (after changing Dockerfile/entrypoint.sh/
+    # requirements-container.txt):
+    #   docker compose build lean && docker compose up -d lean
+    image: sinuhe96/fermat-lean:latest
     build:
       context: .
       # Persist the build layer cache so a rebuild after ANY failure
@@ -28,8 +33,13 @@ services:
       LEAN_TOOLCHAIN: leanprover/lean4:v4.35.0-rc2
     tty: true
     stdin_open: true
-    # Mathlib build is RAM-hungry; cap so Docker Desktop (8GB) doesn't OOM
-    mem_limit: 6g
+    # Mathlib elaboration is RAM-hungry. The old 6g cap was reached
+    # repeatedly (cgroup memory.peak pinned at the cap, 5.6M at-limit
+    # reclaim events) during the unexplained 300-371s slow rounds, while a
+    # Mathlib load measures ~7.3GB peak. 10g sits above that peak and below
+    # the ~12.7GiB Docker VM (wslconfig: memory=13GB, swap=6GB). Speculative
+    # fix; proof/mem_watch.sh samples the cgroup counters to confirm.
+    mem_limit: 10g
     cpus: 10
 
   # CPU inference for 7B prover/math models (GGUF via llama.cpp server, OpenAI-compatible on :8080)

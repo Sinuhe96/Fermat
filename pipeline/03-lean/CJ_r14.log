@@ -1,0 +1,215 @@
+inferInstance : DecompositionMonoid ℚ[X]
+inferInstance : UniqueFactorizationMonoid ℤ[X]
+@coeff_sub : ∀ {R : Type u_1} [inst : Ring R] (p q : R[X]) (n : ℕ), (p - q).coeff n = p.coeff n - q.coeff n
+@sub_eq_add_neg : ∀ {G : Type u_1} [inst : SubNegMonoid G] (a b : G), a - b = a + -b
+@neg_neg : ∀ {G : Type u_1} [inst : InvolutiveNeg G] (a : G), - -a = a
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+@eval_dvd : ∀ {R : Type u_1} [inst : CommSemiring R] {p q : R[X]} {x : R}, p ∣ q → eval x p ∣ eval x q
+@Nat.choose_eq_zero_of_lt : ∀ {n k : ℕ}, n < k → n.choose k = 0
+CJ/Basic.lean:123:63: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:123:72: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:129:8: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:129:17: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:61: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:132:70: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:138:20: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:138:29: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:10: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, one_pow, one_mul, mul_one,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:42: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:61: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    mul_one, sub_zero, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:137:55: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    mul_zero, sub_self, if_true, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:138:20: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    Nat.cast_one, mul_zero, sub_self, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:40: warning: This simp argument is unused:
+  mkQ_Y6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_X6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:48: warning: This simp argument is unused:
+  mkQ_X6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_Y6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:159:24: warning: This simp argument is unused:
+  ← derivative_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [← map_add] at hq
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:161:63: warning: This simp argument is unused:
+  pow_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [derivative_add, derivative_X_pow, derivative_X, C_eq_natCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:183:34: error: unexpected token '#check'; expected 'lemma'
+@natDegree_map : ∀ {R : Type u_1} {S : Type u_2} [inst : Ring R] [IsSimpleRing R] [inst_2 : Semiring S] [Nontrivial S]
+  {p : R[X]} (f : R →+* S), (map f p).natDegree = p.natDegree
+@natDegree_C_mul_X : ∀ {R : Type u_1} [inst : Semiring R] (a : R), a ≠ 0 → (C a * X).natDegree = 1
+@natDegree_add_one : ∀ {R : Type u_1} [inst : Semiring R] {p : R[X]}, (p + 1).natDegree = p.natDegree
+@natDegree_add_eq_left_of_natDegree_lt : ∀ {R : Type u_1} [inst : Semiring R] {p q : R[X]},
+  q.natDegree < p.natDegree → (p + q).natDegree = p.natDegree
+@natDegree_X : ∀ {R : Type u_1} [inst : Semiring R] [Nontrivial R], X.natDegree = 1
+@natDegree_zero : ∀ {R : Type u_1} [inst : Semiring R], natDegree 0 = 0
+@degree_le_natDegree : ∀ {R : Type u_1} [inst : Semiring R] {p : R[X]}, p.degree ≤ ↑p.natDegree
+@monic_X_pow_add : ∀ {R : Type u_1} [inst : Semiring R] {p : R[X]} {n : ℕ}, p.degree < ↑n → (X ^ n + p).Monic
+Int.castRingHom : (α : Type u_1) → [inst : NonAssocRing α] → ℤ →+* α
+CJ/Basic.lean:194:8: error(lean.unknownIdentifier): Unknown identifier `dvd_add_iff_left`
+CJ/Basic.lean:195:8: error(lean.unknownIdentifier): Unknown identifier `dvd_add_iff_right`
+CJ/Basic.lean:207:15: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'map', which is 'noncomputable'
+CJ/Basic.lean:208:15: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'instAdd', which is 'noncomputable'
+CJ/Basic.lean:216:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  φ (X ^ 2 + X + 1)
+in the target expression
+  map (Int.castRingHom ℚ) ((2 * X + 1) * G) = map (Int.castRingHom ℚ) ((X ^ 2 + X + 1) * K)
+
+G K : ℤ[X]
+h : (2 * X + 1) * G = (X ^ 2 + X + 1) * K
+hDq : φ (X ^ 2 + X + 1) = Dq
+hmap : map (Int.castRingHom ℚ) ((2 * X + 1) * G) = map (Int.castRingHom ℚ) ((X ^ 2 + X + 1) * K)
+⊢ φ (2 * X + 1) * φ G = Dq * φ K
+CJ/Basic.lean:242:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsSimpleRing ℤ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+CJ/Basic.lean:272:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?f (?x + ?y)
+in the target expression
+  map (Int.castRingHom ℚ) (G %ₘ (X ^ 2 + X + 1) + (X ^ 2 + X + 1) * (G /ₘ (X ^ 2 + X + 1))) = map (Int.castRingHom ℚ) G
+
+G K : ℤ[X]
+h : (2 * X + 1) * G = (X ^ 2 + X + 1) * K
+hDq : φ (X ^ 2 + X + 1) = Dq
+hq : φ (2 * X + 1) * φ G = Dq * φ K
+hndD : Dq.natDegree = 2
+hndDz : (X ^ 2 + X + 1).natDegree = 2
+hirr : Irreducible Dq
+hprime : Prime Dq
+hDq0 : Dq ≠ 0
+hdvd : Dq ∣ φ (2 * X + 1) * φ G
+hnd2 : (φ (2 * X + 1)).natDegree = 1
+hex : ¬Dq ∣ φ (2 * X + 1)
+hdiv : Dq ∣ φ G
+hM : (X ^ 2 + X + 1).Monic
+hne1 : X ^ 2 + X + 1 ≠ 1
+hident : G %ₘ (X ^ 2 + X + 1) + (X ^ 2 + X + 1) * (G /ₘ (X ^ 2 + X + 1)) = G
+hcon :
+  map (Int.castRingHom ℚ) (G %ₘ (X ^ 2 + X + 1) + (X ^ 2 + X + 1) * (G /ₘ (X ^ 2 + X + 1))) = map (Int.castRingHom ℚ) G
+⊢ Dq ∣ φ (G %ₘ (X ^ 2 + X + 1))
+CJ/Basic.lean:277:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsSimpleRing ℤ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+CJ/Basic.lean:281:10: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsSimpleRing ℤ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+CJ/Basic.lean:215:18: warning: This simp argument is unused:
+  map_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [φ] at hmap
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Int.natAbs_mul : ∀ (a b : ℤ), (a * b).natAbs = a.natAbs * b.natAbs
+Int.natAbs_natCast : ∀ (n : ℕ), (↑n).natAbs = n
+Int.natAbs_pow : ∀ (n : ℤ) (k : ℕ), (n ^ k).natAbs = n.natAbs ^ k
+@Int.dvd_natAbs : ∀ {a b : ℤ}, a ∣ ↑b.natAbs ↔ a ∣ b
+@Int.natAbs_eq_zero : ∀ {a : ℤ}, a.natAbs = 0 ↔ a = 0
+@padicValNat.pow : ∀ {p : ℕ} [hp : Fact (Nat.Prime p)] (a n : ℕ), padicValNat p (a ^ n) = n * padicValNat p a
+@padicValNat_self : ∀ {p : ℕ} [Fact (Nat.Prime p)], padicValNat p p = 1
+ZMod.intCast_zmod_eq_zero_iff_dvd : ∀ (a : ℤ) (b : ℕ), ↑a = 0 ↔ ↑b ∣ a
+@ZMod.pow_card_sub_one_eq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {a : ZMod p}, a ≠ 0 → a ^ (p - 1) = 1
+CJ/Basic.lean:497:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+CJ/Basic.lean:499:69: warning: This simp argument is unused:
+  eval_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [eval_mul, eval_sub, eval_pow, eval_X, eval_C, eval_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CJ.CJ_block1' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.D_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X1_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.n_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.D2_dvd_F' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.CJ_valuation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.CJ_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.CJ_nonlift' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXIT=1

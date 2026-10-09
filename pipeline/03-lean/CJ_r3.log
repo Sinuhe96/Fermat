@@ -1,0 +1,273 @@
+inferInstance : DecompositionMonoid ℚ[X]
+inferInstance : UniqueFactorizationMonoid ℤ[X]
+@coeff_sub : ∀ {R : Type u_1} [inst : Ring R] (p q : R[X]) (n : ℕ), (p - q).coeff n = p.coeff n - q.coeff n
+@sub_eq_add_neg : ∀ {G : Type u_1} [inst : SubNegMonoid G] (a b : G), a - b = a + -b
+@neg_neg : ∀ {G : Type u_1} [inst : InvolutiveNeg G] (a : G), - -a = a
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+@eval_dvd : ∀ {R : Type u_1} [inst : CommSemiring R] {p q : R[X]} {x : R}, p ∣ q → eval x p ∣ eval x q
+@Nat.choose_eq_zero_of_lt : ∀ {n k : ℕ}, n < k → n.choose k = 0
+CJ/Basic.lean:34:32: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  NonAssocSemiring CQ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+CJ/Basic.lean:39:14: warning: declaration uses `sorry`
+CJ/Basic.lean:47:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  SubtractionMonoid ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+CJ/Basic.lean:56:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  SubtractionMonoid ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+CJ/Basic.lean:60:14: warning: declaration uses `sorry`
+CJ/Basic.lean:64:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:67:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:68:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:69:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:70:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:71:4: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:63:4: warning: Unused tactic linter: `simp only [F, Nat.mul_zero, Nat.zero_add, pow_one, map_sub, map_add]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:64:4: warning: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:66:4: warning: Unused tactic linter: `simp only [F] at ih ⊢` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:67:4: warning: Unused tactic linter: `rw [show 6 * (l + 1) + 1 = (6 * l + 1) + 6 from by ring, pow_add, pow_add]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:68:4: warning: Unused tactic linter: `simp only [map_sub, map_mul, map_one]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:69:4: warning: Unused tactic linter: `rw [mkQ_Y6, mkQ_X6, mul_one, mul_one]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:70:4: warning: Unused tactic linter: `simp only [map_sub, map_one] at ih` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:71:4: warning: Unused tactic linter: `exact ih` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:74:6: warning: declaration uses `sorry`
+CJ/Basic.lean:110:2: error: unsolved goals
+case pos
+k : ℕ
+hn : Nat.Prime k
+⊢ ↑k ∣ (1 ^ (k - k) * ↑1 - if True then 1 else 0) - if False then 1 else 0
+CJ/Basic.lean:114:4: error: unsolved goals
+case pos
+n : ℕ
+hn : Nat.Prime n
+hk : ¬0 = n
+⊢ ↑n ∣ (1 * ↑1 - if False then 1 else 0) - if True then 1 else 0
+CJ/Basic.lean:120:8: error: mod_cast has type
+  n ∣ n.choose k
+but is expected to have type
+  ↑n ∣ Int.subNatNat (1 * n.choose k) (if False then 1 else 0) - ↑(if False then 1 else 0)
+CJ/Basic.lean:121:6: error: unsolved goals
+case neg
+n : ℕ
+hn : Nat.Prime n
+k : ℕ
+hk : ¬k = n
+hk0 : ¬k = 0
+hlt : ¬k < n
+hgt : n < k
+hk0' : k ≠ 0
+⊢ ↑n ∣ (1 ^ (n - k) * ↑0 - if False then 1 else 0) - if False then 1 else 0
+CJ/Basic.lean:112:6: warning: This simp argument is unused:
+  pow_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_self, sub_self, mul_one,
+    hn.ne_zero, dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:112:16: warning: This simp argument is unused:
+  sub_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_self, pow_zero, mul_one,
+    hn.ne_zero, dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:112:26: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_self, pow_zero, sub_self,
+    hn.ne_zero, dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:112:47: warning: This simp argument is unused:
+  dvd_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_self, pow_zero, sub_self,
+    mul_one, hn.ne_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:116:31: warning: This simp argument is unused:
+  sub_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_zero_right, sub_self, one_pow,
+    mul_one, hk, dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:116:41: warning: This simp argument is unused:
+  sub_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_zero_right, sub_zero, one_pow,
+    mul_one, hk, dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:116:60: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_zero_right, sub_zero, sub_self,
+    one_pow, hk, dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:116:73: warning: This simp argument is unused:
+  dvd_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_zero_right, sub_zero, sub_self,
+    one_pow, mul_one, hk]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:119:19: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, one_pow, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:119:28: warning: This simp argument is unused:
+  sub_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, one_pow, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:124:40: warning: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, sub_self, hk,
+    hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:124:50: warning: This simp argument is unused:
+  sub_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, mul_zero, hk,
+    hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:124:70: warning: This simp argument is unused:
+  dvd_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, mul_zero,
+    sub_self, hk, hk0']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:128:14: warning: declaration uses `sorry`
+CJ/Basic.lean:132:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:134:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:131:2: warning: Unused tactic linter: `simp only [F]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:132:2: warning: Unused tactic linter: `rw [derivative_sub, derivative_sub, derivative_pow, derivative_pow, derivative_X_add_C,
+  derivative_X, derivative_C, mul_one, mul_one]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:134:2: warning: Unused tactic linter: `simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow,
+  pow_mul, mkQ_Y6, mkQ_X6, one_pow, mul_one, sub_self]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:139:14: warning: declaration uses `sorry`
+CJ/Basic.lean:140:5: warning: Variable name `hFG` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hFG
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+CJ/Basic.lean:144:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:145:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:149:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:150:2: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+CJ/Basic.lean:143:2: warning: Unused tactic linter: `rw [← hFG] at hq` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:144:2: warning: Unused tactic linter: `simp only [derivative_mul, map_add, map_mul] at hq` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:145:2: warning: Unused tactic linter: `have hD' : derivative (X ^ 2 + X + 1) = 2 * X + 1 :=
+  by
+  simp only [derivative_add, derivative_X_pow, derivative_X, derivative_C, pow_one, C_eq_natCast]
+  ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:149:2: warning: Unused tactic linter: `rw [hD', mkQ_D_zero, zero_mul, add_zero, ← map_mul] at hq` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:150:2: warning: Unused tactic linter: `exact exists_eq_mul_right_of_dvd ((Ideal.Quotient.eq_zero_iff_dvd _ _).mp hq)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+CJ/Basic.lean:169:14: warning: declaration uses `sorry`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+CJ/Basic.lean:183:54: error: unsolved goals
+⊢ C 1 ^ 2 = C 1
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+CJ/Basic.lean:191:66: error: unsolved goals
+⊢ -X ^ 2 + X ^ 2 * C 1 + C 1 ^ 2 = C 1
+CJ/Basic.lean:280:52: error: unexpected token '#print'; expected 'lemma'
+'CJ.CJ_block1' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.D_dvd_F' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.X_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X1_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.n_dvd_F' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.D2_dvd_F' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+EXIT=1

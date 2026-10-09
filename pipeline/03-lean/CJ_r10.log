@@ -1,0 +1,221 @@
+inferInstance : DecompositionMonoid ℚ[X]
+inferInstance : UniqueFactorizationMonoid ℤ[X]
+@coeff_sub : ∀ {R : Type u_1} [inst : Ring R] (p q : R[X]) (n : ℕ), (p - q).coeff n = p.coeff n - q.coeff n
+@sub_eq_add_neg : ∀ {G : Type u_1} [inst : SubNegMonoid G] (a b : G), a - b = a + -b
+@neg_neg : ∀ {G : Type u_1} [inst : InvolutiveNeg G] (a : G), - -a = a
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+@eval_dvd : ∀ {R : Type u_1} [inst : CommSemiring R] {p q : R[X]} {x : R}, p ∣ q → eval x p ∣ eval x q
+@Nat.choose_eq_zero_of_lt : ∀ {n k : ℕ}, n < k → n.choose k = 0
+CJ/Basic.lean:123:63: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:123:72: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:129:8: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:129:17: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:61: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:132:70: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:138:20: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:138:29: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:10: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, one_pow, one_mul, mul_one,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:42: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:61: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    mul_one, sub_zero, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:137:55: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    mul_zero, sub_self, if_true, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:138:20: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    Nat.cast_one, mul_zero, sub_self, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:40: warning: This simp argument is unused:
+  mkQ_Y6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_X6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:48: warning: This simp argument is unused:
+  mkQ_X6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_Y6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:159:24: warning: This simp argument is unused:
+  ← derivative_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [← map_add] at hq
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:161:63: warning: This simp argument is unused:
+  pow_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [derivative_add, derivative_X_pow, derivative_X, C_eq_natCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:184:14: warning: declaration uses `sorry`
+Int.natAbs_mul : ∀ (a b : ℤ), (a * b).natAbs = a.natAbs * b.natAbs
+Int.natAbs_natCast : ∀ (n : ℕ), (↑n).natAbs = n
+Int.natAbs_pow : ∀ (n : ℤ) (k : ℕ), (n ^ k).natAbs = n.natAbs ^ k
+@Int.dvd_natAbs : ∀ {a b : ℤ}, a ∣ ↑b.natAbs ↔ a ∣ b
+@Int.natAbs_eq_zero : ∀ {a : ℤ}, a.natAbs = 0 ↔ a = 0
+@padicValNat.pow : ∀ {p : ℕ} [hp : Fact (Nat.Prime p)] (a n : ℕ), padicValNat p (a ^ n) = n * padicValNat p a
+@padicValNat_self : ∀ {p : ℕ} [Fact (Nat.Prime p)], padicValNat p p = 1
+ZMod.intCast_zmod_eq_zero_iff_dvd : ∀ (a : ℤ) (b : ℕ), ↑a = 0 ↔ ↑b ∣ a
+@ZMod.pow_card_sub_one_eq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {a : ZMod p}, a ≠ 0 → a ^ (p - 1) = 1
+CJ/Basic.lean:318:27: error: Function expected at
+  Fact.out
+but this term has type
+  ?m.133
+
+Note: Expected a function because this term is being applied to the argument
+  ‹_›
+CJ/Basic.lean:323:4: error: No goals to be solved
+CJ/Basic.lean:332:48: error: mod_cast has type
+  n ∣ x.natAbs
+but is expected to have type
+  ↑n ∣ x
+CJ/Basic.lean:333:55: error: mod_cast has type
+  n ∣ (x + 1).natAbs
+but is expected to have type
+  ↑n ∣ x + 1
+CJ/Basic.lean:334:62: error: mod_cast has type
+  n ∣ (x ^ 2 + x + 1).natAbs
+but is expected to have type
+  ↑n ∣ x ^ 2 + x + 1
+CJ/Basic.lean:341:84: error: unsolved goals
+n : ℕ
+inst✝ : Fact (Nat.Prime n)
+E : ℤ[X]
+hE : F n = C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 * E
+x : ℤ
+hxn : ¬↑n ∣ x
+hx1 : ¬↑n ∣ x + 1
+hxD : ¬↑n ∣ x ^ 2 + x + 1
+hE0 : eval x E ≠ 0
+hn : Nat.Prime n
+hFE : eval x (F n) = ↑n * x * (x + 1) * (x ^ 2 + x + 1) ^ 2 * eval x E
+hnc : ↑n ≠ 0
+hx0 : x ≠ 0
+hx10 : x + 1 ≠ 0
+hD0 : x ^ 2 + x + 1 ≠ 0
+hF0 : eval x (F n) ≠ 0
+hnxN : ¬n ∣ x.natAbs
+hnx1N : ¬n ∣ (x + 1).natAbs
+hnDN : ¬n ∣ (x ^ 2 + x + 1).natAbs
+hxn0 : x.natAbs ≠ 0
+hx1n0 : (x + 1).natAbs ≠ 0
+hDn0 : (x ^ 2 + x + 1).natAbs ≠ 0
+hEn0 : (eval x E).natAbs ≠ 0
+hFne : (eval x (F n)).natAbs ≠ 0
+⊢ n * x.natAbs * (x + 1).natAbs * (x ^ 2 + x + 1).natAbs ^ 2 * (eval x E).natAbs =
+    n * x.natAbs * (x + 1).natAbs * (x ^ 2 + x + 1).natAbs * (eval x E).natAbs
+CJ/Basic.lean:365:65: error: unsolved goals
+n : ℕ
+inst✝ : Fact (Nat.Prime n)
+E : ℤ[X]
+hE : F n = C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 * E
+x : ℤ
+hxn : ¬↑n ∣ x
+hx1 : ¬↑n ∣ x + 1
+hxD : ¬↑n ∣ x ^ 2 + x + 1
+hE0 : eval x E ≠ 0
+hn : Nat.Prime n
+hFE : eval x (F n) = ↑n * x * (x + 1) * (x ^ 2 + x + 1) ^ 2 * eval x E
+hnc : ↑n ≠ 0
+hx0 : x ≠ 0
+hx10 : x + 1 ≠ 0
+hD0 : x ^ 2 + x + 1 ≠ 0
+hF0 : eval x (F n) ≠ 0
+hnxN : ¬n ∣ x.natAbs
+hnx1N : ¬n ∣ (x + 1).natAbs
+hnDN : ¬n ∣ (x ^ 2 + x + 1).natAbs
+hxn0 : x.natAbs ≠ 0
+hx1n0 : (x + 1).natAbs ≠ 0
+hDn0 : (x ^ 2 + x + 1).natAbs ≠ 0
+hEn0 : (eval x E).natAbs ≠ 0
+hFne : (eval x (F n)).natAbs ≠ 0
+hNA : (eval x (F n)).natAbs = n * x.natAbs * (x + 1).natAbs * (x ^ 2 + x + 1).natAbs * (eval x E).natAbs
+p0 : n * x.natAbs ≠ 0
+p1 : n * x.natAbs * (x + 1).natAbs ≠ 0
+p2 : n * x.natAbs * (x + 1).natAbs * (x ^ 2 + x + 1).natAbs ≠ 0
+⊢ 1 + 0 + 0 + 0 + padicValNat n (eval x E).natAbs = 1 + (0 + (0 + (0 + padicValNat n (eval x E).natAbs)))
+CJ/Basic.lean:385:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+CJ/Basic.lean:387:69: warning: This simp argument is unused:
+  eval_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [eval_mul, eval_sub, eval_pow, eval_X, eval_C, eval_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CJ.CJ_block1' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.D_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X1_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.n_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.D2_dvd_F' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+EXIT=1

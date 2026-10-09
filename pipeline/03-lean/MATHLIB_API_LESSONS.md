@@ -1023,3 +1023,241 @@ Each item below cost one round to learn; all are cheap to avoid now.
    relates the binomial form to the author's factorial form; each of its five
    `Finset.sum_congr` obligations is closed by a `Nat.choose` bridge, and one of
    them is closed by the `rw` alone (`rfl` — lesson 10).
+
+## Side-lane CJ (conjecture lane, session 2026-09-30) — cost 7 fix-rounds
+
+All below were paid for by `pipeline/03-lean/CJ/Basic.lean` rounds R1–R7
+(logs `CJ_r*.log`); Block 1 went green at R8.
+
+17. **`one_mul` vs `mul_one`.** `1 * a = a` is `one_mul`; `mul_one` is
+    `a * 1 = a`. Coefficient simp lists built around `1 * ↑1` sat unused
+    for three rounds because only `mul_one` was listed. Both names in
+    every arithmetic simp list that may see either shape.
+
+18. **`coeff_sub` before any coefficient-wise lemma.** For
+    `(p - q - r).coeff k`, `coeff_X_add_C_pow`/`coeff_X_pow`/`coeff_C`
+    can never match until `coeff_sub` pushes `coeff` through the
+    subtraction — every one of them reports "unused" until `coeff_sub`
+    is in the same `simp only` list. This exact signature (all args
+    unused + unsolved residual) means "missing coeff_sub", not "wrong
+    coeff lemma".
+
+19. **Plain `simp` normalizes `C 1` to a numeral; `simp only` does not.**
+    `simp [coeff_X_add_C_pow, ...]` silently rewrites `C 1 → 1` (some
+    default cast lemma) first, so the `X + C r`-shaped lemma never
+    matches. Use `simp only [F, coeff_sub, coeff_X_add_C_pow, ...]`;
+    bridge both directions with `show (1 : ℤ[X]) = C 1 from rfl`
+    (defeq holds at this pin).
+
+20. **A quotient type alias must be `abbrev`, not `def`.** Typeclass
+    synthesis (e.g. `NonAssocSemiring (ℤ[X] ⧸ Ideal.span {…})`) runs at
+    instance transparency and will not unfold a plain `def` alias —
+    error is `failed to synthesize NonAssocSemiring <alias>` even when
+    the body's instances all exist. Also pin set-literal element types
+    with an OUTER ascription: `(Ideal.span {X ^ 2 + X + 1} : Ideal ℤ[X])`
+    (`{e : T}` inside the braces is a parse error at this pin).
+
+21. **`noncomputable def` for anything ℤ[X]-valued.** `def F : ℤ[X] := p - q`
+    fails with `failed to compile definition … instSub noncomputable`;
+    the failure then starves `simp [F]` of equation lemmas (every tactic
+    in the proof reports "never executed"/"does nothing").
+
+22. **`if`-reduction lemma churn at this pin.** `simp only` does not
+    reduce `if True/if False` on its own; the named reducers are
+    deprecated twice over: `if_pos/if_neg` → `ite_eq_left/ite_eq_right`
+    (hints) with `if_true/if_false` also deprecated-but-working. At this
+    pin `if_true/if_false` still fire (deprecation warnings only);
+    `if_pos/if_neg` did not. Conditions discharged to literal
+    `True`/`False` by `hk : k = n` / `hn.ne_zero` are the pattern.
+
+23. **Pin `pow_add` arguments when several exponent-sums coexist.**
+    `rw [pow_add, pow_add]` matches the leftmost `?a ^ (?m + ?n)`, which
+    can be an *inner* exponent (`6*l + 1`) instead of the intended
+    `((6*l+1) + 6)` — write `rw [pow_add (X + C 1) (6 * l + 1) 6]`.
+
+24. **rw/simp direction discipline cost three rounds:** `pow_two` in
+    forward direction turns `^2 → * _` (to *match* a product-shaped
+    hypothesis you need forward in the goal, backward in a have);
+    `mul_assoc` patterns `(a*b)*c` do not match `a*(b*c)` (use
+    `← mul_assoc`); a `←` simp-arg **removes the forward direction from
+    that simp set** (log hint confirms) — for a term needing forward
+    push then inner rewrite, add pushed-form helper lemmas
+    (`mkQ_Y6' : mkQ (X + C 1) ^ 6 = 1 := by rw [← map_pow]; exact mkQ_Y6`)
+    instead of flipping the direction.
+
+25. **Root `sub_neg` resolves to the ORDER lemma** (`a - b < 0 ↔ a < b`),
+    not the ring identity — rewriting `X - -C 1 → X + C 1` needs
+    `rw [sub_eq_add_neg, neg_neg]` instead.
+
+26. **`derivative 1` for a polynomial literal `1` does not match
+    `derivative_C`** (the literal is `OfNat`, not syntactically `C _`);
+    use `rw [show (derivative (1 : ℤ[X])) = 0 from
+    derivative_eq_zero.mpr natDegree_one]`.
+
+27. **A `/-- doc -/
+` immediately before `#print` is a parse error**
+    ("expected 'lemma'") — docstrings must precede declarations; use
+    `--` comments before commands. The `#print axioms` lines still run
+    (per-command recovery), so the error masks an otherwise green file —
+    check the axioms output before chasing ghosts.
+
+28. **`Fact.out`'s receiver is instance-implicit — positional
+    application always fails.** At this pin
+    `@Fact.out : ∀ {p : Prop} [self : Fact p], p`, so
+    `Fact.out ‹Fact (Nat.Prime n)›` / `Fact.out h` error with
+    "Function expected at Fact.out but this term has type ?m.N" (the
+    head has no explicit argument slot). Use dot-notation on a term of
+    type `Fact _` instead: `‹Fact (Nat.Prime n)›.out`,
+    `(by assumption : Fact (Nat.Prime n)).out`, or pattern-match
+    `obtain ⟨p⟩ := ‹Fact (Nat.Prime n)›`. Cost R11→R13; variants P2–P6
+    in `CJ/PROBE.lean` (P1's failure archived in `CJ_probe.log`).
+
+29. **`rw [padicValNat.pow a k]` cannot find its own LHS at this pin.**
+    Even with the occurrence visibly in the goal — and even fully
+    explicit `rw [@padicValNat.pow n _ A 2]` — rewrite reports
+    "Did not find an occurrence of the pattern
+    `padicValNat n (?a ^ 2)`", with the slot you passed for `a` still
+    printed as an unassigned `?m.N` (mechanism unpinned; Q1/Q4 failures
+    archived in `CJ_probe.log`). Working forms: `simp only [padicValNat.pow]`, or pin through the
+    expected type (`have hpow : padicValNat n (A ^ 2) =
+    2 * padicValNat n A := padicValNat.pow _ 2; rw [hpow]` — concrete
+    pattern matches). General rule: when `rw [lemma args]` claims a
+    missing pattern that is plainly present, inspect the printed
+    pattern's slots — a `?m.N` where you passed an argument means
+    switch to `simp only` or a typed `have`.
+
+30. **`rw` does not see through a `private abbrev` in either direction.**
+    With `abbrev φ p := Polynomial.map f p`: after `simp only [φ]` has
+    unfolded a hypothesis, `rw [hDq]` whose LHS is written `φ (…)`
+    finds no match against `map f (…)` — and symmetrically `rw [← h]`
+    with an unfolded RHS pattern fails against a target still written
+    with the abbrev. State helper equalities in the UNFOLDED form, or
+    `simp only [abbrev]` the other side before matching. (`exact` and
+    typechecking DO see through reducible abbrevs; only `rw`/`simp
+    only` pattern-matching doesn't.)
+
+31. **Root `map_add`/`map_mul` do not fire on `Polynomial.map f (a*b)`.**
+    They match `⇑f (a*b)` where `f` is a hom on the *same* carrier;
+    polynomial-level pushing needs `Polynomial.map_add` /
+    `Polynomial.map_mul` (protected, `@[simp]`, `Polynomial/Eval/Defs.lean`).
+    Symptom: `simp only [φ, map_mul]` reports `map_mul` unused while a
+    product sits visibly under `map`.
+
+32. **`IsSimpleRing ℤ` does not exist at this pin**, so
+    `Polynomial.natDegree_map` and `Polynomial.map_eq_zero` (both
+    `[IsSimpleRing R]`) are unusable at `R = ℤ`. Working substitutes
+    with explicit injectivity: `Polynomial.natDegree_map_eq_of_injective
+    Int.cast_injective p`, `Polynomial.map_eq_zero_iff
+    Int.cast_injective`; and `Function.Injective (Int.castRingHom ℚ) :=
+    Int.cast_injective` (verbatim idiom from `WittVector/Defs.lean`).
+
+33. **`Polynomial.natDegree_modByMonic_lt` args: `(p) (hq : Monic q)
+    (hne : q ≠ 1)`** — `q` is implicit, unified from `hq`; NOT
+    `(p q) hq hne`. Passing `G (X^2+X+1) hM hne1` errors "expected
+    `Monic ?m`" on the second argument; the correct call is
+    `Polynomial.natDegree_modByMonic_lt G hM hne1`.
+
+Rounds R11–R13 (Blocks 2 + 3a): `CJ_valuation`, `CJ_deriv`,
+`CJ_nonlift` sorry-free at R13 (`CJ_r13.log`, EXIT=0).
+Rounds R14–R17 (Block 1): `D_dvd_of_deriv_rel` proved — the file's last
+`sorry` gone; `CJ_block1`/`D2_dvd_F` axiom-clean at R17
+(`CJ_r17.log`, EXIT=0); lessons 30–33 above.
+
+34. **`mul_ne_zero` chains must be LEFT-nested to match left-assoc goals.**
+    For a goal `a * b * c ≠ 0` (= `(a * b) * c`), write
+    `mul_ne_zero (mul_ne_zero ha hb) hc`: a right-nested
+    `mul_ne_zero ha (mul_ne_zero hb hc)` fails with "expected
+    `a * b * c ≠ 0`" on the first argument — the expected type splits
+    the product at its LAST `*`.
+
+35. **When a `rw` chain on numeral equations reports "No goals", delete
+    the trailing close.** `rw [h1, h2]` ending in `2 * 2 = 4` /
+    `0 + 1 = 1` already closes by `rfl` on `ℕ` literals; a following
+    `omega`/`exact le_rfl` errors "No goals to be solved" and can poison
+    the enclosing `have`. For `≤`-hypotheses backed by an equality
+    `have`, pass `le_of_eq h` as a *term* instead of a
+    `by rw …; exact le_rfl` block — deterministic, no race.
+
+36. **Annotate polynomial types in standalone `have` statements.**
+    `have h : Polynomial.homogenize (X ^ 2 + X + 1) 2 = …` either errors
+    with stuck `Semiring ?m` or silently resolves `R` to the numeral
+    default — after which `rw` reports "Did not find an occurrence" of a
+    pattern that is *visibly* in the goal (identical printing, different
+    elaboration). Write `(X ^ 2 + X + 1 : ℤ[X])`. Symptom pair: stuck
+    `Semiring ?m` on the statement + identical-printing pattern-miss at
+    the later `rw`.
+
+37. **`rw [pow_two]` unifies `?a` at the FIRST match.** With both
+    `X 0 ^ 2` (inner) and `D ^ 2` (outer) in the goal, unpinned
+    `pow_two` rewrites only the first, leaving a half-converted goal.
+    Pin it: `pow_two (X 0 ^ 2 + X 0 * X 1 + X 1 ^ 2)` (lesson 23's
+    pinning discipline generalizes to every under-unified `rw` argument).
+
+38. **`MvPolynomial.induction_on` cases are `add`, `C`, `mul_X`** (not
+    `zero`/`monomial`). For `Fin 2`-valued points, finish the `mul_X`
+    case with `simp [ih]` then `fin_cases i <;> first | rfl | simp_all`.
+
+39. **`if_neg (by tac)` as a `simp only` argument cannot work**: the
+    `ite` condition is a metavariable until simp matches a term, so the
+    nested tactic proves `¬?c` against an unassigned metavariable and
+    dies ("omega could not prove … a := ↑n" / "⊢ ¬?m"). Pre-prove named
+    conditions (`have h1n : 1 ≠ n := by omega`) and pass `if_neg h1n`
+    (lesson 22's named-condition discipline — now with the
+    elaboration-order reason).
+
+Rounds R18–R30 (Block 2 complete): probe file cleaned to EXIT=0
+(pinned-absent names commented, expected-fail repros removed);
+`homog_ident`, `CJ_homog`, `CJ_valuation_P` proved via
+`Polynomial.homogenize` (degree splits 1+1+4+(n−6), `eval_homogenize`
+over ℚ, cast-eval naturality by `MvPolynomial.induction_on`); both new
+theorems axiom-clean at R30 (`CJ_r30.log`, EXIT=0) — the file has zero
+`sorry`.
+
+40. **`add_pow` indexes by the power of the FIRST summand**:
+    `(x + y)^n = ∑ m, x^m * y^(n-m) * C(n, m)`. State any `have`
+    rewriting a shifted power in exactly that shape or `rw [add_pow]`
+    leaves an unsolved residue; every downstream choice (which sum index
+    is the head, where standalone `x^n`/`y^n` cancel) follows that
+    convention — the "power of y" convention silently moves the
+    cancellation to the tail.
+
+41. **`Nat.Prime.dvd_choose_self` takes `(k ≠ 0)` first** (see
+    `n_dvd_F`'s `hk0`), not `1 ≤ k` — passing `1 ≤ i` fails with an
+    argument-type mismatch at the application.
+
+42. **Bare `ℕ` variables in a `have` statement elaborate the whole
+    statement in `ℕ`.** `have hsplit : n ^ (n - i) = n ^ 2 * …` with
+    `n : ℕ` proves a `ℕ`-equation, then `rw` fails against the goal's
+    `↑n ^ …` with "pattern not found" despite identical printing.
+    Annotate `(n : ℤ)` on every base whose goal-side is casted.
+    Companion: `obtain ⟨c, hc⟩` from `n ∣ k` injects `↑(n * c)` as a
+    whole product-cast; `ring` will not split it against `↑n * ↑c` —
+    `simp only [Nat.cast_mul]` first.
+
+43. **Generic ring lemmas make non-contiguous cancellations rewritable.**
+    When an atomic `rw` pattern like `(u − v) − u + v = 0` sits on the
+    far side of a `∑` in the goal, prove the generic
+    `∀ a b c d : ℤ, (a + b) - c + d = a + (b - c + d)` (reassociate)
+    and `∀ u v : ℤ, (u - v) - u + v = 0` lemmas by `ring`, then
+    `rw` them — far cheaper than spelling out multi-line sum literals.
+
+Rounds R31–R34 (Block 3b complete): `CJ_fprime` (evaluated `F'`, with
+the plan's `F'(x) = n²(q(x+1) − q(x))` gloss in its docstring) and
+`CJ_fiber` (binomial `add_pow` expansion → `sum_sub_distrib` +
+`sum_range_succ` → three-case pointwise divisibility: `i = 0`
+vanishing, `i = n−1` via the `CJ_fprime` bridge, generic via
+`dvd_choose_self` + an `n²` power split) both axiom-clean at R34
+(`CJ_r34.log`, EXIT=0). File: zero `sorry` across Blocks 1–3.
+
+Rounds R35–R38 (Block 4a complete): `CJ_witness_iff`
+(`v_n(P) ≥ 3 ↔ n² ∣ E₂v` from `CJ_valuation_P` +
+`padicValNat_dvd_iff_le hE2N`: its `.mpr` is `(≤) → (∣)`,
+`.mp` is `(∣) → (≤)` — supplying them backwards gives a rewrite
+failure at the `exact`, not a type error at the lemma); `fInt`
+(`((x+1)^n − x^n − 1)/(n:ℤ)`, cast mandatory in the `def` — bare `/ n`
+unifies `ℕ` against `ℤ`) with `fInt_eq` via `eval_dvd (x := x)
+(n_dvd_F hn)` (`eval_dvd`'s `x` is implicit — `eval_dvd x h` mis-parses
+`x` as the dvd hypothesis since `p q` are the explicit instance-implicit
+receivers) + `Int.ediv_mul_cancel`; `Int.ediv_mul_cancel'` does not
+exist in pinned Mathlib (R37). Both axiom-clean at R38
+(`CJ_r38.log`, EXIT=0). File: zero `sorry` across Blocks 1–3 + 4a.

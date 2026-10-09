@@ -1,0 +1,120 @@
+inferInstance : DecompositionMonoid ℚ[X]
+inferInstance : UniqueFactorizationMonoid ℤ[X]
+@coeff_sub : ∀ {R : Type u_1} [inst : Ring R] (p q : R[X]) (n : ℕ), (p - q).coeff n = p.coeff n - q.coeff n
+@sub_eq_add_neg : ∀ {G : Type u_1} [inst : SubNegMonoid G] (a b : G), a - b = a + -b
+@neg_neg : ∀ {G : Type u_1} [inst : InvolutiveNeg G] (a : G), - -a = a
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+@eval_dvd : ∀ {R : Type u_1} [inst : CommSemiring R] {p q : R[X]} {x : R}, p ∣ q → eval x p ∣ eval x q
+@Nat.choose_eq_zero_of_lt : ∀ {n k : ℕ}, n < k → n.choose k = 0
+CJ/Basic.lean:123:63: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:123:72: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:129:8: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:129:17: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:61: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:132:70: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:138:20: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:138:29: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:10: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, one_pow, one_mul, mul_one,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:42: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:61: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    mul_one, sub_zero, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:137:55: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    mul_zero, sub_self, if_true, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:138:20: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    Nat.cast_one, mul_zero, sub_self, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:40: warning: This simp argument is unused:
+  mkQ_Y6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_X6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:48: warning: This simp argument is unused:
+  mkQ_X6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_Y6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:159:24: warning: This simp argument is unused:
+  ← derivative_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [← map_add] at hq
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:161:63: warning: This simp argument is unused:
+  pow_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [derivative_add, derivative_X_pow, derivative_X, C_eq_natCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:184:14: warning: declaration uses `sorry`
+'CJ.CJ_block1' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.D_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X1_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.n_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.D2_dvd_F' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+EXIT=0

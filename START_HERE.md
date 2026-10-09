@@ -1,0 +1,77 @@
+# Bắt đầu từ đây
+
+Repo này dùng máy tính để kiểm tra chứng minh toán học. Bạn không cần biết lập trình. Bạn làm việc với một AI, AI lo toàn bộ phần máy móc — kể cả cài đặt.
+
+## Repo này làm được hai việc
+
+**1. Kiểm tra một chứng minh có sẵn.**
+Ví dụ: file `PROOF_of_FERMAT.pdf` trong repo là một chứng minh Định lý Fermat (33 trang). Bạn đưa chứng minh, máy tính (Lean) kiểm tra từng bước suy luận đúng hay sai.
+
+**2. Tìm chứng minh hoặc phản ví dụ cho một giả thuyết.**
+Ví dụ: "với số nguyên tố n = 6l + 1, phương trình v_n(P(a,b)) ≥ 3 có nghiệm không?" Máy tính thử hàng nghìn trường hợp để tìm phản ví dụ, rồi ghi lại lập luận.
+
+Bạn chỉ cần nói cho AI biết mình muốn việc nào.
+
+## Máy của bạn cần gì
+
+- Máy Windows 10 hoặc 11, 64-bit.
+- RAM nên có **16 GB**. Máy 12 GB vẫn chạy được nhưng chậm hơn.
+- Ổ cứng còn trống khoảng **15 GB**.
+- Không cần cài Python hay Lean. AI lo hết.
+
+## Bắt đầu (ba bước)
+
+Mở **PowerShell** (không phải Command Prompt — khung đen chữ trắng có dòng chữ `PS`). Gõ từng lệnh dưới đây.
+
+### 1. Cài omp (trợ lý AI)
+
+```powershell
+irm https://omp.sh/install.ps1 | iex
+```
+
+Lệnh này cài một file duy nhất.
+
+### 2. Cho omp một model AI (để AI có não)
+
+omp cần một model AI phía sau. Có hai cách thường dùng, bạn chỉ cần một:
+
+- **Bạn đã trả tiền gói Google AI.** Gõ `omp` để mở trợ lý, rồi gõ `/login`, chọn Google, làm theo hướng dẫn trên màn hình.
+- **Bạn mua credit OpenRouter.** Tạo tài khoản tại `openrouter.ai`, nạp một ít credit, tạo một API key. Rồi trong omp gõ `/login openrouter` và dán key vào.
+
+Khi omp hỏi dùng model nào, chọn một trong hai (rẻ, đủ khỏe):
+
+- `xiaomi/mimo-v2.6-flash`
+- `deepseek/deepseek-v4.1-flash`
+
+Kẹt ở bước này? Mở omp lên và bảo AI: "giúp tôi đăng nhập". Nó tự dẫn bạn đi tiếp.
+
+### 3. Bảo AI dựng mọi thứ còn lại
+
+Gõ `omp` để mở trợ lý (làm trong thư mục người dùng của bạn là được), rồi bảo:
+
+> Lấy repo Fermat về máy giúp tôi: `git clone https://github.com/Sinuhe96/Fermat.git Documents\Fermat`. Rồi đọc file `AI_GUIDE.md` trong đó và bắt đầu giúp tôi.
+
+AI sẽ tự: cài Docker Desktop nếu thiếu, bật WSL, tải bộ công cụ (khoảng 600 MB), nạp thư viện toán học (khoảng 11 GB, lần đầu có thể hơn một giờ), kiểm tra máy. Trước mỗi bước lâu, AI báo trước làm gì, tại sao, mất bao lâu, và chờ bạn đồng ý. Muốn cài thêm phần mềm nào, AI cũng hỏi trước.
+
+## Làm việc hằng ngày
+
+Mỗi lần làm việc: mở **PowerShell**, đi đến thư mục repo trước, rồi mới mở omp:
+
+```powershell
+cd Documents\Fermat
+omp
+```
+
+Thứ tự này quan trọng. omp phải chạy từ trong thư mục repo thì mới thấy file và nhớ việc đang dở.
+
+Chuẩn bị sẵn một trong hai thứ:
+
+- File PDF của chứng minh cần kiểm tra (nếu làm việc 1).
+- Phát biểu giả thuyết của bạn, viết rõ giả thiết và kết luận (nếu làm việc 2).
+
+## Khi có lỗi
+
+- **"Docker ... not running" / "cannot connect"**: mở Docker Desktop, chờ biểu tượng hết quay, thử lại.
+- **Máy chậm hoặc báo hết bộ nhớ khi kiểm tra**: tắt các chương trình nặng khác. Mỗi lần chỉ chạy một kiểm tra.
+- **Không chạy `docker compose down -v`.** Lệnh này xóa toàn bộ dữ liệu đã tải (hàng GB, phải tải lại). Dừng bình thường chỉ cần `docker compose down`.
+- **Lỗi khác**: copy nguyên văn thông báo lỗi gửi cho AI, không cần dịch hay đoán.

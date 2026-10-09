@@ -1,0 +1,343 @@
+inferInstance : DecompositionMonoid ℚ[X]
+inferInstance : UniqueFactorizationMonoid ℤ[X]
+@coeff_sub : ∀ {R : Type u_1} [inst : Ring R] (p q : R[X]) (n : ℕ), (p - q).coeff n = p.coeff n - q.coeff n
+@sub_eq_add_neg : ∀ {G : Type u_1} [inst : SubNegMonoid G] (a b : G), a - b = a + -b
+@neg_neg : ∀ {G : Type u_1} [inst : InvolutiveNeg G] (a : G), - -a = a
+Nat.choose_zero_right : ∀ (n : ℕ), n.choose 0 = 1
+@eval_dvd : ∀ {R : Type u_1} [inst : CommSemiring R] {p q : R[X]} {x : R}, p ∣ q → eval x p ∣ eval x q
+@Nat.choose_eq_zero_of_lt : ∀ {n k : ℕ}, n < k → n.choose k = 0
+CJ/Basic.lean:123:63: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:123:72: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:129:8: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:129:17: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:61: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:132:70: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:138:20: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+CJ/Basic.lean:138:29: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+CJ/Basic.lean:132:10: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, one_pow, one_mul, mul_one,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:42: warning: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    sub_zero, if_true, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:132:61: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, hk, hk0, Nat.cast_one, one_pow, one_mul,
+    mul_one, sub_zero, if_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:137:55: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    mul_zero, sub_self, if_true, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:138:20: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [F, coeff_sub, coeff_X_add_C_pow, coeff_X_pow, coeff_C, Nat.choose_eq_zero_of_lt hgt, Nat.cast_zero,
+    Nat.cast_one, mul_zero, sub_self, if_false, hk, hk0', dvd_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:40: warning: This simp argument is unused:
+  mkQ_Y6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_X6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:149:48: warning: This simp argument is unused:
+  mkQ_X6
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [show (6 * l + 1) - 1 = 6 * l from by omega, sub_zero, map_sub, map_mul, map_pow, pow_mul, mkQ_Y6',
+    mkQ_X6', mkQ_Y6, one_pow, mul_one, sub_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:159:24: warning: This simp argument is unused:
+  ← derivative_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [← map_add] at hq
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+CJ/Basic.lean:161:63: warning: This simp argument is unused:
+  pow_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [derivative_add, derivative_X_pow, derivative_X, C_eq_natCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+@natDegree_map_eq_of_injective : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] [inst_1 : Semiring S]
+  {f : R →+* S}, Function.Injective ⇑f → ∀ (p : R[X]), (map f p).natDegree = p.natDegree
+@Polynomial.map_eq_zero_iff : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] {p : R[X]} [inst_1 : Semiring S]
+  {f : R →+* S}, Function.Injective ⇑f → (map f p = 0 ↔ p = 0)
+@Polynomial.map_add : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] {p q : R[X]} [inst_1 : Semiring S]
+  (f : R →+* S), map f (p + q) = map f p + map f q
+@Polynomial.map_mul : ∀ {R : Type u_1} {S : Type u_2} [inst : Semiring R] {p q : R[X]} [inst_1 : Semiring S]
+  (f : R →+* S), map f (p * q) = map f p * map f q
+@dvd_sub : ∀ {α : Type u_1} [inst : NonUnitalRing α] {a b c : α}, a ∣ b → a ∣ c → a ∣ b - c
+CJ/Basic.lean:206:81: warning: This simp argument is unused:
+  φ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Dq]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Int.natAbs_mul : ∀ (a b : ℤ), (a * b).natAbs = a.natAbs * b.natAbs
+Int.natAbs_natCast : ∀ (n : ℕ), (↑n).natAbs = n
+Int.natAbs_pow : ∀ (n : ℤ) (k : ℕ), (n ^ k).natAbs = n.natAbs ^ k
+@Int.dvd_natAbs : ∀ {a b : ℤ}, a ∣ ↑b.natAbs ↔ a ∣ b
+@Int.natAbs_eq_zero : ∀ {a : ℤ}, a.natAbs = 0 ↔ a = 0
+@padicValNat.pow : ∀ {p : ℕ} [hp : Fact (Nat.Prime p)] (a n : ℕ), padicValNat p (a ^ n) = n * padicValNat p a
+@padicValNat_self : ∀ {p : ℕ} [Fact (Nat.Prime p)], padicValNat p p = 1
+ZMod.intCast_zmod_eq_zero_iff_dvd : ∀ (a : ℤ) (b : ℕ), ↑a = 0 ↔ ↑b ∣ a
+@ZMod.pow_card_sub_one_eq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {a : ZMod p}, a ≠ 0 → a ^ (p - 1) = 1
+CJ/Basic.lean:496:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+CJ/Basic.lean:498:69: warning: This simp argument is unused:
+  eval_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [eval_mul, eval_sub, eval_pow, eval_X, eval_C, eval_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+@natDegree_sub_le : ∀ {R : Type u_1} [inst : Ring R] (p q : R[X]), (p - q).natDegree ≤ max p.natDegree q.natDegree
+@natDegree_pow_le : ∀ {R : Type u_1} [inst : Semiring R] {p : R[X]} {n : ℕ}, (p ^ n).natDegree ≤ n * p.natDegree
+@natDegree_mul : ∀ {R : Type u_1} [inst : Semiring R] [NoZeroDivisors R] {p q : R[X]},
+  p ≠ 0 → q ≠ 0 → (p * q).natDegree = p.natDegree + q.natDegree
+@natDegree_X : ∀ {R : Type u_1} [inst : Semiring R] [Nontrivial R], X.natDegree = 1
+@homogenize_mul : ∀ {R : Type u_1} [inst : CommSemiring R] (p q : R[X]) {m n : ℕ},
+  p.natDegree ≤ m → q.natDegree ≤ n → (p * q).homogenize (m + n) = p.homogenize m * q.homogenize n
+@eval_homogenize : ∀ {K : Type u_1} [inst : Semifield K] {p : K[X]} {n : ℕ},
+  p.natDegree ≤ n → ∀ (x : Fin 2 → K), x 1 ≠ 0 → (MvPolynomial.eval x) (p.homogenize n) = eval (x 0 / x 1) p * x 1 ^ n
+@MvPolynomial.eval_mul : ∀ {R : Type u_1} {σ : Type u_2} [inst : CommSemiring R] {p q : MvPolynomial σ R} {f : σ → R},
+  (MvPolynomial.eval f) (p * q) = (MvPolynomial.eval f) p * (MvPolynomial.eval f) q
+@MvPolynomial.eval_pow : ∀ {R : Type u_1} {σ : Type u_2} [inst : CommSemiring R] {p : MvPolynomial σ R} {f : σ → R}
+  (n : ℕ), (MvPolynomial.eval f) (p ^ n) = (MvPolynomial.eval f) p ^ n
+@MvPolynomial.eval_add : ∀ {R : Type u_1} {σ : Type u_2} [inst : CommSemiring R] {p q : MvPolynomial σ R} {f : σ → R},
+  (MvPolynomial.eval f) (p + q) = (MvPolynomial.eval f) p + (MvPolynomial.eval f) q
+@MvPolynomial.eval_X : ∀ {R : Type u_1} {σ : Type u_2} [inst : CommSemiring R] {f : σ → R} (n : σ),
+  (MvPolynomial.eval f) (MvPolynomial.X n) = f n
+@MvPolynomial.eval_C : ∀ {R : Type u_1} {σ : Type u_2} [inst : CommSemiring R] {f : σ → R} (a : R),
+  (MvPolynomial.eval f) (MvPolynomial.C a) = a
+@natDegree_pow : ∀ {R : Type u_1} [inst : Semiring R] [NoZeroDivisors R] (p : R[X]) (n : ℕ),
+  (p ^ n).natDegree = n * p.natDegree
+@MvPolynomial.eval₂_map : ∀ {R : Type u_1} {S₁ : Type u_2} {S₂ : Type u_3} {σ : Type u_4} [inst : CommSemiring R]
+  [inst_1 : CommSemiring S₁] [inst_2 : CommSemiring S₂] (f : R →+* S₁) (g : σ → S₂) (φ : S₁ →+* S₂)
+  (p : MvPolynomial σ R), MvPolynomial.eval₂ φ g ((MvPolynomial.map f) p) = MvPolynomial.eval₂ (φ.comp f) g p
+@MvPolynomial.eval_map : ∀ {R : Type u_1} {S₁ : Type u_2} {σ : Type u_3} [inst : CommSemiring R]
+  [inst_1 : CommSemiring S₁] (f : R →+* S₁) (g : σ → S₁) (p : MvPolynomial σ R),
+  (MvPolynomial.eval g) ((MvPolynomial.map f) p) = MvPolynomial.eval₂ f g p
+@MvPolynomial.C_mul' : ∀ {R : Type u_1} {σ : Type u_2} {a : R} [inst : CommSemiring R] {p : MvPolynomial σ R},
+  MvPolynomial.C a * p = a • p
+CJ/Basic.lean:554:23: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+CJ/Basic.lean:554:35: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+CJ/Basic.lean:606:16: error: Application type mismatch: The argument
+  hcn0
+has type
+  C ↑n ≠ 0
+but is expected to have type
+  C ↑n * X * (X + C 1) ≠ 0
+in the application
+  mul_ne_zero hcn0
+CJ/Basic.lean:606:34: error: Application type mismatch: The argument
+  hX0
+has type
+  X ≠ 0
+but is expected to have type
+  {
+      toFinsupp :=
+        1 *
+          (1 * ((monomial 1).toAddHom.1 1).toFinsupp * ((monomial 1).toAddHom.1 1).toFinsupp +
+              ((monomial 1).toAddHom.1 1).toFinsupp +
+            1) } ≠
+    0
+in the application
+  mul_ne_zero hX0
+CJ/Basic.lean:615:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (?m.654 ^ ?n).natDegree
+in the target expression
+  ((X ^ 2 + X + 1) ^ 2).natDegree = 4
+
+n : ℕ
+hn : Nat.Prime n
+E : ℤ[X]
+hE : F n = C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 * E
+l : ℕ
+hl : n = 6 * l + 1
+h2 : 2 ≤ n
+h6 : 6 ≤ n
+hcn0 : C ↑n ≠ 0
+hX0 : X ≠ 0
+hY0 : X + C 1 ≠ 0
+hD0 : X ^ 2 + X + 1 ≠ 0
+hD20 : (X ^ 2 + X + 1) ^ 2 ≠ 0
+hstuff0 : C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 ≠ 0
+hndF : (F n).natDegree ≤ n
+hF0 : F n ≠ 0
+hE0 : E ≠ 0
+hndD : (X ^ 2 + X + 1).natDegree = 2
+⊢ ((X ^ 2 + X + 1) ^ 2).natDegree = 4
+CJ/Basic.lean:615:33: error: Application type mismatch: The argument
+  hD0
+has type
+  X ^ 2 + X + 1 ≠ 0
+of sort `Prop` but is expected to have type
+  ?m.651[X]
+of sort `Type ?u.420` in the application
+  natDegree_pow hD0
+CJ/Basic.lean:700:19: error(lean.unknownIdentifier): Unknown constant `MvPolynomial.map_mul`
+CJ/Basic.lean:702:12: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (MvPolynomial.eval ![↑a, ↑b]) ((MvPolynomial.map (Int.castRingHom ℚ)) p)
+in the target expression
+  (MvPolynomial.eval ![↑a, ↑b]) ((MvPolynomial.map (Int.castRingHom ℚ)) (p * MvPolynomial.X i)) =
+    ↑((MvPolynomial.eval ![a, b]) p * ![a, b] i)
+
+case mul_X
+n : ℕ
+hn : Nat.Prime n
+hn6 : ∃ l, n = 6 * l + 1
+E : ℤ[X]
+hE : F n = C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 * E
+hident :
+  (F n).homogenize n =
+    MvPolynomial.C ↑n * MvPolynomial.X 0 * (MvPolynomial.X 0 + MvPolynomial.X 1) *
+        (MvPolynomial.X 0 ^ 2 + MvPolynomial.X 0 * MvPolynomial.X 1 + MvPolynomial.X 1 ^ 2) ^ 2 *
+      E.homogenize (n - 6)
+a b : ℤ
+hb : b ≠ 0
+hndF : (F n).natDegree ≤ n
+hb0 : ↑b ≠ 0
+hq :
+  (MvPolynomial.eval ![↑a, ↑b]) ((MvPolynomial.map (Int.castRingHom ℚ)) ((F n).homogenize n)) =
+    eval (![↑a, ↑b] 0 / ![↑a, ↑b] 1) (map (Int.castRingHom ℚ) (F n)) * ![↑a, ↑b] 1 ^ n
+p : MvPolynomial (Fin 2) ℤ
+i : Fin 2
+hp : (MvPolynomial.eval ![↑a, ↑b]) ((MvPolynomial.map (Int.castRingHom ℚ)) p) = ↑((MvPolynomial.eval ![a, b]) p)
+⊢ (MvPolynomial.eval ![↑a, ↑b]) ((MvPolynomial.map (Int.castRingHom ℚ)) (p * MvPolynomial.X i)) =
+    ↑((MvPolynomial.eval ![a, b]) p * ![a, b] i)
+CJ/Basic.lean:705:54: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  HDiv ℤ ℤ ℚ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+CJ/Basic.lean:706:45: error: unsolved goals
+n : ℕ
+hn : Nat.Prime n
+hn6 : ∃ l, n = 6 * l + 1
+E : ℤ[X]
+hE : F n = C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 * E
+hident :
+  (F n).homogenize n =
+    MvPolynomial.C ↑n * MvPolynomial.X 0 * (MvPolynomial.X 0 + MvPolynomial.X 1) *
+        (MvPolynomial.X 0 ^ 2 + MvPolynomial.X 0 * MvPolynomial.X 1 + MvPolynomial.X 1 ^ 2) ^ 2 *
+      E.homogenize (n - 6)
+a b : ℤ
+hb : b ≠ 0
+hndF : (F n).natDegree ≤ n
+hb0 : ↑b ≠ 0
+hq :
+  ↑((MvPolynomial.eval ![a, b]) ((F n).homogenize n)) =
+    eval (![↑a, ↑b] 0 / ![↑a, ↑b] 1) (map (Int.castRingHom ℚ) (F n)) * ![↑a, ↑b] 1 ^ n
+hcast :
+  ∀ (Q : MvPolynomial (Fin 2) ℤ),
+    (MvPolynomial.eval ![↑a, ↑b]) ((MvPolynomial.map (Int.castRingHom ℚ)) Q) = ↑((MvPolynomial.eval ![a, b]) Q)
+⊢ -((a / b) ^ n * ↑b ^ n) + eval₂ (Int.castRingHom ℚ) (a / b) ((1 + X) ^ n) * ↑b ^ n - ↑b ^ n =
+    -↑b ^ n - ↑a ^ n + (↑b + ↑a) ^ n
+CJ/Basic.lean:711:8: error(lean.unknownIdentifier): Unknown identifier `hRHS`
+CJ/Basic.lean:678:66: error: unsolved goals
+n : ℕ
+hn : Nat.Prime n
+hn6 : ∃ l, n = 6 * l + 1
+E : ℤ[X]
+hE : F n = C ↑n * X * (X + C 1) * (X ^ 2 + X + 1) ^ 2 * E
+hident :
+  (F n).homogenize n =
+    MvPolynomial.C ↑n * MvPolynomial.X 0 * (MvPolynomial.X 0 + MvPolynomial.X 1) *
+        (MvPolynomial.X 0 ^ 2 + MvPolynomial.X 0 * MvPolynomial.X 1 + MvPolynomial.X 1 ^ 2) ^ 2 *
+      E.homogenize (n - 6)
+a b : ℤ
+hb : b ≠ 0
+hbridge : (MvPolynomial.eval ![a, b]) ((F n).homogenize n) = (a + b) ^ n - a ^ n - b ^ n
+⊢ ↑n * ![a, b] 0 * (![a, b] 0 + ![a, b] 1) * (![a, b] 0 ^ 2 + ![a, b] 0 * ![a, b] 1 + ![a, b] 1 ^ 2) ^ 2 *
+      (MvPolynomial.eval ![a, b]) (E.homogenize (n - 6)) =
+    ↑n * a * (a + b) * (a ^ 2 + a * b + b ^ 2) ^ 2 * (MvPolynomial.eval ![a, b]) (E.homogenize (n - 6))
+CJ/Basic.lean:700:41: warning: This simp argument is unused:
+  MvPolynomial.map_X
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [MvPolynomial.map_mul, MvPolynomial.eval_mul, MvPolynomial.eval_X]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'CJ.CJ_block1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.D_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.X1_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.n_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.D2_dvd_F' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.CJ_valuation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.CJ_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.CJ_nonlift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CJ.CJ_homog' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'CJ.CJ_valuation_P' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXIT=1

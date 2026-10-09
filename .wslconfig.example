@@ -1,0 +1,17 @@
+# Copy to your Windows user folder as ".wslconfig" (no .txt at the end),
+# then run "wsl --shutdown" in PowerShell and start Docker Desktop again.
+#
+# This setting is proven on a 16 GB machine. It gives Docker 13 GB,
+# which the proof checker needs (it uses about 7 GB at peak).
+#
+# If your machine has only 12 GB RAM, change the memory line to:
+#   memory=10GB
+# and the swap line to:
+#   swap=8GB
+# Checking will be slower. Tell your AI chatbot about it,
+# it will adapt the rest of the setup for you.
+[wsl2]
+memory=13GB
+swap=6GB
+[experimental]
+autoMemoryReclaim=gradual

@@ -1,0 +1,72 @@
+@Polynomial.modByMonic_add_div : ∀ {R : Type u_1} [inst : Ring R] (p q : Polynomial R), p %ₘ q + q * (p /ₘ q) = p
+@Polynomial.modByMonic_eq_zero_iff_dvd : ∀ {R : Type u_1} [inst : Ring R] {p q : Polynomial R},
+  q.Monic → (p %ₘ q = 0 ↔ q ∣ p)
+@Polynomial.modByMonic_eq_zero_iff_quotient_eq_zero : ∀ {R : Type u_1} [inst : CommRing R] (p q : Polynomial R),
+  q.Monic → (p %ₘ q = 0 ↔ (Ideal.Quotient.mk (Ideal.span {q})) p = 0)
+@Polynomial.natDegree_modByMonic_lt : ∀ {R : Type u_1} [inst : Ring R] (p : Polynomial R) {q : Polynomial R},
+  q.Monic → q ≠ 1 → (p %ₘ q).natDegree < q.natDegree
+@Polynomial.dvd_iff_isRoot : ∀ {R : Type u_1} {a : R} [inst : CommRing R] {p : Polynomial R},
+  Polynomial.X - Polynomial.C a ∣ p ↔ p.IsRoot a
+@exists_eq_mul_right_of_dvd : ∀ {α : Type u_1} [inst : Semigroup α] {a b : α}, a ∣ b → ∃ c, b = a * c
+@Polynomial.C_dvd_iff_dvd_coeff : ∀ {R : Type u_1} [inst : Semiring R] (r : R) (φ : Polynomial R),
+  Polynomial.C r ∣ φ ↔ ∀ (i : ℕ), r ∣ φ.coeff i
+@Polynomial.coeff_C_mul : ∀ {R : Type u_1} {a : R} {n : ℕ} [inst : Semiring R] (p : Polynomial R),
+  (Polynomial.C a * p).coeff n = a * p.coeff n
+@Polynomial.coeff_X_add_C_pow : ∀ {R : Type u_1} [inst : Semiring R] (r : R) (n k : ℕ),
+  ((Polynomial.X + Polynomial.C r) ^ n).coeff k = r ^ (n - k) * ↑(n.choose k)
+@Polynomial.coeff_X_pow : ∀ {R : Type u_1} [inst : Semiring R] (k n : ℕ),
+  (Polynomial.X ^ k).coeff n = if n = k then 1 else 0
+@Polynomial.eval_pow : ∀ {R : Type u_1} [inst : CommSemiring R] {p : Polynomial R} {x : R} (n : ℕ),
+  Polynomial.eval x (p ^ n) = Polynomial.eval x p ^ n
+@Polynomial.eval_sub : ∀ {R : Type u_1} [inst : Ring R] (p q : Polynomial R) (x : R),
+  Polynomial.eval x (p - q) = Polynomial.eval x p - Polynomial.eval x q
+@Polynomial.eval_neg : ∀ {R : Type u_1} [inst : Ring R] (p : Polynomial R) (x : R),
+  Polynomial.eval x (-p) = -Polynomial.eval x p
+@Polynomial.eval_X : ∀ {R : Type u_1} [inst : Semiring R] {x : R}, Polynomial.eval x Polynomial.X = x
+@Polynomial.eval_one : ∀ {R : Type u_1} [inst : Semiring R] {x : R}, Polynomial.eval x 1 = 1
+@Polynomial.natDegree_mul : ∀ {R : Type u_1} [inst : Semiring R] [NoZeroDivisors R] {p q : Polynomial R},
+  p ≠ 0 → q ≠ 0 → (p * q).natDegree = p.natDegree + q.natDegree
+@Polynomial.natDegree_X_add_C : ∀ {R : Type u_1} [Nontrivial R] [inst : Semiring R] (x : R),
+  (Polynomial.X + Polynomial.C x).natDegree = 1
+@Polynomial.natDegree_map : ∀ {R : Type u_1} {S : Type u_2} [inst : Ring R] [IsSimpleRing R] [inst_2 : Semiring S]
+  [Nontrivial S] {p : Polynomial R} (f : R →+* S), (Polynomial.map f p).natDegree = p.natDegree
+@Polynomial.map_eq_zero : ∀ {R : Type u_1} {S : Type u_2} [inst : Ring R] [IsSimpleRing R] [inst_2 : Semiring S]
+  [Nontrivial S] {p : Polynomial R} (f : R →+* S), Polynomial.map f p = 0 ↔ p = 0
+@Polynomial.derivative_pow : ∀ {R : Type u_1} [inst : CommSemiring R] (p : Polynomial R) (n : ℕ),
+  Polynomial.derivative (p ^ n) = Polynomial.C ↑n * p ^ (n - 1) * Polynomial.derivative p
+@Polynomial.derivative_X_add_C : ∀ {R : Type u_1} [inst : Semiring R] (c : R),
+  Polynomial.derivative (Polynomial.X + Polynomial.C c) = 1
+@Polynomial.derivative_mul : ∀ {R : Type u_1} [inst : Semiring R] {f g : Polynomial R},
+  Polynomial.derivative (f * g) = Polynomial.derivative f * g + f * Polynomial.derivative g
+@Polynomial.derivative_sub : ∀ {R : Type u_1} [inst : Ring R] {f g : Polynomial R},
+  Polynomial.derivative (f - g) = Polynomial.derivative f - Polynomial.derivative g
+@Polynomial.derivative_X : ∀ {R : Type u_1} [inst : Semiring R], Polynomial.derivative Polynomial.X = 1
+@Polynomial.derivative_C : ∀ {R : Type u_1} [inst : Semiring R] {a : R}, Polynomial.derivative (Polynomial.C a) = 0
+@Polynomial.derivative_X_pow : ∀ {R : Type u_1} [inst : Semiring R] (n : ℕ),
+  Polynomial.derivative (Polynomial.X ^ n) = Polynomial.C ↑n * Polynomial.X ^ (n - 1)
+@Ideal.Quotient.mk : {R : Type u_1} → [inst : Ring R] → (I : Ideal R) → [inst_1 : I.IsTwoSided] → R →+* R ⧸ I
+@Ideal.Quotient.eq_zero_iff_dvd : ∀ {R : Type u_1} [inst : CommRing R] (x y : R),
+  (Ideal.Quotient.mk (Ideal.span {x})) y = 0 ↔ x ∣ y
+@Ideal.mem_span_singleton : ∀ {α : Type u_1} [inst : CommSemiring α] {x y : α}, x ∈ Ideal.span {y} ↔ y ∣ x
+@eq_neg_of_add_eq_zero_left : ∀ {G : Type u_1} [inst : SubtractionMonoid G] {a b : G}, a + b = 0 → a = -b
+@IsCoprime.mul_dvd : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R}, IsCoprime x y → x ∣ z → y ∣ z → x * y ∣ z
+@IsCoprime.dvd_of_dvd_mul_left : ∀ {R : Type u_1} [inst : CommSemiring R] {x y z : R}, IsCoprime x y → x ∣ y * z → x ∣ z
+@IsCoprime.symm : ∀ {R : Type u_1} [inst : CommSemiring R] {x y : R}, IsCoprime x y → IsCoprime y x
+@Polynomial.irreducible_of_degree_le_three_of_not_isRoot : ∀ {K : Type u_1} [inst : Field K] {p : Polynomial K},
+  p.natDegree ∈ Finset.Icc 1 3 → (∀ (x : K), ¬p.IsRoot x) → Irreducible p
+@Irreducible.prime : ∀ {M : Type u_1} [inst : CommMonoidWithZero M] [DecompositionMonoid M] {a : M},
+  Irreducible a → Prime a
+@Prime.dvd_or_dvd : ∀ {M : Type u_1} [inst : CommMonoidWithZero M] {p : M},
+  Prime p → ∀ {a b : M}, p ∣ a * b → p ∣ a ∨ p ∣ b
+@Prime.ne_zero : ∀ {M : Type u_1} [inst : CommMonoidWithZero M] {p : M}, Prime p → p ≠ 0
+@Polynomial.IsRoot.def : ∀ {R : Type u_1} {a : R} [inst : Semiring R] {p : Polynomial R},
+  p.IsRoot a ↔ Polynomial.eval a p = 0
+@Even.neg_one_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ}, Even n → (-1) ^ n = 1
+@Odd.neg_pow : ∀ {α : Type u_1} [inst : Monoid α] [inst_1 : HasDistribNeg α] {n : ℕ},
+  Odd n → ∀ (a : α), (-a) ^ n = -a ^ n
+@padicValNat_dvd_iff_le : ∀ {p : ℕ} [hp : Fact (Nat.Prime p)] {a n : ℕ}, a ≠ 0 → (p ^ n ∣ a ↔ n ≤ padicValNat p a)
+@padicValNat.mul : ∀ {p a b : ℕ} [hp : Fact (Nat.Prime p)],
+  a ≠ 0 → b ≠ 0 → padicValNat p (a * b) = padicValNat p a + padicValNat p b
+@padicValNat.eq_zero_of_not_dvd : ∀ {p n : ℕ}, ¬p ∣ n → padicValNat p n = 0
+@Fact.out : ∀ {p : Prop} [self : Fact p], p
+EXIT=0
